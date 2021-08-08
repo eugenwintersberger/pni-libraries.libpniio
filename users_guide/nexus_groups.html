@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Creating objects &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="creating-objects">
+  <div class="section" id="creating-objects">
 <h1>Creating objects<a class="headerlink" href="#creating-objects" title="Permalink to this headline">¶</a></h1>
 <p><em>libpninexus</em> provides some convenience approaches for creating objects.
 This incudes</p>
@@ -59,7 +59,7 @@ This incudes</p>
 </ul>
 <p><em>libpninexus</em> provides no special means to handle attributes, instead use
 the facilities provided by <em>h5cpp</em>.</p>
-<section id="creating-base-classes">
+<div class="section" id="creating-base-classes">
 <h2>Creating base classes<a class="headerlink" href="#creating-base-classes" title="Permalink to this headline">¶</a></h2>
 <p>The basic elements of a NeXus tree are base classes. Technically, a base
 class is an HDF5 groups with a <code class="docutils literal notranslate"><span class="pre">NX_class</span></code> attribute attached to it
@@ -85,8 +85,8 @@ carries out all these tasks</p>
 <p>The second argument of the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> function is an HDF5 path
 (<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::Path</span></code>). You could use, in special cases a NeXus path
 as it will be shown later, but there are limitations (as will be shown later).</p>
-</section>
-<section id="creating-fields">
+</div>
+<div class="section" id="creating-fields">
 <h2>Creating fields<a class="headerlink" href="#creating-fields" title="Permalink to this headline">¶</a></h2>
 <p>Similar as for base classes <em>libpninexus</em> provides a factory class to create
 fields: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::FieldFactory</span></code> in order to create HDF5 datasets.
@@ -112,8 +112,8 @@ be chosen.</p>
 <p>The major additional task the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> function of
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::FieldFactory</span></code> does is to check whether the new name of the
 field complies to the NeXus naming rules.</p>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -178,7 +178,7 @@ field complies to the NeXus naming rules.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

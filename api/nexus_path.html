@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Path classes and functions &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,13 +49,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="path-classes-and-functions">
+  <div class="section" id="path-classes-and-functions">
 <span id="nexus-api-path"></span><h1>Path classes and functions<a class="headerlink" href="#path-classes-and-functions" title="Permalink to this headline">¶</a></h1>
-<section id="the-pni-nexus-path-class">
+<div class="section" id="the-pni-nexus-path-class">
 <span id="nexus-api-path-class"></span><h2>The <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a> class<a class="headerlink" href="#the-pni-nexus-path-class" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PathE">
-<span id="_CPPv3N3pni5nexus4PathE"></span><span id="_CPPv2N3pni5nexus4PathE"></span><span id="pni::nexus::Path"></span><span class="target" id="classpni_1_1nexus_1_1Path"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">Path</span></span></span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PathE">
+<span id="_CPPv3N3pni5nexus4PathE"></span><span id="_CPPv2N3pni5nexus4PathE"></span><span id="pni::nexus::Path"></span><span class="target" id="classpni_1_1nexus_1_1Path"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Path</code><a class="headerlink" href="#_CPPv4N3pni5nexus4PathE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Nexus path class. </p>
 <p>This class represents a full Nexus path. Such a path describes the position of an object within a Nexus file. In general the path has a form like this</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span><span class="p">:</span><span class="o">//</span><span class="n">entry</span><span class="p">:</span><span class="n">NXentry</span><span class="o">/</span><span class="n">instrument</span><span class="p">:</span><span class="n">NXinstrument</span><span class="o">/</span><span class="n">detector</span><span class="o">/</span><span class="n">data</span><span class="nd">@attrname</span>
@@ -73,266 +73,275 @@
 </p>
 <p>A path can either be absolute or relative to a particular object. However, a path with a filename part is always absolute (for obvious reasons). </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<p class="breathe-sectiondef-title rubric">Public Types</p>
 <dl class="cpp type">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path7ElementE">
-<span id="_CPPv3N3pni5nexus4Path7ElementE"></span><span id="_CPPv2N3pni5nexus4Path7ElementE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ab9118148258d1ebeb06538094bce5668"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Element</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">pair</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path7ElementE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path7ElementE">
+<span id="_CPPv3N3pni5nexus4Path7ElementE"></span><span id="_CPPv2N3pni5nexus4Path7ElementE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ab9118148258d1ebeb06538094bce5668"></span><em class="property">using </em><code class="sig-name descname">Element</code> = std::pair&lt;pni::string, pni::string&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus4Path7ElementE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>object element (groupname:class) </p>
 </dd></dl>
 
 <dl class="cpp type">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path11ElementListE">
-<span id="_CPPv3N3pni5nexus4Path11ElementListE"></span><span id="_CPPv2N3pni5nexus4Path11ElementListE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ae20610a5d9686a5ac81c7031df7514fc"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ElementList</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path11ElementListE">
+<span id="_CPPv3N3pni5nexus4Path11ElementListE"></span><span id="_CPPv2N3pni5nexus4Path11ElementListE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ae20610a5d9686a5ac81c7031df7514fc"></span><em class="property">using </em><code class="sig-name descname">ElementList</code> = std::list&lt;<a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a>&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>a list of subsequent objects </p>
 </dd></dl>
 
 <dl class="cpp type">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path15ElementIteratorE">
-<span id="_CPPv3N3pni5nexus4Path15ElementIteratorE"></span><span id="_CPPv2N3pni5nexus4Path15ElementIteratorE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1abe6629ffa15af73ee5179eaac98c78f5"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ElementIterator</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="pni::nexus::Path::ElementList"><span class="n"><span class="pre">ElementList</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">iterator</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path15ElementIteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path15ElementIteratorE">
+<span id="_CPPv3N3pni5nexus4Path15ElementIteratorE"></span><span id="_CPPv2N3pni5nexus4Path15ElementIteratorE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1abe6629ffa15af73ee5179eaac98c78f5"></span><em class="property">using </em><code class="sig-name descname">ElementIterator</code> = <a class="reference internal" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="pni::nexus::Path::ElementList">ElementList</a>::iterator<a class="headerlink" href="#_CPPv4N3pni5nexus4Path15ElementIteratorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>iterator over elements </p>
 </dd></dl>
 
 <dl class="cpp type">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path20ConstElementIteratorE">
-<span id="_CPPv3N3pni5nexus4Path20ConstElementIteratorE"></span><span id="_CPPv2N3pni5nexus4Path20ConstElementIteratorE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a7c715c4f5ea7f53b537308c5c96753d9"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ConstElementIterator</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="pni::nexus::Path::ElementList"><span class="n"><span class="pre">ElementList</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">const_iterator</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path20ConstElementIteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path20ConstElementIteratorE">
+<span id="_CPPv3N3pni5nexus4Path20ConstElementIteratorE"></span><span id="_CPPv2N3pni5nexus4Path20ConstElementIteratorE"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a7c715c4f5ea7f53b537308c5c96753d9"></span><em class="property">using </em><code class="sig-name descname">ConstElementIterator</code> = <a class="reference internal" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="pni::nexus::Path::ElementList">ElementList</a>::const_iterator<a class="headerlink" href="#_CPPv4N3pni5nexus4Path20ConstElementIteratorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>const iterator over elements </p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path4PathEv">
-<span id="_CPPv3N3pni5nexus4Path4PathEv"></span><span id="_CPPv2N3pni5nexus4Path4PathEv"></span><span id="pni::nexus::Path::Path"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a30849f8c4b52bf62b7426fb14fb2ded4"></span><span class="sig-name descname"><span class="n"><span class="pre">Path</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path4PathEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path4PathEv">
+<span id="_CPPv3N3pni5nexus4Path4PathEv"></span><span id="_CPPv2N3pni5nexus4Path4PathEv"></span><span id="pni::nexus::Path::Path"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a30849f8c4b52bf62b7426fb14fb2ded4"></span><code class="sig-name descname">Path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path4PathEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE">
-<span id="_CPPv3N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE"></span><span id="_CPPv2N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE"></span><span id="pni::nexus::Path::Path__boost::filesystem::pathCR.ElementListCR.pni::stringCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ab9ff06fa68b7e67a4c7e1a28f5c4fb54"></span><span class="sig-name descname"><span class="n"><span class="pre">Path</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="pni::nexus::Path::ElementList"><span class="n"><span class="pre">ElementList</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">groups</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">attr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE">
+<span id="_CPPv3N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE"></span><span id="_CPPv2N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE"></span><span id="pni::nexus::Path::Path__boost::filesystem::pathCR.ElementListCR.pni::stringCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ab9ff06fa68b7e67a4c7e1a28f5c4fb54"></span><code class="sig-name descname">Path</code><span class="sig-paren">(</span><em class="property">const</em> boost::filesystem::path &amp;<em>file</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4Path11ElementListE" title="pni::nexus::Path::ElementList">ElementList</a> &amp;<em>groups</em>, <em class="property">const</em> pni::string &amp;<em>attr</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path4PathERKN5boost10filesystem4pathERK11ElementListRKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file</strong> – name of the file </p></li>
-<li><p><strong>groups</strong> – a list of elements for the object path </p></li>
-<li><p><strong>attr</strong> – the optional name of an attribute </p></li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">file</span></code>: name of the file </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">groups</span></code>: a list of elements for the object path </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attr</span></code>: the optional name of an attribute </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path4PathERKN4hdf54PathE">
-<span id="_CPPv3N3pni5nexus4Path4PathERKN4hdf54PathE"></span><span id="_CPPv2N3pni5nexus4Path4PathERKN4hdf54PathE"></span><span id="pni::nexus::Path::Path__hdf5::PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ac1a3578f959ddfbab25e5ecf16b1d116"></span><span class="sig-name descname"><span class="n"><span class="pre">Path</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path4PathERKN4hdf54PathE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path4PathERKN4hdf54PathE">
+<span id="_CPPv3N3pni5nexus4Path4PathERKN4hdf54PathE"></span><span id="_CPPv2N3pni5nexus4Path4PathERKN4hdf54PathE"></span><span id="pni::nexus::Path::Path__hdf5::PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ac1a3578f959ddfbab25e5ecf16b1d116"></span><code class="sig-name descname">Path</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::Path &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path4PathERKN4hdf54PathE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 <p>Construct a NeXus path from an HDF5 path. This constructor is deliberately non-explicit. As an HDF5 path does not contain any file or attribute information only the element section of the path will be set.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> – reference to the original HDF5 path </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: reference to the original HDF5 path </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PathcvN4hdf54PathEEv">
-<span id="_CPPv3N3pni5nexus4PathcvN4hdf54PathEEv"></span><span id="_CPPv2N3pni5nexus4PathcvN4hdf54PathEEv"></span><span id="pni::nexus::Path::castto-hdf5::Path-operator"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a49d013b95d8694b7e00a5fecf2b018a6"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Path</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathcvN4hdf54PathEEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PathcvN4hdf54PathEEv">
+<span id="_CPPv3N3pni5nexus4PathcvN4hdf54PathEEv"></span><span id="_CPPv2N3pni5nexus4PathcvN4hdf54PathEEv"></span><span id="pni::nexus::Path::castto-hdf5::Path-operator"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a49d013b95d8694b7e00a5fecf2b018a6"></span><code class="sig-name descname">operator hdf5::Path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathcvN4hdf54PathEEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>conversion to an HDF5 path </p>
 <p>This conversion is only possible if the NeXus path is unique. Otherwise an exception will be thrown.</p>
 <p>As an HDF5 path does not contain any information about the file or an attribute this conversion basically copies the names of all object links to the HDF5 path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>new instance of hdf5::Path </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>new instance of hdf5::Path </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path12has_filenameEv">
-<span id="_CPPv3NK3pni5nexus4Path12has_filenameEv"></span><span id="_CPPv2NK3pni5nexus4Path12has_filenameEv"></span><span id="pni::nexus::Path::has_filenameC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a09a1453fd80ac61b2fdf7f597798c573"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">has_filename</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path12has_filenameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path12has_filenameEv">
+<span id="_CPPv3NK3pni5nexus4Path12has_filenameEv"></span><span id="_CPPv2NK3pni5nexus4Path12has_filenameEv"></span><span id="pni::nexus::Path::has_filenameC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a09a1453fd80ac61b2fdf7f597798c573"></span>bool <code class="sig-name descname">has_filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path12has_filenameEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>true if has filename </p>
-<p>Returns true if the path contains a file name. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if filename exists </p>
+<p>Returns true if the path contains a file name. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if filename exists </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path13has_attributeEv">
-<span id="_CPPv3NK3pni5nexus4Path13has_attributeEv"></span><span id="_CPPv2NK3pni5nexus4Path13has_attributeEv"></span><span id="pni::nexus::Path::has_attributeC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ad62393e40088a377fc55f130c7995df5"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">has_attribute</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path13has_attributeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path13has_attributeEv">
+<span id="_CPPv3NK3pni5nexus4Path13has_attributeEv"></span><span id="_CPPv2NK3pni5nexus4Path13has_attributeEv"></span><span id="pni::nexus::Path::has_attributeC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ad62393e40088a377fc55f130c7995df5"></span>bool <code class="sig-name descname">has_attribute</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path13has_attributeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>true if has attribute </p>
-<p>Returns true if the path contains an attribute name. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if path has attribute </p>
+<p>Returns true if the path contains an attribute name. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if path has attribute </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path8filenameEv">
-<span id="_CPPv3NK3pni5nexus4Path8filenameEv"></span><span id="_CPPv2NK3pni5nexus4Path8filenameEv"></span><span id="pni::nexus::Path::filenameC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ac811b479074fdba7bd2589221310a50a"></span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">filename</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path8filenameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path8filenameEv">
+<span id="_CPPv3NK3pni5nexus4Path8filenameEv"></span><span id="_CPPv2NK3pni5nexus4Path8filenameEv"></span><span id="pni::nexus::Path::filenameC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ac811b479074fdba7bd2589221310a50a"></span>boost::filesystem::path <code class="sig-name descname">filename</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path8filenameEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return the filename </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE">
-<span id="_CPPv3N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE"></span><span id="_CPPv2N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE"></span><span id="pni::nexus::Path::filename__boost::filesystem::pathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a8a62a9890a7ff9d39ebcfef7be77e8df"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">filename</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE">
+<span id="_CPPv3N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE"></span><span id="_CPPv2N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE"></span><span id="pni::nexus::Path::filename__boost::filesystem::pathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a8a62a9890a7ff9d39ebcfef7be77e8df"></span>void <code class="sig-name descname">filename</code><span class="sig-paren">(</span><em class="property">const</em> boost::filesystem::path &amp;<em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path8filenameERKN5boost10filesystem4pathE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>set the filename </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path9attributeEv">
-<span id="_CPPv3NK3pni5nexus4Path9attributeEv"></span><span id="_CPPv2NK3pni5nexus4Path9attributeEv"></span><span id="pni::nexus::Path::attributeC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1abcf3edfe18573cb134a28c8c460a9406"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">attribute</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path9attributeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path9attributeEv">
+<span id="_CPPv3NK3pni5nexus4Path9attributeEv"></span><span id="_CPPv2NK3pni5nexus4Path9attributeEv"></span><span id="pni::nexus::Path::attributeC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1abcf3edfe18573cb134a28c8c460a9406"></span>std::string <code class="sig-name descname">attribute</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path9attributeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return the attribute name </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path9attributeERKNSt6stringE">
-<span id="_CPPv3N3pni5nexus4Path9attributeERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus4Path9attributeERKNSt6stringE"></span><span id="pni::nexus::Path::attribute__ssCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ac716200e9c31b9d6adb15a61c100f32d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">attribute</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">attribute_name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9attributeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path9attributeERKNSt6stringE">
+<span id="_CPPv3N3pni5nexus4Path9attributeERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus4Path9attributeERKNSt6stringE"></span><span id="pni::nexus::Path::attribute__ssCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ac716200e9c31b9d6adb15a61c100f32d"></span>void <code class="sig-name descname">attribute</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9attributeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>set the attribute name </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path9push_backERK7Element">
-<span id="_CPPv3N3pni5nexus4Path9push_backERK7Element"></span><span id="_CPPv2N3pni5nexus4Path9push_backERK7Element"></span><span id="pni::nexus::Path::push_back__ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a8b185f768caebee7a755b75a0ac376cc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">push_back</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9push_backERK7Element" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path9push_backERK7Element">
+<span id="_CPPv3N3pni5nexus4Path9push_backERK7Element"></span><span id="_CPPv2N3pni5nexus4Path9push_backERK7Element"></span><span id="pni::nexus::Path::push_back__ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a8b185f768caebee7a755b75a0ac376cc"></span>void <code class="sig-name descname">push_back</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9push_backERK7Element" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>append element </p>
 <p>Append a new element to the end of the Nexus path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><a class="reference internal" href="core_exception.html#_CPPv4N3pni11value_errorE" title="pni::value_error"><strong>value_error</strong></a> – if one tries to push_back a root group to a non-empty path</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1value__error"><span class="std std-ref"><span class="pre">value_error</span></span></a></code>: if one tries to push_back a root group to a non-empty path</p></li>
+</ul>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><p><strong>o</strong> – element to append </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: element to append </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path10push_frontERK7Element">
-<span id="_CPPv3N3pni5nexus4Path10push_frontERK7Element"></span><span id="_CPPv2N3pni5nexus4Path10push_frontERK7Element"></span><span id="pni::nexus::Path::push_front__ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a9c8324ee8ec4f7d7125c735e8f6f3273"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">push_front</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path10push_frontERK7Element" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path10push_frontERK7Element">
+<span id="_CPPv3N3pni5nexus4Path10push_frontERK7Element"></span><span id="_CPPv2N3pni5nexus4Path10push_frontERK7Element"></span><span id="pni::nexus::Path::push_front__ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a9c8324ee8ec4f7d7125c735e8f6f3273"></span>void <code class="sig-name descname">push_front</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path10push_frontERK7Element" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>prepend element </p>
 <p>Append an element to the beginning of the Nexus path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>o</strong> – element to append </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: element to append </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path9pop_frontEv">
-<span id="_CPPv3N3pni5nexus4Path9pop_frontEv"></span><span id="_CPPv2N3pni5nexus4Path9pop_frontEv"></span><span id="pni::nexus::Path::pop_front"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ab41e798090323127fa7e2c1d13870340"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pop_front</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9pop_frontEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path9pop_frontEv">
+<span id="_CPPv3N3pni5nexus4Path9pop_frontEv"></span><span id="_CPPv2N3pni5nexus4Path9pop_frontEv"></span><span id="pni::nexus::Path::pop_front"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ab41e798090323127fa7e2c1d13870340"></span>void <code class="sig-name descname">pop_front</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9pop_frontEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>last element from path </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path8pop_backEv">
-<span id="_CPPv3N3pni5nexus4Path8pop_backEv"></span><span id="_CPPv2N3pni5nexus4Path8pop_backEv"></span><span id="pni::nexus::Path::pop_back"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ad6e0f59a9687cda1b33d2f0295443533"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pop_back</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path8pop_backEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path8pop_backEv">
+<span id="_CPPv3N3pni5nexus4Path8pop_backEv"></span><span id="_CPPv2N3pni5nexus4Path8pop_backEv"></span><span id="pni::nexus::Path::pop_back"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ad6e0f59a9687cda1b33d2f0295443533"></span>void <code class="sig-name descname">pop_back</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path8pop_backEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>remove first element from path </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path5frontEv">
-<span id="_CPPv3NK3pni5nexus4Path5frontEv"></span><span id="_CPPv2NK3pni5nexus4Path5frontEv"></span><span id="pni::nexus::Path::frontC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a3ab3025b42cf343ffa98a552820f4921"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">front</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path5frontEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path5frontEv">
+<span id="_CPPv3NK3pni5nexus4Path5frontEv"></span><span id="_CPPv2NK3pni5nexus4Path5frontEv"></span><span id="pni::nexus::Path::frontC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a3ab3025b42cf343ffa98a552820f4921"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> <code class="sig-name descname">front</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path5frontEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get last element </p>
 <p>Return the last element of the Nexus path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>last element </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>last element </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path4backEv">
-<span id="_CPPv3NK3pni5nexus4Path4backEv"></span><span id="_CPPv2NK3pni5nexus4Path4backEv"></span><span id="pni::nexus::Path::backC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a6ff58cf8805f745a6765d1d933fa164c"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">back</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path4backEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path4backEv">
+<span id="_CPPv3NK3pni5nexus4Path4backEv"></span><span id="_CPPv2NK3pni5nexus4Path4backEv"></span><span id="pni::nexus::Path::backC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a6ff58cf8805f745a6765d1d933fa164c"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> <code class="sig-name descname">back</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path4backEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get first element </p>
 <p>Return the first element of the Nexus path</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>first element </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>first element </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path4sizeEv">
-<span id="_CPPv3NK3pni5nexus4Path4sizeEv"></span><span id="_CPPv2NK3pni5nexus4Path4sizeEv"></span><span id="pni::nexus::Path::sizeC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1af60c396e2281ffa9cc63a2378fab319f"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path4sizeEv">
+<span id="_CPPv3NK3pni5nexus4Path4sizeEv"></span><span id="_CPPv2NK3pni5nexus4Path4sizeEv"></span><span id="pni::nexus::Path::sizeC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1af60c396e2281ffa9cc63a2378fab319f"></span>size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return number of group entries </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path5beginEv">
-<span id="_CPPv3N3pni5nexus4Path5beginEv"></span><span id="_CPPv2N3pni5nexus4Path5beginEv"></span><span id="pni::nexus::Path::begin"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a83e6a3bfb8b48770d5ef0bf1dcb8ca53"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path15ElementIteratorE" title="pni::nexus::Path::ElementIterator"><span class="n"><span class="pre">ElementIterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path5beginEv">
+<span id="_CPPv3N3pni5nexus4Path5beginEv"></span><span id="_CPPv2N3pni5nexus4Path5beginEv"></span><span id="pni::nexus::Path::begin"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a83e6a3bfb8b48770d5ef0bf1dcb8ca53"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path15ElementIteratorE" title="pni::nexus::Path::ElementIterator">ElementIterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path5beginEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get iterator to first element </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path3endEv">
-<span id="_CPPv3N3pni5nexus4Path3endEv"></span><span id="_CPPv2N3pni5nexus4Path3endEv"></span><span id="pni::nexus::Path::end"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ad1962bf4bc02a21cbea484e687382ca8"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path15ElementIteratorE" title="pni::nexus::Path::ElementIterator"><span class="n"><span class="pre">ElementIterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path3endEv">
+<span id="_CPPv3N3pni5nexus4Path3endEv"></span><span id="_CPPv2N3pni5nexus4Path3endEv"></span><span id="pni::nexus::Path::end"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ad1962bf4bc02a21cbea484e687382ca8"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path15ElementIteratorE" title="pni::nexus::Path::ElementIterator">ElementIterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path3endEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get iterator to last+1 element </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path5beginEv">
-<span id="_CPPv3NK3pni5nexus4Path5beginEv"></span><span id="_CPPv2NK3pni5nexus4Path5beginEv"></span><span id="pni::nexus::Path::beginC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a594832077cc8ffd128f1d28cc9bce7ad"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path20ConstElementIteratorE" title="pni::nexus::Path::ConstElementIterator"><span class="n"><span class="pre">ConstElementIterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path5beginEv">
+<span id="_CPPv3NK3pni5nexus4Path5beginEv"></span><span id="_CPPv2NK3pni5nexus4Path5beginEv"></span><span id="pni::nexus::Path::beginC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a594832077cc8ffd128f1d28cc9bce7ad"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path20ConstElementIteratorE" title="pni::nexus::Path::ConstElementIterator">ConstElementIterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path5beginEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get const iterator to first element </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus4Path3endEv">
-<span id="_CPPv3NK3pni5nexus4Path3endEv"></span><span id="_CPPv2NK3pni5nexus4Path3endEv"></span><span id="pni::nexus::Path::endC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a679eb82584d489cfa05cabb548348213"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path20ConstElementIteratorE" title="pni::nexus::Path::ConstElementIterator"><span class="n"><span class="pre">ConstElementIterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus4Path3endEv">
+<span id="_CPPv3NK3pni5nexus4Path3endEv"></span><span id="_CPPv2NK3pni5nexus4Path3endEv"></span><span id="pni::nexus::Path::endC"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a679eb82584d489cfa05cabb548348213"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path20ConstElementIteratorE" title="pni::nexus::Path::ConstElementIterator">ConstElementIterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus4Path3endEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get const iterator to last+1 element </p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path11from_stringERKNSt6stringE">
-<span id="_CPPv3N3pni5nexus4Path11from_stringERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus4Path11from_stringERKNSt6stringE"></span><span id="pni::nexus::Path::from_string__ssCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a9d30c1da7edb6d4636db92518160bb1b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">from_string</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path11from_stringERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path11from_stringERKNSt6stringE">
+<span id="_CPPv3N3pni5nexus4Path11from_stringERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus4Path11from_stringERKNSt6stringE"></span><span id="pni::nexus::Path::from_string__ssCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a9d30c1da7edb6d4636db92518160bb1b"></span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> <code class="sig-name descname">from_string</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>input</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path11from_stringERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>create path from string </p>
 <p>This method creates a path from a string passed to it.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><a class="reference internal" href="exceptions.html#_CPPv4N3pni12parser_errorE" title="pni::parser_error"><strong>parser_error</strong></a> – in case of parsing problems</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>path instance </p>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><p><strong>input</strong> – string with path representation</p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="exceptions.html#classpni_1_1parser__error"><span class="std std-ref"><span class="pre">parser_error</span></span></a></code>: in case of parsing problems</p></li>
+</ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>path instance </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input</span></code>: string with path representation</p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4Path9to_stringERK4Path">
-<span id="_CPPv3N3pni5nexus4Path9to_stringERK4Path"></span><span id="_CPPv2N3pni5nexus4Path9to_stringERK4Path"></span><span id="pni::nexus::Path::to_string__PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a5e9d1d05af8ab001bcd07248132bdb04"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_string</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9to_stringERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4Path9to_stringERK4Path">
+<span id="_CPPv3N3pni5nexus4Path9to_stringERK4Path"></span><span id="_CPPv2N3pni5nexus4Path9to_stringERK4Path"></span><span id="pni::nexus::Path::to_string__PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a5e9d1d05af8ab001bcd07248132bdb04"></span>std::string <code class="sig-name descname">to_string</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4Path9to_stringERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>create string from path </p>
 <p>Returns the string representation of a path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>p</strong> – reference to path instance </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>string representation of the path </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>string representation of the path </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: reference to path instance </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-related">Related</p>
+<p class="breathe-sectiondef-title rubric">Related</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PathrsERNSt7istreamER4Path">
-<span id="_CPPv3N3pni5nexus4PathrsERNSt7istreamER4Path"></span><span id="_CPPv2N3pni5nexus4PathrsERNSt7istreamER4Path"></span><span id="pni::nexus::Path::rshift-operator__isR.PathR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a93d6f6d2bb783cebe4db39d77627abee"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">istream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&gt;&gt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">istream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathrsERNSt7istreamER4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PathrsERNSt7istreamER4Path">
+<span id="_CPPv3N3pni5nexus4PathrsERNSt7istreamER4Path"></span><span id="_CPPv2N3pni5nexus4PathrsERNSt7istreamER4Path"></span><span id="pni::nexus::Path::rshift-operator__isR.PathR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a93d6f6d2bb783cebe4db39d77627abee"></span>PNINEXUS_EXPORT std::istream &amp;<code class="sig-name descname">operator&gt;&gt;</code><span class="sig-paren">(</span>std::istream &amp;<em>i</em>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathrsERNSt7istreamER4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read path from an input stream </p>
 <p>Constructing a nexus path from a stream. Analogously to the output operator this is used to read a path from a stream-able source.</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="p">::</span><span class="n">Path</span> <span class="n">p</span><span class="p">;</span>
@@ -340,75 +349,70 @@
 </pre></div>
 </div>
 </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>i</strong> – reference to the input stream </p></li>
-<li><p><strong>p</strong> – reference to the path </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to the advanced original stream </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: reference to the input stream </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: reference to the path </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>reference to the advanced original stream </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE">
-<span id="_CPPv3N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE"></span><span id="_CPPv2N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE"></span><span id="pni::nexus::Path::eq-operator__Path::ElementCR.Path::ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a38e7ad955ddd85eab1713c224cd531bb"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">==</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE">
+<span id="_CPPv3N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE"></span><span id="_CPPv2N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE"></span><span id="pni::nexus::Path::eq-operator__Path::ElementCR.Path::ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a38e7ad955ddd85eab1713c224cd531bb"></span>PNINEXUS_EXPORT bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a>::<a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a>::<a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PatheqERKN4Path7ElementERKN4Path7ElementE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>equality operator for path elements </p>
 <p>Two path elements are considered equal if their name and, in the case of groups class, are equal.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> – reference to the element on the left hand-side of the operator </p></li>
-<li><p><strong>b</strong> – reference to the element on the right hand-side of the operator </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if the elements are equal </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to the element on the left hand-side of the operator </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: reference to the element on the right hand-side of the operator </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if the elements are equal </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE">
-<span id="_CPPv3N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE"></span><span id="_CPPv2N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE"></span><span id="pni::nexus::Path::neq-operator__Path::ElementCR.Path::ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ae005cee55afac429e2e11acc2320616f"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">!=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element"><span class="n"><span class="pre">Element</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE">
+<span id="_CPPv3N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE"></span><span id="_CPPv2N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE"></span><span id="pni::nexus::Path::neq-operator__Path::ElementCR.Path::ElementCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1ae005cee55afac429e2e11acc2320616f"></span>PNINEXUS_EXPORT bool <code class="sig-name descname">operator!=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a>::<a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a>::<a class="reference internal" href="#_CPPv4N3pni5nexus4Path7ElementE" title="pni::nexus::Path::Element">Element</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathneERKN4Path7ElementERKN4Path7ElementE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>inequality operator for path elements </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> – reference to the element on the left hand-side of the operator </p></li>
-<li><p><strong>b</strong> – reference to the element on the right hand-side of the operator </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if the elements are no equal </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to the element on the left hand-side of the operator </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: reference to the element on the right hand-side of the operator </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if the elements are no equal </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PathneERK4PathRK4Path">
-<span id="_CPPv3N3pni5nexus4PathneERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus4PathneERK4PathRK4Path"></span><span id="pni::nexus::Path::neq-operator__PathCR.PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a49cb939a3e1dd6d8d21fbba23893799d"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">!=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">lhs</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rhs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathneERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PathneERK4PathRK4Path">
+<span id="_CPPv3N3pni5nexus4PathneERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus4PathneERK4PathRK4Path"></span><span id="pni::nexus::Path::neq-operator__PathCR.PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1a49cb939a3e1dd6d8d21fbba23893799d"></span>PNINEXUS_EXPORT bool <code class="sig-name descname">operator!=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathneERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>inequality operator for two path objects </p>
-<p>Compares two path objects and returns true if they are not equal. </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lhs</strong> – reference to the path on the left hand-side </p></li>
-<li><p><strong>rhs</strong> – reference to the path on the right hand-side </p></li>
+<p>Compares two path objects and returns true if they are not equal. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if not equal, false otherwise </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the path on the left hand-side </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the path on the right hand-side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if not equal, false otherwise </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4PathlsERNSt7ostreamERK4Path">
-<span id="_CPPv3N3pni5nexus4PathlsERNSt7ostreamERK4Path"></span><span id="_CPPv2N3pni5nexus4PathlsERNSt7ostreamERK4Path"></span><span id="pni::nexus::Path::lshift-operator__osR.PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1abcd33e18d17fc51f6e67d0d0cc1a7ffd"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathlsERNSt7ostreamERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4PathlsERNSt7ostreamERK4Path">
+<span id="_CPPv3N3pni5nexus4PathlsERNSt7ostreamERK4Path"></span><span id="_CPPv2N3pni5nexus4PathlsERNSt7ostreamERK4Path"></span><span id="pni::nexus::Path::lshift-operator__osR.PathCR"></span><span class="target" id="classpni_1_1nexus_1_1Path_1abcd33e18d17fc51f6e67d0d0cc1a7ffd"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>stream</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4PathlsERNSt7ostreamERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>output operator for a nexus path </p>
 <p>Prints a NeXus path to an output stream. One can either use this to write a Nexus path to standard out</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="p">::</span><span class="n">Path</span> <span class="n">p</span> <span class="o">=</span> <span class="o">....</span><span class="p">;</span>
@@ -422,91 +426,94 @@
 </pre></div>
 </div>
 </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stream</strong> – reference to the output stream </p></li>
-<li><p><strong>p</strong> – reference to the path </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to the output operator </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code>: reference to the output stream </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: reference to the path </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>reference to the output operator </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-<section id="related-functions">
+<div class="section" id="related-functions">
 <span id="nexus-api-pathobject"></span><h3>Related functions<a class="headerlink" href="#related-functions" title="Permalink to this headline">¶</a></h3>
-<section id="inquery-functions">
+<div class="section" id="inquery-functions">
 <h4>Inquery functions<a class="headerlink" href="#inquery-functions" title="Permalink to this headline">¶</a></h4>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus16has_file_sectionERK4Path">
-<span id="_CPPv3N3pni5nexus16has_file_sectionERK4Path"></span><span id="_CPPv2N3pni5nexus16has_file_sectionERK4Path"></span><span id="pni::nexus::has_file_section__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a6c8127e6422b589ebdf9dd1674710628"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">has_file_section</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus16has_file_sectionERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus16has_file_sectionERK4Path">
+<span id="_CPPv3N3pni5nexus16has_file_sectionERK4Path"></span><span id="_CPPv2N3pni5nexus16has_file_sectionERK4Path"></span><span id="pni::nexus::has_file_section__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a6c8127e6422b589ebdf9dd1674710628"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">has_file_section</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus16has_file_sectionERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if path has a file section </p>
 <p>Return true if an instance of nxpath has a non-empty file section.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>p</strong> – reference to an instance of nxpath </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if path has a file section, false otherwise </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if path has a file section, false otherwise </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: reference to an instance of nxpath </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus21has_attribute_sectionERK4Path">
-<span id="_CPPv3N3pni5nexus21has_attribute_sectionERK4Path"></span><span id="_CPPv2N3pni5nexus21has_attribute_sectionERK4Path"></span><span id="pni::nexus::has_attribute_section__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1aeef6e7d75650b5d96dd94d62e5a0ade5"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">has_attribute_section</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus21has_attribute_sectionERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus21has_attribute_sectionERK4Path">
+<span id="_CPPv3N3pni5nexus21has_attribute_sectionERK4Path"></span><span id="_CPPv2N3pni5nexus21has_attribute_sectionERK4Path"></span><span id="pni::nexus::has_attribute_section__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1aeef6e7d75650b5d96dd94d62e5a0ade5"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">has_attribute_section</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus21has_attribute_sectionERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if path has an attribute section </p>
 <p>Return true if an instance of nxpath has a non-empty attribute section.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>p</strong> – reference to an instance of nxpath </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if the path has an attribute section, false otherweise. </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if the path has an attribute section, false otherweise. </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: reference to an instance of nxpath </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus11is_absoluteERK4Path">
-<span id="_CPPv3N3pni5nexus11is_absoluteERK4Path"></span><span id="_CPPv2N3pni5nexus11is_absoluteERK4Path"></span><span id="pni::nexus::is_absolute__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1aa5127655dfa79d0c46e27e67a5dc69ab"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_absolute</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11is_absoluteERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus11is_absoluteERK4Path">
+<span id="_CPPv3N3pni5nexus11is_absoluteERK4Path"></span><span id="_CPPv2N3pni5nexus11is_absoluteERK4Path"></span><span id="pni::nexus::is_absolute__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1aa5127655dfa79d0c46e27e67a5dc69ab"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_absolute</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11is_absoluteERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if path is absolute </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>p</strong> – path instance </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if path is absolute, false otherwise </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if path is absolute, false otherwise </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: path instance </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus9is_uniqueERK4Path">
-<span id="_CPPv3N3pni5nexus9is_uniqueERK4Path"></span><span id="_CPPv2N3pni5nexus9is_uniqueERK4Path"></span><span id="pni::nexus::is_unique__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1ac7815d214ab84691a72f46f9e194449a"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_unique</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus9is_uniqueERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus9is_uniqueERK4Path">
+<span id="_CPPv3N3pni5nexus9is_uniqueERK4Path"></span><span id="_CPPv2N3pni5nexus9is_uniqueERK4Path"></span><span id="pni::nexus::is_unique__PathCR"></span><span class="target" id="namespacepni_1_1nexus_1ac7815d214ab84691a72f46f9e194449a"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_unique</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus9is_uniqueERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return true if a NeXus path is unique </p>
 <p>A NeXus path is considered unique if all elements in its object section have an object name. In this case the path can be unamiguously mapped to an HDF5 path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> – reference to the NeXus path </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if path is unique, false otherwise. </p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if path is unique, false otherwise. </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: reference to the NeXus path </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-<section id="modification-functions">
+</div>
+<div class="section" id="modification-functions">
 <h4>Modification functions<a class="headerlink" href="#modification-functions" title="Permalink to this headline">¶</a></h4>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path">
-<span id="_CPPv3N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path"></span><span id="_CPPv2N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path"></span><span id="pni::nexus::split_path__PathCR.s.PathR.PathR"></span><span class="target" id="namespacepni_1_1nexus_1a7d1c7dbcc49e59fa1659b25d9db6da14"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">split_path</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p1</span></span>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path">
+<span id="_CPPv3N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path"></span><span id="_CPPv2N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path"></span><span id="pni::nexus::split_path__PathCR.s.PathR.PathR"></span><span class="target" id="namespacepni_1_1nexus_1a7d1c7dbcc49e59fa1659b25d9db6da14"></span>PNINEXUS_EXPORT void <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">split_path</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em>, size_t <em>s</em>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p1</em>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10split_pathERK4Path6size_tR4PathR4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>split a nexus path </p>
 <p>Splits a given Nexus path in to two parts at a particular index s of the group part of the path.If the split index is larger or equal the size of the input path an exception will be thrown.</p>
 <p>The best is to have a look at the following example</p>
@@ -524,70 +531,72 @@
 </pre></div>
 </div>
 </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><a class="reference internal" href="core_exception.html#_CPPv4N3pni11index_errorE" title="pni::index_error"><strong>pni::index_error</strong></a> – if s exceeds input path size </p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1index__error"><span class="std std-ref"><span class="pre">pni::index_error</span></span></a></code>: if s exceeds input path size </p></li>
+</ul>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>p</strong> – original path </p></li>
-<li><p><strong>s</strong> – index where to split </p></li>
-<li><p><strong>p1</strong> – first part of the path </p></li>
-<li><p><strong>p2</strong> – second part of the path </p></li>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: original path </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: index where to split </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p1</span></code>: first part of the path </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p2</span></code>: second part of the path </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10split_lastERK4PathR4PathR4Path">
-<span id="_CPPv3N3pni5nexus10split_lastERK4PathR4PathR4Path"></span><span id="_CPPv2N3pni5nexus10split_lastERK4PathR4PathR4Path"></span><span id="pni::nexus::split_last__PathCR.PathR.PathR"></span><span class="target" id="namespacepni_1_1nexus_1accff93a2c43068768891f1f7089a9737"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">split_last</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">p</span></span>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">gp</span></span>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">op</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10split_lastERK4PathR4PathR4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10split_lastERK4PathR4PathR4Path">
+<span id="_CPPv3N3pni5nexus10split_lastERK4PathR4PathR4Path"></span><span id="_CPPv2N3pni5nexus10split_lastERK4PathR4PathR4Path"></span><span id="pni::nexus::split_last__PathCR.PathR.PathR"></span><span class="target" id="namespacepni_1_1nexus_1accff93a2c43068768891f1f7089a9737"></span>PNINEXUS_EXPORT void <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">split_last</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>p</em>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>gp</em>, <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>op</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10split_lastERK4PathR4PathR4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>split path at last element </p>
 <p>Split the path at the last element. This is a particularly usefull function for traversing through a path. The only portion of a path which mast not be a group is the last element.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><a class="reference internal" href="core_exception.html#_CPPv4N3pni11index_errorE" title="pni::index_error"><strong>pni::index_error</strong></a> – </p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1index__error"><span class="std std-ref"><span class="pre">pni::index_error</span></span></a></code>: </p></li>
+</ul>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>p</strong> – reference to the original path </p></li>
-<li><p><strong>gp</strong> – path with groups </p></li>
-<li><p><strong>op</strong> – path with final object </p></li>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: reference to the original path </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gp</span></code>: path with groups </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">op</span></code>: path with final object </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus4joinERK4PathRK4Path">
-<span id="_CPPv3N3pni5nexus4joinERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus4joinERK4PathRK4Path"></span><span id="pni::nexus::join__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a1429d1816f0b209b8d9bf11c852ec940"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">join</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4joinERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus4joinERK4PathRK4Path">
+<span id="_CPPv3N3pni5nexus4joinERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus4joinERK4PathRK4Path"></span><span id="pni::nexus::join__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a1429d1816f0b209b8d9bf11c852ec940"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">join</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus4joinERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>join two paths </p>
 <p>Join two paths together. This operation can only be carried out if the paths satisfiy some criteria <ul class="simple">
 <li><p>a must not have an attribute set </p></li>
 <li><p>b must not have the file section set </p></li>
 <li><p>b must not be an absolute path</p></li>
 </ul>
-
-If one of these requirements is not satisfied <a class="reference internal" href="core_exception.html#classpni_1_1value__error"><span class="std std-ref">value_error</span></a> is thrown. If one of the paths is empty the other one is returned unchanged.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><a class="reference internal" href="core_exception.html#_CPPv4N3pni11value_errorE" title="pni::value_error"><strong>value_error</strong></a> – if join requirements are not met by either a or b </p>
+<p>If one of these requirements is not satisfied </p>
+<a class="reference internal" href="core_exception.html#classpni_1_1value__error"><span class="std std-ref">value_error</span></a> is thrown. If one of the paths is empty the other one is returned unchanged.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>joined path </p>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>a</strong> – first path </p></li>
-<li><p><strong>b</strong> – second path </p></li>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1value__error"><span class="std std-ref"><span class="pre">value_error</span></span></a></code>: if join requirements are not met by either a or b </p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>joined path </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: first path </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: second path </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus13make_relativeERK4PathRK4Path">
-<span id="_CPPv3N3pni5nexus13make_relativeERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus13make_relativeERK4PathRK4Path"></span><span id="pni::nexus::make_relative__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a33ae9e788172c4e11e150a42c1440265"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">make_relative</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">parent_path</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">orig_path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus13make_relativeERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus13make_relativeERK4PathRK4Path">
+<span id="_CPPv3N3pni5nexus13make_relativeERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus13make_relativeERK4PathRK4Path"></span><span id="pni::nexus::make_relative__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a33ae9e788172c4e11e150a42c1440265"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">make_relative</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>parent_path</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>orig_path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus13make_relativeERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>make a relative path </p>
 <p>Take a given path and make it relative with respect to a particular other path (typically the path of a parent object).</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="p">::</span><span class="n">Path</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">nexus</span><span class="p">::</span><span class="n">Path</span><span class="p">::</span><span class="n">from_string</span><span class="p">(</span><span class="s2">&quot;/:NXentry&quot;</span><span class="p">);</span>
@@ -606,68 +615,65 @@ If one of these requirements is not satisfied <a class="reference internal" href
 <li><p>if</p></li>
 </ul>
 </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>parent_path</strong> – reference to the path to which we want to create a relative one </p></li>
-<li><p><strong>orig_path</strong> – reference to the original path</p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>new instance of <code class="docutils literal notranslate"><a class="reference internal" href="#classpni_1_1nexus_1_1Path"><span class="std std-ref"><span class="pre">Path</span></span></a></code> relative to <code class="docutils literal notranslate"><span class="pre">parent_path</span></code> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent_path</span></code>: reference to the path to which we want to create a relative one </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">orig_path</span></code>: reference to the original path</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>new instance of <code class="docutils literal notranslate"><a class="reference internal" href="#classpni_1_1nexus_1_1Path"><span class="std std-ref"><span class="pre">Path</span></span></a></code> relative to <code class="docutils literal notranslate"><span class="pre">parent_path</span></code> </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-<section id="comparison">
+</div>
+<div class="section" id="comparison">
 <h4>Comparison<a class="headerlink" href="#comparison" title="Permalink to this headline">¶</a></h4>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexuseqERK4PathRK4Path">
-<span id="_CPPv3N3pni5nexuseqERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexuseqERK4PathRK4Path"></span><span id="pni::nexus::eq-operator__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a3e4567c77d736c92cc87d63b10ed10b4"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">==</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">lhs</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rhs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexuseqERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexuseqERK4PathRK4Path">
+<span id="_CPPv3N3pni5nexuseqERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexuseqERK4PathRK4Path"></span><span id="pni::nexus::eq-operator__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a3e4567c77d736c92cc87d63b10ed10b4"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator==</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexuseqERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>equality operator for two path objects </p>
 <p>Compare to path objects. They are considered equal if both paths contain the same components.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lhs</strong> – reference to the path on the left hand-side </p></li>
-<li><p><strong>rhs</strong> – reference to the path on the right hand-side </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if equal, false otherwise </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the path on the left hand-side </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the path on the right hand-side </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if equal, false otherwise </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus5matchERK4PathRK4Path">
-<span id="_CPPv3N3pni5nexus5matchERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus5matchERK4PathRK4Path"></span><span id="pni::nexus::match__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a745e27e7d0d691b5b043c3ac59f716b4"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">match</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus5matchERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus5matchERK4PathRK4Path">
+<span id="_CPPv3N3pni5nexus5matchERK4PathRK4Path"></span><span id="_CPPv2N3pni5nexus5matchERK4PathRK4Path"></span><span id="pni::nexus::match__PathCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a745e27e7d0d691b5b043c3ac59f716b4"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">match</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus5matchERK4PathRK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if paths are matching </p>
 <p>See the users guide for details about when paths are considered as matching.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> – reference to first path </p></li>
-<li><p><strong>b</strong> – reference to second path </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if paths are matching, false otherwise </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to first path </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: reference to second path </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>true if paths are matching, false otherwise </p>
-</dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-</section>
-</section>
-<section id="nexus-path-objects">
+</div>
+</div>
+</div>
+<div class="section" id="nexus-path-objects">
 <h2>NeXus path objects<a class="headerlink" href="#nexus-path-objects" title="Permalink to this headline">¶</a></h2>
-<section id="pni-nexus-pathobject">
+<div class="section" id="pni-nexus-pathobject">
 <h3><a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::PathObject</span></code></a><a class="headerlink" href="#pni-nexus-pathobject" title="Permalink to this headline">¶</a></h3>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10PathObjectE">
-<span id="_CPPv3N3pni5nexus10PathObjectE"></span><span id="_CPPv2N3pni5nexus10PathObjectE"></span><span id="pni::nexus::PathObject"></span><span class="target" id="classpni_1_1nexus_1_1PathObject"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">PathObject</span></span></span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObjectE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10PathObjectE">
+<span id="_CPPv3N3pni5nexus10PathObjectE"></span><span id="_CPPv2N3pni5nexus10PathObjectE"></span><span id="pni::nexus::PathObject"></span><span class="target" id="classpni_1_1nexus_1_1PathObject"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">PathObject</code><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObjectE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>type erasure for path addressable objects </p>
 <p>This is a very simple type erasure (though not implemented in the classic scheme) for all objects which can be addressed with a NeXus path. The current path implementation allows to address</p>
 <p><ul class="simple">
@@ -675,248 +681,262 @@ If one of these requirements is not satisfied <a class="reference internal" href
 <li><p>datasets </p></li>
 <li><p>and attributes</p></li>
 </ul>
-
-while a common HDF5 path can only address the first two. Thus we need a special return type for all path operations when dereferencing objects in an HDF5 tree. </p>
+<p>while a common HDF5 path can only address the first two. Thus we need a special return type for all path operations when dereferencing objects in an HDF5 tree. </p>
+</p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10PathObject10PathObjectEv">
-<span id="_CPPv3N3pni5nexus10PathObject10PathObjectEv"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectEv"></span><span id="pni::nexus::PathObject::PathObject"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1ac57b7bf04ed6b4c998050ef07337743e"></span><span class="sig-name descname"><span class="n"><span class="pre">PathObject</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10PathObject10PathObjectEv">
+<span id="_CPPv3N3pni5nexus10PathObject10PathObjectEv"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectEv"></span><span id="pni::nexus::PathObject::PathObject"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1ac57b7bf04ed6b4c998050ef07337743e"></span><code class="sig-name descname">PathObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 <p>We need default construction for container types. When a <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> is default constructed its type is Type::NONE. In this case no conversion to any other object could be achieved. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE">
-<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE"></span><span id="pni::nexus::PathObject::PathObject__hdf5::attribute::AttributeCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a1a78fc9b26f1b863dbd412aba007cbcf"></span><span class="sig-name descname"><span class="n"><span class="pre">PathObject</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Attribute</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">attribute</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE">
+<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE"></span><span id="pni::nexus::PathObject::PathObject__hdf5::attribute::AttributeCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a1a78fc9b26f1b863dbd412aba007cbcf"></span><code class="sig-name descname">PathObject</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::attribute::Attribute &amp;<em>attribute</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf59attribute9AttributeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 <p>Build a <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> from an attribute. In this case <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject_1a81796f2254b3a0806386d24217d763f1"><span class="std std-ref">type()</span></a> will return Type::ATTRIBUTE.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>attribute</strong> – reference to the original attribute </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">attribute</span></code>: reference to the original attribute </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE">
-<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE"></span><span id="pni::nexus::PathObject::PathObject__hdf5::node::NodeCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1af010188b71e99272e2fd7608e194b183"></span><span class="sig-name descname"><span class="n"><span class="pre">PathObject</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Node</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dataset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE">
+<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE"></span><span id="pni::nexus::PathObject::PathObject__hdf5::node::NodeCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1af010188b71e99272e2fd7608e194b183"></span><code class="sig-name descname">PathObject</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>dataset</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4NodeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 <p>Build a <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> from a dataset. After construction <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject_1a81796f2254b3a0806386d24217d763f1"><span class="std std-ref">type()</span></a> will return Type::DATASET.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>dataset</strong> – reference to the original dataset </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset</span></code>: reference to the original dataset </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE">
-<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE"></span><span id="pni::nexus::PathObject::PathObject__hdf5::node::LinkCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a8a1ddffbde2676834e3170b00326c737"></span><span class="sig-name descname"><span class="n"><span class="pre">PathObject</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Link</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">link</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE">
+<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE"></span><span id="pni::nexus::PathObject::PathObject__hdf5::node::LinkCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a8a1ddffbde2676834e3170b00326c737"></span><code class="sig-name descname">PathObject</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Link &amp;<em>link</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERKN4hdf54node4LinkE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 <p>Build a <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> from a link. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10PathObject10PathObjectERK10PathObject">
-<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERK10PathObject"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERK10PathObject"></span><span id="pni::nexus::PathObject::PathObject__PathObjectCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a1457204fb28337d7c4819069ddcba626"></span><span class="sig-name descname"><span class="n"><span class="pre">PathObject</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERK10PathObject" title="pni::nexus::PathObject::PathObject"><span class="n"><span class="pre">PathObject</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10PathObject10PathObjectERK10PathObject">
+<span id="_CPPv3N3pni5nexus10PathObject10PathObjectERK10PathObject"></span><span id="_CPPv2N3pni5nexus10PathObject10PathObjectERK10PathObject"></span><span id="pni::nexus::PathObject::PathObject__PathObjectCR"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a1457204fb28337d7c4819069ddcba626"></span><code class="sig-name descname">PathObject</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERK10PathObject" title="pni::nexus::PathObject::PathObject">PathObject</a>&amp;<span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni5nexus10PathObject10PathObjectERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy constructor </p>
 <p>We use the compiler provided default implementation here. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus10PathObject4typeEv">
-<span id="_CPPv3NK3pni5nexus10PathObject4typeEv"></span><span id="_CPPv2NK3pni5nexus10PathObject4typeEv"></span><span id="pni::nexus::PathObject::typeC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a81796f2254b3a0806386d24217d763f1"></span><span class="n"><span class="pre">Type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObject4typeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus10PathObject4typeEv">
+<span id="_CPPv3NK3pni5nexus10PathObject4typeEv"></span><span id="_CPPv2NK3pni5nexus10PathObject4typeEv"></span><span id="pni::nexus::PathObject::typeC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a81796f2254b3a0806386d24217d763f1"></span>Type <code class="sig-name descname">type</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObject4typeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return type of the currently stored object </p>
 <p>Return the type of the currently stored object. If the object was default constructed NONE is returned. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv">
-<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::attribute::Attribute-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1adc8f2398611e5927b638272e2b982c3c"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Attribute</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv">
+<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::attribute::Attribute-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1adc8f2398611e5927b638272e2b982c3c"></span><code class="sig-name descname">operator hdf5::attribute::Attribute</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf59attribute9AttributeEEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>provides implicit conversion to an attribute </p>
 <p>Returns the stored object as an HDF5 attribute. If the stored instance is not an HDF5 attribute an exception will be thrown.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>the object stored in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::attribute::Attribute </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>the object stored in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::attribute::Attribute </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv">
-<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::node::Group-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a0b965b796cb46cbb262243ea5f9ddf62"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Group</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv">
+<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::node::Group-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1a0b965b796cb46cbb262243ea5f9ddf62"></span><code class="sig-name descname">operator hdf5::node::Group</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node5GroupEEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to a group </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>the object stored in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::node::Group </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>the object stored in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::node::Group </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv">
-<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::node::Dataset-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1ac060c0392633bf4cccdc69760792c97e"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Dataset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv">
+<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::node::Dataset-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1ac060c0392633bf4cccdc69760792c97e"></span><code class="sig-name descname">operator hdf5::node::Dataset</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node7DatasetEEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to a dataset </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>the object stored in <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::node::Dataset. </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>the object stored in <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::node::Dataset. </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv">
-<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::node::Node-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1ab9f49525619ed73414743ddc5bff6f34"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Node</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv">
+<span id="_CPPv3NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv"></span><span id="_CPPv2NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv"></span><span id="pni::nexus::PathObject::castto-hdf5::node::Node-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObject_1ab9f49525619ed73414743ddc5bff6f34"></span><code class="sig-name descname">operator hdf5::node::Node</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus10PathObjectcvN4hdf54node4NodeEEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to a general HDF5 node type </p>
 <p>Provides implicit conversion to an HDF5 node instance. If the object stored is neither a group or a dataset an exception will be thrown.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>the object stored in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::node::Dataset of hdf5::node::Group. </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>the object stored in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> instance is an instance of hdf5::node::Dataset of hdf5::node::Group. </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-</section>
-<section id="pni-nexus-nexus-pathobjectlist">
+</div>
+<div class="section" id="pni-nexus-nexus-pathobjectlist">
 <h3><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::nexus::PathObjectList</span></code><a class="headerlink" href="#pni-nexus-nexus-pathobjectlist" title="Permalink to this headline">¶</a></h3>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus14PathObjectListE">
-<span id="_CPPv3N3pni5nexus14PathObjectListE"></span><span id="_CPPv2N3pni5nexus14PathObjectListE"></span><span id="pni::nexus::PathObjectList"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">PathObjectList</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject"><span class="n"><span class="pre">PathObject</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus14PathObjectListE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus14PathObjectListE">
+<span id="_CPPv3N3pni5nexus14PathObjectListE"></span><span id="_CPPv2N3pni5nexus14PathObjectListE"></span><span id="pni::nexus::PathObjectList"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">PathObjectList</code> : <em class="property">public</em> std::list&lt;<a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject">PathObject</a>&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus14PathObjectListE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>container for <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a> </p>
 <p>Used in algorithms returning several instances of <a class="reference internal" href="#classpni_1_1nexus_1_1PathObject"><span class="std std-ref">PathObject</span></a>. Can be used along with STL algorithms to filter particular types. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus14PathObjectListcv8NodeListEv">
-<span id="_CPPv3NK3pni5nexus14PathObjectListcv8NodeListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv8NodeListEv"></span><span id="pni::nexus::PathObjectList::castto-NodeList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1ab1950f5d1df0ebf028acdb4a8c7ea8d0"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="nexus_algorithm.html#_CPPv4N3pni5nexus8NodeListE" title="pni::nexus::NodeList"><span class="n"><span class="pre">NodeList</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv8NodeListEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus14PathObjectListcv8NodeListEv">
+<span id="_CPPv3NK3pni5nexus14PathObjectListcv8NodeListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv8NodeListEv"></span><span id="pni::nexus::PathObjectList::castto-NodeList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1ab1950f5d1df0ebf028acdb4a8c7ea8d0"></span><code class="sig-name descname">operator NodeList</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv8NodeListEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to a <a class="reference internal" href="nexus_algorithm.html#classpni_1_1nexus_1_1NodeList"><span class="std std-ref">NodeList</span></a> </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>all instances in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObjectList"><span class="std std-ref">PathObjectList</span></a> must store instances of datasets or groups. </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>all instances in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObjectList"><span class="std std-ref">PathObjectList</span></a> must store instances of datasets or groups. </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus14PathObjectListcv13AttributeListEv">
-<span id="_CPPv3NK3pni5nexus14PathObjectListcv13AttributeListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv13AttributeListEv"></span><span id="pni::nexus::PathObjectList::castto-AttributeList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1afa44c8d1a210438bca4e6c536786594e"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="nexus_algorithm.html#_CPPv4N3pni5nexus13AttributeListE" title="pni::nexus::AttributeList"><span class="n"><span class="pre">AttributeList</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv13AttributeListEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus14PathObjectListcv13AttributeListEv">
+<span id="_CPPv3NK3pni5nexus14PathObjectListcv13AttributeListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv13AttributeListEv"></span><span id="pni::nexus::PathObjectList::castto-AttributeList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1afa44c8d1a210438bca4e6c536786594e"></span><code class="sig-name descname">operator AttributeList</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv13AttributeListEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to an <a class="reference internal" href="nexus_algorithm.html#classpni_1_1nexus_1_1AttributeList"><span class="std std-ref">AttributeList</span></a> </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>all instances in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObjectList"><span class="std std-ref">PathObjectList</span></a> must store attributes </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>all instances in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObjectList"><span class="std std-ref">PathObjectList</span></a> must store attributes </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus14PathObjectListcv9GroupListEv">
-<span id="_CPPv3NK3pni5nexus14PathObjectListcv9GroupListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv9GroupListEv"></span><span id="pni::nexus::PathObjectList::castto-GroupList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1a15a2f83ead7e485e21b9be9b5a1b63e1"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="nexus_algorithm.html#_CPPv4N3pni5nexus9GroupListE" title="pni::nexus::GroupList"><span class="n"><span class="pre">GroupList</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv9GroupListEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus14PathObjectListcv9GroupListEv">
+<span id="_CPPv3NK3pni5nexus14PathObjectListcv9GroupListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv9GroupListEv"></span><span id="pni::nexus::PathObjectList::castto-GroupList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1a15a2f83ead7e485e21b9be9b5a1b63e1"></span><code class="sig-name descname">operator GroupList</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv9GroupListEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to a <a class="reference internal" href="nexus_algorithm.html#classpni_1_1nexus_1_1GroupList"><span class="std std-ref">GroupList</span></a> </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>all instances in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObjectList"><span class="std std-ref">PathObjectList</span></a> must store groups </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>all instances in the <a class="reference internal" href="#classpni_1_1nexus_1_1PathObjectList"><span class="std std-ref">PathObjectList</span></a> must store groups </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni5nexus14PathObjectListcv11DatasetListEv">
-<span id="_CPPv3NK3pni5nexus14PathObjectListcv11DatasetListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv11DatasetListEv"></span><span id="pni::nexus::PathObjectList::castto-DatasetList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1a8dc31d2bd5279a20784db0dbaf678d27"></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="nexus_algorithm.html#_CPPv4N3pni5nexus11DatasetListE" title="pni::nexus::DatasetList"><span class="n"><span class="pre">DatasetList</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv11DatasetListEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni5nexus14PathObjectListcv11DatasetListEv">
+<span id="_CPPv3NK3pni5nexus14PathObjectListcv11DatasetListEv"></span><span id="_CPPv2NK3pni5nexus14PathObjectListcv11DatasetListEv"></span><span id="pni::nexus::PathObjectList::castto-DatasetList-operatorC"></span><span class="target" id="classpni_1_1nexus_1_1PathObjectList_1a8dc31d2bd5279a20784db0dbaf678d27"></span><code class="sig-name descname">operator DatasetList</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus14PathObjectListcv11DatasetListEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>implicit conversion to a <a class="reference internal" href="nexus_algorithm.html#classpni_1_1nexus_1_1DatasetList"><span class="std std-ref">DatasetList</span></a> </p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>all instances in the PathObjetList must store datasets </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>all instances in the PathObjetList must store datasets </p>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h3>Related functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus10is_datasetERK10PathObject">
-<span id="_CPPv3N3pni5nexus10is_datasetERK10PathObject"></span><span id="_CPPv2N3pni5nexus10is_datasetERK10PathObject"></span><span id="pni::nexus::is_dataset__PathObjectCR"></span><span class="target" id="namespacepni_1_1nexus_1a5e4c659f6cd945aae1ed2fe5b11c0c1c"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_dataset</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject"><span class="n"><span class="pre">PathObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">object</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus10is_datasetERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus10is_datasetERK10PathObject">
+<span id="_CPPv3N3pni5nexus10is_datasetERK10PathObject"></span><span id="_CPPv2N3pni5nexus10is_datasetERK10PathObject"></span><span id="pni::nexus::is_dataset__PathObjectCR"></span><span class="target" id="namespacepni_1_1nexus_1a5e4c659f6cd945aae1ed2fe5b11c0c1c"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_dataset</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject">PathObject</a> &amp;<em>object</em><span class="sig-paren">)</span> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4N3pni5nexus10is_datasetERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return true if object stores a dataset </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus8is_groupERK10PathObject">
-<span id="_CPPv3N3pni5nexus8is_groupERK10PathObject"></span><span id="_CPPv2N3pni5nexus8is_groupERK10PathObject"></span><span id="pni::nexus::is_group__PathObjectCR"></span><span class="target" id="namespacepni_1_1nexus_1a8e83f22ccd6a7e978094a196409b6ad0"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_group</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject"><span class="n"><span class="pre">PathObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">object</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus8is_groupERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus8is_groupERK10PathObject">
+<span id="_CPPv3N3pni5nexus8is_groupERK10PathObject"></span><span id="_CPPv2N3pni5nexus8is_groupERK10PathObject"></span><span id="pni::nexus::is_group__PathObjectCR"></span><span class="target" id="namespacepni_1_1nexus_1a8e83f22ccd6a7e978094a196409b6ad0"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_group</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject">PathObject</a> &amp;<em>object</em><span class="sig-paren">)</span> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4N3pni5nexus8is_groupERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return true if object stores a group </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus12is_attributeERK10PathObject">
-<span id="_CPPv3N3pni5nexus12is_attributeERK10PathObject"></span><span id="_CPPv2N3pni5nexus12is_attributeERK10PathObject"></span><span id="pni::nexus::is_attribute__PathObjectCR"></span><span class="target" id="namespacepni_1_1nexus_1a575b671484c158b9dcd709c12fcd6f98"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_attribute</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject"><span class="n"><span class="pre">PathObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">object</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N3pni5nexus12is_attributeERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus12is_attributeERK10PathObject">
+<span id="_CPPv3N3pni5nexus12is_attributeERK10PathObject"></span><span id="_CPPv2N3pni5nexus12is_attributeERK10PathObject"></span><span id="pni::nexus::is_attribute__PathObjectCR"></span><span class="target" id="namespacepni_1_1nexus_1a575b671484c158b9dcd709c12fcd6f98"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_attribute</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus10PathObjectE" title="pni::nexus::PathObject">PathObject</a> &amp;<em>object</em><span class="sig-paren">)</span> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4N3pni5nexus12is_attributeERK10PathObject" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>return true if object stores an attribute </p>
 </dd></dl>
 
-</section>
-</section>
-<section id="searching-with-paths">
+</div>
+</div>
+<div class="section" id="searching-with-paths">
 <h2>Searching with Paths<a class="headerlink" href="#searching-with-paths" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE">
-<span id="_CPPv3N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE"></span><span id="_CPPv2N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE"></span><span id="pni::nexus::get_path__hdf5::attribute::AttributeCR"></span><span class="target" id="namespacepni_1_1nexus_1aaf89ed2831ac7dc326239045b14d7afa"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">get_path</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Attribute</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">attribute</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE">
+<span id="_CPPv3N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE"></span><span id="_CPPv2N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE"></span><span id="pni::nexus::get_path__hdf5::attribute::AttributeCR"></span><span class="target" id="namespacepni_1_1nexus_1aaf89ed2831ac7dc326239045b14d7afa"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_path</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::attribute::Attribute &amp;<em>attribute</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus8get_pathERKN4hdf59attribute9AttributeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get the NeXus path for an HDF5 attribute </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>attribute</strong> – reference to the attribute for which to obtain the path</p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>the attribute must be a valid HDF5 object </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>the attribute must be a valid HDF5 object </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">attribute</span></code>: reference to the attribute for which to obtain the path</p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus8get_pathERKN4hdf54node4NodeE">
-<span id="_CPPv3N3pni5nexus8get_pathERKN4hdf54node4NodeE"></span><span id="_CPPv2N3pni5nexus8get_pathERKN4hdf54node4NodeE"></span><span id="pni::nexus::get_path__hdf5::node::NodeCR"></span><span class="target" id="namespacepni_1_1nexus_1a7fda8096aed1b6a944d194387d3f34cd"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">get_path</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Node</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">node</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus8get_pathERKN4hdf54node4NodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus8get_pathERKN4hdf54node4NodeE">
+<span id="_CPPv3N3pni5nexus8get_pathERKN4hdf54node4NodeE"></span><span id="_CPPv2N3pni5nexus8get_pathERKN4hdf54node4NodeE"></span><span id="pni::nexus::get_path__hdf5::node::NodeCR"></span><span class="target" id="namespacepni_1_1nexus_1a7fda8096aed1b6a944d194387d3f34cd"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_path</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus8get_pathERKN4hdf54node4NodeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get the NeXus path for an HDF5 node </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>node</strong> – reference to the HDF5 node</p>
+<p><dl class="simple">
+<dt><strong>Pre</strong></dt><dd><p>the node must be a valid HDF5 object </p>
 </dd>
-<dt class="field-even">Pre</dt>
-<dd class="field-even"><p>the node must be a valid HDF5 object </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">node</span></code>: reference to the HDF5 node</p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path">
-<span id="_CPPv3N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path"></span><span id="_CPPv2N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path"></span><span id="pni::nexus::get_objects__hdf5::node::GroupCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a6a618d6fc4651fe4365db6149cc84ec9"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus14PathObjectListE" title="pni::nexus::PathObjectList"><span class="n"><span class="pre">PathObjectList</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">get_objects</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Group</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">base</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><span class="n"><span class="pre">Path</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path">
+<span id="_CPPv3N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path"></span><span id="_CPPv2N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path"></span><span id="pni::nexus::get_objects__hdf5::node::GroupCR.PathCR"></span><span class="target" id="namespacepni_1_1nexus_1a6a618d6fc4651fe4365db6149cc84ec9"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5nexus14PathObjectListE" title="pni::nexus::PathObjectList">PathObjectList</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_objects</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Group &amp;<em>base</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path">Path</a> &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11get_objectsERKN4hdf54node5GroupERK4Path" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>search for objects </p>
 <p>Searches recursively below <code class="docutils literal notranslate"><span class="pre">base</span></code> and return a list of path objects which match <code class="docutils literal notranslate"><span class="pre">path</span></code>. The function distinguishes two situations</p>
 <p><ul class="simple">
@@ -925,24 +945,24 @@ while a common HDF5 path can only address the first two. Thus we need a special 
 </ul>
 </p>
 <p>There are some important notes when it comes to dealing with links. Under the hood get_objects iterates over links rather than nodes. This allows the function to handle unresolvable links. If a particular link is resolvable it will be converted into the appropriate node type. In the case of an unresolvable link the link itself will be stored.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><strong>std::runtime_error</strong> – in case of a failure </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>a list of path objects </p>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>base</strong> – the base group from which to start the search </p></li>
-<li><p><strong>path</strong> – the path which to match</p></li>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
 </ul>
 </dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>a list of path objects </p>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base</span></code>: the base group from which to start the search </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: the path which to match</p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -1021,7 +1041,7 @@ while a common HDF5 path can only address the first two. Thus we need a special 
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

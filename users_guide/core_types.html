@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Types &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="data-types">
+  <div class="section" id="data-types">
 <h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
 <table class="docutils align-default">
 <colgroup>
@@ -179,13 +179,13 @@ particular type class defined by the <code class="xref cpp cpp-enum docutils lit
 Table~ref{tab:types:basic_types} gives an overview over the primitive types
 provided by <cite>libpninexus</cite> and their corresponding <code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">type_id_t</span></code> and
 <code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">type_class_t</span></code> values.</p>
-<section id="compile-time-type-identification">
+<div class="section" id="compile-time-type-identification">
 <h2>Compile time type identification<a class="headerlink" href="#compile-time-type-identification" title="Permalink to this headline">¶</a></h2>
 <p>To obtain the ID or class of a type at compile time use the
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">type_id_map</span></code> or <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">type_class_map</span></code> type maps.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="c1">//determine the type ID for a given type</span>
 <span class="n">type_id_map</span><span class="o">&lt;</span><span class="n">float32</span><span class="o">&gt;::</span><span class="n">type_id</span> <span class="o">==</span> <span class="n">type_id_t</span><span class="o">::</span><span class="n">FLOAT32</span><span class="p">;</span>
@@ -197,7 +197,7 @@ provided by <cite>libpninexus</cite> and their corresponding <code class="xref c
 <p>For IDs the other way around is also possible with the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">id_type_map</span></code></p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="c1">//determine the type for a given ID</span>
 <span class="n">id_type_map</span><span class="o">&lt;</span><span class="n">type_id_t</span><span class="o">::</span><span class="n">FLOAT32</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">data</span> <span class="o">=</span> <span class="p">...;</span>
@@ -230,8 +230,8 @@ classification</p>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="identifying-types-at-runtime">
+</div>
+<div class="section" id="identifying-types-at-runtime">
 <h2>Identifying types at runtime<a class="headerlink" href="#identifying-types-at-runtime" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
@@ -306,7 +306,7 @@ function defined in <code class="file docutils literal notranslate"><span class=
 function is rather simple as shown here</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#incldue&lt;pni/types.hpp&gt;</span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="c1">//one could use this with</span>
 <span class="k">auto</span> <span class="n">data</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(...);</span>
@@ -355,7 +355,7 @@ of this two guys is again straight forward.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/type_utils.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="c1">//get a type id from a string</span>
 <span class="n">string</span> <span class="n">rep</span> <span class="o">=</span> <span class="s">&quot;string&quot;</span><span class="p">;</span>
@@ -365,8 +365,8 @@ of this two guys is again straight forward.</p>
 <span class="n">rep</span> <span class="o">=</span> <span class="n">str_from_type_id</span><span class="p">(</span><span class="n">type_id_t</span><span class="o">::</span><span class="n">FLOAT32</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-<section id="the-binary-type">
+</div>
+<div class="section" id="the-binary-type">
 <span id="using-binary"></span><h2>The <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">binary</span></code> type<a class="headerlink" href="#the-binary-type" title="Permalink to this headline">¶</a></h2>
 <p>In many cases uninterpreted binary data should be transfered from one location
 to the other (a typical example would be to copy the content of one file to
@@ -397,16 +397,16 @@ and stored in the vector. Now, it is clear from here that a vector of type
 difference is that unlike <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">char_t</span></code> <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">binary</span></code> has absolutely no
 semantics. In practice there is nothing much you can do without it rather than
 store it back to another stream as it is done in line $33$.</p>
-</section>
-<section id="the-none-type">
+</div>
+<div class="section" id="the-none-type">
 <span id="using-none"></span><h2>The <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">none</span></code> type<a class="headerlink" href="#the-none-type" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">none</span></code> type represents the absence of a type. It is a dummy type
 of very limited functionality and is mainly used internally by
 <cite>libpninexus</cite>. One major application of the <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">none</span></code> type is to do default
 construction of type erasures (see <a class="reference internal" href="core_type_erasures.html#type-erasures"><span class="std std-ref">Type erasures</span></a>).
 For all practical purposes this type can be ignored.</p>
-</section>
-<section id="the-bool-t-type">
+</div>
+<div class="section" id="the-bool-t-type">
 <span id="using-bool"></span><h2>The <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">bool_t</span></code> type<a class="headerlink" href="#the-bool-t-type" title="Permalink to this headline">¶</a></h2>
 <p>Unlike the C programming language C++ provides a native <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">bool_t</span></code> type.
 Unfortunately the C++ standardization committee made some unfortunate decisions
@@ -425,8 +425,8 @@ value and thus can use the <code class="xref cpp cpp-class docutils literal notr
 <cite>libpninexus</cite> <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">bool_t</span></code> type whenever working with <cite>libpninexus</cite>
 templates or whenever the address of a container element is required. For all
 other purposes the default C++ <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">bool_t</span></code> type can be used.</p>
-</section>
-<section id="numeric-type-conversion">
+</div>
+<div class="section" id="numeric-type-conversion">
 <h2>Numeric type conversion<a class="headerlink" href="#numeric-type-conversion" title="Permalink to this headline">¶</a></h2>
 <p><cite>libpninexus</cite> provides facilities for save numeric type conversion. These
 functions are not only used internally by the library they are also available to
@@ -735,7 +735,7 @@ used.</p>
 </tbody>
 </table>
 <p>Type matrix showing between which types  conversion is possible.</p>
-<section id="the-convert-function-template">
+<div class="section" id="the-convert-function-template">
 <h3>The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> function template<a class="headerlink" href="#the-convert-function-template" title="Permalink to this headline">¶</a></h3>
 <p>At the heart of <cite>libpninexus</cite> s type conversion system is the cpp{convert}
 function template. The declaration of the template looks somehow like this</p>
@@ -788,9 +788,9 @@ unsigned type. A similar situation would be</p>
 </div>
 <p>where <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">range_error</span></code> would indicate that it is impossible to store a
 value of 10000 in an 8-Bit unsigned variable.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -862,7 +862,7 @@ value of 10000 in an 8-Bit unsigned variable.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

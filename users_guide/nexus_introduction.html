@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A basic introduction to Nexus &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,9 +49,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="a-basic-introduction-to-nexus">
+  <div class="section" id="a-basic-introduction-to-nexus">
 <h1>A basic introduction to Nexus<a class="headerlink" href="#a-basic-introduction-to-nexus" title="Permalink to this headline">¶</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
 <p>Today, data recorded during synchrotron experiments is typically stored in
 individual binary image files and/or as flat ASCII files. A typical directory
@@ -114,20 +114,20 @@ NeXus file standard.</p>
 idea about <em>h5cpp</em>’s concepts and API. So if you never used <em>h5cpp</em> before
 you better go away for a while here and read the <a class="reference external" href="https://ess-dmsc.github.io/h5cpp/index.html">h5cpp documentation</a>.</p>
 </div>
-</section>
-<section id="the-nexus-layer-model">
+</div>
+<div class="section" id="the-nexus-layer-model">
 <h2>The Nexus layer model<a class="headerlink" href="#the-nexus-layer-model" title="Permalink to this headline">¶</a></h2>
 <p>As already mentioned in the previous section, NeXus can be considered as a set
 of rules describing the logical organization of data within a file.
 NeXus, for this purpose, utilizes types defined in three different layers.</p>
-<figure class="align-center">
-<img alt="../_images/layers.svg" src="../_images/layers.svg" /></figure>
+<div class="figure align-center">
+<img alt="../_images/layers.svg" src="../_images/layers.svg" /></div>
 <p>Each group of types defined in a layer is used for a particular purpose. Layer 1
 provides the basic brick-stones from which the NeXus standard is build of.
 Layer 2 provides collections of Layer 1 instances representing concrete beamline
 components as well as abstract concepts. Layer 3 finally can be used to define
 file formats for particular experimental techniques.</p>
-<section id="layer-1-objects">
+<div class="section" id="layer-1-objects">
 <h3>Layer 1 objects<a class="headerlink" href="#layer-1-objects" title="Permalink to this headline">¶</a></h3>
 <p>The first layer in the NeXus layer model provides the fundamental types used
 to define the organizational structure of data in a file.</p>
@@ -193,8 +193,8 @@ HDF5 types</p>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="layer-2-objects">
+</div>
+<div class="section" id="layer-2-objects">
 <h3>Layer 2 objects<a class="headerlink" href="#layer-2-objects" title="Permalink to this headline">¶</a></h3>
 <p>Objects from the second layer are composites of the types provided by the first
 layer. They describe logical or physical entities at a beamline.
@@ -202,16 +202,16 @@ These range from the very concrete objects like undulators or detectors to
 abstract concepts like <em>entries</em> and <em>subentries</em>.
 The available objects from Layer 2 are defined in the Nexus Base class
 catalog.</p>
-</section>
-<section id="layer-3-objects">
+</div>
+<div class="section" id="layer-3-objects">
 <h3>Layer 3 objects<a class="headerlink" href="#layer-3-objects" title="Permalink to this headline">¶</a></h3>
 <p>The third layer finally provides concepts to standardize the structure of a
 Nexus data tree for particular scientific applications and methods.
 These so called <em>Application Definitions</em> are defined by the NIAC in
 collaboration with the scientific community.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -281,7 +281,7 @@ collaboration with the scientific community.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

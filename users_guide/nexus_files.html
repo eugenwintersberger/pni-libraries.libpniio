@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working with files &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,7 +49,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="working-with-files">
+  <div class="section" id="working-with-files">
 <h1>Working with files<a class="headerlink" href="#working-with-files" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -57,7 +57,7 @@
 type <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::file::File</span></code>. For a full list of operations provided
 by this type consult the <em>h5cpp</em> manual.</p>
 </div>
-<section id="creating-single-files">
+<div class="section" id="creating-single-files">
 <h2>Creating single files<a class="headerlink" href="#creating-single-files" title="Permalink to this headline">¶</a></h2>
 <p>In order to create a file <em>libpninexus</em> provides some simple wrappers around
 the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hdf5::file::create()</span></code> functions provided by <em>h5cpp</em>. These wrappers
@@ -69,7 +69,7 @@ wrapper function which in turn will return an instance of
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/nexus.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;h5cpp/hdf5.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
 <span class="p">{</span>
@@ -90,16 +90,16 @@ In order to overwrite an existing file one can use</p>
 <p>This option should be used with case as all data stored in the original file
 will be lost forever. For more options to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create_file()</span></code>
 check the API documentation and the <em>h5cpp</em> documentation.</p>
-</section>
-<section id="create-distributed-files">
+</div>
+<div class="section" id="create-distributed-files">
 <h2>Create distributed files<a class="headerlink" href="#create-distributed-files" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Do we really need this feature. Need to discuss this during the next
 group meeting</p>
 </div>
-</section>
-<section id="opening-and-closing-files">
+</div>
+<div class="section" id="opening-and-closing-files">
 <h2>Opening and closing files<a class="headerlink" href="#opening-and-closing-files" title="Permalink to this headline">¶</a></h2>
 <p>Like for creating files there is a wrapper function <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code>
 to open a NeXus file.</p>
@@ -126,8 +126,8 @@ check use the <code class="xref cpp cpp-func docutils literal notranslate"><span
 <span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -193,7 +193,7 @@ check use the <code class="xref cpp cpp-func docutils literal notranslate"><span
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spreadsheet like ASCII files &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -50,19 +50,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="spreadsheet-like-ascii-files">
+  <div class="section" id="spreadsheet-like-ascii-files">
 <h1>Spreadsheet like ASCII files<a class="headerlink" href="#spreadsheet-like-ascii-files" title="Permalink to this headline">¶</a></h1>
 <p>Many ASCII formats use a speadsheet like scheme to organize their data,
 basically storing data in rows and columns. Some formats like SPEC allow
 to store multiple runs in a single file (SPEC calls them scans) while others,
 like FIO, store only a single run per file and endcode the run number in the
 file name.</p>
-<figure class="align-center" id="id1">
+<div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/data_readers.svg"><img alt="../_images/data_readers.svg" src="../_images/data_readers.svg" width="65%" /></a>
-<figcaption>
-<p><span class="caption-text">Hierarchy of reader classes in <em>libpninexus</em>.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<p class="caption"><span class="caption-text">Hierarchy of reader classes in <em>libpninexus</em>.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
 <p>Spreadsheet readers favor column based over record based access. Not only
 is this the typical way how data is accessed in the field of synchrotron
 research, it has also the advantage that the data type is constant within
@@ -86,7 +84,7 @@ spreadsheet, namely</p>
 </pre></div>
 </div>
 <p>For more details see the <a class="reference internal" href="../api/ascii_spreadsheet.html#ascii-spreadsheet-api"><span class="std std-ref">ASCII spreadsheet API</span></a>.</p>
-<section id="fio-file-support">
+<div class="section" id="fio-file-support">
 <h2>FIO file support<a class="headerlink" href="#fio-file-support" title="Permalink to this headline">¶</a></h2>
 <p>FIO is the old file format used at DESY. Every run (sometimes called scan) is
 stored in a single file where the run number is encoded in the name of the file.
@@ -143,28 +141,28 @@ type</p></li>
 </div>
 <p>In order to read FIO files use the <a class="reference internal" href="../api/ascii_spreadsheet.html#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::fio_reader</span></code></a>.
 Opening a FIO file works as with any other reader</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">fio_reader</span> <span class="nf">reader</span><span class="p">(</span><span class="s">&quot;run_000001.fio&quot;</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_000001.fio&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<section id="accessing-parameters">
+<div class="section" id="accessing-parameters">
 <h3>Accessing parameters<a class="headerlink" href="#accessing-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Accessing parameters (stored as key value pairs) is done via the
 <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">parameter()</span></code> template member function. Its template parameter determines
 the requested data type for the parameter value</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">fio_reader</span> <span class="nf">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pni</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">reader</span><span class="p">.</span><span class="n">parameter</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;IDORIS&quot;</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="accessing-columns">
+</div>
+<div class="section" id="accessing-columns">
 <h3>Accessing columns<a class="headerlink" href="#accessing-columns" title="Permalink to this headline">¶</a></h3>
 <p>Columns are accessed via the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">column()</span></code> template member function
 where the template parameter is typically the container type used to
 store the column data</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Float64Column</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">float64</span><span class="o">&gt;</span><span class="p">;</span>
 
-<span class="n">pni</span><span class="o">::</span><span class="n">fio_reader</span> <span class="nf">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
+<span class="n">pni</span><span class="o">::</span><span class="n">fio_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;run_0000001.fio&quot;</span><span class="p">);</span>
 
 <span class="k">auto</span> <span class="n">column</span> <span class="o">=</span> <span class="n">reader</span><span class="p">.</span><span class="n">column</span><span class="o">&lt;</span><span class="n">Float64Column</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;OMEGA&quot;</span><span class="p">);</span>
 </pre></div>
@@ -173,9 +171,9 @@ store the column data</p>
 argument to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">column()</span></code>.</p>
 <p>For a full reference of the <a class="reference internal" href="../api/ascii_spreadsheet.html#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::fio_reader</span></code></a> see the
 <a class="reference internal" href="../api/ascii_spreadsheet.html#ascii-spreadsheet-api"><span class="std std-ref">ASCII spreadsheet API</span></a>.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -244,7 +242,7 @@ argument to <code class="xref cpp cpp-func docutils literal notranslate"><span c
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

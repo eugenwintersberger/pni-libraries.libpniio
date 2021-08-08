@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reading binary image data &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,9 +49,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="reading-binary-image-data">
+  <div class="section" id="reading-binary-image-data">
 <h1>Reading binary image data<a class="headerlink" href="#reading-binary-image-data" title="Permalink to this headline">¶</a></h1>
-<section id="the-image-model">
+<div class="section" id="the-image-model">
 <h2>The image model<a class="headerlink" href="#the-image-model" title="Permalink to this headline">¶</a></h2>
 <p>The image model used by <em>libpninexus</em> is rather simple. We assume that an image
 is a regular 2 dimensional array with <em>nx</em> elements along the first dimension
@@ -72,8 +72,8 @@ pixels along each dimension, total number of bits per pixel)</p></li>
 <li><p>and <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">image_channel_info</span></code> - providing information about the
 individual channels stored in each image.</p></li>
 </ul>
-</section>
-<section id="image-reader">
+</div>
+<div class="section" id="image-reader">
 <h2>Image reader<a class="headerlink" href="#image-reader" title="Permalink to this headline">¶</a></h2>
 <p>Currently there are two classes implementing the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">image_reader</span></code>
 interface:</p>
@@ -89,7 +89,7 @@ use <code class="file docutils literal notranslate"><span class="pre">pni/tiff/t
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;pni/cbf/cbf_reader.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/image_info.hpp&gt;</span><span class="cp"></span>
 
-<span class="n">pni</span><span class="o">::</span><span class="n">cbf_reader</span> <span class="nf">reader</span><span class="p">(</span><span class="s">&quot;image_00001.cbf&quot;</span><span class="p">);</span>
+<span class="n">pni</span><span class="o">::</span><span class="n">cbf_reader</span> <span class="n">reader</span><span class="p">(</span><span class="s">&quot;image_00001.cbf&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>We can check whether there are several images in the file and have a
@@ -105,8 +105,8 @@ look on their basic structure with</p>
 <span class="k">auto</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">reader</span><span class="p">.</span><span class="n">image</span><span class="o">&lt;</span><span class="n">Frame</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -171,7 +171,7 @@ look on their basic structure with</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

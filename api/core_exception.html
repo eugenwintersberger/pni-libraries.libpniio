@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exceptions &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,13 +45,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="exceptions">
+  <div class="section" id="exceptions">
 <h1>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h1>
-<section id="pni-exception-record">
+<div class="section" id="pni-exception-record">
 <h2><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::exception_record</span></code></a><a class="headerlink" href="#pni-exception-record" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni16exception_recordE">
-<span id="_CPPv3N3pni16exception_recordE"></span><span id="_CPPv2N3pni16exception_recordE"></span><span id="pni::exception_record"></span><span class="target" id="classpni_1_1exception__record"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">exception_record</span></span></span><a class="headerlink" href="#_CPPv4N3pni16exception_recordE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni16exception_recordE">
+<span id="_CPPv3N3pni16exception_recordE"></span><span id="_CPPv2N3pni16exception_recordE"></span><span id="pni::exception_record"></span><span class="target" id="classpni_1_1exception__record"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">exception_record</code><a class="headerlink" href="#_CPPv4N3pni16exception_recordE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>exception record </p>
 <p>Contains the basic information where an exception has been thrown. This information consists of the source file, the line in the file, and the signature of the function where the error occurred. Using the BOOST_CURRENT_FUNCTION macro defined in boost/current_function.hpp such a record can easily be constructed with</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exception_record</span> <span class="n">r</span><span class="p">(</span><span class="n">__FILE__</span><span class="p">,</span><span class="n">__LINE__</span><span class="p">,</span><span class="n">BOOST_CURRENT_FUNCTION</span><span class="p">);</span>
@@ -59,34 +59,34 @@
 </div>
  </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni16exception_record16exception_recordEv">
-<span id="_CPPv3N3pni16exception_record16exception_recordEv"></span><span id="_CPPv2N3pni16exception_record16exception_recordEv"></span><span id="pni::exception_record::exception_record"></span><span class="target" id="classpni_1_1exception__record_1aae9dfc3bad9111b2233b1420487d1589"></span><span class="sig-name descname"><span class="n"><span class="pre">exception_record</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N3pni16exception_record16exception_recordEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni16exception_record16exception_recordEv">
+<span id="_CPPv3N3pni16exception_record16exception_recordEv"></span><span id="_CPPv2N3pni16exception_record16exception_recordEv"></span><span id="pni::exception_record::exception_record"></span><span class="target" id="classpni_1_1exception__record_1aae9dfc3bad9111b2233b1420487d1589"></span><code class="sig-name descname">exception_record</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni16exception_record16exception_recordEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>no default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni16exception_record16exception_recordERK6string6size_tRK6string">
-<span id="_CPPv3N3pni16exception_record16exception_recordERK6string6size_tRK6string"></span><span id="_CPPv2N3pni16exception_record16exception_recordERK6string6size_tRK6string"></span><span id="pni::exception_record::exception_record__stringCR.s.stringCR"></span><span class="target" id="classpni_1_1exception__record_1aa3de857a873c14e088d390a6d6271904"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">exception_record</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">file</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">line</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">func</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni16exception_record16exception_recordERK6string6size_tRK6string" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni16exception_record16exception_recordERK6string6size_tRK6string">
+<span id="_CPPv3N3pni16exception_record16exception_recordERK6string6size_tRK6string"></span><span id="_CPPv2N3pni16exception_record16exception_recordERK6string6size_tRK6string"></span><span id="pni::exception_record::exception_record__stringCR.s.stringCR"></span><span class="target" id="classpni_1_1exception__record_1aa3de857a873c14e088d390a6d6271904"></span><code class="sig-name descname">exception_record</code><span class="sig-paren">(</span><em class="property">const</em> string &amp;<em>file</em>, size_t <em>line</em>, <em class="property">const</em> string &amp;<em>func</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni16exception_record16exception_recordERK6string6size_tRK6string" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni16exception_record4fileEv">
-<span id="_CPPv3NK3pni16exception_record4fileEv"></span><span id="_CPPv2NK3pni16exception_record4fileEv"></span><span id="pni::exception_record::fileC"></span><span class="target" id="classpni_1_1exception__record_1a4872faf5b97dfa901c734cbef3d4e62e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">file</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni16exception_record4fileEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni16exception_record4fileEv">
+<span id="_CPPv3NK3pni16exception_record4fileEv"></span><span id="_CPPv2NK3pni16exception_record4fileEv"></span><span id="pni::exception_record::fileC"></span><span class="target" id="classpni_1_1exception__record_1a4872faf5b97dfa901c734cbef3d4e62e"></span><em class="property">const</em> string &amp;<code class="sig-name descname">file</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni16exception_record4fileEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get file name </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni16exception_record4lineEv">
-<span id="_CPPv3NK3pni16exception_record4lineEv"></span><span id="_CPPv2NK3pni16exception_record4lineEv"></span><span id="pni::exception_record::lineC"></span><span class="target" id="classpni_1_1exception__record_1a67c39e258afcf44349f6dc9ed2b061af"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">line</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni16exception_record4lineEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni16exception_record4lineEv">
+<span id="_CPPv3NK3pni16exception_record4lineEv"></span><span id="_CPPv2NK3pni16exception_record4lineEv"></span><span id="pni::exception_record::lineC"></span><span class="target" id="classpni_1_1exception__record_1a67c39e258afcf44349f6dc9ed2b061af"></span>size_t <code class="sig-name descname">line</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni16exception_record4lineEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get file line number </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni16exception_record8functionEv">
-<span id="_CPPv3NK3pni16exception_record8functionEv"></span><span id="_CPPv2NK3pni16exception_record8functionEv"></span><span id="pni::exception_record::functionC"></span><span class="target" id="classpni_1_1exception__record_1a2e68f0017b47c28dfc29f30469b56b5c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">function</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni16exception_record8functionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni16exception_record8functionEv">
+<span id="_CPPv3NK3pni16exception_record8functionEv"></span><span id="_CPPv2NK3pni16exception_record8functionEv"></span><span id="pni::exception_record::functionC"></span><span class="target" id="classpni_1_1exception__record_1a2e68f0017b47c28dfc29f30469b56b5c"></span><em class="property">const</em> string &amp;<code class="sig-name descname">function</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni16exception_record8functionEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get function </p>
 </dd></dl>
 
@@ -94,108 +94,112 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pnilsERNSt7ostreamERK16exception_record">
-<span id="_CPPv3N3pnilsERNSt7ostreamERK16exception_record"></span><span id="_CPPv2N3pnilsERNSt7ostreamERK16exception_record"></span><span id="pni::lshift-operator__osR.exception_recordCR"></span><span class="target" id="namespacepni_1ab3c8434813fb9d112b4dec2961b8c09a"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnilsERNSt7ostreamERK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pnilsERNSt7ostreamERK16exception_record">
+<span id="_CPPv3N3pnilsERNSt7ostreamERK16exception_record"></span><span id="_CPPv2N3pnilsERNSt7ostreamERK16exception_record"></span><span id="pni::lshift-operator__osR.exception_recordCR"></span><span class="target" id="namespacepni_1ab3c8434813fb9d112b4dec2961b8c09a"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>rec</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnilsERNSt7ostreamERK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>error record output operator </p>
 </dd></dl>
 
-</section>
-<section id="pni-exception">
+</div>
+<div class="section" id="pni-exception">
 <h2><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::exception</span></code></a><a class="headerlink" href="#pni-exception" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exceptionE">
-<span id="_CPPv3N3pni9exceptionE"></span><span id="_CPPv2N3pni9exceptionE"></span><span id="pni::exception"></span><span class="target" id="classpni_1_1exception"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">exception</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">exception</span></span><a class="headerlink" href="#_CPPv4N3pni9exceptionE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exceptionE">
+<span id="_CPPv3N3pni9exceptionE"></span><span id="_CPPv2N3pni9exceptionE"></span><span id="pni::exception"></span><span class="target" id="classpni_1_1exception"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">exception</code> : <em class="property">public</em> std::exception<a class="headerlink" href="#_CPPv4N3pni9exceptionE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Exceptions base class. </p>
 <p>This is the base class for all exceptions used in this library. </p>
 <p>Subclassed by <a class="reference internal" href="#classpni_1_1cli__argument__error"><span class="std std-ref">pni::cli_argument_error</span></a>, <a class="reference internal" href="#classpni_1_1cli__error"><span class="std std-ref">pni::cli_error</span></a>, pni::cli_help_request, <a class="reference internal" href="#classpni_1_1cli__option__error"><span class="std std-ref">pni::cli_option_error</span></a>, <a class="reference internal" href="#classpni_1_1file__error"><span class="std std-ref">pni::file_error</span></a>, <a class="reference internal" href="#classpni_1_1index__error"><span class="std std-ref">pni::index_error</span></a>, <a class="reference internal" href="exceptions.html#classpni_1_1invalid__object__error"><span class="std std-ref">pni::invalid_object_error</span></a>, <a class="reference internal" href="exceptions.html#classpni_1_1io__error"><span class="std std-ref">pni::io_error</span></a>, <a class="reference internal" href="#classpni_1_1iterator__error"><span class="std std-ref">pni::iterator_error</span></a>, <a class="reference internal" href="#classpni_1_1key__error"><span class="std std-ref">pni::key_error</span></a>, <a class="reference internal" href="exceptions.html#classpni_1_1link__error"><span class="std std-ref">pni::link_error</span></a>, <a class="reference internal" href="#classpni_1_1memory__allocation__error"><span class="std std-ref">pni::memory_allocation_error</span></a>, <a class="reference internal" href="#classpni_1_1memory__not__allocated__error"><span class="std std-ref">pni::memory_not_allocated_error</span></a>, <a class="reference internal" href="#classpni_1_1not__implemented__error"><span class="std std-ref">pni::not_implemented_error</span></a>, <a class="reference internal" href="exceptions.html#classpni_1_1object__error"><span class="std std-ref">pni::object_error</span></a>, <a class="reference internal" href="exceptions.html#classpni_1_1parser__error"><span class="std std-ref">pni::parser_error</span></a>, <a class="reference internal" href="#classpni_1_1range__error"><span class="std std-ref">pni::range_error</span></a>, <a class="reference internal" href="#classpni_1_1shape__mismatch__error"><span class="std std-ref">pni::shape_mismatch_error</span></a>, <a class="reference internal" href="#classpni_1_1size__mismatch__error"><span class="std std-ref">pni::size_mismatch_error</span></a>, pni::tiff::tiff_read_error, <a class="reference internal" href="#classpni_1_1type__error"><span class="std std-ref">pni::type_error</span></a>, <a class="reference internal" href="#classpni_1_1value__error"><span class="std std-ref">pni::value_error</span></a></p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<p class="breathe-sectiondef-title rubric">Public Types</p>
 <dl class="cpp type">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception14const_iteratorE">
-<span id="_CPPv3N3pni9exception14const_iteratorE"></span><span id="_CPPv2N3pni9exception14const_iteratorE"></span><span id="pni::exception::const_iterator"></span><span class="target" id="classpni_1_1exception_1accb6bc9e4ccbc66a9290ae2d284a2c29"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">const_iterator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">const_iterator</span></span></span><a class="headerlink" href="#_CPPv4N3pni9exception14const_iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception14const_iteratorE">
+<span id="_CPPv3N3pni9exception14const_iteratorE"></span><span id="_CPPv2N3pni9exception14const_iteratorE"></span><span id="pni::exception::const_iterator"></span><span class="target" id="classpni_1_1exception_1accb6bc9e4ccbc66a9290ae2d284a2c29"></span><em class="property">typedef </em>std::list&lt;<a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a>&gt;::const_iterator <code class="sig-name descname">const_iterator</code><a class="headerlink" href="#_CPPv4N3pni9exception14const_iteratorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>const iterator over the error record </p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception9exceptionEv">
-<span id="_CPPv3N3pni9exception9exceptionEv"></span><span id="_CPPv2N3pni9exception9exceptionEv"></span><span id="pni::exception::exception"></span><span class="target" id="classpni_1_1exception_1aad6bf63274b22346934b2cf281b5e721"></span><span class="sig-name descname"><span class="n"><span class="pre">exception</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception9exceptionEv">
+<span id="_CPPv3N3pni9exception9exceptionEv"></span><span id="_CPPv2N3pni9exception9exceptionEv"></span><span id="pni::exception::exception"></span><span class="target" id="classpni_1_1exception_1aad6bf63274b22346934b2cf281b5e721"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception9exceptionERK6string">
-<span id="_CPPv3N3pni9exception9exceptionERK6string"></span><span id="_CPPv2N3pni9exception9exceptionERK6string"></span><span id="pni::exception::exception__stringCR"></span><span class="target" id="classpni_1_1exception_1a2c263501126197cf13ae4ea42dbb55d6"></span><span class="sig-name descname"><span class="n"><span class="pre">exception</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionERK6string" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception9exceptionERK6string">
+<span id="_CPPv3N3pni9exception9exceptionERK6string"></span><span id="_CPPv2N3pni9exception9exceptionERK6string"></span><span id="pni::exception::exception__stringCR"></span><span class="target" id="classpni_1_1exception_1a2c263501126197cf13ae4ea42dbb55d6"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><em class="property">const</em> string &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionERK6string" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n</strong> – name of the exception </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception9exceptionERK6stringRK16exception_record">
-<span id="_CPPv3N3pni9exception9exceptionERK6stringRK16exception_record"></span><span id="_CPPv2N3pni9exception9exceptionERK6stringRK16exception_record"></span><span id="pni::exception::exception__stringCR.exception_recordCR"></span><span class="target" id="classpni_1_1exception_1aad30d1aeadbdbdafb216301801a7e638"></span><span class="sig-name descname"><span class="n"><span class="pre">exception</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionERK6stringRK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>constructor </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> – name of the exception </p></li>
-<li><p><strong>rec</strong> – Exception record of the initial location where the error occured </p></li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the exception </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception9exceptionERK6stringRK16exception_recordRK6string">
-<span id="_CPPv3N3pni9exception9exceptionERK6stringRK16exception_recordRK6string"></span><span id="_CPPv2N3pni9exception9exceptionERK6stringRK16exception_recordRK6string"></span><span id="pni::exception::exception__stringCR.exception_recordCR.stringCR"></span><span class="target" id="classpni_1_1exception_1a334339a300ffa281af82b4de6ba25bc7"></span><span class="sig-name descname"><span class="n"><span class="pre">exception</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rec</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionERK6stringRK16exception_recordRK6string" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception9exceptionERK6stringRK16exception_record">
+<span id="_CPPv3N3pni9exception9exceptionERK6stringRK16exception_record"></span><span id="_CPPv2N3pni9exception9exceptionERK6stringRK16exception_record"></span><span id="pni::exception::exception__stringCR.exception_recordCR"></span><span class="target" id="classpni_1_1exception_1aad30d1aeadbdbdafb216301801a7e638"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><em class="property">const</em> string &amp;<em>n</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>rec</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionERK6stringRK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> – name of the exception </p></li>
-<li><p><strong>rec</strong> – exception record describing the location of the first occurrence of the error </p></li>
-<li><p><strong>d</strong> – description of the exception </p></li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the exception </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rec</span></code>: Exception record of the initial location where the error occured </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exceptionD0Ev">
-<span id="_CPPv3N3pni9exceptionD0Ev"></span><span id="_CPPv2N3pni9exceptionD0Ev"></span><span id="pni::exception::~exception"></span><span class="target" id="classpni_1_1exception_1a81b959378b7ee78853c5478f22ee32c7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~exception</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exceptionD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception9exceptionERK6stringRK16exception_recordRK6string">
+<span id="_CPPv3N3pni9exception9exceptionERK6stringRK16exception_recordRK6string"></span><span id="_CPPv2N3pni9exception9exceptionERK6stringRK16exception_recordRK6string"></span><span id="pni::exception::exception__stringCR.exception_recordCR.stringCR"></span><span class="target" id="classpni_1_1exception_1a334339a300ffa281af82b4de6ba25bc7"></span><code class="sig-name descname">exception</code><span class="sig-paren">(</span><em class="property">const</em> string &amp;<em>n</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>rec</em>, <em class="property">const</em> string &amp;<em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception9exceptionERK6stringRK16exception_recordRK6string" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the exception </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rec</span></code>: exception record describing the location of the first occurrence of the error </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code>: description of the exception </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni9exceptionD0Ev">
+<span id="_CPPv3N3pni9exceptionD0Ev"></span><span id="_CPPv2N3pni9exceptionD0Ev"></span><span id="pni::exception::~exception"></span><span class="target" id="classpni_1_1exception_1a81b959378b7ee78853c5478f22ee32c7"></span><code class="sig-name descname">~exception</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exceptionD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>virtual destructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception4nameERKNSt6stringE">
-<span id="_CPPv3N3pni9exception4nameERKNSt6stringE"></span><span id="_CPPv2N3pni9exception4nameERKNSt6stringE"></span><span id="pni::exception::name__ssCR"></span><span class="target" id="classpni_1_1exception_1ac436e6c4f2b202a206f1db2f0bae0eb8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception4nameERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception4nameERKNSt6stringE">
+<span id="_CPPv3N3pni9exception4nameERKNSt6stringE"></span><span id="_CPPv2N3pni9exception4nameERKNSt6stringE"></span><span id="pni::exception::name__ssCR"></span><span class="target" id="classpni_1_1exception_1ac436e6c4f2b202a206f1db2f0bae0eb8"></span>void <code class="sig-name descname">name</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception4nameERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>set the exception name </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>name</strong> – exception name </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: exception name </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni9exception4nameEv">
-<span id="_CPPv3NK3pni9exception4nameEv"></span><span id="_CPPv2NK3pni9exception4nameEv"></span><span id="pni::exception::nameC"></span><span class="target" id="classpni_1_1exception_1a674b7043ae8beae7f22d49c71650e074"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni9exception4nameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni9exception4nameEv">
+<span id="_CPPv3NK3pni9exception4nameEv"></span><span id="_CPPv2NK3pni9exception4nameEv"></span><span id="pni::exception::nameC"></span><span class="target" id="classpni_1_1exception_1a674b7043ae8beae7f22d49c71650e074"></span><em class="property">const</em> string &amp;<code class="sig-name descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9exception4nameEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get the exceptions name </p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>reference to the string object holding the name </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to the string object holding the name </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception6appendERK16exception_record">
-<span id="_CPPv3N3pni9exception6appendERK16exception_record"></span><span id="_CPPv2N3pni9exception6appendERK16exception_record"></span><span id="pni::exception::append__exception_recordCR"></span><span class="target" id="classpni_1_1exception_1ab177ffc79adfd07b44a9da64b1a2e5e6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">append</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception6appendERK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception6appendERK16exception_record">
+<span id="_CPPv3N3pni9exception6appendERK16exception_record"></span><span id="_CPPv2N3pni9exception6appendERK16exception_record"></span><span id="pni::exception::append__exception_recordCR"></span><span class="target" id="classpni_1_1exception_1ab177ffc79adfd07b44a9da64b1a2e5e6"></span>void <code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception6appendERK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>add a new issuer </p>
 <p>Use this method to add a new issuer in the case that the exception is re-thrown by an other function or class method.</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
@@ -206,206 +210,210 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-With this a particular exception can be traced througout the entire code.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n</strong> – <a class="reference internal" href="#classpni_1_1exception__record"><span class="std std-ref">exception_record</span></a> to append </p>
+ With this a particular exception can be traced througout the entire code.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: <a class="reference internal" href="#classpni_1_1exception__record"><span class="std std-ref">exception_record</span></a> to append </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exception11descriptionERKNSt6stringE">
-<span id="_CPPv3N3pni9exception11descriptionERKNSt6stringE"></span><span id="_CPPv2N3pni9exception11descriptionERKNSt6stringE"></span><span id="pni::exception::description__ssCR"></span><span class="target" id="classpni_1_1exception_1a74159cedd09a8e394c395be2c3082f1f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">description</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">desc</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception11descriptionERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exception11descriptionERKNSt6stringE">
+<span id="_CPPv3N3pni9exception11descriptionERKNSt6stringE"></span><span id="_CPPv2N3pni9exception11descriptionERKNSt6stringE"></span><span id="pni::exception::description__ssCR"></span><span class="target" id="classpni_1_1exception_1a74159cedd09a8e394c395be2c3082f1f"></span>void <code class="sig-name descname">description</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>desc</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exception11descriptionERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>set exception desccription </p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>desc</strong> – description of the exception </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">desc</span></code>: description of the exception </p></li>
+</ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni9exception11descriptionEv">
-<span id="_CPPv3NK3pni9exception11descriptionEv"></span><span id="_CPPv2NK3pni9exception11descriptionEv"></span><span id="pni::exception::descriptionC"></span><span class="target" id="classpni_1_1exception_1a8901fdd1f94f3fe3246b7dc659dbea96"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">description</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni9exception11descriptionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni9exception11descriptionEv">
+<span id="_CPPv3NK3pni9exception11descriptionEv"></span><span id="_CPPv2NK3pni9exception11descriptionEv"></span><span id="pni::exception::descriptionC"></span><span class="target" id="classpni_1_1exception_1a8901fdd1f94f3fe3246b7dc659dbea96"></span><em class="property">const</em> string &amp;<code class="sig-name descname">description</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9exception11descriptionEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get the exceptions description </p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>reference to the string object with the exceptions description </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to the string object with the exceptions description </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni9exception4sizeEv">
-<span id="_CPPv3NK3pni9exception4sizeEv"></span><span id="_CPPv2NK3pni9exception4sizeEv"></span><span id="pni::exception::sizeC"></span><span class="target" id="classpni_1_1exception_1a988a1ef86d69f8dc43927dc411f9047d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni9exception4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni9exception4sizeEv">
+<span id="_CPPv3NK3pni9exception4sizeEv"></span><span id="_CPPv2NK3pni9exception4sizeEv"></span><span id="pni::exception::sizeC"></span><span class="target" id="classpni_1_1exception_1a988a1ef86d69f8dc43927dc411f9047d"></span>size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9exception4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get number of record </p>
 <p>Returns the number of records associated with this exception.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>number of records </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of records </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni9exception5beginEv">
-<span id="_CPPv3NK3pni9exception5beginEv"></span><span id="_CPPv2NK3pni9exception5beginEv"></span><span id="pni::exception::beginC"></span><span class="target" id="classpni_1_1exception_1a712dfe6a559a1fe29dadcd0cf5c2379d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni9exception14const_iteratorE" title="pni::exception::const_iterator"><span class="n"><span class="pre">const_iterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni9exception5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni9exception5beginEv">
+<span id="_CPPv3NK3pni9exception5beginEv"></span><span id="_CPPv2NK3pni9exception5beginEv"></span><span id="pni::exception::beginC"></span><span class="target" id="classpni_1_1exception_1a712dfe6a559a1fe29dadcd0cf5c2379d"></span><a class="reference internal" href="#_CPPv4N3pni9exception14const_iteratorE" title="pni::exception::const_iterator">const_iterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9exception5beginEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get iterator to first error record </p>
 <p>Return get a const iterator to the first error record in the class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>iterator to first exception record </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>iterator to first exception record </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK3pni9exception3endEv">
-<span id="_CPPv3NK3pni9exception3endEv"></span><span id="_CPPv2NK3pni9exception3endEv"></span><span id="pni::exception::endC"></span><span class="target" id="classpni_1_1exception_1a441948dc2f5b5ae1e1505c0827ed9d8b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni9exception14const_iteratorE" title="pni::exception::const_iterator"><span class="n"><span class="pre">const_iterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni9exception3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni9exception3endEv">
+<span id="_CPPv3NK3pni9exception3endEv"></span><span id="_CPPv2NK3pni9exception3endEv"></span><span id="pni::exception::endC"></span><span class="target" id="classpni_1_1exception_1a441948dc2f5b5ae1e1505c0827ed9d8b"></span><a class="reference internal" href="#_CPPv4N3pni9exception14const_iteratorE" title="pni::exception::const_iterator">const_iterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9exception3endEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get iterator to the last error record </p>
 <p>Return a const iterator pointing to the last+1 element in the exception record list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>iterator to last+1 exception record </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>iterator to last+1 exception record </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<p class="breathe-sectiondef-title rubric">Friends</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9exceptionlsERNSt7ostreamERK9exception">
-<span id="_CPPv3N3pni9exceptionlsERNSt7ostreamERK9exception"></span><span id="_CPPv2N3pni9exceptionlsERNSt7ostreamERK9exception"></span><span id="pni::exception::lshift-operator__osR.exceptionCR"></span><span class="target" id="classpni_1_1exception_1a2baa738b654a96b0d2a2c849b166de17"></span><span class="pre">friend</span><span class="w"> </span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="p"><span class="pre">&amp;</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exceptionlsERNSt7ostreamERK9exception" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9exceptionlsERNSt7ostreamERK9exception">
+<span id="_CPPv3N3pni9exceptionlsERNSt7ostreamERK9exception"></span><span id="_CPPv2N3pni9exceptionlsERNSt7ostreamERK9exception"></span><span id="pni::exception::lshift-operator__osR.exceptionCR"></span><span class="target" id="classpni_1_1exception_1a2baa738b654a96b0d2a2c849b166de17"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream&amp;, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9exceptionlsERNSt7ostreamERK9exception" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>output operator for exceptions </p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-<section id="exception-classes">
+<div class="section" id="exception-classes">
 <h3>Exception classes<a class="headerlink" href="#exception-classes" title="Permalink to this headline">¶</a></h3>
 <p>These classes have the same interface as <a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::exception</span></code></a> but
 denote different failure situations.</p>
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni23memory_allocation_errorE">
-<span id="_CPPv3N3pni23memory_allocation_errorE"></span><span id="_CPPv2N3pni23memory_allocation_errorE"></span><span id="pni::memory_allocation_error"></span><span class="target" id="classpni_1_1memory__allocation__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_allocation_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni23memory_allocation_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni23memory_allocation_errorE">
+<span id="_CPPv3N3pni23memory_allocation_errorE"></span><span id="_CPPv2N3pni23memory_allocation_errorE"></span><span id="pni::memory_allocation_error"></span><span class="target" id="classpni_1_1memory__allocation__error"></span><em class="property">class </em><code class="sig-name descname">memory_allocation_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni23memory_allocation_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>memory allocation error </p>
 <p>This exception is typically raised when allocation of memory on the heap fails. In other words when a call to new leads to a nullptr. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni26memory_not_allocated_errorE">
-<span id="_CPPv3N3pni26memory_not_allocated_errorE"></span><span id="_CPPv2N3pni26memory_not_allocated_errorE"></span><span id="pni::memory_not_allocated_error"></span><span class="target" id="classpni_1_1memory__not__allocated__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">memory_not_allocated_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni26memory_not_allocated_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni26memory_not_allocated_errorE">
+<span id="_CPPv3N3pni26memory_not_allocated_errorE"></span><span id="_CPPv2N3pni26memory_not_allocated_errorE"></span><span id="pni::memory_not_allocated_error"></span><span class="target" id="classpni_1_1memory__not__allocated__error"></span><em class="property">class </em><code class="sig-name descname">memory_not_allocated_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni26memory_not_allocated_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>memory not allocated error </p>
 <p>This exception is usually thrown if one tries to access not allocated memory. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni20shape_mismatch_errorE">
-<span id="_CPPv3N3pni20shape_mismatch_errorE"></span><span id="_CPPv2N3pni20shape_mismatch_errorE"></span><span id="pni::shape_mismatch_error"></span><span class="target" id="classpni_1_1shape__mismatch__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shape_mismatch_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni20shape_mismatch_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni20shape_mismatch_errorE">
+<span id="_CPPv3N3pni20shape_mismatch_errorE"></span><span id="_CPPv2N3pni20shape_mismatch_errorE"></span><span id="pni::shape_mismatch_error"></span><span class="target" id="classpni_1_1shape__mismatch__error"></span><em class="property">class </em><code class="sig-name descname">shape_mismatch_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni20shape_mismatch_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Shape mismatch error. </p>
 <p>Raised in cases where the Shape objects of two objects are not equal. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni19size_mismatch_errorE">
-<span id="_CPPv3N3pni19size_mismatch_errorE"></span><span id="_CPPv2N3pni19size_mismatch_errorE"></span><span id="pni::size_mismatch_error"></span><span class="target" id="classpni_1_1size__mismatch__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size_mismatch_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni19size_mismatch_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni19size_mismatch_errorE">
+<span id="_CPPv3N3pni19size_mismatch_errorE"></span><span id="_CPPv2N3pni19size_mismatch_errorE"></span><span id="pni::size_mismatch_error"></span><span class="target" id="classpni_1_1size__mismatch__error"></span><em class="property">class </em><code class="sig-name descname">size_mismatch_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni19size_mismatch_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Size mismatch error. </p>
 <p>This exception will be raised in cases where buffer sizes do not meet the requirements. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni11index_errorE">
-<span id="_CPPv3N3pni11index_errorE"></span><span id="_CPPv2N3pni11index_errorE"></span><span id="pni::index_error"></span><span class="target" id="classpni_1_1index__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">index_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni11index_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni11index_errorE">
+<span id="_CPPv3N3pni11index_errorE"></span><span id="_CPPv2N3pni11index_errorE"></span><span id="pni::index_error"></span><span class="target" id="classpni_1_1index__error"></span><em class="property">class </em><code class="sig-name descname">index_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni11index_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>index error </p>
 <p>Raised if the index passed to a [] operator exceeds the size of the container it belongs to. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9key_errorE">
-<span id="_CPPv3N3pni9key_errorE"></span><span id="_CPPv2N3pni9key_errorE"></span><span id="pni::key_error"></span><span class="target" id="classpni_1_1key__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">key_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni9key_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9key_errorE">
+<span id="_CPPv3N3pni9key_errorE"></span><span id="_CPPv2N3pni9key_errorE"></span><span id="pni::key_error"></span><span class="target" id="classpni_1_1key__error"></span><em class="property">class </em><code class="sig-name descname">key_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni9key_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>key error </p>
 <p>Raised in cases where a problem with the key of a hash map occurs. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni10file_errorE">
-<span id="_CPPv3N3pni10file_errorE"></span><span id="_CPPv2N3pni10file_errorE"></span><span id="pni::file_error"></span><span class="target" id="classpni_1_1file__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">file_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni10file_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni10file_errorE">
+<span id="_CPPv3N3pni10file_errorE"></span><span id="_CPPv2N3pni10file_errorE"></span><span id="pni::file_error"></span><span class="target" id="classpni_1_1file__error"></span><em class="property">class </em><code class="sig-name descname">file_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni10file_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>file IO fails </p>
 <p>Raised typically in cases of problems with files. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni10type_errorE">
-<span id="_CPPv3N3pni10type_errorE"></span><span id="_CPPv2N3pni10type_errorE"></span><span id="pni::type_error"></span><span class="target" id="classpni_1_1type__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni10type_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni10type_errorE">
+<span id="_CPPv3N3pni10type_errorE"></span><span id="_CPPv2N3pni10type_errorE"></span><span id="pni::type_error"></span><span class="target" id="classpni_1_1type__error"></span><em class="property">class </em><code class="sig-name descname">type_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni10type_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>data type error </p>
 <p>This exception is raised in cases of errors concerning data types. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni11value_errorE">
-<span id="_CPPv3N3pni11value_errorE"></span><span id="_CPPv2N3pni11value_errorE"></span><span id="pni::value_error"></span><span class="target" id="classpni_1_1value__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">value_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni11value_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni11value_errorE">
+<span id="_CPPv3N3pni11value_errorE"></span><span id="_CPPv2N3pni11value_errorE"></span><span id="pni::value_error"></span><span class="target" id="classpni_1_1value__error"></span><em class="property">class </em><code class="sig-name descname">value_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni11value_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>data value error </p>
 <p>This exception is raised in cases where a particular variable takes an inappropriate value. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni11range_errorE">
-<span id="_CPPv3N3pni11range_errorE"></span><span id="_CPPv2N3pni11range_errorE"></span><span id="pni::range_error"></span><span class="target" id="classpni_1_1range__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">range_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni11range_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni11range_errorE">
+<span id="_CPPv3N3pni11range_errorE"></span><span id="_CPPv2N3pni11range_errorE"></span><span id="pni::range_error"></span><span class="target" id="classpni_1_1range__error"></span><em class="property">class </em><code class="sig-name descname">range_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni11range_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>data range error </p>
 <p>This exception is raised in cases where data values exceed the range spanned by their data type. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni21not_implemented_errorE">
-<span id="_CPPv3N3pni21not_implemented_errorE"></span><span id="_CPPv2N3pni21not_implemented_errorE"></span><span id="pni::not_implemented_error"></span><span class="target" id="classpni_1_1not__implemented__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">not_implemented_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni21not_implemented_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni21not_implemented_errorE">
+<span id="_CPPv3N3pni21not_implemented_errorE"></span><span id="_CPPv2N3pni21not_implemented_errorE"></span><span id="pni::not_implemented_error"></span><span class="target" id="classpni_1_1not__implemented__error"></span><em class="property">class </em><code class="sig-name descname">not_implemented_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni21not_implemented_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>not implemented exception </p>
 <p>This exception can be used to mark methods of abstract or base classes as not implemented. Such an approach can be quite useful for debugging and development. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni14iterator_errorE">
-<span id="_CPPv3N3pni14iterator_errorE"></span><span id="_CPPv2N3pni14iterator_errorE"></span><span id="pni::iterator_error"></span><span class="target" id="classpni_1_1iterator__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">iterator_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni14iterator_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni14iterator_errorE">
+<span id="_CPPv3N3pni14iterator_errorE"></span><span id="_CPPv2N3pni14iterator_errorE"></span><span id="pni::iterator_error"></span><span class="target" id="classpni_1_1iterator__error"></span><em class="property">class </em><code class="sig-name descname">iterator_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni14iterator_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>iterator error </p>
 <p>Exception thrown in case of iterator errors. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni18cli_argument_errorE">
-<span id="_CPPv3N3pni18cli_argument_errorE"></span><span id="_CPPv2N3pni18cli_argument_errorE"></span><span id="pni::cli_argument_error"></span><span class="target" id="classpni_1_1cli__argument__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cli_argument_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni18cli_argument_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni18cli_argument_errorE">
+<span id="_CPPv3N3pni18cli_argument_errorE"></span><span id="_CPPv2N3pni18cli_argument_errorE"></span><span id="pni::cli_argument_error"></span><span class="target" id="classpni_1_1cli__argument__error"></span><em class="property">class </em><code class="sig-name descname">cli_argument_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni18cli_argument_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>command line argument error </p>
 <p>Thrown in cases where a command line argument (do not confuse this with an option has an inapropriate value or is missing). </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni16cli_option_errorE">
-<span id="_CPPv3N3pni16cli_option_errorE"></span><span id="_CPPv2N3pni16cli_option_errorE"></span><span id="pni::cli_option_error"></span><span class="target" id="classpni_1_1cli__option__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cli_option_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni16cli_option_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni16cli_option_errorE">
+<span id="_CPPv3N3pni16cli_option_errorE"></span><span id="_CPPv2N3pni16cli_option_errorE"></span><span id="pni::cli_option_error"></span><span class="target" id="classpni_1_1cli__option__error"></span><em class="property">class </em><code class="sig-name descname">cli_option_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni16cli_option_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>command line option error </p>
 <p>Exception thrown in cases where a command line option is missing or has an inapropriate value. </p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni9cli_errorE">
-<span id="_CPPv3N3pni9cli_errorE"></span><span id="_CPPv2N3pni9cli_errorE"></span><span id="pni::cli_error"></span><span class="target" id="classpni_1_1cli__error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cli_error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception"><span class="n"><span class="pre">exception</span></span></a><a class="headerlink" href="#_CPPv4N3pni9cli_errorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni9cli_errorE">
+<span id="_CPPv3N3pni9cli_errorE"></span><span id="_CPPv2N3pni9cli_errorE"></span><span id="pni::cli_error"></span><span class="target" id="classpni_1_1cli__error"></span><em class="property">class </em><code class="sig-name descname">cli_error</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni9exceptionE" title="pni::exception">exception</a><a class="headerlink" href="#_CPPv4N3pni9cli_errorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>general CLI error </p>
 <p>Thrown in case of a general CLI error not related to arguments or options. </p>
 </dd></dl>
 
-</section>
-</section>
-<section id="macros">
+</div>
+</div>
+<div class="section" id="macros">
 <h2>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.EXCEPTION_RECORD">
-<span class="target" id="error_2exceptions_8hpp_1a51dfad546cd33bda661305be8590d6fb"></span><span class="sig-name descname"><span class="n"><span class="pre">EXCEPTION_RECORD</span></span></span><a class="headerlink" href="#c.EXCEPTION_RECORD" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="c.EXCEPTION_RECORD">
+<span class="target" id="error_2exceptions_8hpp_1a51dfad546cd33bda661305be8590d6fb"></span><code class="sig-name descname">EXCEPTION_RECORD</code><a class="headerlink" href="#c.EXCEPTION_RECORD" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>macro creating an instance of ExceptionRecord </p>
 </dd></dl>
 
 <dl class="cpp macro">
-<dt class="sig sig-object cpp" id="c.EXCEPTION_FORWARD">
-<span class="target" id="error_2exceptions_8hpp_1a22e4136fed8f3773d754cbda93e7e9c2"></span><span class="sig-name descname"><span class="n"><span class="pre">EXCEPTION_FORWARD</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ETYPE</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.EXCEPTION_FORWARD" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="c.EXCEPTION_FORWARD">
+<span class="target" id="error_2exceptions_8hpp_1a22e4136fed8f3773d754cbda93e7e9c2"></span><code class="sig-name descname">EXCEPTION_FORWARD</code><span class="sig-paren">(</span><em>ETYPE</em><span class="sig-paren">)</span><a class="headerlink" href="#c.EXCEPTION_FORWARD" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>forward an exception </p>
 <p>This macro can be used to forward an exception caught from another function. It appends the exception_record of the current function to the existing exception and throws the exception again. Consider the following examples</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span> <span class="n">value</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">);</span> <span class="p">}</span>
@@ -413,63 +421,61 @@ denote different failure situations.</p>
 <span class="n">EXCEPTION_FORWARD</span><span class="p">(</span><span class="n">MemoryNotAllocatedError</span><span class="p">)</span>
 </pre></div>
 </div>
-Please note that the MUST NOT BE a semicolon at the end of this macro. </p>
+ Please note that the MUST NOT BE a semicolon at the end of this macro. </p>
 </dd></dl>
 
-</section>
-<section id="utility-functions">
+</div>
+<div class="section" id="utility-functions">
 <h2>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B">
-<span id="_CPPv3I00EN3pni16check_equal_sizeERK1ARK1B"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK1ARK1B"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">A</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">B</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacepni_1a93bff1ce40a57456405720695ad26e3b"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">check_equal_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="pni::check_equal_size::A"><span class="n"><span class="pre">A</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="pni::check_equal_size::B"><span class="n"><span class="pre">B</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B">
+<span id="_CPPv3I00EN3pni16check_equal_sizeERK1ARK1B"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK1ARK1B"></span>template&lt;typename <code class="sig-name descname">A</code>, typename <code class="sig-name descname">B</code>&gt;<br /><span class="target" id="namespacepni_1a93bff1ce40a57456405720695ad26e3b"></span>bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">check_equal_size</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="pni::check_equal_size::A">A</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="pni::check_equal_size::B">B</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two container have equal size </p>
 <p>This helper function checks if two container instances have equal size and returns true if this is the case. Otherwise false will be returned. Both container types have to provide a <a class="reference internal" href="core_mdarray.html#namespacepni_1ab20a3d8d51f1c5aee26a971b5fe2cf65"><span class="std std-ref">size()</span></a> method returning the number of elements the container can hold.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Template Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>A</strong> – first container type </p></li>
-<li><p><strong>B</strong> – second container type </p></li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if a and b have same size, false otherwise </p>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code>: first container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">B</span></code>: second container type </p></li>
 </ul>
 </dd>
-<dt class="field-even">Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>a</strong> – reference to an instance of A </p></li>
-<li><p><strong>b</strong> – reference to an instance of B </p></li>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to an instance of A </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: reference to an instance of B </p></li>
 </ul>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>true if a and b have same size, false otherwise </p>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record">
-<span id="_CPPv3I00EN3pni16check_equal_sizeERK1ARK1BRK16exception_record"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK1ARK1BRK16exception_record"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">A</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">B</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacepni_1afd1eccdd371aa50b808d32bad059a7b7"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">check_equal_size</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="pni::check_equal_size::A"><span class="n"><span class="pre">A</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="pni::check_equal_size::B"><span class="n"><span class="pre">B</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record"><span class="n"><span class="pre">exception_record</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record">
+<span id="_CPPv3I00EN3pni16check_equal_sizeERK1ARK1BRK16exception_record"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK1ARK1BRK16exception_record"></span>template&lt;typename <code class="sig-name descname">A</code>, typename <code class="sig-name descname">B</code>&gt;<br /><span class="target" id="namespacepni_1afd1eccdd371aa50b808d32bad059a7b7"></span>void <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">check_equal_size</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="pni::check_equal_size::A">A</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="pni::check_equal_size::B">B</a> &amp;<em>b</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two objects have different size </p>
 <p>This utilty function can be used to check for the equality of the size of two objects. It is typically used to compare the size of a shape and a buffer or any other container object. If the sizes do not match an exception is thrown.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Throws</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#_CPPv4N3pni19size_mismatch_errorE" title="pni::size_mismatch_error"><strong>size_mismatch_error</strong></a> – if sizes do not match </p>
-</dd>
-<dt class="field-even">Template Parameters</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>A</strong> – first container type </p></li>
-<li><p><strong>B</strong> – second container type </p></li>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="#classpni_1_1size__mismatch__error"><span class="std std-ref"><span class="pre">size_mismatch_error</span></span></a></code>: if sizes do not match </p></li>
 </ul>
 </dd>
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> – instance of container type A </p></li>
-<li><p><strong>b</strong> – instance of container type B </p></li>
-<li><p><strong>i</strong> – <a class="reference internal" href="#classpni_1_1exception__record"><span class="std std-ref">exception_record</span></a> for the location where to perform the check performed </p></li>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code>: first container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">B</span></code>: second container type </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: instance of container type A </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: instance of container type B </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: <a class="reference internal" href="#classpni_1_1exception__record"><span class="std std-ref">exception_record</span></a> for the location where to perform the check performed </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -533,7 +539,7 @@ Please note that the MUST NOT BE a semicolon at the end of this macro. </p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

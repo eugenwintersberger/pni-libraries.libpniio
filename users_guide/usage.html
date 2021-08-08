@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Using the library &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -48,7 +48,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="using-the-library">
+  <div class="section" id="using-the-library">
 <h1>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h1>
 <p id="nexus-quickstart">This chapter describes how you can use <em>libpninexus</em> from within your own
 C++ project. As already mentioned in the installation chapter, <em>libpninexus</em> uses
@@ -59,7 +59,7 @@ an example</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;h5cpp/hdf5.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/nexus.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
 <span class="p">{</span>
@@ -70,7 +70,7 @@ an example</p>
 </pre></div>
 </div>
 <p>which we assume is the content of a file named <code class="file docutils literal notranslate"><span class="pre">hello.cpp</span></code>.</p>
-<section id="building-with-cmake">
+<div class="section" id="building-with-cmake">
 <h2>Building with <strong class="program">CMake</strong><a class="headerlink" href="#building-with-cmake" title="Permalink to this headline">¶</a></h2>
 <p>This is most probably the easierst case. As <em>libpninexus</em> also installs a
 <em>cmake-package</em> which provides an imported target using the library is
@@ -92,8 +92,8 @@ This includes</p>
 <li><p>the location of the library as well as all its dependencies</p></li>
 <li><p>the location of the header files.</p></li>
 </ul>
-</section>
-<section id="build-from-the-command-line">
+</div>
+<div class="section" id="build-from-the-command-line">
 <h2>Build from the command line<a class="headerlink" href="#build-from-the-command-line" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
@@ -107,8 +107,8 @@ This includes</p>
 standard which is absolutely mandatory if you want to use <em>libpninexus</em>.
 the <cite>pkg-config</cite> command at the end of the command line includes all the
 necessary compiler and linker flags to build and link the code.</p>
-</section>
-<section id="build-with-a-makefile">
+</div>
+<div class="section" id="build-with-a-makefile">
 <h2>Build with a Makefile<a class="headerlink" href="#build-with-a-makefile" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
@@ -120,8 +120,8 @@ of your Makefile</p>
 <span class="nv">LDFLAGS</span><span class="o">=</span><span class="k">$(</span>shell pkg-config --libs pninexus<span class="k">)</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -186,7 +186,7 @@ of your Makefile</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

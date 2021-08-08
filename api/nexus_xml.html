@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NeXus XML functions &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,45 +49,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="nexus-xml-functions">
+  <div class="section" id="nexus-xml-functions">
 <span id="nexus-api-xml"></span><h1>NeXus XML functions<a class="headerlink" href="#nexus-xml-functions" title="Permalink to this headline">¶</a></h1>
-<section id="nexus-xml-create-from-file">
+<div class="section" id="nexus-xml-create-from-file">
 <h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::xml::create_from_file()</span></code><a class="headerlink" href="#nexus-xml-create-from-file" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE">
-<span id="_CPPv3N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE"></span><span id="_CPPv2N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE"></span><span id="pni::nexus::xml::create_from_file__hdf5::node::NodeCR.boost::filesystem::pathCR"></span><span class="target" id="namespacepni_1_1nexus_1_1xml_1a280b3d08f9f1eeb0dd95a8c435a1cc43"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">xml</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">create_from_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Node</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">parent</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">boost</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">filesystem</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xml_file</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE">
+<span id="_CPPv3N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE"></span><span id="_CPPv2N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE"></span><span id="pni::nexus::xml::create_from_file__hdf5::node::NodeCR.boost::filesystem::pathCR"></span><span class="target" id="namespacepni_1_1nexus_1_1xml_1a280b3d08f9f1eeb0dd95a8c435a1cc43"></span>PNINEXUS_EXPORT void <code class="sig-prename descclassname">pni::nexus::xml<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">create_from_file</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>parent</em>, <em class="property">const</em> boost::filesystem::path &amp;<em>xml_file</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>create NeXus objects from an XML file </p>
 <p>Reads the content of an XML file and creates NeXus objects below a parent object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> – reference to the parent object </p></li>
-<li><p><strong>xml_file</strong> – reference to the path of the XML file </p></li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent object </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xml_file</span></code>: reference to the path of the XML file </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-<section id="nexus-xml-create-from-string">
+</div>
+<div class="section" id="nexus-xml-create-from-string">
 <h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::xml::create_from_string()</span></code><a class="headerlink" href="#nexus-xml-create-from-string" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE">
-<span id="_CPPv3N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE"></span><span id="pni::nexus::xml::create_from_string__hdf5::node::NodeCR.ssCR"></span><span class="target" id="namespacepni_1_1nexus_1_1xml_1aa63a377cb85ec2af3cba78987f20b9dc"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">xml</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">create_from_string</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Node</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">parent</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xml_data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE">
+<span id="_CPPv3N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE"></span><span id="pni::nexus::xml::create_from_string__hdf5::node::NodeCR.ssCR"></span><span class="target" id="namespacepni_1_1nexus_1_1xml_1aa63a377cb85ec2af3cba78987f20b9dc"></span>PNINEXUS_EXPORT void <code class="sig-prename descclassname">pni::nexus::xml<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">create_from_string</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>parent</em>, <em class="property">const</em> std::string &amp;<em>xml_data</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>create NeXus objects from XML data </p>
 <p>Reads XML data from a string and creates NeXus objects from it below a parent object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>parent</strong> – reference to the parent object </p></li>
-<li><p><strong>xml_data</strong> – reference to the data string </p></li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent object </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xml_data</span></code>: reference to the data string </p></li>
 </ul>
 </dd>
 </dl>
+</p>
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -152,7 +152,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

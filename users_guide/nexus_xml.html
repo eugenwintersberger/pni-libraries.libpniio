@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XML support &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -49,14 +49,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="xml-support">
+  <div class="section" id="xml-support">
 <h1>XML support<a class="headerlink" href="#xml-support" title="Permalink to this headline">¶</a></h1>
 <p>NeXus files can grow quite complex it would be rather tedious to express
 the structure of such a file entirely in code.
 <em>libpninexus</em> provides a way to create NeXus structures from XML. Like HDF5,
 XML structures data in a tree like hierarchy, making it the perfekt ASCII
 representation for a NeXus file.</p>
-<section id="generating-objects">
+<div class="section" id="generating-objects">
 <h2>Generating objects<a class="headerlink" href="#generating-objects" title="Permalink to this headline">¶</a></h2>
 <p>The XML content can come from two sources</p>
 <ul class="simple">
@@ -123,8 +123,8 @@ Consider here for instance the following files</p>
 </div>
 <p>It should be mentioned that currently <em>libpninexus</em> does not use a validating
 parser which makes error detection rather difficult.</p>
-</section>
-<section id="nexus-xml-tags">
+</div>
+<div class="section" id="nexus-xml-tags">
 <h2>NeXus XML tags<a class="headerlink" href="#nexus-xml-tags" title="Permalink to this headline">¶</a></h2>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
@@ -132,8 +132,8 @@ parser which makes error detection rather difficult.</p>
 documentation. Either need a link here or we have to provide a
 copy in this documentation.</p>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -198,7 +198,7 @@ copy in this documentation.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

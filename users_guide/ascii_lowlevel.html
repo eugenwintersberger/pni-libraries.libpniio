@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The low-level ASCII interface &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -50,14 +50,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="the-low-level-ascii-interface">
+  <div class="section" id="the-low-level-ascii-interface">
 <h1>The low-level ASCII interface<a class="headerlink" href="#the-low-level-ascii-interface" title="Permalink to this headline">¶</a></h1>
 <p>At the very bottom of the ASCII IO interface are</p>
 <ul class="simple">
 <li><p><em>parsers</em> reading ASCII data from a stream</p></li>
 <li><p>and <em>formatters</em> which can be used to write ASCII data to a stream</p></li>
 </ul>
-<section id="parsers">
+<div class="section" id="parsers">
 <h2>Parsers<a class="headerlink" href="#parsers" title="Permalink to this headline">¶</a></h2>
 <p>The major job of this interface is to provided save number parsing. It supports
 all primitive data types provided by <em>libpninexus</em> along with instances of
@@ -66,14 +66,14 @@ all primitive data types provided by <em>libpninexus</em> along with instances o
 template. It takes one template parameter which is the primitive or container
 type to parse. To use the parser API just include <code class="file docutils literal notranslate"><span class="pre">pni/parsers.hpp</span></code> in
 your source file.</p>
-<section id="parsing-primitive-scalars">
+<div class="section" id="parsing-primitive-scalars">
 <h3>Parsing primitive scalars<a class="headerlink" href="#parsing-primitive-scalars" title="Permalink to this headline">¶</a></h3>
 <p>A very simple example would be something like this</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/parsers.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="k">using</span> <span class="n">Float64Parser</span> <span class="o">=</span> <span class="n">pni</span><span class="o">::</span><span class="n">parser</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span><span class="p">;</span>
 
@@ -100,8 +100,8 @@ resulting parser matches either a</p>
 <li><p>or a <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">pni::float64</span></code></p></li>
 <li><p>or a <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">pni::complex64</span></code> type.</p></li>
 </ul>
-</section>
-<section id="parsing-a-vector-of-primitives">
+</div>
+<div class="section" id="parsing-a-vector-of-primitives">
 <h3>Parsing a vector of primitives<a class="headerlink" href="#parsing-a-vector-of-primitives" title="Permalink to this headline">¶</a></h3>
 <p>Besides single scalars the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a> template can also be
 used with <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::vector</span></code> based containers where the element type
@@ -119,7 +119,7 @@ inhomogeneous types. The following program</p>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;pni/parsers.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="k">using</span> <span class="n">Record</span>       <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">RecordParser</span> <span class="o">=</span> <span class="n">pni</span><span class="o">::</span><span class="n">parser</span><span class="o">&lt;</span><span class="n">Record</span><span class="o">&gt;</span><span class="p">;</span>
@@ -166,9 +166,9 @@ delimiter symbol</p>
 <span class="n">Record</span> <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="s">&quot;[1.234;12 ; 1+I3.4]&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="formatters">
+</div>
+</div>
+<div class="section" id="formatters">
 <h2>Formatters<a class="headerlink" href="#formatters" title="Permalink to this headline">¶</a></h2>
 <p>Formatters perform literally the inverse operation of parsers. They write
 data to a stream. Like for parsers the major concern here was to write
@@ -207,8 +207,8 @@ something like this</p>
 <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">,</span><span class="n">config</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -278,7 +278,7 @@ something like this</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>

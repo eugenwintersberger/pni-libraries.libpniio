@@ -5,16 +5,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Searching for objects &#8212; libpninexus 2.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -50,7 +50,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="searching-for-objects">
+  <div class="section" id="searching-for-objects">
 <h1>Searching for objects<a class="headerlink" href="#searching-for-objects" title="Permalink to this headline">¶</a></h1>
 <p>One of the most important tasks for an application when dealing with NeXus files
 is to look for specific objects below a particular group. Such searches would
@@ -64,7 +64,7 @@ include</p>
 interface provided by <em>h5cpp</em> along with STL algorithms to do the job and
 there is nothing wrong in doing so. However, <em>libpninexus</em> provides some
 convenience functions and classes to make the task easier.</p>
-<section id="search-with-path">
+<div class="section" id="search-with-path">
 <h2>Search with path<a class="headerlink" href="#search-with-path" title="Permalink to this headline">¶</a></h2>
 <p>When the search criteria can be expressed in terms of a NeXus path the
 simplest approach would be to use the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">get_objects()</span></code> function.
@@ -92,8 +92,8 @@ in the file grow large this may can cause some severe performance penalty.</p>
 <p>However, in most cases this is not critical and thus the simplicity of
 implementation outweighs this performance penalty.</p>
 </div>
-</section>
-<section id="search-with-predicates">
+</div>
+<div class="section" id="search-with-predicates">
 <h2>Search with predicates<a class="headerlink" href="#search-with-predicates" title="Permalink to this headline">¶</a></h2>
 <p>To search for all detectors in a run using predicates we could use the
 following approach</p>
@@ -118,7 +118,7 @@ are searching for plotable data outside of the <em>NXdata</em> group).</p>
    <span class="p">{</span>
       <span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Type</span><span class="o">::</span><span class="n">DATASET</span><span class="p">)</span>
       <span class="p">{</span>
-         <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Dataset</span> <span class="nf">dataset</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+         <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Dataset</span> <span class="n">dataset</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
          <span class="n">hdf5</span><span class="o">::</span><span class="n">Dimensions</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="n">get_dimensions</span><span class="p">(</span><span class="n">dataset</span><span class="p">);</span>
 
          <span class="k">return</span> <span class="n">dimensions</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">;</span>
@@ -184,8 +184,8 @@ you could use</p>
 </tr>
 </tbody>
 </table>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -251,7 +251,7 @@ you could use</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
 </html>
