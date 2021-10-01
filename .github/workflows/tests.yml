@@ -1,6 +1,10 @@
 name: Test Package
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '30 0 22 * *'
 
 jobs:
 
@@ -43,4 +47,3 @@ jobs:
         run: docker  exec --user root build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE"
       - name: Stop the docker
         run: docker container stop build
-
