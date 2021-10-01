@@ -19,7 +19,7 @@ RUN apt-get clean
 RUN pip3 install conan
 RUN pip3 install gitpython
 
-RUN conan remote remove conan-center
+# RUN conan remote remove conan-center
 RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
 RUN conan remote add conan-center https://conan.bintray.com
 RUN conan remote add conan-transit https://conan-transit.bintray.com
