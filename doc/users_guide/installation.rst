@@ -32,7 +32,8 @@ keyring
 
 .. code-block:: bash
 
-   $ wget -q -O - http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
+   $ curl -s http://repos.pni-hdri.de/debian_repo.pub.gpg  | gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg --import
+   $ chmod 644 /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 
 
 The return value of this command line should be `OK`.
@@ -44,11 +45,11 @@ For Debian (Bullseye) use
 
    $ wget http://repos.pni-hdri.de/bullseye-pni-hdri.list
 
-and for Ubuntu (Hirsute)
+and for Ubuntu (Impish)
 
 .. code-block:: bash
 
-   $ wget http://repos.pni-hdri.de/hirsute-pni-hdri.list
+   $ wget http://repos.pni-hdri.de/impish-pni-hdri.list
 
 The packages are also available for Debian Buster, Stretch and Focal, Bionic, Groovy. 
 
