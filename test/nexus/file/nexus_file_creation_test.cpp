@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(CreationTests)
 
 BOOST_AUTO_TEST_CASE(test_creation)
 {
-  file::File f = nexus::create_file("test_creation.nxs",file::AccessFlags::TRUNCATE);
+  file::File f = nexus::create_file("test_creation.nxs",file::AccessFlags::Truncate);
   node::Group root_group = f.root();
 
   //check if all attributes are available

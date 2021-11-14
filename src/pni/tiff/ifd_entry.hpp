@@ -39,18 +39,18 @@ namespace tiff{
     //possible data values of an IFD entry according to the TIFF standard
     enum class ifd_entry_type_id 
     { 
-        BYTE,  //!< 8Bit unsigned int
+        Byte,  //!< 8Bit unsigned int
         ASCII, //!< string of 8Bit values with binary terminated with a binary 0
-        SHORT, //!< 16Bit unsigned integer
-        LONG,  //!< 32Bit unsigned integer
-        RATIONAL,  //!< two LONG values
-        SBYTE,     //!< 8Bit signed integer
-        UNDEFINED, //! as said: undefined 
-        SSHORT,    //!< 16Bit signed integer
-        SLONG,     //!< 32Bit signed integer
-        SRATIONAL, //!< like RATIONAL but signed
-        FLOAT,     //!< 4Byte IEEE float
-        DOUBLE     //!< 8Byte IEEE float
+        Short, //!< 16Bit unsigned integer
+        Long,  //!< 32Bit unsigned integer
+        Rational,  //!< two LONG values
+        SByte,     //!< 8Bit signed integer
+        Undefined, //! as said: undefined 
+        SShort,    //!< 16Bit signed integer
+        SLong,     //!< 32Bit signed integer
+        SRational, //!< like RATIONAL but signed
+        Float,     //!< 4Byte IEEE float
+        Double     //!< 8Byte IEEE float
     };
 
 #ifdef ENUMBUG
@@ -249,25 +249,25 @@ namespace tiff{
     {
         using namespace pni;
 
-        if(this->_tid == ifd_entry_type_id::BYTE) 
+        if(this->_tid == ifd_entry_type_id::Byte) 
             ifd_entry_reader<T,uint8>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::SHORT)
+        else if(this->_tid == ifd_entry_type_id::Short)
             ifd_entry_reader<T,uint16>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::LONG)
+        else if(this->_tid == ifd_entry_type_id::Long)
             ifd_entry_reader<T,uint32>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::RATIONAL)
+        else if(this->_tid == ifd_entry_type_id::Rational)
             ifd_entry_reader<T,rational<uint16> >::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::SBYTE)
+        else if(this->_tid == ifd_entry_type_id::SByte)
             ifd_entry_reader<T,int8>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::SSHORT)
+        else if(this->_tid == ifd_entry_type_id::SShort)
             ifd_entry_reader<T,int16>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::SLONG)
+        else if(this->_tid == ifd_entry_type_id::SLong)
             ifd_entry_reader<T,int32>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::SRATIONAL)
+        else if(this->_tid == ifd_entry_type_id::SRational)
             ifd_entry_reader<T,rational<int32> >::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::FLOAT)
+        else if(this->_tid == ifd_entry_type_id::Float)
             ifd_entry_reader<T,float32>::read(r,stream);
-        else if(this->_tid == ifd_entry_type_id::DOUBLE)
+        else if(this->_tid == ifd_entry_type_id::Double)
             ifd_entry_reader<T,float64>::read(r,stream);
         else
             //reset stream position

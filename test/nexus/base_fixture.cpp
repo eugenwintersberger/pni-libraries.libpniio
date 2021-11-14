@@ -28,9 +28,9 @@ BaseFixture::BaseFixture(const boost::filesystem::path &fname,bool open_existing
     root()
 {
     if(open_existing)
-        file = hdf5::file::open(filename,hdf5::file::AccessFlags::READWRITE);
+        file = hdf5::file::open(filename,hdf5::file::AccessFlags::ReadWrite);
     else
-        file = hdf5::file::create(filename,hdf5::file::AccessFlags::TRUNCATE);
+        file = hdf5::file::create(filename,hdf5::file::AccessFlags::Truncate);
 
     root = file.root();
 

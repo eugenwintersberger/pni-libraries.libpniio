@@ -40,7 +40,7 @@ class RegressionIssue32
 
 RegressionIssue32::RegressionIssue32()
 {
-  nxfile = nexus::create_file("RegressionIssue32.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  nxfile = nexus::create_file("RegressionIssue32.nxs",hdf5::file::AccessFlags::Truncate);
   root_group = nxfile.root();
 
   //
@@ -50,7 +50,7 @@ RegressionIssue32::RegressionIssue32()
 
   hdf5::property::LinkCreationList lcpl;
   hdf5::property::DatasetCreationList dcpl;
-  dcpl.layout(hdf5::property::DatasetLayout::CHUNKED);
+  dcpl.layout(hdf5::property::DatasetLayout::Chunked);
   dcpl.chunk(hdf5::Dimensions{1,1556,516});
 
   hdf5::datatype::Datatype dtype = hdf5::datatype::create<unsigned short>();

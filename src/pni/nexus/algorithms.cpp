@@ -65,31 +65,31 @@ pni::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
   using hdf5::datatype::create;
   using namespace pni;
   if(datatype == create<uint8>())
-    return type_id_t::UINT8;
+    return type_id_t::UInt8;
   else if(datatype==create<int8>())
-    return type_id_t::INT8;
+    return type_id_t::Int8;
   else if(datatype==create<uint16>())
-    return type_id_t::UINT16;
+    return type_id_t::UInt16;
   else if(datatype==create<int16>())
-    return type_id_t::INT16;
+    return type_id_t::Int16;
   else if(datatype==create<uint32>())
-    return type_id_t::UINT32;
+    return type_id_t::UInt32;
   else if(datatype==create<int32>())
-    return type_id_t::INT32;
+    return type_id_t::Int32;
   else if(datatype==create<uint64>())
-    return type_id_t::UINT64;
+    return type_id_t::UInt64;
   else if(datatype==create<int64>())
-    return type_id_t::INT64;
+    return type_id_t::Int64;
   else if(datatype==create<float32>())
-    return type_id_t::FLOAT32;
+    return type_id_t::Float32;
   else if(datatype==create<float64>())
-    return type_id_t::FLOAT64;
+    return type_id_t::Float64;
   else if(datatype==create<float128>())
-    return type_id_t::FLOAT128;
-  else if(datatype.get_class() == hdf5::datatype::Class::STRING)
-    return type_id_t::STRING;
+    return type_id_t::Float128;
+  else if(datatype.get_class() == hdf5::datatype::Class::String)
+    return type_id_t::String;
   else
-    return type_id_t::NONE;
+    return type_id_t::None;
 }
 
 pni::type_id_t get_type_id(const hdf5::node::Dataset &dataset)
@@ -104,7 +104,7 @@ pni::type_id_t get_type_id(const hdf5::attribute::Attribute &attribute)
 
 hdf5::Dimensions get_dimensions(const hdf5::dataspace::Dataspace &dataspace)
 {
-  if(dataspace.type()==hdf5::dataspace::Type::SCALAR)
+  if(dataspace.type()==hdf5::dataspace::Type::Scalar)
   {
     return hdf5::Dimensions{1};
   }

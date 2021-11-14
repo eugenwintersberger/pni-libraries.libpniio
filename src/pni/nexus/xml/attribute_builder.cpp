@@ -41,9 +41,9 @@ void AttributeBuilder::build(const hdf5::node::Node &parent) const
   hdf5::datatype::Datatype type = datatype_builder_.build();
   hdf5::dataspace::Dataspace space = hdf5::dataspace::Scalar();
 
-  bool is_string = ((type.get_class() == hdf5::datatype::Class::VARLENGTH)
+  bool is_string = ((type.get_class() == hdf5::datatype::Class::VarLength)
 		    ||
-		    (type.get_class() == hdf5::datatype::Class::STRING));
+		    (type.get_class() == hdf5::datatype::Class::String));
 
   if( (!is_string) || node().get_child_optional("dimensions"))
   {

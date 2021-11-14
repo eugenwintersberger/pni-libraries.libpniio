@@ -61,9 +61,9 @@ Path::Element get_element(const hdf5::node::Node &node)
 {
   switch(node.type())
   {
-    case hdf5::node::Type::GROUP:
+    case hdf5::node::Type::Group:
       return get_group_element(hdf5::node::Group(node));
-    case hdf5::node::Type::DATASET:
+    case hdf5::node::Type::Dataset:
       return get_dataset_element(hdf5::node::Dataset(node));
     default:
       return {std::string(),std::string()};
@@ -101,7 +101,7 @@ Path get_path(const hdf5::node::Node &node)
 
   for(auto node_name: node.link().path())
   {
-    if(current_node.type() == hdf5::node::Type::GROUP)
+    if(current_node.type() == hdf5::node::Type::Group)
       current_node = hdf5::node::Group(current_node).nodes[node_name];
 
     path.push_back(get_element(current_node));

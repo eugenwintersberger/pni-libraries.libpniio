@@ -40,7 +40,7 @@ void Writer::_write_entry(const std::string &s)
   _index++;
 
   //flush the new log entry
-  _file.flush(hdf5::file::Scope::LOCAL);
+  _file.flush(hdf5::file::Scope::Local);
 }
 
 void Writer::_init_log()
@@ -61,14 +61,14 @@ void Writer::_init_log()
   _selection = hdf5::dataspace::Hyperslab({0},{1});
 
   //flush the file after initialization
-  _file.flush(hdf5::file::Scope::LOCAL);
+  _file.flush(hdf5::file::Scope::Local);
 }
 
 void Writer::operator()()
 {
   std::cout<<"create file"<<std::endl;
   //works with HDF5
-  _file = nexus::create_file(_filename,hdf5::file::AccessFlags::TRUNCATE);
+  _file = nexus::create_file(_filename,hdf5::file::AccessFlags::Truncate);
 
   //initialize the log
   _init_log();
@@ -90,7 +90,7 @@ void Writer::operator()()
       std::cout<<e<<std::endl;
       break;
     }
-    _file.flush(hdf5::file::Scope::LOCAL);
+    _file.flush(hdf5::file::Scope::Local);
   }
 
 

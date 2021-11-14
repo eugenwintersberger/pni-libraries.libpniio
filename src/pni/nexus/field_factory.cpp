@@ -56,7 +56,7 @@ hdf5::node::Dataset FieldFactory::create(const hdf5::node::Group &parent,
                                          const hdf5::property::DatasetAccessList &acpl)
 {
   hdf5::property::DatasetCreationList chunk_dcpl(dcpl);
-  chunk_dcpl.layout(hdf5::property::DatasetLayout::CHUNKED);
+  chunk_dcpl.layout(hdf5::property::DatasetLayout::Chunked);
   chunk_dcpl.chunk(chunk_shape);
 
   IsValidNeXusName name_check;

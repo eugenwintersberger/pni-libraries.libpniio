@@ -72,10 +72,10 @@ To obtain the ID or class of a type at compile time use the
     using namespace pni;
 
     //determine the type ID for a given type
-    type_id_map<float32>::type_id == type_id_t::FLOAT32;
+    type_id_map<float32>::type_id == type_id_t::Float32;
 
     //obtain the class of a particular type
-    type_class_map<float32>::type_class == type_class_t::FLOAT;
+    type_class_map<float32>::type_class == type_class_t::Float;
 
 For IDs the other way around is also possible with the :cpp:class:`id_type_map`
 
@@ -86,7 +86,7 @@ For IDs the other way around is also possible with the :cpp:class:`id_type_map`
     using namespace pni;
 
     //determine the type for a given ID
-    id_type_map<type_id_t::FLOAT32>::type data = ...;
+    id_type_map<type_id_t::Float32>::type data = ...;
 
 
 For numeric types there are also some other templates for a more detailed type
@@ -186,7 +186,7 @@ of this two guys is again straight forward.
     type_id_t id = type_id_from_str("str");
 
     //get a string from a type id
-    rep = str_from_type_id(type_id_t::FLOAT32);
+    rep = str_from_type_id(type_id_t::Float32);
 
 
 .. ===========================================================================

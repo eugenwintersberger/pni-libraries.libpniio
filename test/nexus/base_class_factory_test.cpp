@@ -36,7 +36,7 @@ struct BaseClassFactoryTestFixture
     BaseClassFactoryTestFixture()
     {
       using hdf5::file::AccessFlags;
-      nexus_file = nexus::create_file("base_class_factory_test.nxs",AccessFlags::TRUNCATE);
+      nexus_file = nexus::create_file("base_class_factory_test.nxs",AccessFlags::Truncate);
       root_group = nexus_file.root();
     }
 };

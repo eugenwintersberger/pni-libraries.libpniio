@@ -41,7 +41,7 @@ In order to overwrite an existing file one can use
 
 .. code-block:: cpp
 
-   h5::file::File file = nexus::create_file("test.nxs",hdf5::file::AccessFlags::TRUNCATE);
+   h5::file::File file = nexus::create_file("test.nxs",hdf5::file::AccessFlags::Truncate);
 
 This option should be used with case as all data stored in the original file 
 will be lost forever. For more options to :cpp:func:`create_file` 
@@ -112,7 +112,7 @@ data manipulations. To open a file for reading and writing use
 
 .. code-block:: cpp
 
-   hdf5::file::File f = nexus::open_file("test.nxs",hdf5::file::AccessFlags::READWRITE);
+   hdf5::file::File f = nexus::open_file("test.nxs",hdf5::file::AccessFlags::ReadWrite);
 
 The object returned by :cpp:func:`nexus::open_file` is again an instance 
 of :cpp:func:`hdf5::file::File`. The :cpp:func:`nexus::open_file` does 

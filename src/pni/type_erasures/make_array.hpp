@@ -68,39 +68,39 @@ namespace pni{
     template<typename CTYPE> 
     array make_array(type_id_t tid,const CTYPE &shape)
     {
-        if(tid == type_id_t::UINT8)
+        if(tid == type_id_t::UInt8)
             return make_array<uint8>(shape);
-        else if(tid == type_id_t::INT8)
+        else if(tid == type_id_t::Int8)
             return make_array<int8>(shape);
-        else if(tid == type_id_t::UINT16)
+        else if(tid == type_id_t::UInt16)
             return make_array<uint16>(shape);
-        else if(tid == type_id_t::INT16)
+        else if(tid == type_id_t::Int16)
             return make_array<int16>(shape);
-        else if(tid == type_id_t::UINT32)
+        else if(tid == type_id_t::UInt32)
             return make_array<uint32>(shape);
-        else if(tid == type_id_t::INT32)
+        else if(tid == type_id_t::Int32)
             return make_array<int32>(shape);
-        else if(tid == type_id_t::UINT64)
+        else if(tid == type_id_t::UInt64)
             return make_array<uint64>(shape);
-        else if(tid == type_id_t::INT64)
+        else if(tid == type_id_t::Int64)
             return make_array<int64>(shape);
-        else if(tid == type_id_t::FLOAT32)
+        else if(tid == type_id_t::Float32)
             return make_array<float32>(shape);
-        else if(tid == type_id_t::FLOAT64)
+        else if(tid == type_id_t::Float64)
             return make_array<float64>(shape);
-        else if(tid == type_id_t::FLOAT128)
+        else if(tid == type_id_t::Float128)
             return make_array<float128>(shape);
-        else if(tid == type_id_t::COMPLEX32)
+        else if(tid == type_id_t::Complex32)
             return make_array<complex32>(shape);
-        else if(tid == type_id_t::COMPLEX64)
+        else if(tid == type_id_t::Complex64)
             return make_array<complex64>(shape);
-        else if(tid == type_id_t::COMPLEX128)
+        else if(tid == type_id_t::Complex128)
             return make_array<complex128>(shape);
-        else if(tid == type_id_t::BOOL)
+        else if(tid == type_id_t::Bool)
             return make_array<bool_t>(shape);
-        else if(tid == type_id_t::BINARY)
+        else if(tid == type_id_t::Binary)
             return make_array<binary>(shape);
-        else if(tid == type_id_t::STRING)
+        else if(tid == type_id_t::String)
             return make_array<string>(shape);
         else 
             throw type_error(EXCEPTION_RECORD,"Type ID cannot be processed!");

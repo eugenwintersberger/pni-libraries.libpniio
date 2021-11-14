@@ -45,7 +45,7 @@ RegressionIssue37::RegressionIssue37()
 {
 
   nxfile = hdf5::file::open("eiger_master_stripped.h5",
-                            hdf5::file::AccessFlags::READONLY);
+                            hdf5::file::AccessFlags::ReadOnly);
   root_group = nxfile.root();
   nexus::GroupList groups = nexus::get_objects(root_group,nexus::Path::from_string("/:NXentry/:NXinstrument/:NXdetector"));
   if(groups.size() == 1)

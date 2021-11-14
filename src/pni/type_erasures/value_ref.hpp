@@ -253,23 +253,23 @@ namespace pni{
         type_id_t tid = type_id();
         switch(tid)
         {
-            case type_id_t::UINT8:      return _get<T,uint8>();
-            case type_id_t::INT8:       return _get<T,int8>();
-            case type_id_t::UINT16:     return _get<T,uint16>();
-            case type_id_t::INT16:      return _get<T,int16>();
-            case type_id_t::UINT32:     return _get<T,uint32>();
-            case type_id_t::INT32:      return _get<T,int32>();
-            case type_id_t::UINT64:     return _get<T,uint64>();
-            case type_id_t::INT64:      return _get<T,int64>();
-            case type_id_t::FLOAT32:    return _get<T,float32>();
-            case type_id_t::FLOAT64:    return _get<T,float64>();
-            case type_id_t::FLOAT128:   return _get<T,float128>();
-            case type_id_t::COMPLEX32:  return _get<T,complex32>();
-            case type_id_t::COMPLEX64:  return _get<T,complex64>();
-            case type_id_t::COMPLEX128: return _get<T,complex128>();
-            case type_id_t::BINARY:     return _get<T,binary>();
-            case type_id_t::STRING:     return _get<T,string>();
-            case type_id_t::BOOL:       return _get<T,bool_t>();
+            case type_id_t::UInt8:      return _get<T,uint8>();
+            case type_id_t::Int8:       return _get<T,int8>();
+            case type_id_t::UInt16:     return _get<T,uint16>();
+            case type_id_t::Int16:      return _get<T,int16>();
+            case type_id_t::UInt32:     return _get<T,uint32>();
+            case type_id_t::Int32:      return _get<T,int32>();
+            case type_id_t::UInt64:     return _get<T,uint64>();
+            case type_id_t::Int64:      return _get<T,int64>();
+            case type_id_t::Float32:    return _get<T,float32>();
+            case type_id_t::Float64:    return _get<T,float64>();
+            case type_id_t::Float128:   return _get<T,float128>();
+            case type_id_t::Complex32:  return _get<T,complex32>();
+            case type_id_t::Complex64:  return _get<T,complex64>();
+            case type_id_t::Complex128: return _get<T,complex128>();
+            case type_id_t::Binary:     return _get<T,binary>();
+            case type_id_t::String:     return _get<T,string>();
+            case type_id_t::Bool:       return _get<T,bool_t>();
             default:
                 throw type_error(EXCEPTION_RECORD,
                         "The reference points to an object of unkown type!");
@@ -286,23 +286,23 @@ namespace pni{
 
         switch(tid)
         {
-            case type_id_t::UINT8:      _set<uint8>(v);      break;
-            case type_id_t::INT8:       _set<int8>(v);       break;
-            case type_id_t::UINT16:     _set<uint16>(v);     break;
-            case type_id_t::INT16:      _set<int16>(v);      break;
-            case type_id_t::UINT32:     _set<uint32>(v);     break;
-            case type_id_t::INT32:      _set<int32>(v);      break;
-            case type_id_t::UINT64:     _set<uint64>(v);     break;
-            case type_id_t::INT64:      _set<int64>(v);      break;
-            case type_id_t::FLOAT32:    _set<float32>(v);    break;
-            case type_id_t::FLOAT64:    _set<float64>(v);    break;
-            case type_id_t::FLOAT128:   _set<float128>(v);   break;
-            case type_id_t::COMPLEX32:  _set<complex32>(v);  break;
-            case type_id_t::COMPLEX64:  _set<complex64>(v);  break;
-            case type_id_t::COMPLEX128: _set<complex128>(v); break;
-            case type_id_t::BINARY:     _set<binary>(v);     break;
-            case type_id_t::STRING:     _set<string>(v);     break;
-            case type_id_t::BOOL:       _set<bool_t>(v);     break;
+            case type_id_t::UInt8:      _set<uint8>(v);      break;
+            case type_id_t::Int8:       _set<int8>(v);       break;
+            case type_id_t::UInt16:     _set<uint16>(v);     break;
+            case type_id_t::Int16:      _set<int16>(v);      break;
+            case type_id_t::UInt32:     _set<uint32>(v);     break;
+            case type_id_t::Int32:      _set<int32>(v);      break;
+            case type_id_t::UInt64:     _set<uint64>(v);     break;
+            case type_id_t::Int64:      _set<int64>(v);      break;
+            case type_id_t::Float32:    _set<float32>(v);    break;
+            case type_id_t::Float64:    _set<float64>(v);    break;
+            case type_id_t::Float128:   _set<float128>(v);   break;
+            case type_id_t::Complex32:  _set<complex32>(v);  break;
+            case type_id_t::Complex64:  _set<complex64>(v);  break;
+            case type_id_t::Complex128: _set<complex128>(v); break;
+            case type_id_t::Binary:     _set<binary>(v);     break;
+            case type_id_t::String:     _set<string>(v);     break;
+            case type_id_t::Bool:       _set<bool_t>(v);     break;
             default:
                 throw type_error(EXCEPTION_RECORD,
                         "The reference points to an object of unknown type!");

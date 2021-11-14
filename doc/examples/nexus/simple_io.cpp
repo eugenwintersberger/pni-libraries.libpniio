@@ -13,7 +13,7 @@ void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,siz
 {
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
-    hdf5::file::File file = nexus::create_file(file_path,hdf5::file::AccessFlags::TRUNCATE);
+    hdf5::file::File file = nexus::create_file(file_path,hdf5::file::AccessFlags::Truncate);
 
     hdf5::node::Group group = nexus::BaseClassFactory::create(file.root(),"scan","NXentry");
     group = nexus::BaseClassFactory::create(group,"instrument","NXinstrument");

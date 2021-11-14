@@ -33,18 +33,18 @@ hdf5::datatype::Datatype DatatypeFactory::create(pni::type_id_t tid)
   using namespace pni;
   switch(tid)
   {
-    case type_id_t::UINT8: return hdf5::datatype::create<uint8>();
-    case type_id_t::UINT16: return hdf5::datatype::create<uint16>();
-    case type_id_t::UINT32: return hdf5::datatype::create<uint32>();
-    case type_id_t::UINT64: return hdf5::datatype::create<uint64>();
-    case type_id_t::INT8: return hdf5::datatype::create<int8>();
-    case type_id_t::INT16: return hdf5::datatype::create<int16>();
-    case type_id_t::INT32: return hdf5::datatype::create<int32>();
-    case type_id_t::INT64: return hdf5::datatype::create<int64>();
-    case type_id_t::FLOAT32: return hdf5::datatype::create<float32>();
-    case type_id_t::FLOAT64: return hdf5::datatype::create<float64>();
-    case type_id_t::FLOAT128: return hdf5::datatype::create<float128>();
-    case type_id_t::STRING: return hdf5::datatype::create<std::string>();
+    case type_id_t::UInt8: return hdf5::datatype::create<uint8>();
+    case type_id_t::UInt16: return hdf5::datatype::create<uint16>();
+    case type_id_t::UInt32: return hdf5::datatype::create<uint32>();
+    case type_id_t::UInt64: return hdf5::datatype::create<uint64>();
+    case type_id_t::Int8: return hdf5::datatype::create<int8>();
+    case type_id_t::Int16: return hdf5::datatype::create<int16>();
+    case type_id_t::Int32: return hdf5::datatype::create<int32>();
+    case type_id_t::Int64: return hdf5::datatype::create<int64>();
+    case type_id_t::Float32: return hdf5::datatype::create<float32>();
+    case type_id_t::Float64: return hdf5::datatype::create<float64>();
+    case type_id_t::Float128: return hdf5::datatype::create<float128>();
+    case type_id_t::String: return hdf5::datatype::create<std::string>();
     default:
     {
       std::stringstream ss;

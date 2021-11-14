@@ -29,13 +29,13 @@ namespace cbf{
     //! \ingroup image_io_cbf
     //! \brief CBF compression id
     //!
-    enum class compression_id { CBF_BYTE_OFFSET };
+    enum class compression_id { CBFByteOffset };
 
     //!
     //! \ingroup image_io_cbf
     //! \brief CBF vendor id
     //!
-    enum class vendor_id { DECTRIS };
+    enum class vendor_id { Dectris };
 
 //end of namespace
 }

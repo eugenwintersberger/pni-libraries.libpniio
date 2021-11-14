@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_SUITE(cbf_reader_test)
 
         image_channel_info cinfo = info.get_channel(0);
         BOOST_CHECK(cinfo.bits() == 32);
-        BOOST_CHECK(cinfo.type_id() == type_id_t::INT32);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::Int32);
 
     }
 

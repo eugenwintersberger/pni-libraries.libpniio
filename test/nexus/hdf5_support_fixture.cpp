@@ -25,6 +25,6 @@
 
 HDF5SupportFixture::HDF5SupportFixture()
 {
-  file = hdf5::file::create("HDF5SupportTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  file = hdf5::file::create("HDF5SupportTest.nxs",hdf5::file::AccessFlags::Truncate);
   root_group = file.root();
 }

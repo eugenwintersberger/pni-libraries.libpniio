@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(test_uint8_attribute)
   attribute.read(data);
   BOOST_CHECK(data == 12);
   auto dataspace = attribute.dataspace();
-  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::Simple);
   BOOST_CHECK(dataspace.size() == 1);
 
 }
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(test_int32_attribute)
   attribute.read(data);
   BOOST_CHECK(data == -12);
   auto dataspace = attribute.dataspace();
-  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SIMPLE);
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::Simple);
   BOOST_CHECK(dataspace.size() == 1);
 }
 
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE(test_string_attribute)
   attribute.read(data);
   BOOST_CHECK(data == "hello");
   auto dataspace = attribute.dataspace();
-  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::SCALAR);
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::Scalar);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -35,7 +35,7 @@ class IsDataset : public nexus::NodePredicate
 
 bool IsDataset::operator()(const hdf5::node::Node &node) const
 {
-  return node.type()==hdf5::node::Type::DATASET;
+  return node.type()==hdf5::node::Type::Dataset;
 }
 
 class Is1dDataset : public nexus::NodePredicate
@@ -46,7 +46,7 @@ class Is1dDataset : public nexus::NodePredicate
 
 bool Is1dDataset::operator()(const hdf5::node::Node &node) const
 {
-  if(node.type()!=hdf5::node::Type::DATASET)
+  if(node.type()!=hdf5::node::Type::Dataset)
   {
     return false;
   }
@@ -75,7 +75,7 @@ int main(int argc,char **argv)
   }
 
 
-  hdf5::file::File file = nexus::create_file("find_datasets.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  hdf5::file::File file = nexus::create_file("find_datasets.nxs",hdf5::file::AccessFlags::Truncate);
   hdf5::node::Group root_group = file.root();
 
   //create the file structure

@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_SUITE(value_construction_test)
     BOOST_AUTO_TEST_CASE(test_default_construction)
     {
         value v;
-        BOOST_CHECK_EQUAL(v.type_id(),type_id_t::NONE);
+        BOOST_CHECK_EQUAL(v.type_id(),type_id_t::None);
     }
     
     //========================================================================
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_SUITE(value_construction_test)
         value v1(f.value_1);
         value v2 = std::move(v1);
 
-        BOOST_CHECK_EQUAL(v1.type_id(),type_id_t::NONE);
+        BOOST_CHECK_EQUAL(v1.type_id(),type_id_t::None);
         BOOST_CHECK(v2.type_id()==type_id_map<T>::type_id);
         BOOST_CHECK_EQUAL(f.value_1,v2.as<T>());
     }

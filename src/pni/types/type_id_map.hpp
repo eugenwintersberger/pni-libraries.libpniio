@@ -50,29 +50,29 @@ namespace pni{
     struct type_id_map
     {
         //! id value for type T
-        static constexpr type_id_t type_id = type_id_t::NONE; 
+        static constexpr type_id_t type_id = type_id_t::None; 
     };
 
     //! \cond NO_API_DOC
-    CREATE_TYPE_ID_MAP(uint8,type_id_t::UINT8);
-    CREATE_TYPE_ID_MAP(int8,type_id_t::INT8);
-    CREATE_TYPE_ID_MAP(uint16,type_id_t::UINT16);
-    CREATE_TYPE_ID_MAP(int16,type_id_t::INT16);
-    CREATE_TYPE_ID_MAP(uint32,type_id_t::UINT32);
-    CREATE_TYPE_ID_MAP(int32,type_id_t::INT32);
-    CREATE_TYPE_ID_MAP(uint64,type_id_t::UINT64);
-    CREATE_TYPE_ID_MAP(int64,type_id_t::INT64);
-    CREATE_TYPE_ID_MAP(float32,type_id_t::FLOAT32);
-    CREATE_TYPE_ID_MAP(float64,type_id_t::FLOAT64);
-    CREATE_TYPE_ID_MAP(float128,type_id_t::FLOAT128);
-    CREATE_TYPE_ID_MAP(complex32,type_id_t::COMPLEX32);
-    CREATE_TYPE_ID_MAP(complex64,type_id_t::COMPLEX64);
-    CREATE_TYPE_ID_MAP(complex128,type_id_t::COMPLEX128);
-    CREATE_TYPE_ID_MAP(string,type_id_t::STRING);
-    CREATE_TYPE_ID_MAP(binary,type_id_t::BINARY);
-    CREATE_TYPE_ID_MAP(bool_t,type_id_t::BOOL);
-    CREATE_TYPE_ID_MAP(bool,type_id_t::BOOL);
-    CREATE_TYPE_ID_MAP(none,type_id_t::NONE);
+    CREATE_TYPE_ID_MAP(uint8,type_id_t::UInt8);
+    CREATE_TYPE_ID_MAP(int8,type_id_t::Int8);
+    CREATE_TYPE_ID_MAP(uint16,type_id_t::UInt16);
+    CREATE_TYPE_ID_MAP(int16,type_id_t::Int16);
+    CREATE_TYPE_ID_MAP(uint32,type_id_t::UInt32);
+    CREATE_TYPE_ID_MAP(int32,type_id_t::Int32);
+    CREATE_TYPE_ID_MAP(uint64,type_id_t::UInt64);
+    CREATE_TYPE_ID_MAP(int64,type_id_t::Int64);
+    CREATE_TYPE_ID_MAP(float32,type_id_t::Float32);
+    CREATE_TYPE_ID_MAP(float64,type_id_t::Float64);
+    CREATE_TYPE_ID_MAP(float128,type_id_t::Float128);
+    CREATE_TYPE_ID_MAP(complex32,type_id_t::Complex32);
+    CREATE_TYPE_ID_MAP(complex64,type_id_t::Complex64);
+    CREATE_TYPE_ID_MAP(complex128,type_id_t::Complex128);
+    CREATE_TYPE_ID_MAP(string,type_id_t::String);
+    CREATE_TYPE_ID_MAP(binary,type_id_t::Binary);
+    CREATE_TYPE_ID_MAP(bool_t,type_id_t::Bool);
+    CREATE_TYPE_ID_MAP(bool,type_id_t::Bool);
+    CREATE_TYPE_ID_MAP(none,type_id_t::None);
     //! \endcond NO_API_DOC
 
 //end of namespace

@@ -184,10 +184,10 @@ namespace pni{
                 //unsigned integer data
                 switch(bps)
                 {
-                    case 8: return type_id_t::UINT8;
-                    case 16: return type_id_t::UINT16;
-                    case 32: return type_id_t::UINT32;
-                    case 64: return type_id_t::UINT64;
+                    case 8: return type_id_t::UInt8;
+                    case 16: return type_id_t::UInt16;
+                    case 32: return type_id_t::UInt32;
+                    case 64: return type_id_t::UInt64;
                     default:
                             error_stream<<"Invalid unsigned integer type - ";
                             error_stream<<"Bits per sample = "<<bps<<" ";
@@ -199,10 +199,10 @@ namespace pni{
                 //signed integer data
                 switch(bps)
                 {
-                    case 8: return type_id_t::INT8;
-                    case 16: return type_id_t::INT16;
-                    case 32: return type_id_t::INT32;
-                    case 64: return type_id_t::INT64;
+                    case 8: return type_id_t::Int8;
+                    case 16: return type_id_t::Int16;
+                    case 32: return type_id_t::Int32;
+                    case 64: return type_id_t::Int64;
                     default:
                              error_stream<<"Invalid signed integer type - ";
                              error_stream<<"Bits per sample = "<<bps<<" ";
@@ -214,8 +214,8 @@ namespace pni{
                 //IEEE floating point data
                 switch(bps)
                 {
-                    case 32: return type_id_t::FLOAT32;
-                    case 64: return type_id_t::FLOAT64;
+                    case 32: return type_id_t::Float32;
+                    case 64: return type_id_t::Float64;
                     default:
                              error_stream<<"Invalid floating point type - ";
                              error_stream<<"Bits per sample = "<<bps<<" ";
@@ -229,7 +229,7 @@ namespace pni{
                 throw type_error(EXCEPTION_RECORD,"Cannot derive type id!");
 
         }
-	return type_id_t::UINT8;
+	return type_id_t::UInt8;
     }
 
     //=============implementation of constructors and destructor===========

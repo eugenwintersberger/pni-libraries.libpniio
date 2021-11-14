@@ -42,13 +42,13 @@ namespace std
         using namespace pni;
         switch(tcid)
         {
-            case type_class_t::NONE: return stream<<"NONE";
-            case type_class_t::INTEGER: return stream<<"INTEGER";
-            case type_class_t::FLOAT: return stream<<"FLOAT";
-            case type_class_t::BINARY: return stream<<"BINARY";
-            case type_class_t::BOOL:   return stream<<"BOOL";
-            case type_class_t::COMPLEX: return stream<<"COMPLEX";
-            case type_class_t::STRING:  return stream<<"STRING";
+            case type_class_t::None: return stream<<"NONE";
+            case type_class_t::Integer: return stream<<"INTEGER";
+            case type_class_t::Float: return stream<<"FLOAT";
+            case type_class_t::Binary: return stream<<"BINARY";
+            case type_class_t::Bool:   return stream<<"BOOL";
+            case type_class_t::Complex: return stream<<"COMPLEX";
+            case type_class_t::String:  return stream<<"STRING";
             default:
                 return stream;
         }
@@ -60,40 +60,40 @@ BOOST_AUTO_TEST_SUITE(type_class_map_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_type_class_map_integer)
     {
-        BOOST_CHECK(type_class_map<uint8>::type_class  == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<int8>::type_class == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<uint16>::type_class == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<int16>::type_class == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<uint32>::type_class == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<int32>::type_class == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<uint64>::type_class == type_class_t::INTEGER);
-        BOOST_CHECK(type_class_map<int64>::type_class == type_class_t::INTEGER);
+        BOOST_CHECK(type_class_map<uint8>::type_class  == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<int8>::type_class == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<uint16>::type_class == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<int16>::type_class == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<uint32>::type_class == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<int32>::type_class == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<uint64>::type_class == type_class_t::Integer);
+        BOOST_CHECK(type_class_map<int64>::type_class == type_class_t::Integer);
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_type_class_map_float)
     {
-        BOOST_CHECK(type_class_map<float32>::type_class == type_class_t::FLOAT);
-        BOOST_CHECK(type_class_map<float64>::type_class == type_class_t::FLOAT);
-        BOOST_CHECK(type_class_map<float128>::type_class == type_class_t::FLOAT);
+        BOOST_CHECK(type_class_map<float32>::type_class == type_class_t::Float);
+        BOOST_CHECK(type_class_map<float64>::type_class == type_class_t::Float);
+        BOOST_CHECK(type_class_map<float128>::type_class == type_class_t::Float);
     }
     
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_type_class_map_complex)
     {
-        BOOST_CHECK(type_class_map<complex32>::type_class == type_class_t::COMPLEX);
-        BOOST_CHECK(type_class_map<complex64>::type_class == type_class_t::COMPLEX);
-        BOOST_CHECK(type_class_map<complex128>::type_class == type_class_t::COMPLEX);
+        BOOST_CHECK(type_class_map<complex32>::type_class == type_class_t::Complex);
+        BOOST_CHECK(type_class_map<complex64>::type_class == type_class_t::Complex);
+        BOOST_CHECK(type_class_map<complex128>::type_class == type_class_t::Complex);
     }
     
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_type_class_map_others)
     {
-        BOOST_CHECK(type_class_map<string>::type_class == type_class_t::STRING);
-        BOOST_CHECK(type_class_map<binary>::type_class == type_class_t::BINARY);
-        BOOST_CHECK(type_class_map<bool_t>::type_class == type_class_t::BOOL);
+        BOOST_CHECK(type_class_map<string>::type_class == type_class_t::String);
+        BOOST_CHECK(type_class_map<binary>::type_class == type_class_t::Binary);
+        BOOST_CHECK(type_class_map<bool_t>::type_class == type_class_t::Bool);
 
-        BOOST_CHECK(type_class_map<none>::type_class == type_class_t::NONE);
+        BOOST_CHECK(type_class_map<none>::type_class == type_class_t::None);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

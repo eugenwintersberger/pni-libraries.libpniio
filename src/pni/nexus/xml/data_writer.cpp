@@ -66,18 +66,18 @@ void write_data(const Node &node,const OBJ &object)
 
   switch(type_id)
   {
-    case type_id_t::UINT8: write_data<uint8>(data,object); break;
-    case type_id_t::INT8:  write_data<int8>(data,object);  break;
-    case type_id_t::UINT16: write_data<uint16>(data,object); break;
-    case type_id_t::INT16: write_data<int16>(data,object);   break;
-    case type_id_t::UINT32: write_data<uint32>(data,object); break;
-    case type_id_t::INT32:  write_data<int32>(data,object);  break;
-    case type_id_t::UINT64: write_data<uint64>(data,object); break;
-    case type_id_t::INT64:  write_data<int64>(data,object);  break;
-    case type_id_t::FLOAT32: write_data<float32>(data,object); break;
-    case type_id_t::FLOAT64: write_data<float64>(data,object); break;
-    case type_id_t::FLOAT128: write_data<float128>(data,object); break;
-    case type_id_t::STRING:   write_string_data(data,object); break;
+    case type_id_t::UInt8: write_data<uint8>(data,object); break;
+    case type_id_t::Int8:  write_data<int8>(data,object);  break;
+    case type_id_t::UInt16: write_data<uint16>(data,object); break;
+    case type_id_t::Int16: write_data<int16>(data,object);   break;
+    case type_id_t::UInt32: write_data<uint32>(data,object); break;
+    case type_id_t::Int32:  write_data<int32>(data,object);  break;
+    case type_id_t::UInt64: write_data<uint64>(data,object); break;
+    case type_id_t::Int64:  write_data<int64>(data,object);  break;
+    case type_id_t::Float32: write_data<float32>(data,object); break;
+    case type_id_t::Float64: write_data<float64>(data,object); break;
+    case type_id_t::Float128: write_data<float128>(data,object); break;
+    case type_id_t::String:   write_string_data(data,object); break;
     default:
     {
       std::stringstream ss;

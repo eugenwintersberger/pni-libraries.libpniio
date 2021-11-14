@@ -156,25 +156,25 @@ namespace tiff {
                 using namespace pni;
                 //first we need to determine the datatype of the
 
-                if(this->_channel_types[c] == type_id_t::UINT8)
+                if(this->_channel_types[c] == type_id_t::UInt8)
                     this->_read_interlace<uint8>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::INT8)
+                else if(this->_channel_types[c] == type_id_t::Int8)
                     this->_read_interlace<int8>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::UINT16)
+                else if(this->_channel_types[c] == type_id_t::UInt16)
                     this->_read_interlace<uint16>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::INT16)
+                else if(this->_channel_types[c] == type_id_t::Int16)
                     this->_read_interlace<int16>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::UINT32)
+                else if(this->_channel_types[c] == type_id_t::UInt32)
                     this->_read_interlace<uint32>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::INT32)
+                else if(this->_channel_types[c] == type_id_t::Int32)
                     this->_read_interlace<int32>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::UINT64)
+                else if(this->_channel_types[c] == type_id_t::UInt64)
                     this->_read_interlace<uint64>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::INT64)
+                else if(this->_channel_types[c] == type_id_t::Int64)
                     this->_read_interlace<int64>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::FLOAT32)
+                else if(this->_channel_types[c] == type_id_t::Float32)
                     this->_read_interlace<float32>(c,stream,data);
-                else if(this->_channel_types[c] == type_id_t::FLOAT64)
+                else if(this->_channel_types[c] == type_id_t::Float64)
                     this->_read_interlace<float64>(c,stream,data);
                 else
                     throw type_error(EXCEPTION_RECORD,

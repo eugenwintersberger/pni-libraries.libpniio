@@ -26,7 +26,7 @@ static const string file_struct =
 int main(int,char **)
 {
   //create the file structure
-  hdf5::file::File file = nexus::create_file("gather_detectors.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  hdf5::file::File file = nexus::create_file("gather_detectors.nxs",hdf5::file::AccessFlags::Truncate);
   hdf5::node::Group root_group = file.root();
   nexus::xml::create_from_string(root_group,file_struct);
 

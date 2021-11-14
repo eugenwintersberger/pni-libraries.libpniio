@@ -39,7 +39,7 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     BOOST_AUTO_TEST_CASE(test_int_value)
     {
         result_type v = p("1234");
-        type_id_t tid = type_id_t::INT64;
+        type_id_t tid = type_id_t::Int64;
         BOOST_CHECK(v.type_id() == tid);
     }
 
@@ -47,7 +47,7 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     BOOST_AUTO_TEST_CASE(test_float_value)
     {
         result_type v = p("1.234e+3");
-        type_id_t tid = type_id_t::FLOAT64;
+        type_id_t tid = type_id_t::Float64;
         BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(1.234e+3,v.as<float64>(),1.e-8);
 
@@ -60,7 +60,7 @@ BOOST_FIXTURE_TEST_SUITE(value_parser_test,value_parser_test_fixture)
     BOOST_AUTO_TEST_CASE(test_complex_value)
     {
         result_type v = p("1.3+I3.4");
-        type_id_t tid = type_id_t::COMPLEX64;
+        type_id_t tid = type_id_t::Complex64;
         BOOST_CHECK(v.type_id() == tid);
         BOOST_CHECK_CLOSE_FRACTION(1.3,v.as<complex64>().real(),1.e-8);
         BOOST_CHECK_CLOSE_FRACTION(3.4,v.as<complex64>().imag(),1.e-8);

@@ -45,7 +45,7 @@ namespace pni{
             //-----------------------------------------------------------------
             //! default constructor
             image_channel_info():
-                _tid(pni::type_id_t::NONE),
+                _tid(pni::type_id_t::None),
                 _bits(0)
             {}
 

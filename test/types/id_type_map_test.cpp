@@ -39,126 +39,126 @@ BOOST_AUTO_TEST_SUITE(id_type_map_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_uint8)
     {
-        typedef id_type_map<type_id_t::UINT8> map_type;
+        typedef id_type_map<type_id_t::UInt8> map_type;
         BOOST_CHECK((std::is_same<map_type::type,uint8>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_int8)
     {
-        typedef id_type_map<type_id_t::INT8> map_type;
+        typedef id_type_map<type_id_t::Int8> map_type;
         BOOST_CHECK((std::is_same<map_type::type,int8>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_uint16)
     {
-        typedef id_type_map<type_id_t::UINT16> map_type;
+        typedef id_type_map<type_id_t::UInt16> map_type;
         BOOST_CHECK((std::is_same<map_type::type,uint16>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_int16)
     {
-        typedef id_type_map<type_id_t::INT16> map_type;
+        typedef id_type_map<type_id_t::Int16> map_type;
         BOOST_CHECK((std::is_same<map_type::type,int16>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_uint32)
     {
-        typedef id_type_map<type_id_t::UINT32> map_type;
+        typedef id_type_map<type_id_t::UInt32> map_type;
         BOOST_CHECK((std::is_same<map_type::type,uint32>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_int32)
     {
-        typedef id_type_map<type_id_t::INT32> map_type;
+        typedef id_type_map<type_id_t::Int32> map_type;
         BOOST_CHECK((std::is_same<map_type::type,int32>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_uint64)
     {
-        typedef id_type_map<type_id_t::UINT64> map_type;
+        typedef id_type_map<type_id_t::UInt64> map_type;
         BOOST_CHECK((std::is_same<map_type::type,uint64>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_int64)
     {
-        typedef id_type_map<type_id_t::INT64> map_type;
+        typedef id_type_map<type_id_t::Int64> map_type;
         BOOST_CHECK((std::is_same<map_type::type,int64>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_float32)
     {
-        typedef id_type_map<type_id_t::FLOAT32> map_type;
+        typedef id_type_map<type_id_t::Float32> map_type;
         BOOST_CHECK((std::is_same<map_type::type,float32>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_float64)
     {
-        typedef id_type_map<type_id_t::FLOAT64> map_type;
+        typedef id_type_map<type_id_t::Float64> map_type;
         BOOST_CHECK((std::is_same<map_type::type,float64>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_float128)
     {
-        typedef id_type_map<type_id_t::FLOAT128> map_type;
+        typedef id_type_map<type_id_t::Float128> map_type;
         BOOST_CHECK((std::is_same<map_type::type,float128>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_complex32)
     {
-        typedef id_type_map<type_id_t::COMPLEX32> map_type;
+        typedef id_type_map<type_id_t::Complex32> map_type;
         BOOST_CHECK((std::is_same<map_type::type,complex32>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_complex64)
     {
-        typedef id_type_map<type_id_t::COMPLEX64> map_type;
+        typedef id_type_map<type_id_t::Complex64> map_type;
         BOOST_CHECK((std::is_same<map_type::type,complex64>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_complex128)
     {
-        typedef id_type_map<type_id_t::COMPLEX128> map_type;
+        typedef id_type_map<type_id_t::Complex128> map_type;
         BOOST_CHECK((std::is_same<map_type::type,complex128>::value));
     }
     
     //========================================================================
     BOOST_AUTO_TEST_CASE(test_id_type_map_string)
     {
-        typedef id_type_map<type_id_t::STRING> map_type;
+        typedef id_type_map<type_id_t::String> map_type;
         BOOST_CHECK((std::is_same<map_type::type,string>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(type_id_type_map_binary)
     {
-        typedef id_type_map<type_id_t::BINARY> map_type;
+        typedef id_type_map<type_id_t::Binary> map_type;
         BOOST_CHECK((std::is_same<map_type::type,binary>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(type_id_type_map_bool)
     {
-        typedef id_type_map<type_id_t::BOOL> map_type;
+        typedef id_type_map<type_id_t::Bool> map_type;
         BOOST_CHECK((std::is_same<map_type::type,bool_t>::value));
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE(type_id_type_map_none)
     {
-        typedef id_type_map<type_id_t::NONE> map_type;
+        typedef id_type_map<type_id_t::None> map_type;
         BOOST_CHECK((std::is_same<map_type::type,none>::value));
     }
 

@@ -36,7 +36,7 @@ struct FieldFactoryTestFixture
 
   FieldFactoryTestFixture()
   {
-    file = nexus::create_file("FieldTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+    file = nexus::create_file("FieldTest.nxs",hdf5::file::AccessFlags::Truncate);
     root_group = file.root();
 
     type = hdf5::datatype::create<uint16>();

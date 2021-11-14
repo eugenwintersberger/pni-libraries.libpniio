@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
 
         image_channel_info cinfo = info.get_channel(0);
         BOOST_CHECK(cinfo.bits() == 8);
-        BOOST_CHECK(cinfo.type_id() == type_id_t::UINT8);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::UInt8);
     }
 
     //-------------------------------------------------------------------------
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
         BOOST_CHECK(cinfo.bits() == 8);
-        BOOST_CHECK(cinfo.type_id() == type_id_t::UINT8);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::UInt8);
         
         auto image = reader.image<std::vector<uint8>>(0);
         BOOST_CHECK(image.size() == data.size());
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
         BOOST_CHECK(cinfo.bits() == 8);
-        BOOST_CHECK(cinfo.type_id() == type_id_t::INT8);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::Int8);
         
         
         auto image = reader.image<std::vector<int8>>(0);
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
         BOOST_CHECK(cinfo.bits() == 32);
-        BOOST_CHECK(cinfo.type_id() == type_id_t::INT32);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::Int32);
 
         auto image = reader.image<std::vector<int32>>(0);
 
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_SUITE(tiff_reader_test)
         image_channel_info cinfo;
         BOOST_CHECK_NO_THROW(cinfo = info.get_channel(0));
         BOOST_CHECK(cinfo.bits() == 32);
-        BOOST_CHECK(cinfo.type_id() == type_id_t::UINT32);
+        BOOST_CHECK(cinfo.type_id() == type_id_t::UInt32);
 
         auto image = reader.image<std::vector<uint32>>(0);
         BOOST_CHECK(image.size() == data.size());

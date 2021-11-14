@@ -43,7 +43,7 @@ class RegressionIssue33
 void RegressionIssue33::create_external_file()
 {
   hdf5::file::File f = nexus::create_file("RegressionIssue33_data.nxs",
-                                          hdf5::file::AccessFlags::TRUNCATE);
+                                          hdf5::file::AccessFlags::Truncate);
   hdf5::node::Group r = f.root();
 
   hdf5::dataspace::Simple dspace = hdf5::dataspace::Simple(hdf5::Dimensions{1024,1024});
@@ -57,7 +57,7 @@ RegressionIssue33::RegressionIssue33()
 {
   create_external_file();
 
-  nxfile = nexus::create_file("RegressionIssue33.nxs",hdf5::file::AccessFlags::TRUNCATE);
+  nxfile = nexus::create_file("RegressionIssue33.nxs",hdf5::file::AccessFlags::Truncate);
   root_group = nxfile.root();
 
   boost::filesystem::path ext_file("RegressionIssue33_data.nxs");

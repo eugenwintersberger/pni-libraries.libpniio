@@ -150,9 +150,9 @@ void write_value(std::ostream &stream,const value &v)
     type_id_t tid = v.type_id();
     switch(tid)
     {
-        case type_id_t::FLOAT64: stream<<v.as<float64>(); break;
-        case type_id_t::COMPLEX64: stream<<v.as<complex64>(); break;
-        case type_id_t::INT32:     stream<<v.as<int32>(); break;
+        case type_id_t::Float64: stream<<v.as<float64>(); break;
+        case type_id_t::Complex64: stream<<v.as<complex64>(); break;
+        case type_id_t::Int32:     stream<<v.as<int32>(); break;
         default:
             type_error(EXCEPTION_RECORD,
                     "Value holds unkown data type!");

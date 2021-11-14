@@ -69,7 +69,7 @@ PNINEXUS_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
 //!
 PNINEXUS_EXPORT
 hdf5::file::File create_file(const boost::filesystem::path &path,
-                             hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::EXCLUSIVE,
+                             hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::Exclusive,
                              const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
                              const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
@@ -96,7 +96,7 @@ hdf5::file::File create_file(const boost::filesystem::path &path,
 //!
 PNINEXUS_EXPORT
 hdf5::file::File open_file(const boost::filesystem::path &path,
-                      hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::READONLY,
+                      hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::ReadOnly,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 PNINEXUS_EXPORT
