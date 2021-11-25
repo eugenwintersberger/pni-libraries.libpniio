@@ -1,0 +1,189 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating objects &#8212; libpninexus 2.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Retrieving objects" href="nexus_retrieval.html" />
+    <link rel="prev" title="Working with files" href="nexus_files.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_retrieval.html" title="Retrieving objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_files.html" title="Working with files"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="creating-objects">
+<h1>Creating objects<a class="headerlink" href="#creating-objects" title="Permalink to this headline">¶</a></h1>
+<p><em>libpninexus</em> provides some convenience approaches for creating objects.
+This incudes</p>
+<ul class="simple">
+<li><p>group (base class) creation</p></li>
+<li><p>field (dataset) creation.</p></li>
+</ul>
+<p><em>libpninexus</em> provides no special means to handle attributes, instead use
+the facilities provided by <em>h5cpp</em>.</p>
+<div class="section" id="creating-base-classes">
+<h2>Creating base classes<a class="headerlink" href="#creating-base-classes" title="Permalink to this headline">¶</a></h2>
+<p>The basic elements of a NeXus tree are base classes. Technically, a base
+class is an HDF5 groups with a <code class="docutils literal notranslate"><span class="pre">NX_class</span></code> attribute attached to it
+determining the particular base class the group represents. So creating
+a base class group with <em>h5cpp</em> a three step process would have to be
+taken</p>
+<ol class="arabic simple">
+<li><p>check if the new name for the group complies to the NeXus naming rules</p></li>
+<li><p>create the new group</p></li>
+<li><p>create a string attribute attached to this group storing the name of the
+particular base class the group should represent.</p></li>
+</ol>
+<p>To make this easier <em>libpninexus</em> provides the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">BaseClassFactory</span></code>
+factory class with a static <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> member function which
+carries out all these tasks</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span><span class="p">;</span>
+<span class="n">Group</span> <span class="n">entry</span>      <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">BaseClassFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;run_001&quot;</span><span class="p">,</span><span class="s">&quot;NXentry&quot;</span><span class="p">);</span>
+<span class="n">Group</span> <span class="n">instrument</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">BaseClassFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="s">&quot;instrument&quot;</span><span class="p">,</span><span class="s">&quot;NXinstrument&quot;</span><span class="p">);</span>
+<span class="n">Group</span> <span class="n">detector</span>   <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">BaseClassFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="s">&quot;detector&quot;</span><span class="p">,</span><span class="s">&quot;NXdetector&quot;</span><span class="p">);</span>
+<span class="n">Group</span> <span class="n">sample</span>     <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">BaseClassFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="s">&quot;sample&quot;</span><span class="p">,</span><span class="s">&quot;NXsample&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The second argument of the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> function is an HDF5 path
+(<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::Path</span></code>). You could use, in special cases a NeXus path
+as it will be shown later, but there are limitations (as will be shown later).</p>
+</div>
+<div class="section" id="creating-fields">
+<h2>Creating fields<a class="headerlink" href="#creating-fields" title="Permalink to this headline">¶</a></h2>
+<p>Similar as for base classes <em>libpninexus</em> provides a factory class to create
+fields: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::FieldFactory</span></code> in order to create HDF5 datasets.
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::FieldFactory</span></code> provides two static member functions capable
+of creating chunked and contiguous HDF5 datasets.</p>
+<p>To create a simple dataset use</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">dataspace</span><span class="o">::</span><span class="n">Scalar</span> <span class="n">space</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">type</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">datatype</span><span class="o">::</span><span class="n">create</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Dataset</span> <span class="n">number_of_frames</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">FieldFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;number_of_frames&quot;</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="n">space</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As you may know, such fields cannot be extended and are thus only useful
+for static data. If you want an extensible dataset a chunked layout should
+be chosen.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">type</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">datatype</span><span class="o">::</span><span class="n">create</span><span class="o">&lt;</span><span class="n">uint16</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="n">hdf5</span><span class="o">::</span><span class="n">dataspace</span><span class="o">::</span><span class="n">Simple</span> <span class="n">space</span><span class="p">{{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">},{</span><span class="n">hdf5</span><span class="o">::</span><span class="n">dataspace</span><span class="o">::</span><span class="n">Simple</span><span class="o">::</span><span class="n">UNLIMITED</span><span class="p">,</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">}};</span>
+<span class="n">hdf5</span><span class="o">::</span><span class="n">Dimensions</span> <span class="n">chunk_shape</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">};</span>
+
+<span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Dataset</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">FieldFactory</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;frames&quot;</span><span class="p">,</span><span class="n">type</span><span class="p">,</span><span class="n">space</span><span class="p">,</span><span class="n">chunk_shape</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The major additional task the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> function of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::FieldFactory</span></code> does is to check whether the new name of the
+field complies to the NeXus naming rules.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating objects</a><ul>
+<li><a class="reference internal" href="#creating-base-classes">Creating base classes</a></li>
+<li><a class="reference internal" href="#creating-fields">Creating fields</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_files.html"
+                        title="previous chapter">Working with files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_retrieval.html"
+                        title="next chapter">Retrieving objects</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_retrieval.html" title="Retrieving objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_files.html" title="Working with files"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Creating objects</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

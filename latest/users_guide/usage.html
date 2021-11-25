@@ -1,0 +1,197 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using the library &#8212; libpninexus 2.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Legacy formats" href="legacy.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="legacy.html" title="Legacy formats"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Users guide</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Using the library</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-the-library">
+<h1>Using the library<a class="headerlink" href="#using-the-library" title="Permalink to this headline">¶</a></h1>
+<p id="nexus-quickstart">This chapter describes how you can use <em>libpninexus</em> from within your own
+C++ project. As already mentioned in the installation chapter, <em>libpninexus</em> uses
+<strong class="program">cmake</strong> as its build tool. In addition it also exports a <em>cmake-package</em>
+providing access to all the installation details.</p>
+<p>For all the following examples we use the following minimal C++ program as
+an example</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;h5cpp/hdf5.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/nexus.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;hello.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">TRUNCATE</span><span class="p">);</span>
+
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>which we assume is the content of a file named <code class="file docutils literal notranslate"><span class="pre">hello.cpp</span></code>.</p>
+<div class="section" id="building-with-cmake">
+<h2>Building with <strong class="program">CMake</strong><a class="headerlink" href="#building-with-cmake" title="Permalink to this headline">¶</a></h2>
+<p>This is most probably the easierst case. As <em>libpninexus</em> also installs a
+<em>cmake-package</em> which provides an imported target using the library is
+fairly easy. For the code example above a sufficient <code class="file docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>
+file would look like this</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.5.0</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">hello</span> <span class="s">LANGUAGES</span> <span class="s">C</span> <span class="s">CXX</span> <span class="s">VERSION</span> <span class="s">0.0.1</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">pninexus</span> <span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="nb">add_executable</span><span class="p">(</span><span class="s">hello</span> <span class="s">hello.cpp</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello</span> <span class="s">pninexus</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><cite>pninexus</cite> in the <cite>target_link_library</cite> command is an imported target which
+contains all the information required to build and link with <em>libpninexus</em>.
+This includes</p>
+<ul class="simple">
+<li><p>the location of the library as well as all its dependencies</p></li>
+<li><p>the location of the header files.</p></li>
+</ul>
+</div>
+<div class="section" id="build-from-the-command-line">
+<h2>Build from the command line<a class="headerlink" href="#build-from-the-command-line" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Need to finish this section</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$&gt; g++ -std<span class="o">=</span>c++11 -otest test.cpp <span class="k">$(</span>pkg-config --cflags --libs pninexus<span class="k">)</span>
+</pre></div>
+</div>
+<p>There are two important remarks we have to make here. The first is the
+<cite>-std=c++11</cite> option. This tells the compiler to use the new C++11
+standard which is absolutely mandatory if you want to use <em>libpninexus</em>.
+the <cite>pkg-config</cite> command at the end of the command line includes all the
+necessary compiler and linker flags to build and link the code.</p>
+</div>
+<div class="section" id="build-with-a-makefile">
+<h2>Build with a Makefile<a class="headerlink" href="#build-with-a-makefile" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Need to finish this section</p>
+</div>
+<p><cite>pkg-config</cite> can be used in a Makefile by putting the following at the top
+of your Makefile</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">CPPFLAGS</span><span class="o">=</span>-O2 -g -std<span class="o">=</span>c++11 <span class="k">$(</span>shell pkg-config --cflags pninexus<span class="k">)</span>
+<span class="nv">LDFLAGS</span><span class="o">=</span><span class="k">$(</span>shell pkg-config --libs pninexus<span class="k">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using the library</a><ul>
+<li><a class="reference internal" href="#building-with-cmake">Building with <strong class="program">CMake</strong></a></li>
+<li><a class="reference internal" href="#build-from-the-command-line">Build from the command line</a></li>
+<li><a class="reference internal" href="#build-with-a-makefile">Build with a Makefile</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="legacy.html"
+                        title="next chapter">Legacy formats</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="legacy.html" title="Legacy formats"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Using the library</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

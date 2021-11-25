@@ -1,6 +1,0 @@
-# Site settings
-title: libpniio
-email: jan.kotanski@desy.de
-description: "libpniio"
-
-include: ['_sources', '_static', '_images', 'api', 'user_guide']
