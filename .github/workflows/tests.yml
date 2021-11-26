@@ -84,7 +84,6 @@ jobs:
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
              docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
              docker  exec build /bin/bash -c "mkdir -p ./${{ steps.extract_docver.outputs.docver }}"
-             ls -a
              docker  exec build /bin/bash -c "shopt -u dotglob && rm -rf ./${{ steps.extract_docver.outputs.docver }}/* "
              docker  exec build /bin/bash -c "mv -f build/doc/build/html/* ./${{ steps.extract_docver.outputs.docver }}/"
              docker  exec build /bin/bash -c "mv -f build/doc/api/html ./${{ steps.extract_docver.outputs.docver }}/doxygen"
@@ -94,7 +93,6 @@ jobs:
              docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\;"
              docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
              docker  exec build /bin/bash -c "rm -rf build"
-             ls -a
 
       - name: Deploy documentation
         if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
