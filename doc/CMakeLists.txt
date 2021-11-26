@@ -2,6 +2,7 @@
 
 configure_file(conf.py.in conf.py @ONLY)
 configure_file(index.rst index.rst COPYONLY)
+configure_file(index.html index.html COPYONLY)
 
 
 
