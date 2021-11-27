@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Installation &#8212; libpninexus 2.0.0 documentation</title>
+    <title>Installation &#8212; libpninexus (latest) documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="introduction.html" title="A general introduction to libpninexus"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus (latest) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Users guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
       </ul>
@@ -72,7 +72,8 @@ package sources you need to login as <cite>root</cite> user. Use <strong class="
 <strong class="command">sudo su</strong> on Debian and Ubuntu respectively.
 The first task is to add the GPG key of the HDRI repository to your local
 keyring</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget -q -O - http://repos.pni-hdri.de/debian_repo.pub.gpg <span class="p">|</span> apt-key add -
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ curl -s http://repos.pni-hdri.de/debian_repo.pub.gpg  <span class="p">|</span> gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg --import
+$ chmod <span class="m">644</span> /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 </pre></div>
 </div>
 <p>The return value of this command line should be <cite>OK</cite>.
@@ -82,8 +83,8 @@ For Debian (Bullseye) use</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget http://repos.pni-hdri.de/bullseye-pni-hdri.list
 </pre></div>
 </div>
-<p>and for Ubuntu (Hirsute)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget http://repos.pni-hdri.de/hirsute-pni-hdri.list
+<p>and for Ubuntu (Impish)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget http://repos.pni-hdri.de/impish-pni-hdri.list
 </pre></div>
 </div>
 <p>The packages are also available for Debian Buster, Stretch and Focal, Bionic, Groovy.</p>
@@ -214,13 +215,6 @@ be used the <span class="target" id="index-0"></span><code class="xref std std-e
   <h4>Next topic</h4>
   <p class="topless"><a href="usage.html"
                         title="next chapter">Using the library</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/users_guide/installation.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -230,7 +224,19 @@ be used the <span class="target" id="index-0"></span><code class="xref std std-e
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
         </div>
       </div>
       <div class="clearer"></div>
@@ -247,13 +253,13 @@ be used the <span class="target" id="index-0"></span><code class="xref std std-e
         <li class="right" >
           <a href="introduction.html" title="A general introduction to libpninexus"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus (latest) documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, Eugen Wintersberger.
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
     </div>
   </body>
