@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(pninexus
         LANGUAGES CXX C
-        VERSION 2.0.0)
+        # VERSION 3.0.0
+        VERSION 3.0
+	)
 include(CTest)
 
 
