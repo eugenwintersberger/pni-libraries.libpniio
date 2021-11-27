@@ -1,0 +1,489 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algorithms &#8212; libpninexus (latest) documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NeXus XML functions" href="nexus_xml.html" />
+    <link rel="prev" title="Path classes and functions" href="nexus_path.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_xml.html" title="NeXus XML functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_path.html" title="Path classes and functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus (latest) documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Algorithms</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="algorithms">
+<span id="nexus-api-algorithms"></span><h1>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline">¶</a></h1>
+<p><em>libpninexus</em>’s provides an extensive set algorithms related to NeXus. In
+particulare related to searching for particular base classes.</p>
+<div class="section" id="containers">
+<span id="nexus-api-containers"></span><h2>Containers<a class="headerlink" href="#containers" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus9GroupListE">
+<span id="_CPPv3N3pni5nexus9GroupListE"></span><span id="_CPPv2N3pni5nexus9GroupListE"></span><span id="pni::nexus::GroupList"></span><span class="target" id="classpni_1_1nexus_1_1GroupList"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">GroupList</code> : <em class="property">public</em> std::vector&lt;hdf5::node::Group&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus9GroupListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>list of HDF5 groups </p>
+<p>A specialization of std::list storing instances of hdf5::node::Group. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus9GroupList9GroupListERK8NodeList">
+<span id="_CPPv3N3pni5nexus9GroupList9GroupListERK8NodeList"></span><span id="_CPPv2N3pni5nexus9GroupList9GroupListERK8NodeList"></span><span id="pni::nexus::GroupList::GroupList__NodeListCR"></span><span class="target" id="classpni_1_1nexus_1_1GroupList_1a721ce889dc67c70939fe0dfbbe5032eb"></span><code class="sig-name descname">GroupList</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus8NodeListE" title="pni::nexus::NodeList">NodeList</a> &amp;<em>nodes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus9GroupList9GroupListERK8NodeList" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>conversion constructor </p>
+<p>This constructor is deliberately not marked as explicit. It is used to convert a list of nodes to a list of groups. This will only work if all nodes are indeed groups. Otherwise an exception is thrown.</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nodes</span></code>: reference to the original node list </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus9GroupList9GroupListEv">
+<span id="_CPPv3N3pni5nexus9GroupList9GroupListEv"></span><span id="_CPPv2N3pni5nexus9GroupList9GroupListEv"></span><span id="pni::nexus::GroupList::GroupList"></span><span class="target" id="classpni_1_1nexus_1_1GroupList_1a3b784ab86547aa2c2e86442cc76c2339"></span><code class="sig-name descname">GroupList</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni5nexus9GroupList9GroupListEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+<p>Use the compiler provided default implementation. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus11DatasetListE">
+<span id="_CPPv3N3pni5nexus11DatasetListE"></span><span id="_CPPv2N3pni5nexus11DatasetListE"></span><span id="pni::nexus::DatasetList"></span><span class="target" id="classpni_1_1nexus_1_1DatasetList"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">DatasetList</code> : <em class="property">public</em> std::vector&lt;hdf5::node::Dataset&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus11DatasetListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>list of datasets </p>
+<p>A specialization of std::vector storing instances of hdf5::node::Dataset; </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11DatasetList11DatasetListEv">
+<span id="_CPPv3N3pni5nexus11DatasetList11DatasetListEv"></span><span id="_CPPv2N3pni5nexus11DatasetList11DatasetListEv"></span><span id="pni::nexus::DatasetList::DatasetList"></span><span class="target" id="classpni_1_1nexus_1_1DatasetList_1a209a7a96056603e7885ceef95ed42cfb"></span><code class="sig-name descname">DatasetList</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni5nexus11DatasetList11DatasetListEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+<p>Use the compiler provided default implementation here </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11DatasetList11DatasetListERK8NodeList">
+<span id="_CPPv3N3pni5nexus11DatasetList11DatasetListERK8NodeList"></span><span id="_CPPv2N3pni5nexus11DatasetList11DatasetListERK8NodeList"></span><span id="pni::nexus::DatasetList::DatasetList__NodeListCR"></span><span class="target" id="classpni_1_1nexus_1_1DatasetList_1a73bae0ee7d0f777f126d511cedc03290"></span><code class="sig-name descname">DatasetList</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus8NodeListE" title="pni::nexus::NodeList">NodeList</a> &amp;<em>nodes</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11DatasetList11DatasetListERK8NodeList" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>implicit conversion constructor </p>
+<p>This constructor is deliberately not marked as explicit. It is used to convert a list of nodes to a list of groups. This will only work if all nodes are indeed groups. Otherwise an exception is thrown.</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nodes</span></code>: reference to the original node list </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus8NodeListE">
+<span id="_CPPv3N3pni5nexus8NodeListE"></span><span id="_CPPv2N3pni5nexus8NodeListE"></span><span id="pni::nexus::NodeList"></span><span class="target" id="classpni_1_1nexus_1_1NodeList"></span><em class="property">class </em><code class="sig-name descname">NodeList</code> : <em class="property">public</em> std::vector&lt;hdf5::node::Node&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus8NodeListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>list of HDF5 nodes </p>
+<p>A specialization of std::list storing instances of hdf5::node::Node; </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus13AttributeListE">
+<span id="_CPPv3N3pni5nexus13AttributeListE"></span><span id="_CPPv2N3pni5nexus13AttributeListE"></span><span id="pni::nexus::AttributeList"></span><span class="target" id="classpni_1_1nexus_1_1AttributeList"></span><em class="property">class </em><code class="sig-name descname">AttributeList</code> : <em class="property">public</em> std::vector&lt;hdf5::attribute::Attribute&gt;<a class="headerlink" href="#_CPPv4N3pni5nexus13AttributeListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="predicates">
+<span id="nexus-api-predicates"></span><h2>Predicates<a class="headerlink" href="#predicates" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus13NodePredicateE">
+<span id="_CPPv3N3pni5nexus13NodePredicateE"></span><span id="_CPPv2N3pni5nexus13NodePredicateE"></span><span id="pni::nexus::NodePredicate"></span><span class="target" id="classpni_1_1nexus_1_1NodePredicate"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">NodePredicate</code><a class="headerlink" href="#_CPPv4N3pni5nexus13NodePredicateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>abstract predicate interface for nodes </p>
+<p>This is the base class for all predicates related to HDF5 Node instances. </p>
+<p>Subclassed by <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">pni::nexus::IsBaseClass</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus13NodePredicateD0Ev">
+<span id="_CPPv3N3pni5nexus13NodePredicateD0Ev"></span><span id="_CPPv2N3pni5nexus13NodePredicateD0Ev"></span><span id="pni::nexus::NodePredicate::~NodePredicate"></span><span class="target" id="classpni_1_1nexus_1_1NodePredicate_1aa964bcdb313f84cd46f6fe8e7c4914f1"></span><code class="sig-name descname">~NodePredicate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus13NodePredicateD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>virtual destructor </p>
+<p>Required for inheritances </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5nexus13NodePredicateclERKN4hdf54node4NodeE">
+<span id="_CPPv3NK3pni5nexus13NodePredicateclERKN4hdf54node4NodeE"></span><span id="_CPPv2NK3pni5nexus13NodePredicateclERKN4hdf54node4NodeE"></span><span id="pni::nexus::NodePredicate::call-operator__hdf5::node::NodeCRC"></span><span class="target" id="classpni_1_1nexus_1_1NodePredicate_1a6b7c8d26a42eded792a1fe023d916342"></span>bool <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>node</em><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK3pni5nexus13NodePredicateclERKN4hdf54node4NodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>predicate operator </p>
+<p>Every specialization of this class has to implement this function.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true of the node matches the predicate, false otherwise </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">node</span></code>: reference to the node of interest </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus11IsBaseClassE">
+<span id="_CPPv3N3pni5nexus11IsBaseClassE"></span><span id="_CPPv2N3pni5nexus11IsBaseClassE"></span><span id="pni::nexus::IsBaseClass"></span><span class="target" id="classpni_1_1nexus_1_1IsBaseClass"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">IsBaseClass</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus13NodePredicateE" title="pni::nexus::NodePredicate">NodePredicate</a><a class="headerlink" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>predicate to search for base classes </p>
+<p>This predicate can be used in two particular ways <ul class="simple">
+<li><p>to search for any base class (when default constructed) </p></li>
+<li><p>to search for a specific base class when constructed with a class name</p></li>
+</ul>
+<p>//!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">using</span> <span class="n">GroupList</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="nb">list</span><span class="o">&lt;</span><span class="n">hdf5</span><span class="p">::</span><span class="n">node</span><span class="p">::</span><span class="n">Group</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="n">GroupList</span> <span class="n">detectors</span><span class="p">;</span>
+<span class="n">hdf5</span><span class="p">::</span><span class="n">node</span><span class="p">::</span><span class="n">Group</span> <span class="n">entry</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
+
+<span class="n">std</span><span class="p">::</span><span class="n">copy_if</span><span class="p">(</span><span class="n">node</span><span class="p">::</span><span class="n">RecursiveNodeIterator</span><span class="p">::</span><span class="n">begin</span><span class="p">(</span><span class="n">entry</span><span class="p">),</span>
+             <span class="n">node</span><span class="p">::</span><span class="n">RecursiveNodeIterator</span><span class="p">::</span><span class="n">end</span><span class="p">(</span><span class="n">entry</span><span class="p">),</span>
+             <span class="n">std</span><span class="p">::</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">detectors</span><span class="p">),</span>
+             <span class="n">IsBaseClass</span><span class="p">(</span><span class="s2">&quot;NXdetector&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+ </p>
+<p>Subclassed by <a class="reference internal" href="#classpni_1_1nexus_1_1IsData"><span class="std std-ref">pni::nexus::IsData</span></a>, <a class="reference internal" href="#classpni_1_1nexus_1_1IsDetector"><span class="std std-ref">pni::nexus::IsDetector</span></a>, <a class="reference internal" href="#classpni_1_1nexus_1_1IsEntry"><span class="std std-ref">pni::nexus::IsEntry</span></a>, <a class="reference internal" href="#classpni_1_1nexus_1_1IsInstrument"><span class="std std-ref">pni::nexus::IsInstrument</span></a>, <a class="reference internal" href="#classpni_1_1nexus_1_1IsSample"><span class="std std-ref">pni::nexus::IsSample</span></a>, <a class="reference internal" href="#classpni_1_1nexus_1_1IsSubentry"><span class="std std-ref">pni::nexus::IsSubentry</span></a>, <a class="reference internal" href="#classpni_1_1nexus_1_1IsTransformation"><span class="std std-ref">pni::nexus::IsTransformation</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassEv">
+<span id="_CPPv3N3pni5nexus11IsBaseClass11IsBaseClassEv"></span><span id="_CPPv2N3pni5nexus11IsBaseClass11IsBaseClassEv"></span><span id="pni::nexus::IsBaseClass::IsBaseClass"></span><span class="target" id="classpni_1_1nexus_1_1IsBaseClass_1a65d03b6f6522c85363848ed54f8d2c56"></span><code class="sig-name descname">IsBaseClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+<p>We use the compiler provided default implementation. When instantiated with the default constructor this predicate will match every base class. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassERKNSt6stringE">
+<span id="_CPPv3N3pni5nexus11IsBaseClass11IsBaseClassERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus11IsBaseClass11IsBaseClassERKNSt6stringE"></span><span id="pni::nexus::IsBaseClass::IsBaseClass__ssCR"></span><span class="target" id="classpni_1_1nexus_1_1IsBaseClass_1a59adea444e0cca5166000561d580a660"></span><code class="sig-name descname">IsBaseClass</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+<p>A predicate instantiated with this constructor searches for a particular type of base class. The type is determined by the name argument of the constructor.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: the name of the base class to match </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassERK11IsBaseClass">
+<span id="_CPPv3N3pni5nexus11IsBaseClass11IsBaseClassERK11IsBaseClass"></span><span id="_CPPv2N3pni5nexus11IsBaseClass11IsBaseClassERK11IsBaseClass"></span><span id="pni::nexus::IsBaseClass::IsBaseClass__IsBaseClassCR"></span><span class="target" id="classpni_1_1nexus_1_1IsBaseClass_1aaedfa7c7bca6c37119debdd35c92a2a5"></span><code class="sig-name descname">IsBaseClass</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassERK11IsBaseClass" title="pni::nexus::IsBaseClass::IsBaseClass">IsBaseClass</a>&amp;<span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni5nexus11IsBaseClass11IsBaseClassERK11IsBaseClass" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor </p>
+<p>We use the compiler provided default implementation here. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11IsBaseClassD0Ev">
+<span id="_CPPv3N3pni5nexus11IsBaseClassD0Ev"></span><span id="_CPPv2N3pni5nexus11IsBaseClassD0Ev"></span><span id="pni::nexus::IsBaseClass::~IsBaseClass"></span><span class="target" id="classpni_1_1nexus_1_1IsBaseClass_1a5be6d40f92de282f879c15b73508d32b"></span><code class="sig-name descname">~IsBaseClass</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11IsBaseClassD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>virtual destructor </p>
+<p>Required for inheritance. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5nexus11IsBaseClassclERKN4hdf54node4NodeE">
+<span id="_CPPv3NK3pni5nexus11IsBaseClassclERKN4hdf54node4NodeE"></span><span id="_CPPv2NK3pni5nexus11IsBaseClassclERKN4hdf54node4NodeE"></span><span id="pni::nexus::IsBaseClass::call-operator__hdf5::node::NodeCRC"></span><span class="target" id="classpni_1_1nexus_1_1IsBaseClass_1a35bd5e7bcfd17e496af2793b81247bb8"></span>bool <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>node</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5nexus11IsBaseClassclERKN4hdf54node4NodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>function call operator </p>
+<p>Returns true if the node matches the predicate, false otherwise. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">node</span></code>: reference to the node to check </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus6IsDataE">
+<span id="_CPPv3N3pni5nexus6IsDataE"></span><span id="_CPPv2N3pni5nexus6IsDataE"></span><span id="pni::nexus::IsData"></span><span class="target" id="classpni_1_1nexus_1_1IsData"></span><em class="property">class </em><code class="sig-name descname">IsData</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus6IsDataE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches NXdata </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches NXdata </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus10IsDetectorE">
+<span id="_CPPv3N3pni5nexus10IsDetectorE"></span><span id="_CPPv2N3pni5nexus10IsDetectorE"></span><span id="pni::nexus::IsDetector"></span><span class="target" id="classpni_1_1nexus_1_1IsDetector"></span><em class="property">class </em><code class="sig-name descname">IsDetector</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus10IsDetectorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches NXdetector </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches NXdetector </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus7IsEntryE">
+<span id="_CPPv3N3pni5nexus7IsEntryE"></span><span id="_CPPv2N3pni5nexus7IsEntryE"></span><span id="pni::nexus::IsEntry"></span><span class="target" id="classpni_1_1nexus_1_1IsEntry"></span><em class="property">class </em><code class="sig-name descname">IsEntry</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus7IsEntryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches NXentry </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches an NXentry </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus12IsInstrumentE">
+<span id="_CPPv3N3pni5nexus12IsInstrumentE"></span><span id="_CPPv2N3pni5nexus12IsInstrumentE"></span><span id="pni::nexus::IsInstrument"></span><span class="target" id="classpni_1_1nexus_1_1IsInstrument"></span><em class="property">class </em><code class="sig-name descname">IsInstrument</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus12IsInstrumentE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches NXinstrument </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches NXinstrument </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus8IsSampleE">
+<span id="_CPPv3N3pni5nexus8IsSampleE"></span><span id="_CPPv2N3pni5nexus8IsSampleE"></span><span id="pni::nexus::IsSample"></span><span class="target" id="classpni_1_1nexus_1_1IsSample"></span><em class="property">class </em><code class="sig-name descname">IsSample</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus8IsSampleE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches NXsample </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches NXsample </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus10IsSubentryE">
+<span id="_CPPv3N3pni5nexus10IsSubentryE"></span><span id="_CPPv2N3pni5nexus10IsSubentryE"></span><span id="pni::nexus::IsSubentry"></span><span class="target" id="classpni_1_1nexus_1_1IsSubentry"></span><em class="property">class </em><code class="sig-name descname">IsSubentry</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus10IsSubentryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches NXsubentry </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches NXsubentry </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus16IsTransformationE">
+<span id="_CPPv3N3pni5nexus16IsTransformationE"></span><span id="_CPPv2N3pni5nexus16IsTransformationE"></span><span id="pni::nexus::IsTransformation"></span><span class="target" id="classpni_1_1nexus_1_1IsTransformation"></span><em class="property">class </em><code class="sig-name descname">IsTransformation</code> : <em class="property">public</em> pni::nexus::<a class="reference internal" href="#_CPPv4N3pni5nexus11IsBaseClassE" title="pni::nexus::IsBaseClass">IsBaseClass</a><a class="headerlink" href="#_CPPv4N3pni5nexus16IsTransformationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>matches an NXtransformations </p>
+<p>Child class of <a class="reference internal" href="#classpni_1_1nexus_1_1IsBaseClass"><span class="std std-ref">IsBaseClass</span></a> that matches an NXtransformation. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus16IsValidNeXusNameE">
+<span id="_CPPv3N3pni5nexus16IsValidNeXusNameE"></span><span id="_CPPv2N3pni5nexus16IsValidNeXusNameE"></span><span id="pni::nexus::IsValidNeXusName"></span><span class="target" id="classpni_1_1nexus_1_1IsValidNeXusName"></span><em class="property">class </em><code class="sig-name descname">IsValidNeXusName</code><a class="headerlink" href="#_CPPv4N3pni5nexus16IsValidNeXusNameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>predicate checking a NeXus name </p>
+<p>This predicate is checking a string if it is a valid NeXus name. The regular expression used for this check is given <a class="reference external" href="http://download.nexusformat.org/doc/html/datarules.html?highlight=valid%20name">here</a>. </p>
+</dd></dl>
+
+</div>
+<div class="section" id="searching">
+<span id="nexus-api-searching"></span><h2>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
+<p>There is a single search function which, in connection with the above
+predicates can be used to retrieve any node from a NeXus tree.</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus6searchERKN4hdf54node5GroupERK13NodePredicateb">
+<span id="_CPPv3N3pni5nexus6searchERKN4hdf54node5GroupERK13NodePredicateb"></span><span id="_CPPv2N3pni5nexus6searchERKN4hdf54node5GroupERK13NodePredicateb"></span><span id="pni::nexus::search__hdf5::node::GroupCR.NodePredicateCR.b"></span><span class="target" id="namespacepni_1_1nexus_1afbb2b9e0c66313eb53dcf1441007a8fc"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5nexus8NodeListE" title="pni::nexus::NodeList">NodeList</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Group &amp;<em>base</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5nexus13NodePredicateE" title="pni::nexus::NodePredicate">NodePredicate</a> &amp;<em>predicate</em>, bool <em>recursive</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus6searchERKN4hdf54node5GroupERK13NodePredicateb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>search for nodes satisfying a predicate </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an instance of <a class="reference internal" href="#classpni_1_1nexus_1_1NodeList"><span class="std std-ref">NodeList</span></a> with all nodes satisfying the predicate </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base</span></code>: reference to the group where to start the search </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predicate</span></code>: the predicate to select a node </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recursive</span></code>: if true perform a recursive search </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11get_type_idERKN4hdf59attribute9AttributeE">
+<span id="_CPPv3N3pni5nexus11get_type_idERKN4hdf59attribute9AttributeE"></span><span id="_CPPv2N3pni5nexus11get_type_idERKN4hdf59attribute9AttributeE"></span><span id="pni::nexus::get_type_id__hdf5::attribute::AttributeCR"></span><span class="target" id="namespacepni_1_1nexus_1aca4d253d6bff93a941c978d3e08fae37"></span>PNINEXUS_EXPORT pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_type_id</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::attribute::Attribute &amp;<em>attribute</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11get_type_idERKN4hdf59attribute9AttributeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return the type_id of an attribute </p>
+<p>If the underlying data type is unkonwn NONE is returned.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type_id_t enumeration </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">attribute</span></code>: reference to the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus11get_type_idERKN4hdf54node7DatasetE">
+<span id="_CPPv3N3pni5nexus11get_type_idERKN4hdf54node7DatasetE"></span><span id="_CPPv2N3pni5nexus11get_type_idERKN4hdf54node7DatasetE"></span><span id="pni::nexus::get_type_id__hdf5::node::DatasetCR"></span><span class="target" id="namespacepni_1_1nexus_1acc5a159429ad538707a8eddeaf608e42"></span>PNINEXUS_EXPORT pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_type_id</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Dataset &amp;<em>dataset</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11get_type_idERKN4hdf54node7DatasetE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return the type_id of a dataset </p>
+<p>If the underlying data type is unkonwn NONE is returned.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type_id_t enumeration </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset</span></code>: reference to the dataset </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus14get_dimensionsERKN4hdf59attribute9AttributeE">
+<span id="_CPPv3N3pni5nexus14get_dimensionsERKN4hdf59attribute9AttributeE"></span><span id="_CPPv2N3pni5nexus14get_dimensionsERKN4hdf59attribute9AttributeE"></span><span id="pni::nexus::get_dimensions__hdf5::attribute::AttributeCR"></span><span class="target" id="namespacepni_1_1nexus_1af6be92ff3bcc1e5b1b91041b72d02a5c"></span>PNINEXUS_EXPORT hdf5::Dimensions <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_dimensions</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::attribute::Attribute &amp;<em>attribute</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus14get_dimensionsERKN4hdf59attribute9AttributeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get the current dimensions of an attribute </p>
+<p>If the attribute is scalar {1} is returned. Otherwise the current dimensions of the attribute are returned.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of hdf5::Dimensions with the current dimensions </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">attribute</span></code>: reference to the attribute </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus14get_dimensionsERKN4hdf54node7DatasetE">
+<span id="_CPPv3N3pni5nexus14get_dimensionsERKN4hdf54node7DatasetE"></span><span id="_CPPv2N3pni5nexus14get_dimensionsERKN4hdf54node7DatasetE"></span><span id="pni::nexus::get_dimensions__hdf5::node::DatasetCR"></span><span class="target" id="namespacepni_1_1nexus_1abde3156c9ce814c106b47df03715fc44"></span>PNINEXUS_EXPORT hdf5::Dimensions <code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">get_dimensions</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Dataset &amp;<em>dataset</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus14get_dimensionsERKN4hdf54node7DatasetE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get the current dimensions of a dataset </p>
+<p>If the dataset is scalar {1} is returned. Otherwise the current dimensions of the dataset are returned.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of hdf5::Dimensions with the current dimensions </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dataset</span></code>: reference to the dataset </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Algorithms</a><ul>
+<li><a class="reference internal" href="#containers">Containers</a></li>
+<li><a class="reference internal" href="#predicates">Predicates</a></li>
+<li><a class="reference internal" href="#searching">Searching</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_path.html"
+                        title="previous chapter">Path classes and functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_xml.html"
+                        title="next chapter">NeXus XML functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_xml.html" title="NeXus XML functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_path.html" title="Path classes and functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus (latest) documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Algorithms</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
