@@ -26,6 +26,14 @@ RUN conan remote add conan-community https://api.bintray.com/conan/conan-communi
 RUN conan remote add conan-center https://conan.bintray.com
 RUN conan remote add conan-transit https://conan-transit.bintray.com
 
+# install latest h5cpp
+RUN mkdir -p /opt/h5cpp
+RUN mkdir -p /h5cpp-src
+RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
+RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DCONAN=DISABLE -DDISABLE_TESTS=True  ../h5cpp && make install -j4
+ENV CPLUS_INCLUDE_PATH=/opt/h5cpp/include
+ENV LD_LIBRARY_PATH=/opt/h5cpp/lib
+
 RUN conan user
 RUN mkdir /src
 WORKDIR /src
