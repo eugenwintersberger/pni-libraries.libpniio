@@ -49,7 +49,7 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
     //! This function is intended for internal use only. It creates a valid
     //! attribute path from an attribute name.
     //!
-    //! @param name the name of the attribute
+    //! @param attribute_name the name of the attribute
     //! @return a valid property tree attribute path
     //!
     static std::string attribute_path(const std::string &attribute_name);
@@ -92,9 +92,7 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
     //! @throws key_error if the attribute does not exist
     //! @throws parser_error in case of any other error
     //!
-    //! @param parent the node from which to retrieve the attribute
     //! @param name the name of the attribute
-    //! @param node representing the attribute
     //!
     Node attribute(const std::string &name) const;
 
@@ -106,7 +104,6 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
     //! Returns true if the node parent has a an attribute name attached to it.
     //! Otherwise false is returned.
     //!
-    //! @param parent reference to the parent node
     //! @param name the attributes name
     //! @return true if the attribute exists, false otherwise
     //!
@@ -120,7 +117,6 @@ class PNIIO_EXPORT Node : public boost::property_tree::ptree
     //! If the node does not have a name attribute an empty string is
     //! returned.
     //!
-    //! @param n node with name attribute
     //! @return content of the name attribute of a tag
     //!
     std::string name() const;

@@ -52,9 +52,8 @@ namespace tiff{
             //! begining of the entries data section. The method does no 
             //! repositioning of the stream once it is finished. This must be 
             //! done by the calling function or method.
-            //! \param r number of elements to read
+            //! \param r vector of RTYPE values holding the result
             //! \param stream input stream from which to read data
-            //! \return vector of RTYPE values holding the result
             //!
             static void read(std::vector<RTYPE> &r,std::ifstream &stream);
     };
