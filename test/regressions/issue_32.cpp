@@ -54,7 +54,7 @@ RegressionIssue32::RegressionIssue32()
   dcpl.chunk(hdf5::Dimensions{1,1556,516});
 
   hdf5::datatype::Datatype dtype = hdf5::datatype::create<unsigned short>();
-  hdf5::dataspace::Simple dspace(stack_dimensions,hdf5::Dimensions{hdf5::dataspace::Simple::UNLIMITED,1556,516});
+  hdf5::dataspace::Simple dspace(stack_dimensions,hdf5::Dimensions{hdf5::dataspace::Simple::unlimited,1556,516});
   image_stack = hdf5::node::Dataset(root_group,hdf5::Path("data"),dtype,dspace,lcpl,dcpl);
 }
 

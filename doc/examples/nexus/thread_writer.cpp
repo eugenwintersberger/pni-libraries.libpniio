@@ -50,7 +50,7 @@ void Writer::_init_log()
 
   //create a field with holding the timestamp when the
   //log was created
-  hdf5::dataspace::Simple space{{0},{hdf5::dataspace::Simple::UNLIMITED}};
+  hdf5::dataspace::Simple space{{0},{hdf5::dataspace::Simple::unlimited}};
   auto type = hdf5::datatype::create<std::string>();
 
   hdf5::node::Dataset(g,"create",type,hdf5::dataspace::Scalar()).write(nexus::DateTime::get_date_time_str());

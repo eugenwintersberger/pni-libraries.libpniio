@@ -41,7 +41,7 @@ struct FieldFactoryTestFixture
 
     type = hdf5::datatype::create<uint16>();
     simple_space = hdf5::dataspace::Simple({0,1024,1024},
-                                           {hdf5::dataspace::Simple::UNLIMITED,1024,1024});
+                                           {hdf5::dataspace::Simple::unlimited,1024,1024});
   }
 };
 
