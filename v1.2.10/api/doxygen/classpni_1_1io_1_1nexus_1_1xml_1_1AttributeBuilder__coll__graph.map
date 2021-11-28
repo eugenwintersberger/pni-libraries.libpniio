@@ -1,0 +1,10 @@
+<map id="pni::io::nexus::xml::AttributeBuilder" name="pni::io::nexus::xml::AttributeBuilder">
+<area shape="rect" id="node1" title=" " alt="" coords="795,108,924,149"/>
+<area shape="rect" id="node2" href="$classpni_1_1io_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="498,5,627,47"/>
+<area shape="rect" id="node3" href="$classpni_1_1io_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="193,13,380,39"/>
+<area shape="rect" id="node4" href="$classpni_1_1io_1_1nexus_1_1xml_1_1Node.html" title="alias for ptree" alt="" coords="222,115,351,156"/>
+<area shape="rect" id="node6" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DataWriter.html" title=" " alt="" coords="498,71,627,112"/>
+<area shape="rect" id="node7" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DataspaceBuilder.html" title=" " alt="" coords="496,136,629,177"/>
+<area shape="rect" id="node8" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DatatypeBuilder.html" title="builds datatypes from XML nodes" alt="" coords="498,201,627,243"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,115,144,156"/>
+</map>

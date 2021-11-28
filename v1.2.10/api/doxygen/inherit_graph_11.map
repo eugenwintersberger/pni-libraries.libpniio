@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classpni_1_1io_1_1data__reader.html" title="base class for data readers" alt="" coords="5,81,139,108"/>
+<area shape="rect" id="node2" href="$classpni_1_1io_1_1image__reader.html" title="base class for image readers" alt="" coords="187,52,329,79"/>
+<area shape="rect" id="node5" href="$classpni_1_1io_1_1spreadsheet__reader.html" title="base class for spreadsheet reader" alt="" coords="190,103,326,145"/>
+<area shape="rect" id="node3" href="$classpni_1_1io_1_1cbf__reader.html" title="base clase for CBF readers" alt="" coords="377,5,504,32"/>
+<area shape="rect" id="node4" href="$classpni_1_1io_1_1tiff__reader.html" title="TIFF file reader." alt="" coords="379,56,502,83"/>
+<area shape="rect" id="node6" href="$classpni_1_1io_1_1fio__reader.html" title="FIO data reader." alt="" coords="379,111,502,137"/>
+</map>

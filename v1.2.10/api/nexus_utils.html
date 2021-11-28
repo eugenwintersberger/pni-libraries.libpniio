@@ -1,0 +1,380 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utility functions and classes &#8212; pniio 1.2.10 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="NeXus XML functions" href="nexus_xml.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_xml.html" title="NeXus XML functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Utility functions and classes</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="utility-functions-and-classes">
+<span id="nexus-api-utils"></span><h1>Utility functions and classes<a class="headerlink" href="#utility-functions-and-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pni-io-nexus-version">
+<h2><a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::nexus::Version</span></code></a><a class="headerlink" href="#pni-io-nexus-version" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni2io5nexus7VersionE">
+<span id="_CPPv3N3pni2io5nexus7VersionE"></span><span id="_CPPv2N3pni2io5nexus7VersionE"></span><span id="pni::io::nexus::Version"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version"></span><em class="property">class </em><code class="sig-prename descclassname">pni::io::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Version</code><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>a 3 number version class </p>
+<p>Describes a version number. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3pni2io5nexus7Version10NumberTypeE">
+<span id="_CPPv3N3pni2io5nexus7Version10NumberTypeE"></span><span id="_CPPv2N3pni2io5nexus7Version10NumberTypeE"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a25ee42db5dccc3638c6c4192be8648f3"></span><em class="property">using </em><code class="sig-name descname">NumberType</code> = unsigned long<a class="headerlink" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>the number type used to represent version numbers </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7Version7VersionEv">
+<span id="_CPPv3N3pni2io5nexus7Version7VersionEv"></span><span id="_CPPv2N3pni2io5nexus7Version7VersionEv"></span><span id="pni::io::nexus::Version::Version"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a562ef386e97ab7c7a4368e0e73fc05db"></span><code class="sig-name descname">Version</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4N3pni2io5nexus7Version7VersionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+<p>Set all three version numbers to 0 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7Version7VersionE10NumberType10NumberType10NumberType">
+<span id="_CPPv3N3pni2io5nexus7Version7VersionE10NumberType10NumberType10NumberType"></span><span id="_CPPv2N3pni2io5nexus7Version7VersionE10NumberType10NumberType10NumberType"></span><span id="pni::io::nexus::Version::Version__NumberType.NumberType.NumberType"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a77e5ab1982b20297f710248b5da412c1"></span><code class="sig-name descname">Version</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="pni::io::nexus::Version::NumberType">NumberType</a> <em>major</em>, <a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="pni::io::nexus::Version::NumberType">NumberType</a> <em>minor</em>, <a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="pni::io::nexus::Version::NumberType">NumberType</a> <em>patch</em><span class="sig-paren">)</span> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4N3pni2io5nexus7Version7VersionE10NumberType10NumberType10NumberType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">major</span></code>: the major version number </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">minor</span></code>: the minor version number </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">patch</span></code>: the patch version number </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7Version7VersionERK7Version">
+<span id="_CPPv3N3pni2io5nexus7Version7VersionERK7Version"></span><span id="_CPPv2N3pni2io5nexus7Version7VersionERK7Version"></span><span id="pni::io::nexus::Version::Version__VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a15bc015787cd47e35ec0a3ec837f4086"></span><code class="sig-name descname">Version</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version7VersionERK7Version" title="pni::io::nexus::Version::Version">Version</a>&amp;<span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni2io5nexus7Version7VersionERK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor </p>
+<p>We can use the compiler provided default implementation here as all members are trivially copyable. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni2io5nexus7Version5majorEv">
+<span id="_CPPv3NK3pni2io5nexus7Version5majorEv"></span><span id="_CPPv2NK3pni2io5nexus7Version5majorEv"></span><span id="pni::io::nexus::Version::majorC"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a65955f0cd9b71f1c6be837f1b2ca1858"></span><a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="pni::io::nexus::Version::NumberType">NumberType</a> <code class="sig-name descname">major</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni2io5nexus7Version5majorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return the major version number </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni2io5nexus7Version5minorEv">
+<span id="_CPPv3NK3pni2io5nexus7Version5minorEv"></span><span id="_CPPv2NK3pni2io5nexus7Version5minorEv"></span><span id="pni::io::nexus::Version::minorC"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1ae4b1508ca5fae88b3042031e9b54b3a1"></span><a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="pni::io::nexus::Version::NumberType">NumberType</a> <code class="sig-name descname">minor</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni2io5nexus7Version5minorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return the minor version number </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni2io5nexus7Version5patchEv">
+<span id="_CPPv3NK3pni2io5nexus7Version5patchEv"></span><span id="_CPPv2NK3pni2io5nexus7Version5patchEv"></span><span id="pni::io::nexus::Version::patchC"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a65c4f7355c3830c6a41c68021b65e339"></span><a class="reference internal" href="#_CPPv4N3pni2io5nexus7Version10NumberTypeE" title="pni::io::nexus::Version::NumberType">NumberType</a> <code class="sig-name descname">patch</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni2io5nexus7Version5patchEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return the patch version number </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7Version11from_stringERKNSt6stringE">
+<span id="_CPPv3N3pni2io5nexus7Version11from_stringERKNSt6stringE"></span><span id="_CPPv2N3pni2io5nexus7Version11from_stringERKNSt6stringE"></span><span id="pni::io::nexus::Version::from_string__ssCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a28c915b73865a56b9e8ab90db6bf6e34"></span><a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> <code class="sig-name descname">from_string</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>str</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7Version11from_stringERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read version from a string </p>
+<p>The string must be formated as <em>MAJOR.MINOR.PATCH</em>. Otherwise a runtime exception will be thrown. Incomplete version numbers are permitted starting from <em>MAJOR</em> downwards. Non-existing elements of the version are assumed to be 0.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>a new instance of <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in the case of a malformed input string</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">str</span></code>: the string with the version number </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7Version9to_stringERK7Version">
+<span id="_CPPv3N3pni2io5nexus7Version9to_stringERK7Version"></span><span id="_CPPv2N3pni2io5nexus7Version9to_stringERK7Version"></span><span id="pni::io::nexus::Version::to_string__VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1af0c2611e3b6da756bf11d9d53511df14"></span>std::string <code class="sig-name descname">to_string</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7Version9to_stringERK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>convert a <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> to a string </p>
+<p>The result is a string with the format <em>MAJOR.MINOR.PATCH</em>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>a new instance of std::string </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code>: reference to a instance of <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Related</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersionlsERNSt7ostreamERK7Version">
+<span id="_CPPv3N3pni2io5nexus7VersionlsERNSt7ostreamERK7Version"></span><span id="_CPPv2N3pni2io5nexus7VersionlsERNSt7ostreamERK7Version"></span><span id="pni::io::nexus::Version::lshift-operator__osR.VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a443e8691058cb49b5bc5465419dc9606"></span>PNIIO_EXPORT std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>stream</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersionlsERNSt7ostreamERK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output stream operator </p>
+<p>Writes an instance of <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> to a std::ostream. The output format is the same as for <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version_1af0c2611e3b6da756bf11d9d53511df14"><span class="std std-ref">Version::to_string</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>modified version of std::ostream </p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version_1af0c2611e3b6da756bf11d9d53511df14"><span class="std std-ref">Version::to_string</span></a> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code>: the stream where to write the version </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code>: reference to the <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> to write </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersionrsERNSt7istreamER7Version">
+<span id="_CPPv3N3pni2io5nexus7VersionrsERNSt7istreamER7Version"></span><span id="_CPPv2N3pni2io5nexus7VersionrsERNSt7istreamER7Version"></span><span id="pni::io::nexus::Version::rshift-operator__isR.VersionR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1ab9b4b943b111d27088c51fba2f762d27"></span>PNIIO_EXPORT std::istream &amp;<code class="sig-name descname">operator&gt;&gt;</code><span class="sig-paren">(</span>std::istream &amp;<em>stream</em>, <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>version</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersionrsERNSt7istreamER7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>input stream operator </p>
+<p>Read an instance of <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> from a stream. The input format expected is the same as for <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version_1a28c915b73865a56b9e8ab90db6bf6e34"><span class="std std-ref">Version::from_string</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>modified input stream </p>
+</dd>
+<dt><strong>See</strong></dt><dd><p><a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version_1a28c915b73865a56b9e8ab90db6bf6e34"><span class="std std-ref">Version::from_string</span></a> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code>: reference to the stream from which to read the <a class="reference internal" href="#classpni_1_1io_1_1nexus_1_1Version"><span class="std std-ref">Version</span></a> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">version</span></code>: reference to the version to which to read </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersioneqERK7VersionRK7Version">
+<span id="_CPPv3N3pni2io5nexus7VersioneqERK7VersionRK7Version"></span><span id="_CPPv2N3pni2io5nexus7VersioneqERK7VersionRK7Version"></span><span id="pni::io::nexus::Version::eq-operator__VersionCR.VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1ad78355b5769fe1baca6e8ec6aca02631"></span>PNIIO_EXPORT bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersioneqERK7VersionRK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>checks two version for equality </p>
+<p>Two version are considered equal if all of their parts are equal.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if versions are equal, false otherwise </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the left hand side version </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the right hand side version </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersionneERK7VersionRK7Version">
+<span id="_CPPv3N3pni2io5nexus7VersionneERK7VersionRK7Version"></span><span id="_CPPv2N3pni2io5nexus7VersionneERK7VersionRK7Version"></span><span id="pni::io::nexus::Version::neq-operator__VersionCR.VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a20eab86dddba41fa511ce3f236959fe8"></span>PNIIO_EXPORT bool <code class="sig-name descname">operator!=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersionneERK7VersionRK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>checks if two versions are not equal </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>true if versions are not equal, false otherwise </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the left hand side version </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the right hand side version </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersionltERK7VersionRK7Version">
+<span id="_CPPv3N3pni2io5nexus7VersionltERK7VersionRK7Version"></span><span id="_CPPv2N3pni2io5nexus7VersionltERK7VersionRK7Version"></span><span id="pni::io::nexus::Version::lt-operator__VersionCR.VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a58d2f221c0e3e19cb2653ba7b639530c"></span>PNIIO_EXPORT bool <code class="sig-name descname">operator&lt;</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersionltERK7VersionRK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>checks if the left version is strictly small than the right </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the left hand side version </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the right hand side version </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersiongeERK7VersionRK7Version">
+<span id="_CPPv3N3pni2io5nexus7VersiongeERK7VersionRK7Version"></span><span id="_CPPv2N3pni2io5nexus7VersiongeERK7VersionRK7Version"></span><span id="pni::io::nexus::Version::gte-operator__VersionCR.VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a3785f7d2f22d98e08b7390a8db8bf07d"></span>PNIIO_EXPORT bool <code class="sig-name descname">operator&gt;=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersiongeERK7VersionRK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>checks if the left version is bigger or equal than the right </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the left hand side version </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the right hand side version </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus7VersiongtERK7VersionRK7Version">
+<span id="_CPPv3N3pni2io5nexus7VersiongtERK7VersionRK7Version"></span><span id="_CPPv2N3pni2io5nexus7VersiongtERK7VersionRK7Version"></span><span id="pni::io::nexus::Version::gt-operator__VersionCR.VersionCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1Version_1a7d948f625a7b377fac2581e92a8667c8"></span>PNIIO_EXPORT bool <code class="sig-name descname">operator&gt;</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni2io5nexus7VersionE" title="pni::io::nexus::Version">Version</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus7VersiongtERK7VersionRK7Version" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>checks if the left version is strictly bigger than the right </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lhs</span></code>: reference to the left hand side version </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: reference to the right hand side version </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pni-io-nexus-datetime">
+<h2><a class="reference internal" href="#_CPPv4N3pni2io5nexus8DateTimeE" title="pni::io::nexus::DateTime"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::nexus::DateTime</span></code></a><a class="headerlink" href="#pni-io-nexus-datetime" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni2io5nexus8DateTimeE">
+<span id="_CPPv3N3pni2io5nexus8DateTimeE"></span><span id="_CPPv2N3pni2io5nexus8DateTimeE"></span><span id="pni::io::nexus::DateTime"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1DateTime"></span><em class="property">class </em><code class="sig-prename descclassname">pni::io::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">DateTime</code><a class="headerlink" href="#_CPPv4N3pni2io5nexus8DateTimeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>date time factory </p>
+<p>nxdate_time provides static methods to create date-time strings which are compliant to the Nexus standard. It is highly important for this class to work properly that the time zone setup is correct. Time-zone information can come either directly from the host machine the program is running on or can be configured manually if this setup is not correct. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus8DateTime17get_date_time_strEv">
+<span id="_CPPv3N3pni2io5nexus8DateTime17get_date_time_strEv"></span><span id="_CPPv2N3pni2io5nexus8DateTime17get_date_time_strEv"></span><span id="pni::io::nexus::DateTime::get_date_time_str"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1DateTime_1ad4d621c984d618dfe895dcea4b4545b8"></span>std::string <code class="sig-name descname">get_date_time_str</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus8DateTime17get_date_time_strEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>date-time now </p>
+<p>Returns a string with a Nexus compliant date-time string for now.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Nexus date-time string </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni2io5nexus8DateTime17get_date_time_strERK6time_t">
+<span id="_CPPv3N3pni2io5nexus8DateTime17get_date_time_strERK6time_t"></span><span id="_CPPv2N3pni2io5nexus8DateTime17get_date_time_strERK6time_t"></span><span id="pni::io::nexus::DateTime::get_date_time_str__time_tCR"></span><span class="target" id="classpni_1_1io_1_1nexus_1_1DateTime_1a7da74434b5c5cfabc282a3f53322d1c6"></span>std::string <code class="sig-name descname">get_date_time_str</code><span class="sig-paren">(</span><em class="property">const</em> time_t &amp;<em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni2io5nexus8DateTime17get_date_time_strERK6time_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>date-time at t </p>
+<p>Converts a given time in time_t format to a Nexus date-time string.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Nexus date-time string </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: time as time_t </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Utility functions and classes</a><ul>
+<li><a class="reference internal" href="#pni-io-nexus-version"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::nexus::Version</span></code></a></li>
+<li><a class="reference internal" href="#pni-io-nexus-datetime"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::io::nexus::DateTime</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_xml.html"
+                        title="previous chapter">NeXus XML functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_xml.html" title="NeXus XML functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">pniio 1.2.10 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Utility functions and classes</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
