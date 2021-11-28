@@ -39,16 +39,24 @@ jobs:
         # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all
-        run: docker  exec build /bin/bash -c "cd build && make all -j4"
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target all --config $BUILDTYPE -- -j4"
 
       - name: Build api_doc
-        run: docker  exec build /bin/bash -c "cd build && make api_doc"
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target api_doc --config $BUILDTYPE"
 
       - name: Build html
-        run: docker  exec build /bin/bash -c "cd build && make html"
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target html --config $BUILDTYPE"
 
       - name: Build check
-        run: docker  exec build /bin/bash -c "cd build && make check -j4"
+        env:
+          BUILDTYPE: ${{ matrix.buildtype }}
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE -- -j4"
 
       - name: Append documentation for the latest release version
         if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
