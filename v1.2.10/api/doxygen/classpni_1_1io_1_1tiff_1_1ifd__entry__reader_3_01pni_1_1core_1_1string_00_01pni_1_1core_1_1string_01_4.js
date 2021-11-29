@@ -1,0 +1,4 @@
+var classpni_1_1io_1_1tiff_1_1ifd__entry__reader_3_01pni_1_1core_1_1string_00_01pni_1_1core_1_1string_01_4 =
+[
+    [ "read", "classpni_1_1io_1_1tiff_1_1ifd__entry__reader_3_01pni_1_1core_1_1string_00_01pni_1_1core_1_1string_01_4.html#a5632422aac7b87d896dfaf611c469fd7", null ]
+];
