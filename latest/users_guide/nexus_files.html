@@ -84,7 +84,7 @@ wrapper function which in turn will return an instance of
 <p>The code should be rather self explaining.  If the file already exists a
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::runtime_error</span></code> exception is thrown.
 In order to overwrite an existing file one can use</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">TRUNCATE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">Truncate</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This option should be used with case as all data stored in the original file
@@ -108,7 +108,7 @@ to open a NeXus file.</p>
 </div>
 <p>By default files are opened in read-only mode in order to avoid accidental
 data manipulations. To open a file for reading and writing use</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">READWRITE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">ReadWrite</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The object returned by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code> is again an instance
