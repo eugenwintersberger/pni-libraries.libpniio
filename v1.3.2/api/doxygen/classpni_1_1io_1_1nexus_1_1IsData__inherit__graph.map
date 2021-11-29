@@ -1,0 +1,5 @@
+<map id="pni::io::nexus::IsData" name="pni::io::nexus::IsData">
+<area shape="rect" id="node1" title="matches NXdata" alt="" coords="29,155,176,181"/>
+<area shape="rect" id="node2" href="$classpni_1_1io_1_1nexus_1_1IsBaseClass.html" title="predicate to search for base classes" alt="" coords="11,80,194,107"/>
+<area shape="rect" id="node3" href="$classpni_1_1io_1_1nexus_1_1NodePredicate.html" title="abstract predicate interface for nodes" alt="" coords="5,5,200,32"/>
+</map>

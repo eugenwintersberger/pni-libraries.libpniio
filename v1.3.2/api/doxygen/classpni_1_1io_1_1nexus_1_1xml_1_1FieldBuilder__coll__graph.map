@@ -1,0 +1,11 @@
+<map id="pni::io::nexus::xml::FieldBuilder" name="pni::io::nexus::xml::FieldBuilder">
+<area shape="rect" id="node1" title=" " alt="" coords="1123,155,1252,197"/>
+<area shape="rect" id="node2" href="$classpni_1_1io_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="498,17,627,58"/>
+<area shape="rect" id="node3" href="$classpni_1_1io_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="193,5,380,32"/>
+<area shape="rect" id="node4" href="$classpni_1_1io_1_1nexus_1_1xml_1_1Node.html" title="alias for ptree" alt="" coords="222,149,351,190"/>
+<area shape="rect" id="node6" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DataWriter.html" title=" " alt="" coords="653,215,783,257"/>
+<area shape="rect" id="node7" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DataspaceBuilder.html" title=" " alt="" coords="496,149,629,190"/>
+<area shape="rect" id="node8" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DatatypeBuilder.html" title="builds datatypes from XML nodes" alt="" coords="653,274,783,315"/>
+<area shape="rect" id="node9" href="$classpni_1_1io_1_1nexus_1_1xml_1_1DatasetCreationListBuilder.html" title=" " alt="" coords="807,95,993,137"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,149,144,190"/>
+</map>

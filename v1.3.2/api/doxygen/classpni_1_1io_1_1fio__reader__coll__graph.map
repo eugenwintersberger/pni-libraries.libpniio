@@ -1,0 +1,12 @@
+<map id="pni::io::fio_reader" name="pni::io::fio_reader">
+<area shape="rect" id="node1" title="FIO data reader." alt="" coords="1047,141,1169,167"/>
+<area shape="rect" id="node2" href="$classpni_1_1io_1_1spreadsheet__reader.html" title="base class for spreadsheet reader" alt="" coords="777,60,913,101"/>
+<area shape="rect" id="node3" href="$classpni_1_1io_1_1data__reader.html" title="base class for data readers" alt="" coords="493,13,627,39"/>
+<area shape="rect" id="node4" title=" " alt="" coords="243,5,381,47"/>
+<area shape="rect" id="node5" title=" " alt="" coords="495,64,625,105"/>
+<area shape="rect" id="node6" href="$classpni_1_1io_1_1column__info.html" title="Spreadsheet column information." alt="" coords="245,71,379,98"/>
+<area shape="rect" id="node7" title=" " alt="" coords="5,71,148,98"/>
+<area shape="rect" id="node8" title=" " alt="" coords="771,126,919,182"/>
+<area shape="rect" id="node9" title=" " alt="" coords="487,133,633,175"/>
+<area shape="rect" id="node10" title=" " alt="" coords="777,206,912,262"/>
+</map>

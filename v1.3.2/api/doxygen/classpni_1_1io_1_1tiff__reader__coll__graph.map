@@ -1,0 +1,10 @@
+<map id="pni::io::tiff_reader" name="pni::io::tiff_reader">
+<area shape="rect" id="node1" title="TIFF file reader." alt="" coords="95,407,218,433"/>
+<area shape="rect" id="node2" href="$classpni_1_1io_1_1image__reader.html" title="base class for image readers" alt="" coords="5,310,148,337"/>
+<area shape="rect" id="node3" href="$classpni_1_1io_1_1data__reader.html" title="base class for data readers" alt="" coords="10,213,143,240"/>
+<area shape="rect" id="node4" title=" " alt="" coords="7,109,146,151"/>
+<area shape="rect" id="node5" title=" " alt="" coords="173,303,303,344"/>
+<area shape="rect" id="node6" href="$classpni_1_1io_1_1tiff_1_1ifd.html" title="IFD &#45; Image File Directory class." alt="" coords="187,213,289,240"/>
+<area shape="rect" id="node7" title=" " alt="" coords="173,109,303,151"/>
+<area shape="rect" id="node8" href="$classpni_1_1io_1_1tiff_1_1ifd__entry.html" title="class for IFD entries" alt="" coords="187,5,289,47"/>
+</map>
