@@ -1,0 +1,26 @@
+var classpni_1_1io_1_1spreadsheet__reader =
+[
+    [ "const_iterator", "classpni_1_1io_1_1spreadsheet__reader.html#afca94d186607937f85df445412215117", null ],
+    [ "iterator", "classpni_1_1io_1_1spreadsheet__reader.html#a83d2ce1140f17b97e8d5f0ce62f72a8c", null ],
+    [ "spreadsheet_reader", "classpni_1_1io_1_1spreadsheet__reader.html#ac37c87894ffbfce8785e8ea67271859d", null ],
+    [ "spreadsheet_reader", "classpni_1_1io_1_1spreadsheet__reader.html#adc324c9b33e3aee73bad9e4483bccca8", null ],
+    [ "spreadsheet_reader", "classpni_1_1io_1_1spreadsheet__reader.html#adfc8532ca866636c43f1c1063f271bed", null ],
+    [ "spreadsheet_reader", "classpni_1_1io_1_1spreadsheet__reader.html#a6c740db30761e67622ad830908b7fa31", null ],
+    [ "~spreadsheet_reader", "classpni_1_1io_1_1spreadsheet__reader.html#acca3ac879c0d648c1f2c830b979909ad", null ],
+    [ "_append_column", "classpni_1_1io_1_1spreadsheet__reader.html#a503bbb9d68ecd8262056087624491092", null ],
+    [ "_get_column", "classpni_1_1io_1_1spreadsheet__reader.html#a746b7b412f001896b74298397da9b2a0", null ],
+    [ "_get_column", "classpni_1_1io_1_1spreadsheet__reader.html#a10879a6a4b6c5b3050ec97a26f81ac36", null ],
+    [ "_nrecords", "classpni_1_1io_1_1spreadsheet__reader.html#a3711a1c68feadc7561649628e7e74476", null ],
+    [ "begin", "classpni_1_1io_1_1spreadsheet__reader.html#af0dd13fdaef03e003ec05afdd0f83565", null ],
+    [ "begin", "classpni_1_1io_1_1spreadsheet__reader.html#a78697c99dcbb4393f2bc231bf52ae245", null ],
+    [ "column_index", "classpni_1_1io_1_1spreadsheet__reader.html#a3c7ad858f552811c76c3a4294fffe5b0", null ],
+    [ "end", "classpni_1_1io_1_1spreadsheet__reader.html#a46db91fbd89acb05fff69c8cac5c849b", null ],
+    [ "end", "classpni_1_1io_1_1spreadsheet__reader.html#a44400800b791a3f564d49446845430b3", null ],
+    [ "has_column", "classpni_1_1io_1_1spreadsheet__reader.html#a93244251dc3b0cc45a1f71d0f5157805", null ],
+    [ "ncolumns", "classpni_1_1io_1_1spreadsheet__reader.html#a87a02ceb9770ba5ad35877ab235fe2cf", null ],
+    [ "nrecords", "classpni_1_1io_1_1spreadsheet__reader.html#ab1cee73d4377acdc4d6753d435b4faac", null ],
+    [ "operator=", "classpni_1_1io_1_1spreadsheet__reader.html#afd64aed7640071928dfaa7d18194e893", null ],
+    [ "operator=", "classpni_1_1io_1_1spreadsheet__reader.html#a3bd40adfed199a84bf43bb82dfd7890f", null ],
+    [ "_columns_info", "classpni_1_1io_1_1spreadsheet__reader.html#a108ad2c0204fa59a2fe136bac318fb86", null ],
+    [ "_nrec", "classpni_1_1io_1_1spreadsheet__reader.html#afde95acb400887f86a500ae082b00961", null ]
+];
