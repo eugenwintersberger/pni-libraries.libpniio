@@ -1,0 +1,27 @@
+var classpni_1_1array__selection =
+[
+    [ "index_type", "classpni_1_1array__selection.html#ad971ff994904de12a1fd443ffac967b1", null ],
+    [ "array_selection", "classpni_1_1array__selection.html#ad5bd156133203e136dde247fd9c5fc12", null ],
+    [ "array_selection", "classpni_1_1array__selection.html#a1ffa30a39c9836461fe8468de12e9d2a", null ],
+    [ "array_selection", "classpni_1_1array__selection.html#a75e807b9f0da8253e229f17945f6c267", null ],
+    [ "array_selection", "classpni_1_1array__selection.html#ab24f137f795c363f3656aada8d1308d6", null ],
+    [ "array_selection", "classpni_1_1array__selection.html#a74fb262e7cc7c01e9934c1977b97841b", null ],
+    [ "array_selection", "classpni_1_1array__selection.html#a8c30b719cdcec3e6c554dde141be5cf7", null ],
+    [ "create", "classpni_1_1array__selection.html#a35bb7eec239ebfb39b02820dd69ad35c", null ],
+    [ "full_shape", "classpni_1_1array__selection.html#ab6fdaaa03e3dc9119fc6eb0b3eaadc7d", null ],
+    [ "full_shape", "classpni_1_1array__selection.html#af69070b57438d8388b8ab364ad3afb07", null ],
+    [ "index", "classpni_1_1array__selection.html#a8a34b415d9323035ef661b9c0894dc85", null ],
+    [ "index", "classpni_1_1array__selection.html#ac1742172eb8d8490f295128e90ffd6c6", null ],
+    [ "offset", "classpni_1_1array__selection.html#abd6240762eefe6eccb204cf083b90559", null ],
+    [ "offset", "classpni_1_1array__selection.html#a681aa97518db137d63ac74ebddd1232f", null ],
+    [ "operator=", "classpni_1_1array__selection.html#a31cf805c42558d82fadb543187b4b433", null ],
+    [ "operator=", "classpni_1_1array__selection.html#ae9b7b31760879c37ad2ce39e2d77560e", null ],
+    [ "rank", "classpni_1_1array__selection.html#ab290c833a62b4cf1382a54ce1d7f9895", null ],
+    [ "shape", "classpni_1_1array__selection.html#aaeeadb902620826b8babe529917ae652", null ],
+    [ "size", "classpni_1_1array__selection.html#a40f7cbbfcea549e5f51844ab39d7ba16", null ],
+    [ "stride", "classpni_1_1array__selection.html#ade4d2234ae3c4ee5f63b4802bf7242cd", null ],
+    [ "stride", "classpni_1_1array__selection.html#a7a07541c0f7d64dec5d445711321189b", null ],
+    [ "_offset", "classpni_1_1array__selection.html#a40a71beee273cc44e6036b64a501ec14", null ],
+    [ "_oshape", "classpni_1_1array__selection.html#aaaa7db4f381f45d201f09aec335a514f", null ],
+    [ "_stride", "classpni_1_1array__selection.html#ac933ad2f50c67e48d3462eae42074cdf", null ]
+];
