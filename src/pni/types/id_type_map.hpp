@@ -63,24 +63,24 @@ namespace pni{
     };
 
     //! \cond NO_API_DOC
-    CREATE_ID_TYPE_MAP(type_id_t::UINT8,uint8);
-    CREATE_ID_TYPE_MAP(type_id_t::INT8,int8);
-    CREATE_ID_TYPE_MAP(type_id_t::UINT16,uint16);
-    CREATE_ID_TYPE_MAP(type_id_t::INT16,int16);
-    CREATE_ID_TYPE_MAP(type_id_t::UINT32,uint32);
-    CREATE_ID_TYPE_MAP(type_id_t::INT32,int32);
-    CREATE_ID_TYPE_MAP(type_id_t::UINT64,uint64);
-    CREATE_ID_TYPE_MAP(type_id_t::INT64,int64);
-    CREATE_ID_TYPE_MAP(type_id_t::FLOAT32,float32);
-    CREATE_ID_TYPE_MAP(type_id_t::FLOAT64,float64);
-    CREATE_ID_TYPE_MAP(type_id_t::FLOAT128,float128);
-    CREATE_ID_TYPE_MAP(type_id_t::COMPLEX32,complex32);
-    CREATE_ID_TYPE_MAP(type_id_t::COMPLEX64,complex64);
-    CREATE_ID_TYPE_MAP(type_id_t::COMPLEX128,complex128);
-    CREATE_ID_TYPE_MAP(type_id_t::STRING,string);
-    CREATE_ID_TYPE_MAP(type_id_t::BINARY,binary);
-    CREATE_ID_TYPE_MAP(type_id_t::BOOL,bool_t);
-    CREATE_ID_TYPE_MAP(type_id_t::NONE,none);
+    CREATE_ID_TYPE_MAP(type_id_t::UInt8,uint8);
+    CREATE_ID_TYPE_MAP(type_id_t::Int8,int8);
+    CREATE_ID_TYPE_MAP(type_id_t::UInt16,uint16);
+    CREATE_ID_TYPE_MAP(type_id_t::Int16,int16);
+    CREATE_ID_TYPE_MAP(type_id_t::UInt32,uint32);
+    CREATE_ID_TYPE_MAP(type_id_t::Int32,int32);
+    CREATE_ID_TYPE_MAP(type_id_t::UInt64,uint64);
+    CREATE_ID_TYPE_MAP(type_id_t::Int64,int64);
+    CREATE_ID_TYPE_MAP(type_id_t::Float32,float32);
+    CREATE_ID_TYPE_MAP(type_id_t::Float64,float64);
+    CREATE_ID_TYPE_MAP(type_id_t::Float128,float128);
+    CREATE_ID_TYPE_MAP(type_id_t::Complex32,complex32);
+    CREATE_ID_TYPE_MAP(type_id_t::Complex64,complex64);
+    CREATE_ID_TYPE_MAP(type_id_t::Complex128,complex128);
+    CREATE_ID_TYPE_MAP(type_id_t::String,string);
+    CREATE_ID_TYPE_MAP(type_id_t::Binary,binary);
+    CREATE_ID_TYPE_MAP(type_id_t::Bool,bool_t);
+    CREATE_ID_TYPE_MAP(type_id_t::None,none);
     //! \endcond NO_API_DOC
 
 }

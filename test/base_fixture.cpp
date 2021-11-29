@@ -30,10 +30,10 @@ base_fixture::base_fixture(const string &fname,bool open_existing):
 {
     if(open_existing)
       file = hdf5::file::open(filename,
-			      hdf5::file::AccessFlags::READONLY);
+			      hdf5::file::AccessFlags::ReadOnly);
     else
       file = nexus::create_file(filename,
-				hdf5::file::AccessFlags::TRUNCATE);
+				hdf5::file::AccessFlags::Truncate);
 
     root = file.root();
 

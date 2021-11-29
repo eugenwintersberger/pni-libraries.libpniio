@@ -50,32 +50,32 @@ namespace pni{
     struct type_class_map
     {
         //! class of type T
-        static const type_class_t type_class = type_class_t::NONE;
+        static const type_class_t type_class = type_class_t::None;
     };
 
     //! \cond NO_API_DOC
-    CREATE_TYPE_CLASS_MAP(uint8,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(int8,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(uint16,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(int16,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(uint32,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(int32,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(uint64,type_class_t::INTEGER);
-    CREATE_TYPE_CLASS_MAP(int64,type_class_t::INTEGER);
+    CREATE_TYPE_CLASS_MAP(uint8,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(int8,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(uint16,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(int16,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(uint32,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(int32,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(uint64,type_class_t::Integer);
+    CREATE_TYPE_CLASS_MAP(int64,type_class_t::Integer);
     
-    CREATE_TYPE_CLASS_MAP(float32,type_class_t::FLOAT);
-    CREATE_TYPE_CLASS_MAP(float64,type_class_t::FLOAT);
-    CREATE_TYPE_CLASS_MAP(float128,type_class_t::FLOAT);
+    CREATE_TYPE_CLASS_MAP(float32,type_class_t::Float);
+    CREATE_TYPE_CLASS_MAP(float64,type_class_t::Float);
+    CREATE_TYPE_CLASS_MAP(float128,type_class_t::Float);
 
-    CREATE_TYPE_CLASS_MAP(complex32,type_class_t::COMPLEX);
-    CREATE_TYPE_CLASS_MAP(complex64,type_class_t::COMPLEX);
-    CREATE_TYPE_CLASS_MAP(complex128,type_class_t::COMPLEX);
+    CREATE_TYPE_CLASS_MAP(complex32,type_class_t::Complex);
+    CREATE_TYPE_CLASS_MAP(complex64,type_class_t::Complex);
+    CREATE_TYPE_CLASS_MAP(complex128,type_class_t::Complex);
 
-    CREATE_TYPE_CLASS_MAP(bool_t,type_class_t::BOOL);
-    CREATE_TYPE_CLASS_MAP(binary,type_class_t::BINARY);
-    CREATE_TYPE_CLASS_MAP(string,type_class_t::STRING);
+    CREATE_TYPE_CLASS_MAP(bool_t,type_class_t::Bool);
+    CREATE_TYPE_CLASS_MAP(binary,type_class_t::Binary);
+    CREATE_TYPE_CLASS_MAP(string,type_class_t::String);
 
-    CREATE_TYPE_CLASS_MAP(none,type_class_t::NONE);
+    CREATE_TYPE_CLASS_MAP(none,type_class_t::None);
 
     //! \endcond NO_API_DOC
 

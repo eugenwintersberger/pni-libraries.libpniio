@@ -36,12 +36,12 @@ struct FieldFactoryTestFixture
 
   FieldFactoryTestFixture()
   {
-    file = nexus::create_file("FieldTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+    file = nexus::create_file("FieldTest.nxs",hdf5::file::AccessFlags::Truncate);
     root_group = file.root();
 
     type = hdf5::datatype::create<uint16>();
     simple_space = hdf5::dataspace::Simple({0,1024,1024},
-                                           {hdf5::dataspace::Simple::UNLIMITED,1024,1024});
+                                           {hdf5::dataspace::Simple::unlimited,1024,1024});
   }
 };
 

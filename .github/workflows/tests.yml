@@ -34,12 +34,13 @@ jobs:
       - name: Run Ninja
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+        run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+        # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target all --config $BUILDTYPE"
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target all --config $BUILDTYPE -- -j4"
 
       - name: Build api_doc
         env:
@@ -54,7 +55,7 @@ jobs:
       - name: Build check
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE"
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE -- -j4"
 
       - name: Append documentation for the latest release version
         if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'

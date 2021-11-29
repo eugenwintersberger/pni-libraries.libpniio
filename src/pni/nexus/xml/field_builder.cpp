@@ -94,9 +94,9 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   hdf5::datatype::Datatype datatype = datatype_builder_.build();
   hdf5::dataspace::Dataspace dataspace = hdf5::dataspace::Scalar();
 
-  bool is_string = ((datatype.get_class() == hdf5::datatype::Class::VARLENGTH)
+  bool is_string = ((datatype.get_class() == hdf5::datatype::Class::VarLength)
 		    ||
-		    (datatype.get_class() == hdf5::datatype::Class::STRING));
+		    (datatype.get_class() == hdf5::datatype::Class::String));
 
   auto has_dimension_node = node().get_child_optional("dimensions");
   if( (!is_string) || has_dimension_node)

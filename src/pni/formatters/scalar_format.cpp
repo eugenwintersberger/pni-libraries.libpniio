@@ -187,37 +187,37 @@ namespace pni{
     {
         switch(v.type_id())
         {
-            case type_id_t::UINT8:
+            case type_id_t::UInt8:
                 return format(v.as<uint8>());
-            case type_id_t::INT8:
+            case type_id_t::Int8:
                 return format(v.as<int8>());
-            case type_id_t::INT16:
+            case type_id_t::Int16:
                 return format(v.as<int16>());
-            case type_id_t::UINT16:
+            case type_id_t::UInt16:
                 return format(v.as<uint16>());
-            case type_id_t::UINT32:
+            case type_id_t::UInt32:
                 return format(v.as<uint32>());
-            case type_id_t::INT32:
+            case type_id_t::Int32:
                 return format(v.as<int32>());
-            case type_id_t::UINT64:
+            case type_id_t::UInt64:
                 return format(v.as<uint64>());
-            case type_id_t::INT64:
+            case type_id_t::Int64:
                 return format(v.as<int64>());
-            case type_id_t::FLOAT32:
+            case type_id_t::Float32:
                 return format(v.as<float32>());
-            case type_id_t::FLOAT64:
+            case type_id_t::Float64:
                 return format(v.as<float64>());
-            case type_id_t::FLOAT128:
+            case type_id_t::Float128:
                 return format(v.as<float128>());
-            case type_id_t::COMPLEX32:
+            case type_id_t::Complex32:
                 return format(v.as<complex32>());
-            case type_id_t::COMPLEX64:
+            case type_id_t::Complex64:
                 return format(v.as<complex64>());
-            case type_id_t::COMPLEX128:
+            case type_id_t::Complex128:
                 return format(v.as<complex128>());
-            case type_id_t::BOOL:
+            case type_id_t::Bool:
                 return format(v.as<bool_t>());
-            case type_id_t::STRING:
+            case type_id_t::String:
                 return format(v.as<string>());
             default:
                 return "";

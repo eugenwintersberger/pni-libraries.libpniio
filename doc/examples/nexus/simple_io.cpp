@@ -13,7 +13,7 @@ void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,siz
 {
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 
-    hdf5::file::File file = nexus::create_file(file_path,hdf5::file::AccessFlags::TRUNCATE);
+    hdf5::file::File file = nexus::create_file(file_path,hdf5::file::AccessFlags::Truncate);
 
     hdf5::node::Group group = nexus::BaseClassFactory::create(file.root(),"scan","NXentry");
     group = nexus::BaseClassFactory::create(group,"instrument","NXinstrument");
@@ -21,7 +21,7 @@ void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,siz
 
     hdf5::filter::Deflate deflate(8);
     hdf5::filter::Shuffle shuffle;
-    hdf5::dataspace::Simple space{{0,nx,ny},{hdf5::dataspace::Simple::UNLIMITED,nx,ny}};
+    hdf5::dataspace::Simple space{{0,nx,ny},{hdf5::dataspace::Simple::unlimited,nx,ny}};
     hdf5::Dimensions chunk_dims{1,nx,ny};
     auto type = hdf5::datatype::create<int>();
     hdf5::property::LinkCreationList lcpl;

@@ -80,7 +80,7 @@ We would first implement a custom predicate
       
       virtual bool operator()(const hdf5::node::Node &node) const
       {
-         if(node.type() == hdf5::node::Type::DATASET)
+         if(node.type() == hdf5::node::Type::Dataset)
          {
             hdf5::node::Dataset dataset(node);
             hdf5::Dimensions dimensions = get_dimensions(dataset);

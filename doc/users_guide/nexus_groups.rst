@@ -65,7 +65,7 @@ be chosen.
 .. code-block:: cpp
 
    auto type = hdf5::datatype::create<uint16>();
-   hdf5::dataspace::Simple space{{0,1024,2048},{hdf5::dataspace::Simple::UNLIMITED,1024,2048}};
+   hdf5::dataspace::Simple space{{0,1024,2048},{hdf5::dataspace::Simple::unlimited,1024,2048}};
    hdf5::Dimensions chunk_shape{1,1024,2048};
    
    hdf5::node::Dataset frames = nexus::FieldFactory::create(root_group,"frames",type,space,chunk_shape);

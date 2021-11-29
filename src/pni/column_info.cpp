@@ -30,7 +30,7 @@ namespace pni{
     //implementation of the  default constructor
     column_info::column_info():
         _name(),
-        _tid(pni::type_id_t::NONE),
+        _tid(pni::type_id_t::None),
         _shape()
     {}
 

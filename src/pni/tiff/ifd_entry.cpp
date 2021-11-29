@@ -61,40 +61,40 @@ namespace tiff{
 
     //map object associating TIFF type tags to IDFEntryTypeId enums
     std::map<uint16,ifd_entry_type_id> type_tag_to_entry_type_id = 
-                               {{1,ifd_entry_type_id::BYTE},
+                               {{1,ifd_entry_type_id::Byte},
                                {2,ifd_entry_type_id::ASCII},
-                               {3,ifd_entry_type_id::SHORT},
-                               {4,ifd_entry_type_id::LONG},
-                               {5,ifd_entry_type_id::RATIONAL},
-                               {6,ifd_entry_type_id::SBYTE},
-                               {7,ifd_entry_type_id::UNDEFINED},
-                               {8,ifd_entry_type_id::SSHORT},
-                               {9,ifd_entry_type_id::SLONG},
-                               {10,ifd_entry_type_id::SRATIONAL},
-                               {11,ifd_entry_type_id::FLOAT},
-                               {12,ifd_entry_type_id::DOUBLE}};
+                               {3,ifd_entry_type_id::Short},
+                               {4,ifd_entry_type_id::Long},
+                               {5,ifd_entry_type_id::Rational},
+                               {6,ifd_entry_type_id::SByte},
+                               {7,ifd_entry_type_id::Undefined},
+                               {8,ifd_entry_type_id::SShort},
+                               {9,ifd_entry_type_id::SLong},
+                               {10,ifd_entry_type_id::SRational},
+                               {11,ifd_entry_type_id::Float},
+                               {12,ifd_entry_type_id::Double}};
 
     //map object associating IDFEntryTypeIds to PNI TypeIDs
     std::map<ifd_entry_type_id,type_id_t> entry_type_to_type_id = 
-                          {{ifd_entry_type_id::BYTE,pni::type_id_t::UINT8},
-                          {ifd_entry_type_id::ASCII,pni::type_id_t::STRING},
-                          {ifd_entry_type_id::SHORT,pni::type_id_t::UINT16},
-                          {ifd_entry_type_id::LONG,pni::type_id_t::UINT32},
-                          {ifd_entry_type_id::RATIONAL,pni::type_id_t::FLOAT64},
-                          {ifd_entry_type_id::SBYTE,pni::type_id_t::INT8},
-                          {ifd_entry_type_id::UNDEFINED,pni::type_id_t::NONE},
-                          {ifd_entry_type_id::SSHORT,pni::type_id_t::INT16},
-                          {ifd_entry_type_id::SLONG,pni::type_id_t::INT32},
-                          {ifd_entry_type_id::SRATIONAL,pni::type_id_t::FLOAT64},
-                          {ifd_entry_type_id::FLOAT,pni::type_id_t::FLOAT32},
-                          {ifd_entry_type_id::DOUBLE,pni::type_id_t::FLOAT64}};
+                          {{ifd_entry_type_id::Byte,pni::type_id_t::UInt8},
+                          {ifd_entry_type_id::ASCII,pni::type_id_t::String},
+                          {ifd_entry_type_id::Short,pni::type_id_t::UInt16},
+                          {ifd_entry_type_id::Long,pni::type_id_t::UInt32},
+                          {ifd_entry_type_id::Rational,pni::type_id_t::Float64},
+                          {ifd_entry_type_id::SByte,pni::type_id_t::Int8},
+                          {ifd_entry_type_id::Undefined,pni::type_id_t::None},
+                          {ifd_entry_type_id::SShort,pni::type_id_t::Int16},
+                          {ifd_entry_type_id::SLong,pni::type_id_t::Int32},
+                          {ifd_entry_type_id::SRational,pni::type_id_t::Float64},
+                          {ifd_entry_type_id::Float,pni::type_id_t::Float32},
+                          {ifd_entry_type_id::Double,pni::type_id_t::Float64}};
 
 
     //==================constructors and destructor========================
     //implementation of the  default constructor
     ifd_entry::ifd_entry():
         _tag(0),
-        _tid(ifd_entry_type_id::UNDEFINED),
+        _tid(ifd_entry_type_id::Undefined),
         _size(0),
         _data(0)
     {}

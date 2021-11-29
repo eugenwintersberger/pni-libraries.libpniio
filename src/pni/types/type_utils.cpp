@@ -38,23 +38,23 @@ namespace pni{
     A map instance mapping the string representations of types to type IDs.
     */
     static const std::map<string,type_id_t> str2type_id =
-    {{"uint8",type_id_t::UINT8},{"ui8",type_id_t::UINT8},
-     {"int8",type_id_t::INT8},{"i8",type_id_t::INT8},
-     {"uint16",type_id_t::UINT16},{"ui16",type_id_t::UINT16},
-     {"int16",type_id_t::INT16},{"i16",type_id_t::INT16},
-     {"uint32",type_id_t::UINT32},{"ui32",type_id_t::UINT32},
-     {"int32",type_id_t::INT32},{"i32",type_id_t::INT32},
-     {"uint64",type_id_t::UINT64},{"ui64",type_id_t::UINT64},
-     {"int64",type_id_t::INT64},{"i64",type_id_t::INT64},
-     {"float32",type_id_t::FLOAT32},{"f32",type_id_t::FLOAT32},
-     {"float64",type_id_t::FLOAT64},{"f64",type_id_t::FLOAT64},
-     {"float128",type_id_t::FLOAT128},{"f128",type_id_t::FLOAT128},
-     {"complex32",type_id_t::COMPLEX32},{"c32",type_id_t::COMPLEX32},
-     {"complex64",type_id_t::COMPLEX64},{"c64",type_id_t::COMPLEX64},
-     {"complex128",type_id_t::COMPLEX128},{"c128",type_id_t::COMPLEX128},
-     {"string",type_id_t::STRING},{"str",type_id_t::STRING},
-     {"binary",type_id_t::BINARY}, {"bool",type_id_t::BOOL},
-     {"none",type_id_t::NONE}
+    {{"uint8",type_id_t::UInt8},{"ui8",type_id_t::UInt8},
+     {"int8",type_id_t::Int8},{"i8",type_id_t::Int8},
+     {"uint16",type_id_t::UInt16},{"ui16",type_id_t::UInt16},
+     {"int16",type_id_t::Int16},{"i16",type_id_t::Int16},
+     {"uint32",type_id_t::UInt32},{"ui32",type_id_t::UInt32},
+     {"int32",type_id_t::Int32},{"i32",type_id_t::Int32},
+     {"uint64",type_id_t::UInt64},{"ui64",type_id_t::UInt64},
+     {"int64",type_id_t::Int64},{"i64",type_id_t::Int64},
+     {"float32",type_id_t::Float32},{"f32",type_id_t::Float32},
+     {"float64",type_id_t::Float64},{"f64",type_id_t::Float64},
+     {"float128",type_id_t::Float128},{"f128",type_id_t::Float128},
+     {"complex32",type_id_t::Complex32},{"c32",type_id_t::Complex32},
+     {"complex64",type_id_t::Complex64},{"c64",type_id_t::Complex64},
+     {"complex128",type_id_t::Complex128},{"c128",type_id_t::Complex128},
+     {"string",type_id_t::String},{"str",type_id_t::String},
+     {"binary",type_id_t::Binary}, {"bool",type_id_t::Bool},
+     {"none",type_id_t::None}
     };
 
     //-------------------------------------------------------------------------
@@ -66,38 +66,38 @@ namespace pni{
     type.
     */
     static const std::map<type_id_t,string> type_id2str =
-    {{type_id_t::UINT8,"uint8"},   {type_id_t::INT8,"int8"},
-     {type_id_t::UINT16,"uint16"}, {type_id_t::INT16,"int16"},
-     {type_id_t::UINT32,"uint32"}, {type_id_t::INT32,"int32"},
-     {type_id_t::UINT64,"uint64"}, {type_id_t::INT64,"int64"},
-     {type_id_t::FLOAT32,"float32"},
-     {type_id_t::FLOAT64,"float64"},
-     {type_id_t::FLOAT128,"float128"},
-     {type_id_t::COMPLEX32,"complex32"},
-     {type_id_t::COMPLEX64,"complex64"},
-     {type_id_t::COMPLEX128,"complex128"},
-     {type_id_t::STRING,"string"},
-     {type_id_t::BINARY,"binary"},
-     {type_id_t::BOOL,"bool"},
-     {type_id_t::NONE,"none"}
+    {{type_id_t::UInt8,"uint8"},   {type_id_t::Int8,"int8"},
+     {type_id_t::UInt16,"uint16"}, {type_id_t::Int16,"int16"},
+     {type_id_t::UInt32,"uint32"}, {type_id_t::Int32,"int32"},
+     {type_id_t::UInt64,"uint64"}, {type_id_t::Int64,"int64"},
+     {type_id_t::Float32,"float32"},
+     {type_id_t::Float64,"float64"},
+     {type_id_t::Float128,"float128"},
+     {type_id_t::Complex32,"complex32"},
+     {type_id_t::Complex64,"complex64"},
+     {type_id_t::Complex128,"complex128"},
+     {type_id_t::String,"string"},
+     {type_id_t::Binary,"binary"},
+     {type_id_t::Bool,"bool"},
+     {type_id_t::None,"none"}
     };
 
     //-------------------------------------------------------------------------
     type_id_t get_type_id(const binary &)
     {
-        return type_id_t::BINARY;
+        return type_id_t::Binary;
     }
 
     //-------------------------------------------------------------------------
     type_id_t get_type_id(const bool_t &)
     {
-        return type_id_t::BOOL;
+        return type_id_t::Bool;
     }
 
     //-------------------------------------------------------------------------
     type_id_t get_type_id(const string &)
     {
-        return type_id_t::STRING;
+        return type_id_t::String;
     }
 
     //-------------------------------------------------------------------------

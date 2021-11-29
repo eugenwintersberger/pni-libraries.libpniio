@@ -30,8 +30,8 @@ struct CheckTestsFixture
 {
     CheckTestsFixture()
     {
-      nexus::create_file("check_tests.nxs",file::AccessFlags::TRUNCATE);
-      file::create("check_tests.h5",file::AccessFlags::TRUNCATE);
+      nexus::create_file("check_tests.nxs",file::AccessFlags::Truncate);
+      file::create("check_tests.h5",file::AccessFlags::Truncate);
     }
 };
 

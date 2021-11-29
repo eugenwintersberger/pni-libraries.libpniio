@@ -27,24 +27,24 @@
 
 typedef std::vector<pni::type_id_t> id_vector_type;
 
-static const id_vector_type integer_ids = { pni::type_id_t::UINT8,
-                                            pni::type_id_t::INT8,
-                                            pni::type_id_t::UINT16,
-                                            pni::type_id_t::INT16,
-                                            pni::type_id_t::UINT32,
-                                            pni::type_id_t::INT32,
-                                            pni::type_id_t::UINT64,
-                                            pni::type_id_t::INT64};
+static const id_vector_type integer_ids = { pni::type_id_t::UInt8,
+                                            pni::type_id_t::Int8,
+                                            pni::type_id_t::UInt16,
+                                            pni::type_id_t::Int16,
+                                            pni::type_id_t::UInt32,
+                                            pni::type_id_t::Int32,
+                                            pni::type_id_t::UInt64,
+                                            pni::type_id_t::Int64};
 
-static const id_vector_type float_ids = {pni::type_id_t::FLOAT32,
-                                         pni::type_id_t::FLOAT64,
-                                         pni::type_id_t::FLOAT128};
+static const id_vector_type float_ids = {pni::type_id_t::Float32,
+                                         pni::type_id_t::Float64,
+                                         pni::type_id_t::Float128};
 
-static const id_vector_type complex_ids = {pni::type_id_t::COMPLEX32,
-                                           pni::type_id_t::COMPLEX64,
-                                           pni::type_id_t::COMPLEX128};
+static const id_vector_type complex_ids = {pni::type_id_t::Complex32,
+                                           pni::type_id_t::Complex64,
+                                           pni::type_id_t::Complex128};
 
-static const id_vector_type non_numeric_ids = {pni::type_id_t::STRING,
-                                               pni::type_id_t::NONE,
-                                               pni::type_id_t::BINARY,
-                                               pni::type_id_t::BOOL};
+static const id_vector_type non_numeric_ids = {pni::type_id_t::String,
+                                               pni::type_id_t::None,
+                                               pni::type_id_t::Binary,
+                                               pni::type_id_t::Bool};

@@ -33,7 +33,7 @@ struct CreateTestFixture
 
     CreateTestFixture()
     {
-      file = hdf5::file::create("CreateTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      file = hdf5::file::create("CreateTest.nxs",hdf5::file::AccessFlags::Truncate);
       root_group = file.root();
     }
 };
@@ -47,12 +47,12 @@ BOOST_AUTO_TEST_CASE(from_simple_structure)
   boost::filesystem::path file = "create/simple_structure.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
-  BOOST_CHECK(get_node(root_group,"/scan_1").type() == Type::GROUP);
-  BOOST_CHECK(get_node(root_group,"/scan_1/title").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/scan_1/experiment_identifier").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/scan_1/experiment_description").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/scan_1/instrument/storage_ring").type() == Type::GROUP);
-  BOOST_CHECK(get_node(root_group,"/scan_1/instrument/storage_ring/name").type() == Type::DATASET);
+  BOOST_CHECK(get_node(root_group,"/scan_1").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan_1/title").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/scan_1/experiment_identifier").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/scan_1/experiment_description").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/scan_1/instrument/storage_ring").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan_1/instrument/storage_ring/name").type() == Type::Dataset);
 }
 
 BOOST_AUTO_TEST_CASE(from_simple_structure_with_data)
@@ -79,9 +79,9 @@ BOOST_AUTO_TEST_CASE(detector_master_data_file)
   boost::filesystem::path xml_data_file = "create/detector_data_file.xml";
 
   hdf5::file::File master_file = hdf5::file::create("detector_master_file.nxs",
-                                                    hdf5::file::AccessFlags::TRUNCATE);
+                                                    hdf5::file::AccessFlags::Truncate);
   hdf5::file::File data_file = hdf5::file::create("detector_data_file.nxs",
-                                                  hdf5::file::AccessFlags::TRUNCATE);
+                                                  hdf5::file::AccessFlags::Truncate);
   BOOST_CHECK_NO_THROW(xml::create_from_file(data_file.root(),xml_data_file));
   BOOST_CHECK_NO_THROW(xml::create_from_file(master_file.root(),xml_master_file));
 
@@ -94,15 +94,15 @@ BOOST_AUTO_TEST_CASE(from_detector_link)
   boost::filesystem::path file = "create/detector_link.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
-  BOOST_CHECK(get_node(root_group,"/entry").type() == Type::GROUP);
-  BOOST_CHECK(get_node(root_group,"/entry/string").type() == Type::GROUP);
-  BOOST_CHECK(get_node(root_group,"/entry/string/value").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/entry/string/time").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/entry/double").type() == Type::GROUP);
-  BOOST_CHECK(get_node(root_group,"/entry/double/value").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/entry/double/time").type() == Type::DATASET);
-  BOOST_CHECK(get_node(root_group,"/entry/data").type() == Type::GROUP);
-  BOOST_CHECK(get_node(root_group,"/entry/data/data").type() == Type::DATASET);
+  BOOST_CHECK(get_node(root_group,"/entry").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/entry/string").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/entry/string/value").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/entry/string/time").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/entry/double").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/entry/double/value").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/entry/double/time").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/entry/data").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/entry/data/data").type() == Type::Dataset);
 }
 
 BOOST_AUTO_TEST_CASE(from_duplicate_field)

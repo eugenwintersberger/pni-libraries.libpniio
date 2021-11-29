@@ -181,11 +181,11 @@ const
 pni::type_id_t fio_reader::_typestr2id(const pni::string &tstr)
 {
   if(tstr == "FLOAT")
-    return pni::type_id_t::FLOAT32;
+    return pni::type_id_t::Float32;
   else if(tstr == "DOUBLE")
-    return pni::type_id_t::FLOAT64;
+    return pni::type_id_t::Float64;
   else
-    return pni::type_id_t::NONE;
+    return pni::type_id_t::None;
 }
 
 //=======================constructors and destructor=======================

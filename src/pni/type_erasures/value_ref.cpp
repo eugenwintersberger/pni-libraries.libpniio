@@ -78,23 +78,23 @@ namespace pni{
 
         switch(tid)
         {
-            case type_id_t::UINT8:      *this = v.as<uint8>();      break;
-            case type_id_t::INT8:       *this = v.as<int8>();       break;
-            case type_id_t::UINT16:     *this = v.as<uint16>();     break;
-            case type_id_t::INT16:      *this = v.as<int16>();      break;
-            case type_id_t::UINT32:     *this = v.as<uint32>();     break;
-            case type_id_t::INT32:      *this = v.as<int32>();      break;
-            case type_id_t::UINT64:     *this = v.as<uint64>();     break;
-            case type_id_t::INT64:      *this = v.as<int64>();      break; 
-            case type_id_t::FLOAT32:    *this = v.as<float32>();    break;
-            case type_id_t::FLOAT64:    *this = v.as<float64>();    break;
-            case type_id_t::FLOAT128:   *this = v.as<float128>();   break;
-            case type_id_t::COMPLEX32:  *this = v.as<complex32>();  break;
-            case type_id_t::COMPLEX64:  *this = v.as<complex64>();  break;
-            case type_id_t::COMPLEX128: *this = v.as<complex128>(); break;
-            case type_id_t::STRING:     *this = v.as<string>();     break;
-            case type_id_t::BOOL:       *this = v.as<bool_t>();     break;
-            case type_id_t::BINARY:     *this = v.as<binary>();     break;
+            case type_id_t::UInt8:      *this = v.as<uint8>();      break;
+            case type_id_t::Int8:       *this = v.as<int8>();       break;
+            case type_id_t::UInt16:     *this = v.as<uint16>();     break;
+            case type_id_t::Int16:      *this = v.as<int16>();      break;
+            case type_id_t::UInt32:     *this = v.as<uint32>();     break;
+            case type_id_t::Int32:      *this = v.as<int32>();      break;
+            case type_id_t::UInt64:     *this = v.as<uint64>();     break;
+            case type_id_t::Int64:      *this = v.as<int64>();      break; 
+            case type_id_t::Float32:    *this = v.as<float32>();    break;
+            case type_id_t::Float64:    *this = v.as<float64>();    break;
+            case type_id_t::Float128:   *this = v.as<float128>();   break;
+            case type_id_t::Complex32:  *this = v.as<complex32>();  break;
+            case type_id_t::Complex64:  *this = v.as<complex64>();  break;
+            case type_id_t::Complex128: *this = v.as<complex128>(); break;
+            case type_id_t::String:     *this = v.as<string>();     break;
+            case type_id_t::Bool:       *this = v.as<bool_t>();     break;
+            case type_id_t::Binary:     *this = v.as<binary>();     break;
             default:
                 throw type_error(EXCEPTION_RECORD, "Unkown type!");
         }
@@ -125,22 +125,22 @@ namespace pni{
 
         switch(tid)
         {
-            case type_id_t::UINT8:      return value(v.as<uint8>());
-            case type_id_t::INT8:       return value(v.as<int8>());
-            case type_id_t::UINT16:     return value(v.as<uint16>());
-            case type_id_t::INT16:      return value(v.as<int16>()); 
-            case type_id_t::UINT32:     return value(v.as<uint32>());
-            case type_id_t::INT32:      return value(v.as<int32>());
-            case type_id_t::UINT64:     return value(v.as<uint64>());
-            case type_id_t::INT64:      return value(v.as<int64>());
-            case type_id_t::FLOAT32:    return value(v.as<float32>());
-            case type_id_t::FLOAT64:    return value(v.as<float64>());
-            case type_id_t::FLOAT128:   return value(v.as<float128>());
-            case type_id_t::COMPLEX32:  return value(v.as<complex32>());
-            case type_id_t::COMPLEX64:  return value(v.as<complex64>());
-            case type_id_t::COMPLEX128: return value(v.as<complex128>());
-            case type_id_t::STRING:     return value(v.as<string>());
-            case type_id_t::BOOL:       return value(v.as<bool_t>());
+            case type_id_t::UInt8:      return value(v.as<uint8>());
+            case type_id_t::Int8:       return value(v.as<int8>());
+            case type_id_t::UInt16:     return value(v.as<uint16>());
+            case type_id_t::Int16:      return value(v.as<int16>()); 
+            case type_id_t::UInt32:     return value(v.as<uint32>());
+            case type_id_t::Int32:      return value(v.as<int32>());
+            case type_id_t::UInt64:     return value(v.as<uint64>());
+            case type_id_t::Int64:      return value(v.as<int64>());
+            case type_id_t::Float32:    return value(v.as<float32>());
+            case type_id_t::Float64:    return value(v.as<float64>());
+            case type_id_t::Float128:   return value(v.as<float128>());
+            case type_id_t::Complex32:  return value(v.as<complex32>());
+            case type_id_t::Complex64:  return value(v.as<complex64>());
+            case type_id_t::Complex128: return value(v.as<complex128>());
+            case type_id_t::String:     return value(v.as<string>());
+            case type_id_t::Bool:       return value(v.as<bool_t>());
             default: 
                 throw type_error(EXCEPTION_RECORD,
                                  "Value is of unkown type!");

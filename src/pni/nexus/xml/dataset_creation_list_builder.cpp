@@ -35,7 +35,7 @@ DatasetCreationListBuilder::DatasetCreationListBuilder(const Node &node):
 
 void DatasetCreationListBuilder::set_chunking(hdf5::property::DatasetCreationList &dcpl) const
 {
-  dcpl.layout(hdf5::property::DatasetLayout::CHUNKED);
+  dcpl.layout(hdf5::property::DatasetLayout::Chunked);
 
   //set the default chunk layout
   hdf5::Dimensions chunk = dataspace_builder_.build().current_dimensions();

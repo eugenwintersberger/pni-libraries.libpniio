@@ -40,12 +40,18 @@ namespace datatype {
 template<> class TypeTrait<pni::array>
 {
   public:
-    using TypeClass = Datatype;
+    using TypeClass = datatype::Datatype;
 
     static TypeClass create(const pni::array &v)
     {
       return pni::nexus::DatatypeFactory::create(v.type_id());
     }
+
+    const static Datatype  & get(const pni::array & ) {
+      const static Datatype & cref_ = Datatype{};
+      return cref_;
+    }
+
 };
 
 template<
@@ -62,6 +68,11 @@ class TypeTrait<pni::mdarray<STORAGE,IMAP,IPA>>
     static TypeClass create(const  Type & = Type())
     {
       return TypeTrait<typename Type::value_type>::create();
+    }
+
+    const static Datatype & get(const Type & = Type()) {
+      const static Datatype & cref_ = Datatype();
+      return cref_;
     }
 };
 
@@ -93,6 +104,10 @@ template<> class TypeTrait<pni::array>
     {
       return a.data();
     }
+  const static Dataspace & get(const pni::array &, hdf5::dataspace::DataspacePool &) {
+      const static Dataspace & cref_ = Dataspace();
+      return cref_;
+    }
 };
 
 
@@ -121,6 +136,12 @@ class TypeTrait<pni::mdarray<STORAGE,IMAP,IPA>>
     {
       return reinterpret_cast<const void*>(a.data());
     }
+
+    const static Dataspace & get(const ArrayType &, hdf5::dataspace::DataspacePool &) {
+    const static Dataspace & cref_ = Dataspace();
+    return cref_;
+  }
+
 };
 
 

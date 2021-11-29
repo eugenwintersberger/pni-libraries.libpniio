@@ -149,24 +149,24 @@ namespace pni{
     //! 
     //! Typed enumeration with type IDs. 
     //!
-    enum class type_id_t {NONE,       //!< no data type
-                          INT8,       //!< signed 8Bit integer
-                          UINT8,      //!< unsigned 8Bit integer
-                          INT16,      //!< signed 16Bit integer
-                          UINT16,     //!< unsigned 16Bit integer
-                          INT32,      //!< signed 32Bit integer
-                          UINT32,     //!< unsigned 32Bit integer
-                          INT64,      //!< signed 64Bit integer
-                          UINT64,     //!< unsigned 64Bit integer
-                          FLOAT32,    //!< 32Bit IEEE floating point
-                          FLOAT64,    //!< 64Bit IEEE floating point
-                          FLOAT128,   //!< 128Bit IEEE floating point
-                          COMPLEX32,  //!< 32Bit IEEE floating point complex
-                          COMPLEX64,  //!< 64Bit IEEE floating point complex
-                          COMPLEX128, //!< 128Bit IEEE floating point complex
-                          STRING,     //!< String type
-                          BINARY,     //!< binary data
-                          BOOL        //!< boolean data
+    enum class type_id_t {None,       //!< no data type
+                          Int8,       //!< signed 8Bit integer
+                          UInt8,      //!< unsigned 8Bit integer
+                          Int16,      //!< signed 16Bit integer
+                          UInt16,     //!< unsigned 16Bit integer
+                          Int32,      //!< signed 32Bit integer
+                          UInt32,     //!< unsigned 32Bit integer
+                          Int64,      //!< signed 64Bit integer
+                          UInt64,     //!< unsigned 64Bit integer
+                          Float32,    //!< 32Bit IEEE floating point
+                          Float64,    //!< 64Bit IEEE floating point
+                          Float128,   //!< 128Bit IEEE floating point
+                          Complex32,  //!< 32Bit IEEE floating point complex
+                          Complex64,  //!< 64Bit IEEE floating point complex
+                          Complex128, //!< 128Bit IEEE floating point complex
+                          String,     //!< String type
+                          Binary,     //!< binary data
+                          Bool        //!< boolean data
                       };
 
     //! 
@@ -187,13 +187,13 @@ namespace pni{
     //! \brief type class definitions
     //!
     //! classes of data types provided by the PNI utility library
-    enum class type_class_t {NONE,       //!< unspecified type
-                             INTEGER,    //!< integer type
-                             FLOAT,      //!< floating point type
-                             BINARY,     //!< binary data type
-                             BOOL,       //!< boolean data type
-                             COMPLEX,    //!< complex data type
-                             STRING      //!< class for string types
+    enum class type_class_t {None,       //!< unspecified type
+                             Integer,    //!< integer type
+                             Float,      //!< floating point type
+                             Binary,     //!< binary data type
+                             Bool,       //!< boolean data type
+                             Complex,    //!< complex data type
+                             String      //!< class for string types
                             };
 
 

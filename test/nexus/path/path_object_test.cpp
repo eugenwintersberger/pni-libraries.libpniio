@@ -36,7 +36,7 @@ struct PathObjectFixture
 
     PathObjectFixture()
     {
-      file = nexus::create_file("PathObjectTest.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      file = nexus::create_file("PathObjectTest.nxs",hdf5::file::AccessFlags::Truncate);
       group = file.root();
       dataset = hdf5::node::Dataset(group,"data",hdf5::datatype::create<int>(),
                                                  hdf5::dataspace::Scalar());
@@ -50,13 +50,13 @@ BOOST_FIXTURE_TEST_SUITE(PathObjectTest,PathObjectFixture)
 BOOST_AUTO_TEST_CASE(default_construction)
 {
   nexus::PathObject object;
-  BOOST_CHECK(object.type() == nexus::PathObject::Type::NONE);
+  BOOST_CHECK(object.type() == nexus::PathObject::Type::None);
 }
 
 BOOST_AUTO_TEST_CASE(attribute_construction)
 {
   nexus::PathObject object = group.attributes["NX_class"];
-  BOOST_CHECK(object.type() == nexus::PathObject::Type::ATTRIBUTE);
+  BOOST_CHECK(object.type() == nexus::PathObject::Type::Attribute);
   BOOST_CHECK(nexus::is_attribute(object));
 
   hdf5::attribute::Attribute attr = object;
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(attribute_construction)
 BOOST_AUTO_TEST_CASE(group_construction)
 {
   nexus::PathObject object = group;
-  BOOST_CHECK(object.type() == nexus::PathObject::Type::GROUP);
+  BOOST_CHECK(object.type() == nexus::PathObject::Type::Group);
   BOOST_CHECK(nexus::is_group(object));
 
   hdf5::node::Group g = object;
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(group_construction)
 BOOST_AUTO_TEST_CASE(dataset_construction)
 {
   nexus::PathObject object = dataset;
-  BOOST_CHECK(object.type() == nexus::PathObject::Type::DATASET);
+  BOOST_CHECK(object.type() == nexus::PathObject::Type::Dataset);
   BOOST_CHECK(nexus::is_dataset(object));
 
   hdf5::node::Dataset d = object;

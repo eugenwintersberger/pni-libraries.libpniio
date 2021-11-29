@@ -115,7 +115,7 @@ void cbf_reader::_parse_file()
       {
         _data_offset = cbf::dectris_reader::read_header(_istream,
                                                         _image_info,_compression_type);
-        _detector_vendor = cbf::vendor_id::DECTRIS;
+        _detector_vendor = cbf::vendor_id::Dectris;
         return;
       }else{
         //should raise an exception here

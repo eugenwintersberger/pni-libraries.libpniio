@@ -223,13 +223,13 @@ void cbf_reader::image(CTYPE &data,size_t i,size_t c)
   //load the channel information
   image_channel_info channel = inf.get_channel(c);
 
-  if(_detector_vendor == cbf::vendor_id::DECTRIS)
+  if(_detector_vendor == cbf::vendor_id::Dectris)
   {
-    if(channel.type_id() == type_id_t::INT16)
+    if(channel.type_id() == type_id_t::Int16)
       //read 16Bit signed data
       cbf::dectris_reader::read_data_byte_offset<int16>(
           _get_stream(),inf,data);
-    if(channel.type_id() == type_id_t::INT32)
+    if(channel.type_id() == type_id_t::Int32)
       //read 32Bit signed data
       cbf::dectris_reader::read_data_byte_offset<int32>(
           _get_stream(),inf,data);

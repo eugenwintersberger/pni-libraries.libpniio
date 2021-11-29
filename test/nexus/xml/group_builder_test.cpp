@@ -39,7 +39,7 @@ struct GroupBuilderFixture
 
     GroupBuilderFixture()
     {
-      nexus_file = file::create("GroupBuilderTest.nxs",file::AccessFlags::TRUNCATE);
+      nexus_file = file::create("GroupBuilderTest.nxs",file::AccessFlags::Truncate);
       root_group = nexus_file.root();
     }
 };

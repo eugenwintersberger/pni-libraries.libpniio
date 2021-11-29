@@ -29,24 +29,24 @@ namespace pni{
     //! output operator for TypeID
     std::ostream &operator<<(std::ostream &o,const type_id_t &tid)
     {
-        if(tid==type_id_t::NONE) {o<<"NONE"; return o;}
-        if(tid==type_id_t::INT8) {o<<"INT8"; return o;}
-	    if(tid==type_id_t::UINT8) {o<<"UINT8"; return o;}
-		if(tid==type_id_t::INT16) {o<<"INT16"; return o;}
-		if(tid==type_id_t::UINT16) {o<<"UINT16"; return o;}
-		if(tid==type_id_t::INT32) {o<<"INT32"; return o;}
-		if(tid==type_id_t::UINT32) {o<<"UINT32"; return o;}
-		if(tid==type_id_t::INT64) {o<<"INT64"; return o;}
-		if(tid==type_id_t::UINT64) {o<<"UINT64"; return o;}
-	    if(tid==type_id_t::FLOAT32) {o<<"FLOAT32"; return o;}
-	    if(tid==type_id_t::FLOAT64) {o<<"FLOAT64"; return o;}
-	    if(tid==type_id_t::FLOAT128) {o<<"FLOAT128"; return o;}
-	    if(tid==type_id_t::COMPLEX32) {o<<"COMPLEX32"; return o;}
-	    if(tid==type_id_t::COMPLEX64) {o<<"COMPLEX64"; return o;}
-	    if(tid==type_id_t::COMPLEX128) {o<<"COMPLEX128"; return o;}
-	    if(tid==type_id_t::STRING) {o<<"STRING"; return o;}
-	    if(tid==type_id_t::BINARY) {o<<"BINARY"; return o;}
-	    if(tid==type_id_t::BOOL) {o<<"BOOL"; return o;}
+        if(tid==type_id_t::None) {o<<"NONE"; return o;}
+        if(tid==type_id_t::Int8) {o<<"INT8"; return o;}
+	    if(tid==type_id_t::UInt8) {o<<"UINT8"; return o;}
+		if(tid==type_id_t::Int16) {o<<"INT16"; return o;}
+		if(tid==type_id_t::UInt16) {o<<"UINT16"; return o;}
+		if(tid==type_id_t::Int32) {o<<"INT32"; return o;}
+		if(tid==type_id_t::UInt32) {o<<"UINT32"; return o;}
+		if(tid==type_id_t::Int64) {o<<"INT64"; return o;}
+		if(tid==type_id_t::UInt64) {o<<"UINT64"; return o;}
+	    if(tid==type_id_t::Float32) {o<<"FLOAT32"; return o;}
+	    if(tid==type_id_t::Float64) {o<<"FLOAT64"; return o;}
+	    if(tid==type_id_t::Float128) {o<<"FLOAT128"; return o;}
+	    if(tid==type_id_t::Complex32) {o<<"COMPLEX32"; return o;}
+	    if(tid==type_id_t::Complex64) {o<<"COMPLEX64"; return o;}
+	    if(tid==type_id_t::Complex128) {o<<"COMPLEX128"; return o;}
+	    if(tid==type_id_t::String) {o<<"STRING"; return o;}
+	    if(tid==type_id_t::Binary) {o<<"BINARY"; return o;}
+	    if(tid==type_id_t::Bool) {o<<"BOOL"; return o;}
 
         //this is just to make the compiler happy - we should never come here.
         return o; 

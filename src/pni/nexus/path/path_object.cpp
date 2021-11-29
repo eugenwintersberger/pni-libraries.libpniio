@@ -28,21 +28,21 @@ namespace pni {
 namespace nexus {
 
 PathObject::PathObject():
-    type_(Type::NONE),
+    type_(Type::None),
     attribute_(),
     group_(),
     dataset_()
 {}
 
 PathObject::PathObject(const hdf5::attribute::Attribute &attribute):
-    type_(Type::ATTRIBUTE),
+    type_(Type::Attribute),
     attribute_(attribute),
     group_(),
     dataset_()
 {}
 
 PathObject::PathObject(const hdf5::node::Link &link):
-    type_(Type::NONE),
+    type_(Type::None),
     attribute_(),
     group_(),
     dataset_(),
@@ -50,40 +50,40 @@ PathObject::PathObject(const hdf5::node::Link &link):
 {
   if(!link.is_resolvable())
   {
-    type_ = Type::LINK;
+    type_ = Type::Link;
     link_ = link;
   }
   else
   {
     hdf5::node::Node node = *link;
-    if(node.type() == hdf5::node::Type::GROUP)
+    if(node.type() == hdf5::node::Type::Group)
     {
       group_ = node;
-      type_ = Type::GROUP;
+      type_ = Type::Group;
     }
-    else if(node.type() == hdf5::node::Type::DATASET)
+    else if(node.type() == hdf5::node::Type::Dataset)
     {
-      type_ = Type::DATASET;
+      type_ = Type::Dataset;
       dataset_ = node;
     }
   }
 }
 
 PathObject::PathObject(const hdf5::node::Node &node):
-    type_(Type::NONE),
+    type_(Type::None),
     attribute_(),
     group_(),
     dataset_()
 {
   switch(node.type())
   {
-    case hdf5::node::Type::DATASET:
+    case hdf5::node::Type::Dataset:
       dataset_ = node;
-      type_ = Type::DATASET;
+      type_ = Type::Dataset;
       break;
-    case hdf5::node::Type::GROUP:
+    case hdf5::node::Type::Group:
       group_ = node;
-      type_ = Type::GROUP;
+      type_ = Type::Group;
       break;
     default:
       std::stringstream ss;
@@ -100,7 +100,7 @@ PathObject::Type PathObject::type() const noexcept
 
 PathObject::operator hdf5::attribute::Attribute() const
 {
-  if(type() != Type::ATTRIBUTE)
+  if(type() != Type::Attribute)
   {
     std::stringstream ss;
     ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
@@ -112,7 +112,7 @@ PathObject::operator hdf5::attribute::Attribute() const
 
 PathObject::operator hdf5::node::Group() const
 {
-  if(type() != Type::GROUP)
+  if(type() != Type::Group)
   {
     std::stringstream ss;
     ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
@@ -124,7 +124,7 @@ PathObject::operator hdf5::node::Group() const
 
 PathObject::operator hdf5::node::Dataset() const
 {
-  if(type() != Type::DATASET)
+  if(type() != Type::Dataset)
   {
     std::stringstream ss;
     ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
@@ -136,9 +136,9 @@ PathObject::operator hdf5::node::Dataset() const
 
 PathObject::operator hdf5::node::Node() const
 {
-  if(type()==Type::DATASET)
+  if(type()==Type::Dataset)
     return dataset_;
-  else if(type() == Type::GROUP)
+  else if(type() == Type::Group)
     return group_;
   else
   {
@@ -151,7 +151,7 @@ PathObject::operator hdf5::node::Node() const
 
 PathObject::operator hdf5::node::Link() const
 {
-  if(type() != Type::LINK)
+  if(type() != Type::Link)
   {
     std::stringstream ss;
     ss<<"PathObject stores an instance of "<<type()<<" and cannot be "
@@ -185,14 +185,14 @@ bool operator==(const PathObject &a,const PathObject &b)
 
     switch(a.type())
     {
-        case PathObject::Type::DATASET:
+        case PathObject::Type::Dataset:
             return static_cast<Dataset>(a)==static_cast<Dataset>(b);
-        case PathObject::Type::GROUP:
+        case PathObject::Type::Group:
             return static_cast<Group>(a)==static_cast<Group>(b);
-        case PathObject::Type::ATTRIBUTE:
+        case PathObject::Type::Attribute:
             return attributes_are_equal(static_cast<Attribute>(a),
                                         static_cast<Attribute>(b));
-        case PathObject::Type::NONE:
+        case PathObject::Type::None:
             return true;
     }
 }
@@ -242,10 +242,10 @@ std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
 {
   switch(type)
   {
-    case PathObject::Type::NONE: return stream<<"NONE";
-    case PathObject::Type::ATTRIBUTE: return stream<<"ATTRIBUTE";
-    case PathObject::Type::DATASET: return stream<<"DATASET";
-    case PathObject::Type::GROUP: return stream<<"GROUP";
+    case PathObject::Type::None: return stream<<"NONE";
+    case PathObject::Type::Attribute: return stream<<"ATTRIBUTE";
+    case PathObject::Type::Dataset: return stream<<"DATASET";
+    case PathObject::Type::Group: return stream<<"GROUP";
     default:
       return stream;
   }
@@ -256,22 +256,22 @@ std::ostream &operator<<(std::ostream &stream,const PathObject::Type &type)
 
 bool is_dataset(const PathObject &object) noexcept
 {
-  return object.type() == PathObject::Type::DATASET;
+  return object.type() == PathObject::Type::Dataset;
 }
 
 bool is_attribute(const PathObject &object) noexcept
 {
-  return object.type() == PathObject::Type::ATTRIBUTE;
+  return object.type() == PathObject::Type::Attribute;
 }
 
 bool is_group(const PathObject &object) noexcept
 {
-  return object.type() == PathObject::Type::GROUP;
+  return object.type() == PathObject::Type::Group;
 }
 
 bool is_link(const PathObject &object) noexcept
 {
-  return object.type() == PathObject::Type::LINK;
+  return object.type() == PathObject::Type::Link;
 }
 
 } // namespace nexus

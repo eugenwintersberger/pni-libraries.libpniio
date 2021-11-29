@@ -32,9 +32,9 @@ struct GetPathFixture
     hdf5::file::File file2;
     GetPathFixture()
     {
-      file1=nexus::create_file("GetPathFixture1.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      file1=nexus::create_file("GetPathFixture1.nxs",hdf5::file::AccessFlags::Truncate);
       nexus::xml::create_from_file(file1.root(),"simple_structure.xml");
-      file2=nexus::create_file("GetPathFixture2.nxs",hdf5::file::AccessFlags::TRUNCATE);
+      file2=nexus::create_file("GetPathFixture2.nxs",hdf5::file::AccessFlags::Truncate);
       nexus::xml::create_from_file(file2.root(),"detector_with_transformation.xml");
     }
 };

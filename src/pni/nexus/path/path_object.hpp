@@ -51,11 +51,11 @@ class PNINEXUS_EXPORT PathObject
   public:
     enum class Type : uint8_t
     {
-       NONE = 1,
-       ATTRIBUTE = 2,
-       GROUP = 3,
-       DATASET = 4,
-       LINK = 5
+       None = 1,
+       Attribute = 2,
+       Group = 3,
+       Dataset = 4,
+       Link = 5
 
     };
 
@@ -63,7 +63,7 @@ class PNINEXUS_EXPORT PathObject
     //! @brief default constructor
     //!
     //! We need default construction for container types. When a
-    //! PathObject is default constructed its type is Type::NONE.
+    //! PathObject is default constructed its type is Type::None.
     //! In this case no conversion to any other object could be
     //! achieved.
     //!
@@ -73,7 +73,7 @@ class PNINEXUS_EXPORT PathObject
     //! @brief constructor
     //!
     //! Build a PathObject from an attribute. In this case type()
-    //! will return Type::ATTRIBUTE.
+    //! will return Type::Attribute.
     //!
     //! @param attribute reference to the original attribute
     //!
@@ -83,7 +83,7 @@ class PNINEXUS_EXPORT PathObject
     //! @brief constructor
     //!
     //! Build a PathObject from a dataset. After construction
-    //! type() will return Type::DATASET.
+    //! type() will return Type::Dataset.
     //!
     //! @param dataset reference to the original dataset
     //!

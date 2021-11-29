@@ -85,7 +85,7 @@ namespace cbf{
                                 "Cannot find conversion string!");
                     
                     if(match.str(0) == "\"x-CBF_BYTE_OFFSET\"")
-                        ct = compression_id::CBF_BYTE_OFFSET;
+                        ct = compression_id::CBFByteOffset;
                     else
                         throw file_error(EXCEPTION_RECORD,
                                 "Unknown compression algorithm!");
@@ -102,7 +102,7 @@ namespace cbf{
                     //set the data type id
                     if(match.str(0) == "\"signed 32-bit integer\"")
                     {
-                        tid=type_id_t::INT32;
+                        tid=type_id_t::Int32;
                         bits_per_pixel = 32;
                     }
                     else

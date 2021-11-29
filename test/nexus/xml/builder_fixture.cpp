@@ -29,7 +29,7 @@ BuilderFixture::BuilderFixture(const boost::filesystem::path &nexus_file,
   using namespace pni;
   using pni::type_id_t;
   file = hdf5::file::create(nexus_file,
-                            hdf5::file::AccessFlags::TRUNCATE);
+                            hdf5::file::AccessFlags::Truncate);
   root_group = file.root();
 
   nexus::xml::Node n = nexus::xml::Node::from_file(xml_file);
