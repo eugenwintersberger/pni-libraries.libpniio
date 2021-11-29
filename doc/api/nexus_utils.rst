@@ -1,5 +1,5 @@
 
-.. _nexus-api-utils
+.. _nexus-api-utils:
 
 =============================
 Utility functions and classes
