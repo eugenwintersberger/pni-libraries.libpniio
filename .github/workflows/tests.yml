@@ -72,6 +72,8 @@ jobs:
              docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\; "
              docker  exec build /bin/bash -c "rm -rf ./latest/_sources"
              docker  exec build /bin/bash -c "rm -rf build"
+             docker  exec build /bin/bash -c "rm -rf doc"
+             docker  exec build /bin/bash -c "rm -rf cmake"
 
       - name: Extract the code version from the branch name
         if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
@@ -94,6 +96,8 @@ jobs:
              docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\;"
              docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
              docker  exec build /bin/bash -c "rm -rf build"
+             docker  exec build /bin/bash -c "rm -rf doc"
+             docker  exec build /bin/bash -c "rm -rf cmake"
 
       - name: Deploy documentation
         if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
