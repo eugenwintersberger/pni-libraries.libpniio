@@ -23,6 +23,7 @@
 //
 
 #include <pni/parsers/bool_parser.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
 
@@ -47,6 +48,36 @@ namespace pni{
             return true;
         else if(boost::regex_match(input,_false_regex))
             return false;
+        else
+        {
+            std::stringstream ss;
+            ss<<"Input ["<<input<<"] cannot be converted to a boolean value!";
+            throw parser_error(EXCEPTION_RECORD,ss.str());
+        }
+    }
+
+
+    parser<hdf5::datatype::EBool>::parser():
+        _true_regex("^T(rue|RUE)|true|1$"),
+        _false_regex("^F(alse|ALSE)|false|0$")
+    {}
+
+
+    parser<hdf5::datatype::EBool>::parser(const pni::string &true_regex,
+                                      const pni::string &false_regex):
+        _true_regex(true_regex),
+        _false_regex(false_regex)
+    {}
+
+    parser<hdf5::datatype::EBool>::result_type
+    parser<hdf5::datatype::EBool>::operator()(const pni::string &input) const
+    {
+        using namespace pni;
+
+        if(boost::regex_match(input,_true_regex))
+          return hdf5::datatype::EBool(1);
+        else if(boost::regex_match(input,_false_regex))
+          return hdf5::datatype::EBool(0);
         else
         {
             std::stringstream ss;

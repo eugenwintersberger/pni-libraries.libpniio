@@ -22,6 +22,7 @@
 //
 #include <boost/test/unit_test.hpp>
 #include <pni/nexus/xml/attribute_builder.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 #include "builder_fixture.hpp"
 using namespace pni;
@@ -32,7 +33,7 @@ struct ScalarAttributeFixture : public BuilderFixture
 
     ScalarAttributeFixture():
       BuilderFixture("ScalarAttributesTest.nxs","scalar_attribute_test.xml")
-    {}
+  { }
 };
 
 
@@ -77,6 +78,19 @@ BOOST_AUTO_TEST_CASE(test_string_attribute)
   BOOST_CHECK(data == "hello");
   auto dataspace = attribute.dataspace();
   BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::Scalar);
+}
+
+BOOST_AUTO_TEST_CASE(test_bool_attribute)
+{
+  BOOST_CHECK(root_group.attributes.exists("bool_attribute"));
+  BOOST_CHECK_NO_THROW(attribute = root_group.attributes["bool_attribute"]);
+  BOOST_CHECK(attribute.datatype()==hdf5::datatype::create<hdf5::datatype::EBool>());
+  bool data;
+  attribute.read(data);
+  BOOST_CHECK(data == true);
+  auto dataspace = attribute.dataspace();
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::Simple);
+  BOOST_CHECK(dataspace.size() == 1);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
