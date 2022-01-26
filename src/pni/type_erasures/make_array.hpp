@@ -24,6 +24,7 @@
 #pragma once
 
 #include <pni/arrays.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
 
@@ -98,6 +99,8 @@ namespace pni{
             return make_array<complex128>(shape);
         else if(tid == type_id_t::Bool)
             return make_array<bool_t>(shape);
+        else if(tid == type_id_t::EBool)
+            return make_array<hdf5::datatype::EBool>(shape);
         else if(tid == type_id_t::Binary)
             return make_array<binary>(shape);
         else if(tid == type_id_t::String)

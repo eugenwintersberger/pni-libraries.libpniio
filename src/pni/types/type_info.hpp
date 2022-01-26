@@ -27,6 +27,8 @@
 #include <limits>
 
 #include <pni/types/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
+
 
 namespace pni{
 
@@ -239,7 +241,6 @@ namespace pni{
 
     };
 
-
     template<> struct type_info<bool_t>
     {
         typedef bool_t type;
@@ -255,6 +256,24 @@ namespace pni{
         static type min() { return false; }
 
         static type max() { return true; }
+
+    };
+
+    template<> struct type_info<hdf5::datatype::EBool>
+    {
+        typedef hdf5::datatype::EBool type;
+        typedef hdf5::datatype::EBool base_type;
+
+        static const size_t size = sizeof(bool);
+        static const bool is_integer = true;
+        static const bool is_signed = false;
+        static const bool is_complex = false;
+
+        static bool is_negative(type) { return false; }
+
+        static type min() { return hdf5::datatype::EBool::False; }
+
+        static type max() { return hdf5::datatype::EBool::True; }
 
     };
     //! \endcond

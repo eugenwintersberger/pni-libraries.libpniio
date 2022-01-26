@@ -25,6 +25,7 @@
 #include <sstream>
 #include <pni/types.hpp>
 #include <boost/lexical_cast.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 #ifdef NOCPPRAND
 #include <boost/random/uniform_int.hpp>
@@ -168,6 +169,18 @@ template<typename T> class random_generator<std::complex<T>>
 
 //-----------------------------------------------------------------------------
 template<> class random_generator<bool_t>
+{
+    private:
+        random_generator<unsigned short> _generator;
+    public:
+
+        random_generator();
+
+        bool_t operator()();
+};
+
+//-----------------------------------------------------------------------------
+template<> class random_generator<hdf5::datatype::EBool>
 {
     private:
         random_generator<unsigned short> _generator;

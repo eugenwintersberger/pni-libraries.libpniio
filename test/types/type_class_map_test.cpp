@@ -31,6 +31,7 @@
 #endif
 #include <pni/types.hpp>
 #include <pni/types/type_class_map.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <iostream>
 
 using namespace pni;
@@ -92,6 +93,7 @@ BOOST_AUTO_TEST_SUITE(type_class_map_test)
         BOOST_CHECK(type_class_map<string>::type_class == type_class_t::String);
         BOOST_CHECK(type_class_map<binary>::type_class == type_class_t::Binary);
         BOOST_CHECK(type_class_map<bool_t>::type_class == type_class_t::Bool);
+        BOOST_CHECK(type_class_map<hdf5::datatype::EBool>::type_class == type_class_t::Bool);
 
         BOOST_CHECK(type_class_map<none>::type_class == type_class_t::None);
     }

@@ -25,6 +25,7 @@
 #pragma once
 
 #include <pni/types/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
 
@@ -80,6 +81,7 @@ namespace pni{
     CREATE_ID_TYPE_MAP(type_id_t::String,string);
     CREATE_ID_TYPE_MAP(type_id_t::Binary,binary);
     CREATE_ID_TYPE_MAP(type_id_t::Bool,bool_t);
+    CREATE_ID_TYPE_MAP(type_id_t::EBool,hdf5::datatype::EBool);
     CREATE_ID_TYPE_MAP(type_id_t::None,none);
     //! \endcond NO_API_DOC
 

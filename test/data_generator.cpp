@@ -21,7 +21,18 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #include "data_generator.hpp"
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
+//----------------------------------------------------------------------------
+random_generator<hdf5::datatype::EBool>::random_generator()
+    :_generator(0,1)
+{}
+
+//----------------------------------------------------------------------------
+bool_t random_generator<hdf5::datatype::EBool>::operator()()
+{
+    return bool(_generator());
+}
 //----------------------------------------------------------------------------
 random_generator<bool_t>::random_generator()
     :_generator(0,1)

@@ -46,7 +46,7 @@ hdf5::datatype::Datatype DatatypeFactory::create(pni::type_id_t tid)
     case type_id_t::Float64: return hdf5::datatype::create<float64>();
     case type_id_t::Float128: return hdf5::datatype::create<float128>();
     case type_id_t::String: return hdf5::datatype::create<std::string>();
-    case type_id_t::Bool: return hdf5::datatype::create<hdf5::datatype::EBool>();
+    case type_id_t::EBool: return hdf5::datatype::create<hdf5::datatype::EBool>();
     default:
     {
       std::stringstream ss;

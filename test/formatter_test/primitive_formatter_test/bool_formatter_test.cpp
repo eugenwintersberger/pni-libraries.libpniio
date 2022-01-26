@@ -24,6 +24,7 @@
 
 #include <boost/test/unit_test.hpp>
 #include <pni/formatters/scalar_format.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 using namespace pni;
 
@@ -34,7 +35,10 @@ BOOST_AUTO_TEST_SUITE(bool_formatter_test)
     {
         BOOST_CHECK(format(bool_t(true)) == "true");
         BOOST_CHECK(format(bool_t(false)) == "false");
+        BOOST_CHECK(format(hdf5::datatype::EBool(true)) == "true");
+        BOOST_CHECK(format(hdf5::datatype::EBool(false)) == "false");
     }
+
 
 BOOST_AUTO_TEST_SUITE_END()
 

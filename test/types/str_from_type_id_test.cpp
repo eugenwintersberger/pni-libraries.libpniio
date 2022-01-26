@@ -132,9 +132,14 @@ BOOST_AUTO_TEST_SUITE(str_from_type_id_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE(test_bool_str_from_type_id)
+    BOOST_AUTO_TEST_CASE(test_ibool_str_from_type_id)
     {
-        BOOST_CHECK_EQUAL(str_from_type_id(type_id_t::Bool) , "bool");
+        BOOST_CHECK_EQUAL(str_from_type_id(type_id_t::Bool) , "ibool");
+    }
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(test_ebool_str_from_type_id)
+    {
+        BOOST_CHECK_EQUAL(str_from_type_id(type_id_t::EBool) , "bool");
     }
 
     //========================================================================

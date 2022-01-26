@@ -147,9 +147,19 @@ BOOST_AUTO_TEST_SUITE(type_id_from_str_test)
     }
 
     //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-    BOOST_AUTO_TEST_CASE(test_boold_id_from_str)
+    BOOST_AUTO_TEST_CASE(test_ibool_id_from_str)
     {
-        BOOST_CHECK_EQUAL(type_id_from_str("bool"),type_id_t::Bool);
+        BOOST_CHECK_EQUAL(type_id_from_str("ibool"),type_id_t::Bool);
+    }
+
+    BOOST_AUTO_TEST_CASE(test_bool_id_from_str)
+    {
+        BOOST_CHECK_EQUAL(type_id_from_str("bool"),type_id_t::EBool);
+    }
+
+    BOOST_AUTO_TEST_CASE(test_ebool_id_from_str)
+    {
+        BOOST_CHECK_EQUAL(type_id_from_str("ebool"),type_id_t::EBool);
     }
     
     //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

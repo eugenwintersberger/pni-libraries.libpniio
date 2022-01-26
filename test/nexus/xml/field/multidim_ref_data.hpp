@@ -24,6 +24,7 @@
 
 #include <pni/types.hpp>
 #include <vector>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 template<typename T> struct mdim_ref_data
 {
@@ -50,6 +51,7 @@ GENERATE_MDIM_REFERENCE_DATA(pni::float64,-1.233e+4, 239e-3, 30495.e-8);
 GENERATE_MDIM_REFERENCE_DATA(pni::complex32,{34.f,123.e-3f},{34.e-2f,98.3f},{453.98f,-743.29f});
 GENERATE_MDIM_REFERENCE_DATA(pni::complex64,{-23.,-8.203},{893e+4,-23.12},{9.e-8,732e+3});
 GENERATE_MDIM_REFERENCE_DATA(pni::bool_t,true,true,false);
+GENERATE_MDIM_REFERENCE_DATA(hdf5::datatype::EBool,true,true,false);
 
 #ifndef _MSC_VER
 GENERATE_MDIM_REFERENCE_DATA(pni::float128,123.24354e-4, 40394.e-4, 1.23e+5);

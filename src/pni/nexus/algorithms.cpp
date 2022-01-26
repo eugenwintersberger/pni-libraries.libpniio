@@ -91,7 +91,7 @@ pni::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
     return type_id_t::String;
   else if(datatype.get_class() == hdf5::datatype::Class::Enum
           && hdf5::datatype::is_bool(hdf5::datatype::Enum(datatype)))
-    return type_id_t::Bool;
+    return type_id_t::EBool;
   else
     return type_id_t::None;
 }

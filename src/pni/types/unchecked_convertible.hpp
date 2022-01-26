@@ -29,6 +29,7 @@
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/at.hpp>
 #include <pni/types/id_type_map.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
     
@@ -142,6 +143,7 @@ namespace pni{
         boost::mpl::pair<string,boost::mpl::vector<string>>,
 
         boost::mpl::pair<bool_t,boost::mpl::vector<bool_t>>,
+        boost::mpl::pair<hdf5::datatype::EBool,boost::mpl::vector<hdf5::datatype::EBool>>,
 
         boost::mpl::pair<binary,boost::mpl::vector<binary>>
         > unchecked_type_vectors;

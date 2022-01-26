@@ -24,6 +24,7 @@
 
 #include <pni/nexus/xml/node.hpp>
 #include <h5cpp/hdf5.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <pni/types.hpp>
 #include <vector>
 
@@ -46,6 +47,7 @@ using complex128_vector = std::vector<pni::complex128>;
 
 using string_vector = std::vector<pni::string>;
 using bool_t_vector = std::vector<pni::bool_t>;
+using ebool_vector = std::vector<hdf5::datatype::EBool>;
 
 namespace xml_test{
 namespace field_test{
@@ -79,6 +81,7 @@ namespace field_test{
 
     DECLARE_DATA_FROM_XML(pni::string);
     DECLARE_DATA_FROM_XML(pni::bool_t);
+  DECLARE_DATA_FROM_XML(hdf5::datatype::EBool);
     
     DECLARE_DATA_FROM_XML(uint8_vector);
     DECLARE_DATA_FROM_XML(int8_vector);
@@ -99,6 +102,7 @@ namespace field_test{
 
     DECLARE_DATA_FROM_XML(string_vector);
     DECLARE_DATA_FROM_XML(bool_t_vector);
+    DECLARE_DATA_FROM_XML(ebool_vector);
 
 #define DECLARE_DATA_TO_XML(type)\
     void data_to_xml(const type &value,pni::nexus::xml::Node &node)
@@ -122,6 +126,7 @@ namespace field_test{
 
     DECLARE_DATA_TO_XML(pni::string);
     DECLARE_DATA_TO_XML(pni::bool_t);
+    DECLARE_DATA_TO_XML(hdf5::datatype::EBool);
     
     DECLARE_DATA_TO_XML(uint8_vector);
     DECLARE_DATA_TO_XML(int8_vector);
@@ -142,6 +147,7 @@ namespace field_test{
 
     DECLARE_DATA_TO_XML(string_vector);
     DECLARE_DATA_TO_XML(bool_t_vector);
+    DECLARE_DATA_TO_XML(ebool_vector);
 
     pni::nexus::xml::Node
     object_to_xml(const hdf5::node::Node &object);
