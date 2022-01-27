@@ -18,7 +18,9 @@
 //************************************************************************
 //
 //  Created on: Oct 18, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #include "data_generator.hpp"
 #include <h5cpp/contrib/nexus/ebool.hpp>

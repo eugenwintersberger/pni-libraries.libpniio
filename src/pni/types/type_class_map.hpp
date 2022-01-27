@@ -19,7 +19,9 @@
 // ============================================================================
 //
 //  Created on: Sep 27, 2012
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 

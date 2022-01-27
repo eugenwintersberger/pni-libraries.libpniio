@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 //  Createyd on: Oct 17, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 #include <h5cpp/contrib/nexus/ebool.hpp>

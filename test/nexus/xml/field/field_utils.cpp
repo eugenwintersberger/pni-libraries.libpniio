@@ -18,7 +18,9 @@
 // ===========================================================================
 //
 //  Created on: Sep 04, 2015
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include "field_utils.hpp"

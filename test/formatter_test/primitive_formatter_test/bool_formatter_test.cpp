@@ -18,8 +18,9 @@
 // ===========================================================================
 //
 //  Created on: Feb 11, 2015
-//      Authors: Eugen Wintersberger <eugen.wintersberger@desy.de>
-//               Jan Kotanski <jan.kotanski@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include <boost/test/unit_test.hpp>

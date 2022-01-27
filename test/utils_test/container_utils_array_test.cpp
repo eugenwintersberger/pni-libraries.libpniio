@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 //  Created on: Nov 07, 2013
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #ifdef __GNUG__

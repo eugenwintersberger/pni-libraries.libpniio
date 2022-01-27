@@ -18,7 +18,9 @@
 // ===========================================================================
 //
 //  Created on: Jan 28, 2015
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #include <boost/test/unit_test.hpp>
 #include <pni/parsers/bool_parser.hpp>
