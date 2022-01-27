@@ -4,6 +4,7 @@ MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
 RUN /bin/bash -c 'echo "deb http://ftp.de.debian.org/debian stretch main" > /etc/apt/sources.list.d/debian9de.list'
 RUN /bin/bash -c 'echo "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/debian9bp.list'
+RUN /bin/bash -c 'echo "deb http://deb.debian.org/debian stretch-backports-sloppy main" > /etc/apt/sources.list.d/debian9bps.list'
 
 RUN apt-get update
 RUN apt-get install -y base-passwd apt-utils dialog -y
@@ -16,6 +17,7 @@ RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
 RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
 RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
+RUN apt-get -qq update && apt-get -t stretch-backports-sloppy -y install libarchive13
 RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
 # RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
