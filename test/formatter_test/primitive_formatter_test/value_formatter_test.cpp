@@ -141,12 +141,9 @@ BOOST_AUTO_TEST_SUITE(value_formatter_test)
     BOOST_AUTO_TEST_CASE(test_bool)
     {
         bool_t v = true;
-        value eev(v);
-        //format(eev);
-        // BOOST_CHECK(format(value(v)) == "true");
-        // BOOST_CHECK(format(value(v)) == "true");
-        // v = false;
-        // BOOST_CHECK(format(input_type(v)) == "false");
+        BOOST_CHECK(format(value(v)) == "true");
+        v = false;
+        BOOST_CHECK(format(input_type(v)) == "false");
     }
 
     BOOST_AUTO_TEST_CASE(test_ebool)

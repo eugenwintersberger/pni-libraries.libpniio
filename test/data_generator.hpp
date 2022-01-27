@@ -188,7 +188,7 @@ template<> class random_generator<hdf5::datatype::EBool>
 
         random_generator();
 
-        bool_t operator()();
+        hdf5::datatype::EBool operator()();
 };
 
 //-----------------------------------------------------------------------------

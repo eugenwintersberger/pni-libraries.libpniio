@@ -29,9 +29,9 @@ random_generator<hdf5::datatype::EBool>::random_generator()
 {}
 
 //----------------------------------------------------------------------------
-bool_t random_generator<hdf5::datatype::EBool>::operator()()
+hdf5::datatype::EBool random_generator<hdf5::datatype::EBool>::operator()()
 {
-    return bool(_generator());
+    return hdf5::datatype::EBool(_generator());
 }
 //----------------------------------------------------------------------------
 random_generator<bool_t>::random_generator()

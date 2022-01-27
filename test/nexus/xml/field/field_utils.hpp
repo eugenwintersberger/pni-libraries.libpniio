@@ -81,7 +81,7 @@ namespace field_test{
 
     DECLARE_DATA_FROM_XML(pni::string);
     DECLARE_DATA_FROM_XML(pni::bool_t);
-  DECLARE_DATA_FROM_XML(hdf5::datatype::EBool);
+    DECLARE_DATA_FROM_XML(hdf5::datatype::EBool);
     
     DECLARE_DATA_FROM_XML(uint8_vector);
     DECLARE_DATA_FROM_XML(int8_vector);

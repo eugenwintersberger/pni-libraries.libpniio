@@ -34,7 +34,7 @@ jobs:
       - name: Run Ninja
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+        run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DH5CPP_WITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
         # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -DWITH_CONAN=OFF -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all

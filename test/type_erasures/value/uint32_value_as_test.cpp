@@ -32,6 +32,7 @@
 #include <boost/test/tools/floating_point_comparison.hpp>
 #include <pni/types.hpp>
 #include <pni/type_erasures.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 #include "fixture.hpp"
 #include "../../data_generator.hpp"
@@ -223,6 +224,15 @@ BOOST_AUTO_TEST_SUITE(uint32_value_as_test)
     BOOST_AUTO_TEST_CASE(test_as_bool)
     {
         typedef bool_t target_type;
+        fixture_type f(0,40000000);
+        value v(f.value_1);
+        BOOST_CHECK_THROW(v.as<target_type>(),type_error);
+    }
+
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(test_as_ebool)
+    {
+        typedef hdf5::datatype::EBool target_type;
         fixture_type f(0,40000000);
         value v(f.value_1);
         BOOST_CHECK_THROW(v.as<target_type>(),type_error);

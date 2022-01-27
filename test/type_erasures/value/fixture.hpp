@@ -22,6 +22,8 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 #pragma once
+#include <h5cpp/contrib/nexus/ebool.hpp>
+
 #include "../../data_generator.hpp"
 
 
@@ -89,6 +91,21 @@ template<> struct fixture<bool_t>
     generator_type generator;
     bool_t value_1;
     bool_t value_2;
+
+    fixture():
+        generator(),
+        value_1(generator()),
+        value_2(generator())
+    {}
+
+};
+
+template<> struct fixture<hdf5::datatype::EBool>
+{
+    typedef random_generator<hdf5::datatype::EBool> generator_type;
+    generator_type generator;
+    hdf5::datatype::EBool value_1;
+    hdf5::datatype::EBool value_2;
 
     fixture():
         generator(),

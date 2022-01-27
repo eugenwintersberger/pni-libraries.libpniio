@@ -26,6 +26,7 @@
 #include <iostream>
 
 #include <pni/windows.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
 
@@ -66,5 +67,8 @@ namespace pni{
 
     //! input operator for bool_t
     PNINEXUS_EXPORT std::istream &operator>>(std::istream &stream,bool_t &b);
+
+    //! input operator for EBool
+    PNINEXUS_EXPORT std::istream &operator>>(std::istream &stream,hdf5::datatype::EBool &b);
 //end of namespace
 }

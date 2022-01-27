@@ -23,6 +23,7 @@
 #include <boost/test/unit_test.hpp>
 #include <vector>
 #include <pni/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <pni/container_io_config.hpp>
 #include "../primitive_parsers/parser_test_fixture.hpp"
 
@@ -32,6 +33,14 @@ struct bool_vector_parser_test_fixture : parser_test_fixture<std::vector<bool_t>
 {
     result_type ref;
 };
+
+struct ebool_vector_parser_test_fixture : parser_test_fixture<std::vector<hdf5::datatype::EBool>>
+{
+    result_type ref;
+};
+
+auto False = hdf5::datatype::EBool::False;
+auto True = hdf5::datatype::EBool::True;
 
 BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture)
 
@@ -77,6 +86,56 @@ BOOST_FIXTURE_TEST_SUITE(bool_vector_parser_test,bool_vector_parser_test_fixture
         auto result = p("[true,false ,false, true  ,  true]");
         BOOST_CHECK(result.size() == 5);
         ref = {true,false,false,true,true};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_FIXTURE_TEST_SUITE(ebool_vector_parser_test,ebool_vector_parser_test_fixture)
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_default)
+    {
+        auto result = p("true false  true    false  false");
+
+        BOOST_CHECK(result.size() == 5);
+        ref = {True,False,True,False,False};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_start_stop)
+    {
+        p = parser_type(container_io_config('(',')'));
+        auto result = p("( true false false true  true   )");
+        BOOST_CHECK(result.size() == 5);
+
+        ref = {True,False,False,True,True};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_delimiter)
+    {
+        p = parser_type(container_io_config(';'));
+        auto result = p("true;false ;true; true ; false");
+
+        BOOST_CHECK(result.size() == 5);
+        ref = {True,False,True,True,False};
+        BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
+                                      ref.begin(),ref.end());
+    }
+
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_full)
+    {
+        p = parser_type(container_io_config('[',']',','));
+        auto result = p("[true,false ,false, true  ,  true]");
+        BOOST_CHECK(result.size() == 5);
+        ref = {True,False,False,True,True};
         BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(),result.end(),
                                       ref.begin(),ref.end());
     }

@@ -32,6 +32,7 @@
 #endif
 #include <boost/mpl/list.hpp>
 #include <array>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include "test_trait.hpp"
 
 using namespace pni;
@@ -55,7 +56,8 @@ typedef boost::mpl::list<array_type<uint8>,
                          array_type<complex64>,
                          array_type<complex128>,
                          array_type<string>,
-                         array_type<bool_t>
+                         array_type<bool_t>,
+                         array_type<hdf5::datatype::EBool>
                          > test_types;
 
 

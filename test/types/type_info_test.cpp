@@ -32,6 +32,7 @@
 #include <boost/test/tools/floating_point_comparison.hpp>
 #include <pni/types.hpp>
 #include <boost/mpl/list.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <limits>
 #include <climits>
 
@@ -194,6 +195,19 @@ BOOST_AUTO_TEST_SUITE(type_info_test)
 
         BOOST_CHECK_EQUAL(info_type::min(),false);
         BOOST_CHECK_EQUAL(info_type::max(),true);
+        BOOST_CHECK(info_type::size==1);
+        BOOST_CHECK(info_type::is_integer);
+        BOOST_CHECK(!info_type::is_signed);
+        BOOST_CHECK(!info_type::is_complex);
+    }
+
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(test_type_info_ebool)
+    {
+        typedef pni::type_info<hdf5::datatype::EBool> info_type;
+
+        BOOST_CHECK_EQUAL(info_type::min(),hdf5::datatype::EBool::False);
+        BOOST_CHECK_EQUAL(info_type::max(),hdf5::datatype::EBool::True);
         BOOST_CHECK(info_type::size==1);
         BOOST_CHECK(info_type::is_integer);
         BOOST_CHECK(!info_type::is_signed);

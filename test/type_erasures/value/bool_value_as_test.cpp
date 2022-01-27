@@ -193,4 +193,13 @@ BOOST_AUTO_TEST_SUITE(bool_value_as_test)
         BOOST_CHECK_EQUAL(v.as<target_type>() ,f.value_1);
     }
 
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(test_as_ebool)
+    {
+        typedef hdf5::datatype::EBool target_type;
+        fixture_type f;
+        value v(f.value_1);
+        BOOST_CHECK_EQUAL(v.as<target_type>() ,f.value_1);
+    }
+
 BOOST_AUTO_TEST_SUITE_END()

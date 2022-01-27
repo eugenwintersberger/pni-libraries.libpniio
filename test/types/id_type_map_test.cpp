@@ -30,6 +30,7 @@
 #pragma GCC diagnostic pop
 #endif
 #include <pni/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <iostream>
 
 using namespace pni;
@@ -153,6 +154,13 @@ BOOST_AUTO_TEST_SUITE(id_type_map_test)
     {
         typedef id_type_map<type_id_t::Bool> map_type;
         BOOST_CHECK((std::is_same<map_type::type,bool_t>::value));
+    }
+
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(type_id_type_map_ebool)
+    {
+        typedef id_type_map<type_id_t::EBool> map_type;
+        BOOST_CHECK((std::is_same<map_type::type,hdf5::datatype::EBool>::value));
     }
 
     //========================================================================

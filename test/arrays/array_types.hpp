@@ -26,6 +26,7 @@
 #include <pni/types.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/joint_view.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <cstddef>
 
 typedef boost::mpl::list<pni::dynamic_array<pni::uint8>,
@@ -45,7 +46,8 @@ typedef boost::mpl::list<pni::dynamic_array<pni::uint8>,
                          numeric_dynamic_arrays;
 
 typedef boost::mpl::list<pni::dynamic_array<pni::string>,
-                         pni::dynamic_array<pni::bool_t>>
+                         pni::dynamic_array<pni::bool_t>,
+                         pni::dynamic_array<hdf5::datatype::EBool>>
                          nonnumeric_dynamic_arrays;
 
 typedef boost::mpl::joint_view<numeric_dynamic_arrays,
@@ -73,7 +75,8 @@ using numeric_fixed_dim_arrays =
 template<size_t NDIMS>
 using nonnumeric_fixed_dim_arrays = 
         boost::mpl::list<pni::fixed_dim_array<pni::string,NDIMS>,
-                         pni::fixed_dim_array<pni::bool_t,NDIMS>>;
+                         pni::fixed_dim_array<pni::bool_t,NDIMS>,
+                         pni::fixed_dim_array<hdf5::datatype::EBool,NDIMS>>;
 
 template<size_t NDIMS>
 using all_fixed_dim_arrays = 
@@ -100,7 +103,8 @@ using numeric_static_arrays =
 template<size_t... DIMS>
 using nonnumeric_static_arrays = 
         boost::mpl::list<pni::static_array<pni::string,DIMS... >,
-                         pni::static_array<pni::bool_t,DIMS... >>;
+                         pni::static_array<pni::bool_t,DIMS... >,
+                         pni::static_array<hdf5::datatype::EBool,DIMS... >>;
 
 template<size_t... DIMS>
 using all_static_arrays = 

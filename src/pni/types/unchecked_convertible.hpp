@@ -142,8 +142,8 @@ namespace pni{
         //-------------------source type for string---------------------------
         boost::mpl::pair<string,boost::mpl::vector<string>>,
 
-        boost::mpl::pair<bool_t,boost::mpl::vector<bool_t>>,
-        boost::mpl::pair<hdf5::datatype::EBool,boost::mpl::vector<hdf5::datatype::EBool>>,
+        boost::mpl::pair<bool_t,boost::mpl::vector<bool_t,hdf5::datatype::EBool>>,
+        boost::mpl::pair<hdf5::datatype::EBool,boost::mpl::vector<bool_t,hdf5::datatype::EBool>>,
 
         boost::mpl::pair<binary,boost::mpl::vector<binary>>
         > unchecked_type_vectors;

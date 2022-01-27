@@ -25,6 +25,7 @@
 #include <sstream>
 #include <random>
 #include <pni/types.hpp>
+#include <hdf5/contrib/nexus/ebool.hpp>
 #include <random>
 
 using namespace pni;
@@ -59,11 +60,11 @@ template<typename T> class uniform_distribution
             _engine(),
             _distribution(0.2*pni::type_info<T>::min(),
                           0.2*pni::type_info<T>::max())
-        { 
-            _engine.seed(std::random_device()()); 
+        {
+            _engine.seed(std::random_device()());
         }
 
-        T operator()() 
+        T operator()()
         {
             return _distribution(_engine);
         }
@@ -81,9 +82,9 @@ template<typename T> class uniform_distribution<std::complex<T> >
             _distribution(0.2*pni::type_info<float32>::min(),
                           0.2*pni::type_info<float32>::max())
         {
-            _engine.seed(std::random_device()()); 
+            _engine.seed(std::random_device()());
         }
-        
+
         std::complex<T> operator()()
         {
             return std::complex<T>(_distribution(_engine),
@@ -102,12 +103,32 @@ template<> class uniform_distribution<bool_t>
             _engine(),
             _distribution(0,1)
         {
-            _engine.seed(std::random_device()()); 
+            _engine.seed(std::random_device()());
         }
 
         bool_t operator()()
         {
             return _distribution(_engine)!=0;
+        }
+};
+
+//----------------------------------------------------------------------------
+template<> class uniform_distribution<hdf5::datatype::EBool>
+{
+    private:
+        std::mt19937_64 _engine;
+        std::uniform_int_distribution<> _distribution;
+    public:
+        uniform_distribution():
+            _engine(),
+            _distribution(0,1)
+        {
+            _engine.seed(std::random_device()());
+        }
+
+        hdf5::datatype::EBool operator()()
+        {
+            return hdf5::datatype::EBool(distribution(_engine)!=0);
         }
 };
 
@@ -123,7 +144,7 @@ template<> class uniform_distribution<pni::uint8>
             _engine(),
             _distribution(0,255)
         {
-            _engine.seed(std::random_device()()); 
+            _engine.seed(std::random_device()());
         }
 
         pni::uint8 operator()()
@@ -142,7 +163,7 @@ template<> class uniform_distribution<pni::int8>
             _engine(),
             _distribution(-127,128)
         {
-            _engine.seed(std::random_device()()); 
+            _engine.seed(std::random_device()());
         }
 
         pni::int8 operator()()
@@ -168,7 +189,7 @@ template<> class uniform_distribution<binary>
             _engine.seed(std::random_device()());
         }
 
-        binary operator()() 
+        binary operator()()
         {
             return _distribution(_engine);
         }
@@ -189,4 +210,3 @@ template<> class uniform_distribution<string>
             return ss.str();
         }
 };
-

@@ -26,6 +26,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/joint_view.hpp>
 #include <pni/arrays.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 
 template<typename T> using sarray = pni::static_array<T,3,2>;
@@ -46,7 +47,8 @@ typedef boost::mpl::list<pni::dynamic_array<pni::uint8>,
                          pni::dynamic_array<pni::complex64>,
                          pni::dynamic_array<pni::complex128>,
                          pni::dynamic_array<pni::string>,
-                         pni::dynamic_array<pni::bool_t>
+                         pni::dynamic_array<pni::bool_t>,
+                         pni::dynamic_array<hdf5::datatype::EBool>
                          > dyn_array_types; 
 
 typedef boost::mpl::list<sarray<pni::uint8>,
@@ -64,7 +66,8 @@ typedef boost::mpl::list<sarray<pni::uint8>,
                          sarray<pni::complex64>,
                          sarray<pni::complex128>,
                          sarray<pni::string>,
-                         sarray<pni::bool_t>
+                         sarray<pni::bool_t>,
+                         sarray<hdf5::datatype::EBool>
                         > stat_array_types;
 
 typedef boost::mpl::list<farray<pni::uint8>,
@@ -82,7 +85,8 @@ typedef boost::mpl::list<farray<pni::uint8>,
                          farray<pni::complex64>,
                          farray<pni::complex128>,
                          farray<pni::string>,
-                         farray<pni::bool_t>
+                         farray<pni::bool_t>,
+                         farray<hdf5::datatype::EBool>
                         > fix_array_types;
 
 typedef boost::mpl::joint_view<

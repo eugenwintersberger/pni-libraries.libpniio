@@ -25,6 +25,7 @@
 #include <pni/types.hpp>
 #include <boost/test/unit_test.hpp>
 #include <pni/formatters.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 using namespace pni;
 
@@ -36,6 +37,18 @@ BOOST_AUTO_TEST_SUITE(bool_vector_formatter_test)
         typedef bool_t                     element_type;
         typedef std::vector<element_type>  input_type;
         input_type     input ={true,false,false,true} ;
+
+        BOOST_CHECK(format(input) == "true false false true");
+    }
+    //-------------------------------------------------------------------------
+    BOOST_AUTO_TEST_CASE(test_ebool_format)
+    {
+        typedef hdf5::datatype::EBool       element_type;
+        typedef std::vector<element_type>  input_type;
+        input_type     input ={hdf5::datatype::EBool::True,
+          hdf5::datatype::EBool::False,
+          hdf5::datatype::EBool::False,
+          hdf5::datatype::EBool::True} ;
 
         BOOST_CHECK(format(input) == "true false false true");
     }

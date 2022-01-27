@@ -30,6 +30,7 @@
 #pragma GCC diagnostic pop
 #endif
 #include <pni/types/unchecked_convertible.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 using namespace pni;
 
@@ -39,6 +40,7 @@ BOOST_AUTO_TEST_SUITE(unchecked_convertible_test)
     template<typename T> void always_fails()
     {
         BOOST_CHECK(!(unchecked_convertible<T,bool_t>::value));
+        BOOST_CHECK(!(unchecked_convertible<T,hdf5::datatype::EBool>::value));
         BOOST_CHECK(!(unchecked_convertible<T,binary>::value));
         BOOST_CHECK(!(unchecked_convertible<T,string>::value));
     }
