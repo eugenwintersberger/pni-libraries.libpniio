@@ -23,6 +23,7 @@
 
 #include "thread_writer.hpp"
 #include <pni/nexus.hpp>
+#include <h5cpp/hdf5.hpp>
 
 using namespace pni;
 

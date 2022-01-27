@@ -13,7 +13,8 @@ RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian buster main" -y
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
 RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
-RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1 libhdf5-dev
+RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
+# RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
 RUN apt-get clean
 RUN pip3 install conan
