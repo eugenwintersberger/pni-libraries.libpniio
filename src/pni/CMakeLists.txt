@@ -92,7 +92,7 @@ set_target_properties(pninexus PROPERTIES VERSION "${LIBRARY_VERSION}"
                                        SOVERSION "${SO_VERSION}")
 
 target_link_libraries(pninexus                      
- PUBLIC h5cpp
+ PUBLIC h5cpp::h5cpp
  ${HDF5_LIBRARIES}
  Boost::filesystem
  Boost::regex
