@@ -1,8 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classpni_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="5,97,173,123"/>
-<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="221,97,419,123"/>
-<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1xml_1_1AttributeBuilder.html" title=" " alt="" coords="480,5,648,47"/>
-<area shape="rect" id="node4" href="$classpni_1_1nexus_1_1xml_1_1FieldBuilder.html" title=" " alt="" coords="471,71,657,98"/>
-<area shape="rect" id="node5" href="$classpni_1_1nexus_1_1xml_1_1GroupBuilder.html" title=" " alt="" coords="467,122,661,149"/>
-<area shape="rect" id="node6" href="$classpni_1_1nexus_1_1xml_1_1LinkBuilder.html" title=" " alt="" coords="473,173,655,199"/>
+<area shape="rect" id="node1" href="$classpni_1_1nexus_1_1NodePredicate.html" title="abstract predicate interface for nodes" alt="" coords="5,157,181,184"/>
+<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1IsBaseClass.html" title="predicate to search for base classes" alt="" coords="229,157,395,184"/>
+<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1IsData.html" title="matches NXdata" alt="" coords="472,5,601,32"/>
+<area shape="rect" id="node4" href="$classpni_1_1nexus_1_1IsDetector.html" title="matches NXdetector" alt="" coords="461,56,612,83"/>
+<area shape="rect" id="node5" href="$classpni_1_1nexus_1_1IsEntry.html" title="matches NXentry" alt="" coords="471,107,603,133"/>
+<area shape="rect" id="node6" href="$classpni_1_1nexus_1_1IsInstrument.html" title="matches NXinstrument" alt="" coords="455,157,618,184"/>
+<area shape="rect" id="node7" href="$classpni_1_1nexus_1_1IsSample.html" title="matches NXsample" alt="" coords="464,208,609,235"/>
+<area shape="rect" id="node8" href="$classpni_1_1nexus_1_1IsSubentry.html" title="matches NXsubentry" alt="" coords="460,259,613,285"/>
+<area shape="rect" id="node9" href="$classpni_1_1nexus_1_1IsTransformation.html" title="matches an NXtransformations" alt="" coords="443,309,631,336"/>
 </map>

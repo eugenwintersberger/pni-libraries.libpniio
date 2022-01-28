@@ -14,7 +14,7 @@ var types_2types_8hpp =
     [ "int64", "types_2types_8hpp.html#ga92b286022d3b0449bce9604e3fda1041", null ],
     [ "int8", "types_2types_8hpp.html#gadc41483281916729dac71199de27a884", null ],
     [ "integer_types", "types_2types_8hpp.html#gacbd5a595aaf93f47266269949891c095", null ],
-    [ "non_numeric_types", "types_2types_8hpp.html#ga849acfa54c3cfcbc19ba277b7bc52bb7", null ],
+    [ "non_numeric_types", "types_2types_8hpp.html#ga9406166148f118a22958b77118fbdac6", null ],
     [ "numeric_types", "types_2types_8hpp.html#ga58fbe5d75590006cbac83b07014da1ba", null ],
     [ "primitive_types", "types_2types_8hpp.html#ga09c2c225bf1677084f0b32e684726625", null ],
     [ "shape_t", "types_2types_8hpp.html#a5b5c35e86d7bd211daf1b949d3e3fc8e", null ],
@@ -51,7 +51,8 @@ var types_2types_8hpp =
       [ "Complex128", "types_2types_8hpp.html#gga2c8ca0de37c42914554a1a9e500b31cdaee63a91375f038924d9671f9fec7059b", null ],
       [ "String", "types_2types_8hpp.html#gga2c8ca0de37c42914554a1a9e500b31cda27118326006d3829667a400ad23d5d98", null ],
       [ "Binary", "types_2types_8hpp.html#gga2c8ca0de37c42914554a1a9e500b31cda6ce976e8f061b2b5cfe4d0c50c3405dd", null ],
-      [ "Bool", "types_2types_8hpp.html#gga2c8ca0de37c42914554a1a9e500b31cdac26f15e86e3de4c398a8273272aba034", null ]
+      [ "Bool", "types_2types_8hpp.html#gga2c8ca0de37c42914554a1a9e500b31cdac26f15e86e3de4c398a8273272aba034", null ],
+      [ "EBool", "types_2types_8hpp.html#gga2c8ca0de37c42914554a1a9e500b31cdae9ea9a7e4f8a765f1765d6f7a2ea187e", null ]
     ] ],
     [ "operator<<", "types_2types_8hpp.html#ga73b873733f07704f8ddd93f6695cf9cc", null ]
 ];

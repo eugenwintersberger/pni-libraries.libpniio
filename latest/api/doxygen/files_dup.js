@@ -29,7 +29,8 @@ var files_dup =
     [ "binary.hpp", "binary_8hpp.html", "binary_8hpp" ],
     [ "bool.hpp", "bool_8hpp.html", "bool_8hpp" ],
     [ "bool_parser.hpp", "bool__parser_8hpp.html", [
-      [ "parser< pni::bool_t >", "classpni_1_1parser_3_01pni_1_1bool__t_01_4.html", "classpni_1_1parser_3_01pni_1_1bool__t_01_4" ]
+      [ "parser< pni::bool_t >", "classpni_1_1parser_3_01pni_1_1bool__t_01_4.html", "classpni_1_1parser_3_01pni_1_1bool__t_01_4" ],
+      [ "parser< hdf5::datatype::EBool >", "classpni_1_1parser_3_01hdf5_1_1datatype_1_1EBool_01_4.html", "classpni_1_1parser_3_01hdf5_1_1datatype_1_1EBool_01_4" ]
     ] ],
     [ "builder_factory.hpp", "builder__factory_8hpp.html", [
       [ "BuilderFactory", "classpni_1_1nexus_1_1xml_1_1BuilderFactory.html", "classpni_1_1nexus_1_1xml_1_1BuilderFactory" ]

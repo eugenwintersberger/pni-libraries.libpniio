@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"classpni_1_1mdarray.html#af64c8650b777be03d73b6a1caad23ee7":[2,0,1,38,39],
 "classpni_1_1mdarray.html#afc887fed4812b1c66d053dcc9989bbfd":[2,0,1,38,0],
 "classpni_1_1memory__allocation__error.html":[2,0,1,49],
 "classpni_1_1memory__allocation__error.html#a24392efb55cac59554a118dafc0a0f7b":[2,0,1,49,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "classpni_1_1nexus_1_1xml_1_1Node.html#af5bcd01bffde679f164c9af6571f1661":[2,0,1,1,0,10,9],
 "classpni_1_1nexus_1_1xml_1_1Node.html#afe357d8d9f36522ff76465eea3842bbe":[2,0,1,1,0,10,5],
 "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html":[2,0,1,1,0,11],
-"classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a2913383bdacb9f10f22c033e133dc441":[2,0,1,1,0,11,4],
-"classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a46b4c376edc0de39137cf84a6917e6d8":[2,0,1,1,0,11,3]
+"classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a2913383bdacb9f10f22c033e133dc441":[2,0,1,1,0,11,4]
 };
