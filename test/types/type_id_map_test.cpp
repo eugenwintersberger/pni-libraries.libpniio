@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 //  Created on: Oct 15, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #ifdef __GNUG__
 #pragma GCC diagnostic push
@@ -31,6 +33,7 @@
 #endif
 #include <pni/types.hpp>
 #include <pni/types/type_id_map.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <iostream>
 
 using namespace pni;
@@ -137,6 +140,12 @@ BOOST_AUTO_TEST_SUITE(type_id_map_test)
     BOOST_AUTO_TEST_CASE(type_id_map_bool)
     {
         BOOST_CHECK(type_id_map<bool_t>::type_id == type_id_t::Bool);
+    }
+
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(type_id_map_ebool)
+    {
+        BOOST_CHECK(type_id_map<hdf5::datatype::EBool>::type_id == type_id_t::EBool);
     }
 
     //========================================================================

@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 //  Created on: Jan 9, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #ifdef __GNUG__
 #pragma GCC diagnostic push
@@ -188,6 +190,15 @@ BOOST_AUTO_TEST_SUITE(bool_value_as_test)
     BOOST_AUTO_TEST_CASE(test_as_bool)
     {
         typedef bool_t target_type;
+        fixture_type f;
+        value v(f.value_1);
+        BOOST_CHECK_EQUAL(v.as<target_type>() ,f.value_1);
+    }
+
+    //========================================================================
+    BOOST_AUTO_TEST_CASE(test_as_ebool)
+    {
+        typedef hdf5::datatype::EBool target_type;
         fixture_type f;
         value v(f.value_1);
         BOOST_CHECK_EQUAL(v.as<target_type>() ,f.value_1);

@@ -17,11 +17,14 @@
 // along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 // Created on: Dec 13, 2017
 //
 #include <pni/nexus/xml/data_writer.hpp>
 #include <pni/parsers.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni {
 namespace nexus {
@@ -38,6 +41,13 @@ template<typename OBJ>
 void write_string_data(const std::string &data,const OBJ &object)
 {
   object.write(data);
+}
+
+template<typename OBJ>
+void write_bool_data(const std::string &data,const OBJ &object)
+{
+  pni::parser<std::vector<hdf5::datatype::EBool>> parser;
+  object.write(parser(data));
 }
 
 template<typename OBJ>
@@ -78,6 +88,7 @@ void write_data(const Node &node,const OBJ &object)
     case type_id_t::Float64: write_data<float64>(data,object); break;
     case type_id_t::Float128: write_data<float128>(data,object); break;
     case type_id_t::String:   write_string_data(data,object); break;
+    case type_id_t::EBool:   write_bool_data(data,object); break;
     default:
     {
       std::stringstream ss;

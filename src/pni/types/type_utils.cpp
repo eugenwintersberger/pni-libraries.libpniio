@@ -19,7 +19,9 @@
 // ============================================================================
 //
 // Created on: Sep 30, 2013
-//     Author: Eugen Wintersberger
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 //
 //
 
@@ -27,6 +29,7 @@
 #include <stdexcept>
 #include <pni/error/exceptions.hpp>
 #include <pni/types/type_utils.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 
 namespace pni{
@@ -53,7 +56,9 @@ namespace pni{
      {"complex64",type_id_t::Complex64},{"c64",type_id_t::Complex64},
      {"complex128",type_id_t::Complex128},{"c128",type_id_t::Complex128},
      {"string",type_id_t::String},{"str",type_id_t::String},
-     {"binary",type_id_t::Binary}, {"bool",type_id_t::Bool},
+     {"binary",type_id_t::Binary}, {"bool",type_id_t::EBool},
+     {"ibool",type_id_t::Bool},
+     {"ebool",type_id_t::EBool},
      {"none",type_id_t::None}
     };
 
@@ -78,7 +83,9 @@ namespace pni{
      {type_id_t::Complex128,"complex128"},
      {type_id_t::String,"string"},
      {type_id_t::Binary,"binary"},
-     {type_id_t::Bool,"bool"},
+     {type_id_t::Bool,"ibool"},
+     {type_id_t::EBool,"bool"},
+     // {type_id_t::EBool,"ebool"},
      {type_id_t::None,"none"}
     };
 
@@ -92,6 +99,12 @@ namespace pni{
     type_id_t get_type_id(const bool_t &)
     {
         return type_id_t::Bool;
+    }
+
+    //-------------------------------------------------------------------------
+    type_id_t get_type_id(const hdf5::datatype::EBool &)
+    {
+        return type_id_t::EBool;
     }
 
     //-------------------------------------------------------------------------

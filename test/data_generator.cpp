@@ -18,10 +18,23 @@
 //************************************************************************
 //
 //  Created on: Oct 18, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #include "data_generator.hpp"
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
+//----------------------------------------------------------------------------
+random_generator<hdf5::datatype::EBool>::random_generator()
+    :_generator(0,1)
+{}
+
+//----------------------------------------------------------------------------
+hdf5::datatype::EBool random_generator<hdf5::datatype::EBool>::operator()()
+{
+    return hdf5::datatype::EBool(_generator());
+}
 //----------------------------------------------------------------------------
 random_generator<bool_t>::random_generator()
     :_generator(0,1)

@@ -18,12 +18,15 @@
 // ===========================================================================
 //
 //  Created on: Jan 15, 2016
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
 #include <pni/types.hpp>
 #include <boost/mpl/list.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 typedef boost::mpl::list<pni::uint8,
                          pni::int8,
@@ -43,6 +46,7 @@ typedef boost::mpl::list<pni::uint8,
 #ifndef _MSC_VER
                          pni::complex128,
 #endif
+                         hdf5::datatype::EBool,
                          pni::bool_t> mdim_test_types;
 
 typedef boost::mpl::list<pni::uint8,
@@ -64,4 +68,5 @@ typedef boost::mpl::list<pni::uint8,
                          pni::complex128,
 #endif
                          pni::string,
+                         hdf5::datatype::EBool,
                          pni::bool_t> scalar_test_types;

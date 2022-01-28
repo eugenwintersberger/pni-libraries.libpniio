@@ -19,7 +19,9 @@
 // ============================================================================
 //
 // Created on: Jan 11, 2013
-//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 #include<iostream>
@@ -29,7 +31,7 @@
 #include <pni/types/types.hpp>
 #include <pni/type_erasures/value_holder.hpp>
 #include <pni/type_erasures/utils.hpp>
-
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <pni/windows.hpp>
 
 namespace pni{
@@ -270,6 +272,7 @@ namespace pni{
             case type_id_t::Binary:     return _get<T,binary>();
             case type_id_t::String:     return _get<T,string>();
             case type_id_t::Bool:       return _get<T,bool_t>();
+            case type_id_t::EBool:       return _get<T,hdf5::datatype::EBool>();
             default:
                 throw type_error(EXCEPTION_RECORD,
                         "The reference points to an object of unkown type!");
@@ -303,6 +306,7 @@ namespace pni{
             case type_id_t::Binary:     _set<binary>(v);     break;
             case type_id_t::String:     _set<string>(v);     break;
             case type_id_t::Bool:       _set<bool_t>(v);     break;
+            case type_id_t::EBool:      _set<hdf5::datatype::EBool>(v);     break;
             default:
                 throw type_error(EXCEPTION_RECORD,
                         "The reference points to an object of unknown type!");

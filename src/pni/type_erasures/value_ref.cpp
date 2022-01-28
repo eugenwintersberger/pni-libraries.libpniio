@@ -19,11 +19,14 @@
 //! ===========================================================================
 //!
 //! Created on: Jan 14, 2013
-//!     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//! Authors:
+//!         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//!         Jan Kotanski <jan.kotanski@desy.de>
 //!
 
 #include <pni/type_erasures/value_ref.hpp>
 #include <pni/type_erasures/value.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
 
@@ -94,6 +97,7 @@ namespace pni{
             case type_id_t::Complex128: *this = v.as<complex128>(); break;
             case type_id_t::String:     *this = v.as<string>();     break;
             case type_id_t::Bool:       *this = v.as<bool_t>();     break;
+            case type_id_t::EBool:       *this = v.as<hdf5::datatype::EBool>();     break;
             case type_id_t::Binary:     *this = v.as<binary>();     break;
             default:
                 throw type_error(EXCEPTION_RECORD, "Unkown type!");
@@ -141,6 +145,7 @@ namespace pni{
             case type_id_t::Complex128: return value(v.as<complex128>());
             case type_id_t::String:     return value(v.as<string>());
             case type_id_t::Bool:       return value(v.as<bool_t>());
+            case type_id_t::EBool:       return value(v.as<hdf5::datatype::EBool>());
             default: 
                 throw type_error(EXCEPTION_RECORD,
                                  "Value is of unkown type!");

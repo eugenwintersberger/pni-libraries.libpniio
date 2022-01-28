@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 //  Created on: Dec 20, 2014
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #ifdef __GNUG__
 #pragma GCC diagnostic push
@@ -30,6 +32,7 @@
 #pragma GCC diagnostic push
 #endif
 #include <pni/types/checked_convertible.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 using namespace pni; 
 
@@ -37,6 +40,7 @@ using namespace pni;
 template<typename T> void always_fails()
 {
     BOOST_CHECK(!(checked_convertible<T,bool_t>::value));
+    BOOST_CHECK(!(checked_convertible<T,hdf5::datatype::EBool>::value));
     BOOST_CHECK(!(checked_convertible<T,binary>::value));
     BOOST_CHECK(!(checked_convertible<T,string>::value));
 }

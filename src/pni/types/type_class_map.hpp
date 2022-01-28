@@ -19,11 +19,14 @@
 // ============================================================================
 //
 //  Created on: Sep 27, 2012
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
 #include <pni/types/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
    
@@ -71,6 +74,7 @@ namespace pni{
     CREATE_TYPE_CLASS_MAP(complex64,type_class_t::Complex);
     CREATE_TYPE_CLASS_MAP(complex128,type_class_t::Complex);
 
+    CREATE_TYPE_CLASS_MAP(hdf5::datatype::EBool,type_class_t::Bool);
     CREATE_TYPE_CLASS_MAP(bool_t,type_class_t::Bool);
     CREATE_TYPE_CLASS_MAP(binary,type_class_t::Binary);
     CREATE_TYPE_CLASS_MAP(string,type_class_t::String);

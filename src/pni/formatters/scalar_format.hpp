@@ -18,7 +18,9 @@
 // ===========================================================================
 //
 // Created on: Sep 08, 2015
-//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//      Authors:
+//              Eugen Wintersberger <eugen.wintersberger@desy.de>
+//              Jan Kotanski <jan.kotanski@desy.de>
 //
 //
 #pragma once
@@ -26,6 +28,7 @@
 #include <pni/types.hpp>
 #include <pni/type_erasures.hpp>
 #include <pni/windows.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 
 namespace pni{
@@ -76,4 +79,5 @@ namespace pni{
     pni::string PNINEXUS_EXPORT format(const pni::value &v);
     pni::string PNINEXUS_EXPORT format(const pni::value_ref &v);
 
+    pni::string PNINEXUS_EXPORT format(const hdf5::datatype::EBool &v);
 }

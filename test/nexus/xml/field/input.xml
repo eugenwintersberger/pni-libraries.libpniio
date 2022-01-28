@@ -13,6 +13,7 @@
     	<field type="float64" name="float64_field"></field>
     	<field type="float128" name="float128_field"></field>
     	<field type="string" name="string_field">hello</field>
+        <field type="bool" name="bool_field">true</field>
     </group>
 
     <group name="multidim_field">

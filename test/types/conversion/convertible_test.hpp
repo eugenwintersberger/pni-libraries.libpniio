@@ -19,13 +19,16 @@
 // ===========================================================================
 //
 //  Created on: Dec 20, 2014
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
 #include<cppunit/TestFixture.h>
 #include<cppunit/extensions/HelperMacros.h>
 #include<boost/current_function.hpp>
+#include<h5cpp/contrib/nexus/ebool.hpp>
 
 #include <pni/types/convertible.hpp>
 
@@ -54,6 +57,7 @@ class convertible_test : public CppUnit::TestFixture
         template<typename T> void always_fails()
         {
             CPPUNIT_ASSERT(!(convertible<T,bool_t>::value));
+            CPPUNIT_ASSERT(!(convertible<T,hdf5::datatype::EBool>::value));
             CPPUNIT_ASSERT(!(convertible<T,binary>::value));
             CPPUNIT_ASSERT(!(convertible<T,string>::value));
         }

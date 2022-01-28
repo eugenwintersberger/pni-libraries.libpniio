@@ -38,12 +38,11 @@
 
 #include "fixture.hpp"
 
-typedef binary value_type;
-typedef pni::type_info<binary> sinfo_type;
-typedef random_generator<value_type> generator_type;
+typedef hdf5::datatype::EBool value_type;
+typedef pni::type_info<hdf5::datatype::EBool> sinfo_type;
 typedef fixture<value_type> fixture_type;
 
-BOOST_AUTO_TEST_SUITE(binary_value_as_test)
+BOOST_AUTO_TEST_SUITE(ebool_value_as_test)
 
     BOOST_AUTO_TEST_CASE(test_as_uint8)
     {
@@ -185,7 +184,7 @@ BOOST_AUTO_TEST_SUITE(binary_value_as_test)
         typedef binary target_type;
         fixture_type f;
         value v(f.value_1);
-        BOOST_CHECK_EQUAL(v.as<target_type>(),f.value_1);
+        BOOST_CHECK_THROW(v.as<target_type>(),type_error);
     }
 
     //========================================================================
@@ -194,7 +193,7 @@ BOOST_AUTO_TEST_SUITE(binary_value_as_test)
         typedef bool_t target_type;
         fixture_type f;
         value v(f.value_1);
-        BOOST_CHECK_THROW(v.as<target_type>(),type_error);
+        BOOST_CHECK_EQUAL(v.as<target_type>() ,f.value_1);
     }
 
     //========================================================================
@@ -203,7 +202,7 @@ BOOST_AUTO_TEST_SUITE(binary_value_as_test)
         typedef hdf5::datatype::EBool target_type;
         fixture_type f;
         value v(f.value_1);
-        BOOST_CHECK_THROW(v.as<target_type>(),type_error);
+        BOOST_CHECK_EQUAL(v.as<target_type>() ,f.value_1);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

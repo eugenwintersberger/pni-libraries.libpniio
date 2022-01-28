@@ -19,7 +19,9 @@
 // ============================================================================
 //
 // Created on: Sep 18, 2013
-//     Author: Eugen Wintersberger
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
@@ -27,6 +29,7 @@
 #include <pni/types/type_id_map.hpp>
 #include <pni/utilities/sfinae_macros.hpp>
 #include <functional>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 #include <pni/windows.hpp>
 
@@ -70,6 +73,15 @@ namespace pni{
     //! \return typeID for bool_t
     //!
     PNINEXUS_EXPORT type_id_t get_type_id(const bool_t &v);
+    //-------------------------------------------------------------------------
+    //!
+    //! \ingroup type_classes_internal
+    //! \brief get_type_id overload for EBool data
+    //!
+    //! \param v boolean data
+    //! \return typeID for EBool
+    //!
+    PNINEXUS_EXPORT type_id_t get_type_id(const hdf5::datatype::EBool &v);
 
 
     //-------------------------------------------------------------------------

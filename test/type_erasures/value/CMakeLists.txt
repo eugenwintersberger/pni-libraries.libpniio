@@ -18,6 +18,7 @@ set(SOURCES value_construction_test.cpp
             string_value_as_test.cpp
             binary_value_as_test.cpp
             bool_value_as_test.cpp
+            ebool_value_as_test.cpp
     )
 
 set_boost_test_definitions(SOURCES "testing the value type erasure")

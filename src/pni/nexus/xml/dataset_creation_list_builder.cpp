@@ -17,12 +17,15 @@
 // along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 // Created on: Dec 13, 2017
 //
 #include <pni/nexus/xml/dataset_creation_list_builder.hpp>
 #include <pni/nexus/xml/dimension_node_handler.hpp>
 #include <pni/parsers.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni {
 namespace nexus {
@@ -65,10 +68,10 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
     long compression_rate = 0;
 
     if(node.has_attribute("compression"))
-      use_compression = node.attribute("compression").data<pni::bool_t>();
+      use_compression = node.attribute("compression").data<hdf5::datatype::EBool>();
 
     if(node.has_attribute("shuffle"))
-      use_shuffle = node.attribute("shuffle").data<pni::bool_t>();
+      use_shuffle = node.attribute("shuffle").data<hdf5::datatype::EBool>();
 
     if(node.has_attribute("rate"))
       compression_rate = node.attribute("rate").data<size_t>();

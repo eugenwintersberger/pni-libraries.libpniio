@@ -19,13 +19,15 @@
 //! ===========================================================================
 //!
 //! Created on: Jan 14, 2013
-//!     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//! Authors:
+//!         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//!         Jan Kotanski <jan.kotanski@desy.de>
 //!
 
 #include <pni/type_erasures/value.hpp>
 #include <pni/types/none.hpp>
 #include <pni/type_erasures/value_ref.hpp>
-
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
 
@@ -112,6 +114,7 @@ namespace pni{
             case type_id_t::Binary:     return make_value<binary>();
             case type_id_t::String:     return make_value<string>();
             case type_id_t::Bool:       return make_value<bool_t>();
+            case type_id_t::EBool:       return make_value<hdf5::datatype::EBool>();
             default:
                 throw type_error(EXCEPTION_RECORD,
                         "Unknown type ID - cannot instantive value!");

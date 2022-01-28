@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 // Created on: May 16, 2011
-//     Author: Eugen Wintersberger
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 //
 //
 #pragma once
@@ -30,6 +32,7 @@
 #include <vector>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/joint_view.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 #ifdef _MSC_VER
 #include <basetsd.h>
@@ -129,7 +132,7 @@ namespace pni{
     //!
     //! A boos MPL vector with non numeric types
     //!
-    typedef boost::mpl::vector<none,bool_t,binary,string> non_numeric_types;
+    typedef boost::mpl::vector<none,bool_t,hdf5::datatype::EBool,binary,string> non_numeric_types;
 
     //------------------------------------------------------------------------
     //!
@@ -166,7 +169,8 @@ namespace pni{
                           Complex128, //!< 128Bit IEEE floating point complex
                           String,     //!< String type
                           Binary,     //!< binary data
-                          Bool        //!< boolean data
+                          Bool,        //!< integer boolean data
+                          EBool        //!< enum boolean data
                       };
 
     //! 

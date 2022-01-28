@@ -18,11 +18,14 @@
 // ===========================================================================
 //
 // Created on: Sep 08, 2015
-//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//      Authors:
+//              Eugen Wintersberger <eugen.wintersberger@desy.de>
+//              Jan Kotanski <jan.kotanski@desy.de>
 //
 //
 
 #include <pni/formatters/scalar_format.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <boost/format.hpp>
 
 namespace pni{
@@ -176,6 +179,14 @@ namespace pni{
             return "false";
     }
 
+    string format(const hdf5::datatype::EBool &v)
+    {
+        if(v)
+            return "true";
+        else
+            return "false";
+    }
+
     //-------------------------------------------------------------------------
     string format(const string &s)
     {
@@ -217,6 +228,8 @@ namespace pni{
                 return format(v.as<complex128>());
             case type_id_t::Bool:
                 return format(v.as<bool_t>());
+            case type_id_t::EBool:
+                return format(v.as<hdf5::datatype::EBool>());
             case type_id_t::String:
                 return format(v.as<string>());
             default:

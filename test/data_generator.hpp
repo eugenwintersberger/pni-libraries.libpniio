@@ -18,13 +18,16 @@
 //************************************************************************
 //
 //  Created on: Jan 21, 2013
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
 #include <sstream>
 #include <pni/types.hpp>
 #include <boost/lexical_cast.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 #ifdef NOCPPRAND
 #include <boost/random/uniform_int.hpp>
@@ -176,6 +179,18 @@ template<> class random_generator<bool_t>
         random_generator();
 
         bool_t operator()();
+};
+
+//-----------------------------------------------------------------------------
+template<> class random_generator<hdf5::datatype::EBool>
+{
+    private:
+        random_generator<unsigned short> _generator;
+    public:
+
+        random_generator();
+
+        hdf5::datatype::EBool operator()();
 };
 
 //-----------------------------------------------------------------------------

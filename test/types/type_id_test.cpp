@@ -19,7 +19,9 @@
 // ===========================================================================
 //
 //  Created on: Oct 15, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #ifdef __GNUG__
 #pragma GCC diagnostic push
@@ -31,6 +33,7 @@
 #endif
 #include <pni/types.hpp>
 #include <pni/arrays.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/joint_view.hpp>
 
@@ -42,7 +45,7 @@ typedef boost::mpl::list<uint8,int8,
                          uint64,int64,
                          float32,float64,float128,
                          complex32,complex64,complex128,
-                         string,bool_t> scalar_types;
+                         string,bool_t,hdf5::datatype::EBool> scalar_types;
 
 
 template<typename T> using sarray = static_array<T,1>;
@@ -57,7 +60,7 @@ typedef boost::mpl::list<sarray<uint8>,sarray<int8>,
                          sarray<complex32>,
                          sarray<complex64>,
                          sarray<complex128>,
-                         sarray<string>,sarray<bool_t>> sarray_types;
+                         sarray<string>,sarray<bool_t>, sarray<hdf5::datatype::EBool>> sarray_types;
 
 typedef boost::mpl::list<darray<uint8>,darray<int8>,
                          darray<uint16>,darray<int16>,
@@ -67,7 +70,7 @@ typedef boost::mpl::list<darray<uint8>,darray<int8>,
                          darray<complex32>,
                          darray<complex64>,
                          darray<complex128>,
-                         darray<string>,darray<bool_t>> darray_types;
+                         darray<string>,darray<bool_t>,darray<hdf5::datatype::EBool>> darray_types;
 
 typedef boost::mpl::list<farray<uint8>,farray<int8>,
                          farray<uint16>,farray<int16>,
@@ -77,7 +80,7 @@ typedef boost::mpl::list<farray<uint8>,farray<int8>,
                          farray<complex32>,
                          farray<complex64>,
                          farray<complex128>,
-                         farray<string>,farray<bool_t>> farray_types;
+                         farray<string>,farray<bool_t>,farray<hdf5::datatype::EBool>> farray_types;
 
 typedef boost::mpl::joint_view<sarray_types,
                                farray_types> array_types_1;

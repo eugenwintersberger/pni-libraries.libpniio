@@ -13,7 +13,8 @@ RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq d
 
 RUN /bin/bash -c 'echo "Europe/Berlin" > /etc/timezone'
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
-RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get  -y install libh5cpp0.4.1-dev libh5cpp0.4.1 libhdf5-dev
+RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
+# RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
 RUN apt-get clean
 RUN pip3 install conan
@@ -28,7 +29,7 @@ RUN conan remote add conan-transit https://conan-transit.bintray.com
 RUN mkdir -p /opt/h5cpp
 RUN mkdir -p /h5cpp-src
 RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
-RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DCONAN=DISABLE -DDISABLE_TESTS=True  ../h5cpp && make install -j4
+RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
 ENV CPLUS_INCLUDE_PATH=/opt/h5cpp/include
 ENV LD_LIBRARY_PATH=/opt/h5cpp/lib
 

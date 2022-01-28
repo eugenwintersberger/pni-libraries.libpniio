@@ -19,10 +19,13 @@
 // ============================================================================
 //
 // Created on: Apr 14, 2014
-//     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include <pni/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
     
@@ -40,6 +43,16 @@ namespace pni{
         stream>>value;
         if(value == "True") b = true;
         else if(value == "False") b = false;
+
+        return stream;
+    }
+
+    std::istream &operator>>(std::istream &stream,hdf5::datatype::EBool &b)
+    {
+        string value;
+        stream>>value;
+        if(value == "True") b = hdf5::datatype::EBool::True;
+        else if(value == "False") b = hdf5::datatype::EBool::False;
 
         return stream;
     }

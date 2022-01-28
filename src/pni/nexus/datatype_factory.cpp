@@ -17,13 +17,16 @@
 // along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 // Created on: Dec 11, 2017
 //
 
 #include <pni/nexus/datatype_factory.hpp>
 #include <sstream>
 #include <stdexcept>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni {
 namespace nexus {
@@ -45,6 +48,7 @@ hdf5::datatype::Datatype DatatypeFactory::create(pni::type_id_t tid)
     case type_id_t::Float64: return hdf5::datatype::create<float64>();
     case type_id_t::Float128: return hdf5::datatype::create<float128>();
     case type_id_t::String: return hdf5::datatype::create<std::string>();
+    case type_id_t::EBool: return hdf5::datatype::create<hdf5::datatype::EBool>();
     default:
     {
       std::stringstream ss;

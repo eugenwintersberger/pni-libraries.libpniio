@@ -19,7 +19,9 @@
 // ============================================================================
 //
 //  Created on: Dec 18, 2014
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
@@ -29,6 +31,7 @@
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/at.hpp>
 #include <pni/types/id_type_map.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 namespace pni{
     
@@ -141,7 +144,8 @@ namespace pni{
         //-------------------source type for string---------------------------
         boost::mpl::pair<string,boost::mpl::vector<string>>,
 
-        boost::mpl::pair<bool_t,boost::mpl::vector<bool_t>>,
+        boost::mpl::pair<bool_t,boost::mpl::vector<bool_t,hdf5::datatype::EBool>>,
+        boost::mpl::pair<hdf5::datatype::EBool,boost::mpl::vector<bool_t,hdf5::datatype::EBool>>,
 
         boost::mpl::pair<binary,boost::mpl::vector<binary>>
         > unchecked_type_vectors;

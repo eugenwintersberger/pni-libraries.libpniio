@@ -17,11 +17,15 @@
 // along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//      Authors:
+//              Eugen Wintersberger <eugen.wintersberger@desy.de>
+//              Jan Kotanski <jan.kotanski@desy.de>
+//
 // Created on: Dec 8, 2017
 //
 
 #include <pni/nexus/algorithms.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <algorithm>
 #include <functional>
 
@@ -88,6 +92,9 @@ pni::type_id_t get_type_id(const hdf5::datatype::Datatype &datatype)
     return type_id_t::Float128;
   else if(datatype.get_class() == hdf5::datatype::Class::String)
     return type_id_t::String;
+  else if(datatype.get_class() == hdf5::datatype::Class::Enum
+          && hdf5::datatype::is_bool(hdf5::datatype::Enum(datatype)))
+    return type_id_t::EBool;
   else
     return type_id_t::None;
 }

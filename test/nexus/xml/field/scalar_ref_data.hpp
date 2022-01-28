@@ -18,11 +18,14 @@
 // ===========================================================================
 //
 //  Created on: Jan 15, 2016
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 
 #include <pni/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 
 template<typename T> struct scalar_ref_data
 {
@@ -62,3 +65,4 @@ GENERATE_SCALAR_REFERENCE_DATA(pni::complex128,{123,340});
 #endif
 GENERATE_SCALAR_REFERENCE_DATA(pni::string,"hello word a stupid text");
 GENERATE_SCALAR_REFERENCE_DATA(pni::bool_t,true);
+GENERATE_SCALAR_REFERENCE_DATA(hdf5::datatype::EBool,true);

@@ -18,12 +18,14 @@
 // ===========================================================================
 //
 //  Created on: Sep 04, 2015
-//      Author: Eugen Wintersberger
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 
 #include "field_utils.hpp"
 #include <pni/nexus/xml/field_node.hpp>
-
+#include <h5cpp/contirub/nexus/ebool.hpp>
 
 
 namespace xml_test{
@@ -75,6 +77,7 @@ namespace field_test{
 
     DEF_DATA_FROM_XML(pni::string)
     DEF_DATA_FROM_XML(pni::bool_t)
+    DEF_DATA_FROM_XML(hdf5::datatype:EBool)
     
     DEF_DATA_FROM_XML(uint8_vector)
     DEF_DATA_FROM_XML(int8_vector)
@@ -99,6 +102,7 @@ namespace field_test{
 
     DEF_DATA_FROM_XML(string_vector)
     DEF_DATA_FROM_XML(bool_t_vector)
+    DEF_DATA_FROM_XML(ebool_vector)
 
 #define DEF_DATA_TO_XML(type) \
     void data_to_xml(const type &value,pni::nexus::xml::Node &node) \
@@ -130,6 +134,7 @@ namespace field_test{
 
     DEF_DATA_TO_XML(pni::string)
     DEF_DATA_TO_XML(pni::bool_t)
+    DEF_DATA_TO_XML(hdf5::datatype::EBool)
     
     DEF_DATA_TO_XML(uint8_vector)
     DEF_DATA_TO_XML(int8_vector)
@@ -154,6 +159,7 @@ namespace field_test{
 
     DEF_DATA_TO_XML(string_vector)
     DEF_DATA_TO_XML(bool_t_vector)
+    DEF_DATA_TO_XML(ebool_vector)
 
     pni::nexus::xml::Node
     object_to_xml(const hdf5::node::Node &object)

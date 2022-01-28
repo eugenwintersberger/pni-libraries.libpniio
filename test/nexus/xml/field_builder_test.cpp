@@ -17,9 +17,11 @@
 // along with libpninexus.  If not, see <http://www.gnu.org/licenses/>.
 // ===========================================================================
 //
-// Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+// Authors:
+//         Eugen Wintersberger <eugen.wintersberger@desy.de>
+//         Jan Kotanski <jan.kotanski@desy.de>
 // Created on: Dec 11, 2017
-//
+
 #include <boost/test/unit_test.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <pni/nexus/xml/field_builder.hpp>
@@ -143,6 +145,16 @@ BOOST_AUTO_TEST_CASE(test_scalar_fields)
   std::string sdata;
   dataset.read(sdata);
   BOOST_CHECK(sdata == std::string("hello"));
+
+  dataset = hdf5::node::get_node(root_group,"/scalar_fields/bool_field");
+  BOOST_CHECK(nexus::get_type_id(dataset) == type_id_t::EBool);
+  dataspace = dataset.dataspace();
+  BOOST_CHECK(dataspace.type() == hdf5::dataspace::Type::Simple);
+  BOOST_CHECK(dataspace.size() == 1);
+  BOOST_CHECK(dataset.datatype()==hdf5::datatype::create<hdf5::datatype::EBool>());
+  bool bdata;
+  dataset.read(bdata);
+  BOOST_CHECK(bdata == true);
 }
 
 BOOST_AUTO_TEST_CASE(test_multidim_fields)

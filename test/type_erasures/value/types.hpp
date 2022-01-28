@@ -19,10 +19,13 @@
 // ===========================================================================
 //
 //  Created on: Oct 17, 2015
-//      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
+//  Authors:
+//          Eugen Wintersberger <eugen.wintersberger@desy.de>
+//          Jan Kotanski <jan.kotanski@desy.de>
 //
 #pragma once
 #include <pni/types.hpp>
+#include <h5cpp/contrib/nexus/ebool.hpp>
 #include <boost/mpl/list.hpp>
 
 typedef boost::mpl::list<
@@ -41,5 +44,6 @@ typedef boost::mpl::list<
                          pni::complex64,
                          pni::complex128,
                          pni::string,
+                         hdf5::datatype::EBool,
                          pni::bool_t
                         > all_types;
