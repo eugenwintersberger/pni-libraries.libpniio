@@ -15,7 +15,8 @@ jobs:
       matrix:
         # os: [debian11, debian10, debian9, ubuntu21.10, ubuntu20.04, ubuntu18.04]
         os: [debian11, debian10, debian9]
-        buildtype: [Debug, Release]
+        # buildtype: [Debug, Release]
+        buildtype: [Debug]
 
     steps:
       - uses: actions/checkout@v2
