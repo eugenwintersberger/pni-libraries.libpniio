@@ -38,7 +38,9 @@ RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
 # RUN cd /h5cpp-src/h5cpp && git checkout 323674e54709bd39d442454ae20e6be4816daf83 -b testbr
 # RUN cd /h5cpp-src/h5cpp && git checkout 323674e54709bd39d442454ae20e6be4816daf83 -- h5cpp-config.cmake.in
 # RUN cd /h5cpp-src/h5cpp && git checkout 323674e54709bd39d442454ae20e6be4816daf83 -- CMakeLists.txt
-RUN cd /h5cpp-src/h5cpp && git checkout 323674e54709bd39d442454ae20e6be4816daf83 -- src/h5cpp/CMakeLists.txt
+# RUN cd /h5cpp-src/h5cpp && git checkout 323674e54709bd39d442454ae20e6be4816daf83 -- src/h5cpp/CMakeLists.txt
+RUN cp h5cpp/CmakeLists.txt /h5cpp-src/h5cpp/src/h5cpp
+
 RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DCMAKE_CXX_STANDARD=11 -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
 ENV CPLUS_INCLUDE_PATH=/opt/h5cpp/include
 ENV LD_LIBRARY_PATH=/opt/h5cpp/lib
