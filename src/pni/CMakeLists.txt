@@ -115,7 +115,7 @@ endif()
 configure_file(pninexus.pc.cmake pninexus.pc @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pninexus.pc"
         DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/pkgconfig")
-#
+# 
 # export the targets which are latter used by the CMAKE package
 # 
 install(TARGETS pninexus
