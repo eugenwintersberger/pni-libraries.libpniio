@@ -36,8 +36,6 @@ RUN mkdir -p /opt/h5cpp
 RUN mkdir -p /h5cpp-src
 RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
 RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DCMAKE_CXX_STANDARD=11 -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
-# ENV CPLUS_INCLUDE_PATH=/opt/h5cpp/include
-# ENV LD_LIBRARY_PATH=/opt/h5cpp/lib
 
 RUN conan user
 RUN mkdir /src
