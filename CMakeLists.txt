@@ -81,10 +81,10 @@ include(${EXTRA_MODULES_DIR}/OutputDirConfig.cmake)
 include(${EXTRA_MODULES_DIR}/WindowsUtils.cmake)
 include(${EXTRA_MODULES_DIR}/PackageConfig.cmake)
 include(${EXTRA_MODULES_DIR}/BuildInfo.cmake)
+include(${EXTRA_MODULES_DIR}/DoxygenUtilities.cmake)
 include(Sphinx)
 include(utilities)
-include(DoxygenUtilities)
-
+# include(DoxygenUtilities)
 
 
 #---------------------------------------------------------------------------------
