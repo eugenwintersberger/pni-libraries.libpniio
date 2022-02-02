@@ -187,7 +187,7 @@ jobs:
       - name: build with cmake
         run: |
           # conan build .  --build-folder build
-          cd build &&  && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
+          cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
           make install -j4
       - name: run tests
         run: |
