@@ -171,10 +171,12 @@ jobs:
             --lockfile conan.lock \
             --build missing \
             --update
-      - name: build with cmake
+      - name: build h5cpp
         run: |
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-          cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4 & cd ../../
+          cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4 & cd ../../
+      - name: build with cmake
+        run: |
           conan build . \
             --build-folder build
       - name: run tests
