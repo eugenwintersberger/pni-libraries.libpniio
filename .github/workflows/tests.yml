@@ -189,15 +189,8 @@ jobs:
           # conan build .  --build-folder build
           cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
           make install -j4
-          make check -j4
+          # make check -j4
       - name: run tests
         run: |
           cd build
-          ls -ltr bin/
-          bin/cli_option_error_test
-          bin/default_int_regexp_test
-          bin/idl_tif_reader_test
-          bin/reader_test
-          bin/fio_reader_test
-          bin/compound_formatter_test
-          ctest --extra-verbose --no-tests=error --debug
+          cmake --build . --target check --config Release -- -j4
