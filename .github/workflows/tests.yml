@@ -193,4 +193,5 @@ jobs:
       - name: run tests
         run: |
           cd build
-          cmake --build . --target check --config Release -- -j4
+          make check CTEST_OUTPUT_ON_FAILURE=TRUE
+          # cmake --build . --target check --config Release -- -j4
