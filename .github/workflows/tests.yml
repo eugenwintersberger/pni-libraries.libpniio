@@ -193,4 +193,10 @@ jobs:
       - name: run tests
         run: |
           cd build
+          bin/cli_option_error_test
+          bin/default_int_regexp_test
+          bin/idl_tif_reader_test
+          bin/reader_test
+          bin/fio_reader_test
+          bin/compound_formatter_test
           ctest --extra-verbose --no-tests=error --debug
