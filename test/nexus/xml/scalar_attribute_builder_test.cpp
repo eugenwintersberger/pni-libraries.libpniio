@@ -22,7 +22,7 @@
 //         Jan Kotanski <jan.kotanski@desy.de>
 // Created on: Dec 14, 2017
 //
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/nexus/xml/attribute_builder.hpp>
 #include <h5cpp/contrib/nexus/ebool.hpp>
 

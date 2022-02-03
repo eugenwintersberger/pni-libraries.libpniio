@@ -21,7 +21,7 @@
 // Created on: Mar 5, 2018
 //
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/nexus.hpp>
 
 using namespace hdf5;

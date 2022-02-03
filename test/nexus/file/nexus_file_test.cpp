@@ -21,7 +21,7 @@
 // Created on: Dec 7, 2017
 //
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(NexusFileTest)
 

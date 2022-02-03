@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/nexus/path.hpp>
 
 using namespace pni;

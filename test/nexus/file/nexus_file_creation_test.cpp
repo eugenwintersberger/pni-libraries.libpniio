@@ -20,7 +20,7 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 7, 2017
 //
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/nexus/file.hpp>
 
 using namespace hdf5;

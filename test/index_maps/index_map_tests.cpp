@@ -27,7 +27,7 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #ifdef __GNUG__
 #pragma GCC diagnostic pop
 #endif

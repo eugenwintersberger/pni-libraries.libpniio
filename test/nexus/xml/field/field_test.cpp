@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include "../../base_fixture.hpp"
 
 struct FieldTestFixture : BaseFixture

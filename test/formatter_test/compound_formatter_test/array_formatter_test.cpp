@@ -25,7 +25,7 @@
 
 #include <pni/types.hpp>
 #include <pni/type_erasures.hpp>
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/formatters.hpp>
 
 using namespace pni;

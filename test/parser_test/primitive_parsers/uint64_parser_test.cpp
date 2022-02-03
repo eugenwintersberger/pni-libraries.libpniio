@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <pni/parsers.hpp>
 #include <pni/types.hpp>
 #include "parser_test_fixture.hpp"

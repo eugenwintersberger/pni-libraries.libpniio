@@ -20,7 +20,7 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Mar 19, 2018
 //
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <pni/nexus.hpp>
 #include <algorithm>
