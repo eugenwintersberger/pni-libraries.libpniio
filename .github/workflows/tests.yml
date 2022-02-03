@@ -193,6 +193,7 @@ jobs:
       - name: run tests
         run: |
           cd build
+          ls -ltr bin/
           bin/cli_option_error_test
           bin/default_int_regexp_test
           bin/idl_tif_reader_test
