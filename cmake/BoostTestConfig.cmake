@@ -6,6 +6,7 @@
 if(NOT Boost_VERSION)
     message(FATAL_ERROR "Cannot setup Boost test logging as long as Boost is not configured!")
 endif()
+message(STATUS "BOOST VERSION TEST ${Boost_VERSION}")
 
 #
 # set the path where all the test reports and logs will be stored
@@ -32,16 +33,8 @@ macro (add_boost_logging_test test_name test_target working_dir)
     else()
         set(LOG_OPTIONS --log_level=all --log_sink=${TEST_LOG_FILE})
         set(REPORT_OPTIONS --report_level=detailed --report_sink=${TEST_REPORT_FILE})
-        if(Boost_VERSION LESS 100)
-            list(APPEND LOG_OPTIONS "--log_format=XML")
-            list(APPEND REPORT_OPTIONS "--report_format=XML")
-        elseif(Boost_VERSION LESS 106000)
-            list(APPEND LOG_OPTIONS "--log_format=xml")
-            list(APPEND REPORT_OPTIONS "--report_format=xml")
-        else()
-            list(APPEND LOG_OPTIONS "--log_format=XML")
-            list(APPEND LOG_OPTIONS "--report_format=XML")
-        endif()
+        list(APPEND LOG_OPTIONS "--log_format=XML")
+        list(APPEND REPORT_OPTIONS "--report_format=XML")
     endif()
 
     add_test(NAME "${test_name}"

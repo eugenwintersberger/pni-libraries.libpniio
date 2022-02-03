@@ -193,4 +193,4 @@ jobs:
       - name: run tests
         run: |
           cd build
-          ctest --extra-verbose --no-tests=error
+          ctest --extra-verbose --no-tests=error --debug
