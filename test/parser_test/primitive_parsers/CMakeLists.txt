@@ -20,7 +20,7 @@ set(SOURCES uint8_parser_test.cpp
 
 set_boost_test_definitions(SOURCES "testing primitive parsers")
 add_executable(primitive_parsers_test EXCLUDE_FROM_ALL ${SOURCES} )
-target_link_libraries(primitive_parsers_test pninexus ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(primitive_parsers_test pninexus Boost::unit_test_framework)
 add_boost_logging_test("parsers:primitive_parsers" primitive_parsers_test
                         ${PROJECT_BINARY_DIR}/test/parser_test/primitive_parsers)
 
