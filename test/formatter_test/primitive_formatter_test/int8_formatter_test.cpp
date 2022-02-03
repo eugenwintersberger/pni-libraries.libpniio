@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/test/unit_test.hpp>
+#include "../../boost_unit_test.hpp"
 #include <pni/types.hpp>
 #include <pni/formatters/scalar_format.hpp>
 

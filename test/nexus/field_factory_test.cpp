@@ -20,7 +20,7 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Jan 2, 2018
 //
-#include <boost/test/unit_test.hpp>
+#include "../boost_unit_test.hpp"
 #include <pni/nexus.hpp>
 #include <pni/types.hpp>
 

@@ -20,7 +20,7 @@
 //  Created on: Jan 28, 2015
 //      Author: Eugen Wintersberger
 //
-#include <boost/test/unit_test.hpp>
+#include "../../boost_unit_test.hpp"
 #include <pni/parsers.hpp>
 #include <pni/exceptions.hpp>
 #include <pni/types.hpp>

@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/test/unit_test.hpp>
+#include "../../../boost_unit_test.hpp"
 #include <boost/test/floating_point_comparison.hpp>
 
 #include "field_test_fixture.hpp"

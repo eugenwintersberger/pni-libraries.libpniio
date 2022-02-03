@@ -22,7 +22,7 @@
 //          Eugen Wintersberger <eugen.wintersberger@desy.de>
 //          Jan Kotanski <jan.kotanski@desy.de>
 //
-#include <boost/test/unit_test.hpp>
+#include "../../boost_unit_test.hpp"
 #include <pni/parsers/bool_parser.hpp>
 #include <pni/exceptions.hpp>
 #include <pni/types.hpp>

@@ -20,7 +20,7 @@
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 // Created on: Dec 13, 2017
 //
-#include <boost/test/unit_test.hpp>
+#include "../../boost_unit_test.hpp"
 #include <pni/nexus/xml/dataspace_builder.hpp>
 
 using namespace pni::nexus;
