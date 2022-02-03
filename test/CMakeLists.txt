@@ -1,10 +1,14 @@
 
 #need to define the version of the library
+find_package(h5cpp REQUIRED)
+get_target_property(H5CPP_INCLUDE_DIRS h5cpp::h5cpp INTERFACE_INCLUDE_DIRECTORIES)
+include_directories(${PROJECT_SOURCE_DIR}/src ${HDF5_INCLUDE_DIRS} ${H5CPP_INCLUDE_DIRS})
 
-include(${PROJECT_SOURCE_DIR}/cmake/common/BoostTestConfig.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/BoostTestConfig.cmake)
 
 link_directories(${PNICORE_PKG_LIBRARY_DIRS} ${HDF5_LIBRARY_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/src)
+
 
 # set(COMMON_SRC base_fixture.cpp)
 set(COMMON_SRC base_fixture.cpp compare.cpp data_generator.cpp)
