@@ -23,7 +23,7 @@
 //          Jan Kotanski <jan.kotanski@desy.de>
 //
 
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/formatters/scalar_format.hpp>
 #include <h5cpp/contrib/nexus/ebool.hpp>
 

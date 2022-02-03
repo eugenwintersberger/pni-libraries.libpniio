@@ -20,7 +20,7 @@
 //  Created on: Dec 2, 2014
 //      Author: Eugen Wintersberger
 //
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/nexus/xml/dimensions.hpp>
 #include <pni/types.hpp>
 #include <pni/error.hpp>

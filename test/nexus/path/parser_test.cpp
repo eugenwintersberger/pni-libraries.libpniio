@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/nexus/path.hpp>
 #include <pni/nexus/path/parser.hpp>
 #include <pni/exceptions.hpp>

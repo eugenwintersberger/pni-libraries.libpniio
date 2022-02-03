@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <vector>
 #include <pni/types.hpp>
 #include <pni/tiff/tiff_reader.hpp>

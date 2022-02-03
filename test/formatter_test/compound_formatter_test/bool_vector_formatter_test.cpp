@@ -23,7 +23,7 @@
 //
 
 #include <pni/types.hpp>
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/formatters.hpp>
 #include <h5cpp/contrib/nexus/ebool.hpp>
 

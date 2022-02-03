@@ -22,7 +22,7 @@
 //               Jan Kotanski <jan.kotanski@desy.de>
 //
 
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/types.hpp>
 #include <pni/formatters.hpp>
 

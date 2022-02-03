@@ -21,7 +21,7 @@
 // Created: Tue 23 May, 2017
 // Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <sstream>
 #include <pni/error.hpp>
 

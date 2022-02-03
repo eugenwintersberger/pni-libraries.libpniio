@@ -20,7 +20,7 @@
 //  Created on: Feb 4, 2015
 //      Author: Eugen Wintersberger
 //
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <vector>
 #include <pni/types.hpp>
 #include <pni/container_io_config.hpp>

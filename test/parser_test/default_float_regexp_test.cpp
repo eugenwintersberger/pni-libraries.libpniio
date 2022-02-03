@@ -21,7 +21,7 @@
 //     Author: Eugen Wintersberger <eugen.wintersberger@desy.de>
 //
 //
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/parsers/parser.hpp>
 
 using namespace pni;

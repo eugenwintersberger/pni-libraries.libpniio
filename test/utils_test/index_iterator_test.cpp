@@ -26,11 +26,11 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif 
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #ifdef __GNUG__
 #pragma GCC diagnostic pop
 #endif
-#include "../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/current_function.hpp>
 #include <vector>

@@ -25,7 +25,7 @@
 #include <pni/formatters.hpp>
 #include <pni/types.hpp>
 #include <pni/arrays.hpp>
-#include "../../boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 
 using namespace pni;
 

@@ -23,7 +23,7 @@
 //
 #pragma once
 
-#include "boost_unit_test.hpp"
+#include <boost/test/unit_test.hpp>
 #include <pni/types.hpp>
 
 template<typename T>
