@@ -21,7 +21,7 @@
 // Created on: Dec 15, 2017
 //
 
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 #include <pni/nexus/path.hpp>
 
 using namespace pni::nexus;

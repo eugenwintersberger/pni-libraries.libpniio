@@ -21,7 +21,7 @@
 //      Author: Eugen Wintersberger
 //
 
-#include <boost/test/unit_test.hpp>
+#include <boost/test/included/unit_test.hpp>
 #include <boost/current_function.hpp>
 #include <pni/types.hpp>
 #include <pni/nexus/xml/dimensions.hpp>
