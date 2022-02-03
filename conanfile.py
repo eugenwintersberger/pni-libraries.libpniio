@@ -32,9 +32,10 @@ class H5CppConan(ConanFile):
             self.options["hdf5"].parallel = True
 
     def requirements(self):
-        # self.requires("hdf5/1.12.0")
-        self.requires("boost/1.77.0")
-        self.requires("hdf5/1.10.6")
+        self.requires("hdf5/1.12.0")
+        # self.requires("boost/1.77.0")
+        self.requires("boost/1.71.0")
+        # self.requires("hdf5/1.10.6")
         # self.requires("boost/1.69.0")
         self.requires("doxygen/1.9.2")
         # self.requires("zlib/1.2.11")
