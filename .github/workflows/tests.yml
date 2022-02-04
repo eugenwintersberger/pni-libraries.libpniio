@@ -1,4 +1,4 @@
-name: Test Package
+name: Build and Test
 
 on:
   push:
@@ -7,8 +7,7 @@ on:
     - cron: '30 0 22 * *'
 
 jobs:
-
-  tests:
+  dpkg:
     runs-on: ubuntu-latest
 
     strategy:
@@ -110,3 +109,52 @@ jobs:
 
       - name: Stop the docker
         run: docker container stop build
+
+  conan:
+    strategy:
+      matrix:
+        shared: [
+          shared,
+          # static  # not supported yet
+        ]
+        mpi: [
+        # mpi,   # not supported yet
+        serial]
+        libcxx: [
+            libstdc++11,
+            # libc++   # not supported yet
+        ]
+        image: [
+            "conanio/gcc11-ubuntu16.04",
+            # "conanio/clang13-ubuntu16.04"
+        ]
+    runs-on: ubuntu-20.04
+    container:
+      image: ${{ matrix.image }}
+      options: '--user=root'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set environment variables
+        run: |
+            bash .github/workflows/set_env_vars.sh \
+              ${{ matrix.shared }} \
+              ${{ matrix.mpi }}
+      - name: Install MPI prerequisites
+        if: ${{ matrix.mpi == 'mpi' }}
+        run: |
+            apt-get update
+            apt-get install -y --no-install-recommends ssh
+      - name: build h5cpp
+        run: |
+          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
+          cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True -DH5CPP_CONAN_FILE=../../conanfile.txt  ../h5cpp
+          make install -j4 && cd ../../
+      - name: build pninexus
+        run: |
+          mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
+          make install -j4
+      - name: run tests
+        run: |
+          cd build
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+          make check CTEST_OUTPUT_ON_FAILURE=TRUE -j4

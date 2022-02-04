@@ -1,8 +1,8 @@
 #generate additional doxygen files
 configure_file(mainpage.cmake mainpage.dox @ONLY)
 configure_file(Doxyfile.cmake Doxyfile @ONLY)
-configure_file(doxygen-awesome-css/doxygen-awesome.css doxygen-awesome.css COPYONLY)
-configure_file(doxygen-awesome-css/doxygen-awesome-sidebar-only.css doxygen-awesome-sidebar-only.css COPYONLY)
+# configure_file(doxygen-awesome-css/doxygen-awesome.css doxygen-awesome.css COPYONLY)
+# configure_file(doxygen-awesome-css/doxygen-awesome-sidebar-only.css doxygen-awesome-sidebar-only.css COPYONLY)
 set_source_files_properties(Doxyfile mainpage.dox
                       PROPERTIES GENERATED TRUE)
 

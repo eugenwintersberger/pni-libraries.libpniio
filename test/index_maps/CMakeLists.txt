@@ -11,7 +11,7 @@ set(SOURCES index_map_tests.cpp
 # by ourselves. 
 
 add_executable(index_maps_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(index_maps_test pninexus Boost::unit_test_framework)
+target_link_libraries(index_maps_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 add_dependencies(check index_maps_test)
 
 add_boost_logging_test("index_maps_test"

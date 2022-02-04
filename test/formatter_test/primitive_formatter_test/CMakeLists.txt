@@ -19,7 +19,7 @@ set(SOURCES
 set_boost_test_definitions(SOURCES "Testing primitive formatters")
 add_executable(primitive_formatter_test EXCLUDE_FROM_ALL ${SOURCES})
 add_dependencies(check primitive_formatter_test)
-target_link_libraries(primitive_formatter_test pninexus Boost::unit_test_framework)
+target_link_libraries(primitive_formatter_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 add_boost_logging_test("formatters:primitive_formatters"
                        primitive_formatter_test
                        ${PROJECT_BINARY_DIR}/test/formatter_test/primitive_formatter_test)
