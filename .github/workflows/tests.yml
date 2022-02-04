@@ -120,26 +120,23 @@ jobs:
         mpi: [
         # mpi,
         serial]
-        libcxx: [
-        libstdc++11,
-        # libc++
-        ]
+        libcxx: [ libstdc++11, libc++ ]
         image: [
             "conanio/gcc11-ubuntu16.04",
-            # "conanio/clang13-ubuntu16.04"
+            "conanio/clang13-ubuntu16.04"
         ]
-        # exclude:
-        #   - image: conanio/gcc11-ubuntu16.04
-        #     libcxx: libc++
+        exclude:
+          - image: conanio/gcc11-ubuntu16.04
+            libcxx: libc++
         include:
           - image: conanio/gcc11-ubuntu16.04
             profile: gcc11
-          # - image: conanio/clang13-ubuntu16.04
-          #   libcxx: libstdc++11
-          #   profile: clang13-libstdc++
-          # - image: conanio/clang13-ubuntu16.04
-          #   libcxx: libc++
-          #   profile: clang13-libc++
+          - image: conanio/clang13-ubuntu16.04
+            libcxx: libstdc++11
+            profile: clang13-libstdc++
+          - image: conanio/clang13-ubuntu16.04
+            libcxx: libc++
+            profile: clang13-libc++
     runs-on: ubuntu-20.04
     container:
       image: ${{ matrix.image }}
@@ -194,5 +191,5 @@ jobs:
         run: |
           cd build
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-          make check CTEST_OUTPUT_ON_FAILURE=TRUE
+          make check CTEST_OUTPUT_ON_FAILURE=TRUE -j4
           # cmake --build . --target check --config Release -- -j4
