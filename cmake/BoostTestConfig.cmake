@@ -6,7 +6,6 @@
 if(NOT Boost_VERSION)
     message(FATAL_ERROR "Cannot setup Boost test logging as long as Boost is not configured!")
 endif()
-message(STATUS "BOOST VERSION TEST ${Boost_VERSION}")
 
 #
 # set the path where all the test reports and logs will be stored
