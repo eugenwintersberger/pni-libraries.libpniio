@@ -1,5 +1,6 @@
  # libpninexus
 
+![github workflow](https://github.com/pni-libraries/libpninexus/actions/workflows/tests.yml/badge.svg) [![docs](https://img.shields.io/badge/Documentation-webpages-ADD8E6.svg)](https://pni-libraries.github.io/libpninexus/index.html)
 
 `libpninexus` provides the IO functionality among the PNI libraries. Currently this
 is restricted to file IO. The library supports
