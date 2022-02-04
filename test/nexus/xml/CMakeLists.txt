@@ -23,7 +23,7 @@ endforeach()
 	       
 set_boost_test_definitions(SOURCES "Testing Nexus xml stack")
 add_executable(nexus_xml_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(nexus_xml_test pninexus Boost::unit_test_framework)
+target_link_libraries(nexus_xml_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 add_dependencies(check nexus_xml_test)
 add_boost_logging_test("nexus::xml" nexus_xml_test
 	                   ${CMAKE_CURRENT_BINARY_DIR})

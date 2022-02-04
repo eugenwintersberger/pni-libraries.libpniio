@@ -23,7 +23,7 @@ set(SOURCES unchecked_convertible_test.cpp
 
 set_boost_test_definitions(SOURCES "Testing type conversions")
 add_executable(conversion_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(conversion_test pninexus Boost::unit_test_framework)
+target_link_libraries(conversion_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 add_dependencies(check conversion_test)
 
 add_boost_logging_test("types:conversion_test" conversion_test

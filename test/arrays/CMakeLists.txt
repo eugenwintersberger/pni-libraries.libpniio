@@ -17,7 +17,7 @@ endif()
 set_boost_test_definitions(SOURCES "Testing array functions")
 
 add_executable(arrays_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
-target_link_libraries(arrays_test pninexus Boost::unit_test_framework)
+target_link_libraries(arrays_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 add_dependencies(check arrays_test)
 
 add_boost_logging_test("arrays_test"

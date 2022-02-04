@@ -14,10 +14,10 @@ set(SOURCES binary_test.cpp
 set_boost_test_definitions(SOURCES "testing type features")
 
 add_executable(type_test EXCLUDE_FROM_ALL ${SOURCES})
-target_link_libraries(type_test pninexus Boost::unit_test_framework)
+target_link_libraries(type_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 
 add_executable(show_type_info EXCLUDE_FROM_ALL show_type_info.cpp)
-target_link_libraries(show_type_info pninexus)
+target_link_libraries(show_type_info pninexus h5cpp::h5cpp)
 add_dependencies(check type_test show_type_info)
 
 

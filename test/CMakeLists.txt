@@ -18,19 +18,19 @@ target_include_directories(test_common PRIVATE ${Boost_INCLUDE_DIRS} ${PROJECT_S
 
 
 add_executable(parser_complex_test EXCLUDE_FROM_ALL parser_complex_test.cpp)
-target_link_libraries(parser_complex_test pninexus)
+target_link_libraries(parser_complex_test pninexus h5cpp::h5cpp)
 
 #
 # build test program for the random number generator
 #
 # add_executable(rand_test EXCLUDE_FROM_ALL "rand_test.cpp" $<TARGET_OBJECTS:test_common>)
-# target_link_libraries(rand_test PRIVATE pninexus)
+# target_link_libraries(rand_test PRIVATE pninexus h5cpp::h5cpp)
 
 #
 # build random number generator
 #
 # add_executable(rand_gen EXCLUDE_FROM_ALL rand_gen.cpp)
-# target_link_libraries(rand_gen pninexus)
+# target_link_libraries(rand_gen pninexus h5cpp::h5cpp)
 
 #
 # build the environment test program
