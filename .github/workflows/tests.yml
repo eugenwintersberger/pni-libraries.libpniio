@@ -193,5 +193,6 @@ jobs:
       - name: run tests
         run: |
           cd build
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
           make check CTEST_OUTPUT_ON_FAILURE=TRUE
           # cmake --build . --target check --config Release -- -j4
