@@ -183,7 +183,7 @@ jobs:
         run: |
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
           conan build ../ \
-            --build-folder h5cpp-build
+            --build-folder h5cpp-build \
             --install-folder ../build
       # - name: build h5cpp with make 
       #   run: |
