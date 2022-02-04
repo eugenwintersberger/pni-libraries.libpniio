@@ -115,14 +115,14 @@ jobs:
       matrix:
         shared: [
           shared,
-          # static
+          # static  # not supported yet
         ]
         mpi: [
-        # mpi,
+        # mpi,   # not supported yet
         serial]
         libcxx: [
             libstdc++11,
-            # libc++
+            # libc++   # not supported yet
         ]
         image: [
             "conanio/gcc11-ubuntu16.04",
@@ -156,53 +156,33 @@ jobs:
         run: |
             apt-get update
             apt-get install -y --no-install-recommends ssh
-      - name: Install and configure conan
-        run: |
-          CONAN_ARGS="--profile .github/workflows/conan/profiles/${{ matrix.profile }} \
-            -o with_mpi=${PNINEXUS_WITH_MPI} \
-            -o shared=${PNINEXUS_SHARED} \
-            -o hdf5:shared=${PNINEXUS_SHARED}"
-          conan lock create conanfile.py ${CONAN_ARGS} --base --lockfile-out base.lock
-          conan lock create conanfile.py ${CONAN_ARGS} --build missing
-      - name: cache conan dependencies
-        uses: actions/cache@v2
-        with:
-          path: /home/conan/.conan/data
-          key: conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}-${{ hashFiles('conan.lock') }}
-          restore-keys: |
-            conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}
-            conan-${{ matrix.profile }}
-      # - name: install conan dependencies
+      # - name: Install and configure conan
       #   run: |
-      #     conan install . \
-      #       --install-folder build \
-      #       --lockfile conan.lock \
-      #       --build missing \
-      #       --update
-      # - name: build h5cpp
-      #   run: |
-      #     mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-      #     conan build ../ \
-      #       --build-folder h5cpp-build \
-      #       --install-folder ../build
+      #     CONAN_ARGS="--profile .github/workflows/conan/profiles/${{ matrix.profile }} \
+      #       -o with_mpi=${PNINEXUS_WITH_MPI} \
+      #       -o shared=${PNINEXUS_SHARED} \
+      #       -o hdf5:shared=${PNINEXUS_SHARED}"
+      #     conan lock create conanfile.py ${CONAN_ARGS} --base --lockfile-out base.lock
+      #     conan lock create conanfile.py ${CONAN_ARGS} --build missing
+      # - name: cache conan dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /home/conan/.conan/data
+      #     key: conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}-${{ hashFiles('conan.lock') }}
+      #     restore-keys: |
+      #       conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}
+      #       conan-${{ matrix.profile }}
       - name: build h5cpp
         run: |
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
           cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True -DH5CPP_CONAN_FILE=../../conanfile.txt  ../h5cpp
           make install -j4 && cd ../../ 
-      # - name: build pninexus
-      #   run: |
-      #     conan build . \
-      #       --build-folder build
       - name: build pninexus
         run: |
-          # conan build .  --build-folder build
           mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
           make install -j4
-          # make check -j4
       - name: run tests
         run: |
           cd build
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
           make check CTEST_OUTPUT_ON_FAILURE=TRUE -j4
-          # cmake --build . --target check --config Release -- -j4
