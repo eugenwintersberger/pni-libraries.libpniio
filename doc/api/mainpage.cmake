@@ -1,4 +1,4 @@
-/*! \mainpage @CMAKE_PROJECT_NAME@ @LIBRARY_VERSION@ documentation
+/*! \mainpage PNI NeXus Library @CMAKE_PROJECT_VERSION@ Documentation
 
 \section Introduction
 \c libpninexus is a C++ implementation of the Nexus file format. Althoug the NIAC
