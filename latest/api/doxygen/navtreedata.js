@@ -24,7 +24,14 @@
 */
 var NAVTREE =
 [
-  [ "pninexus", "index.html", [
+  [ "PNI NeXus Library", "index.html", [
+    [ "PNI NeXus Library 3.0 Documentation", "index.html", [
+      [ "Introduction", "index.html#Introduction", null ],
+      [ "Outlook - concurrent applications", "index.html#outlook", [
+        [ "Thread safety", "index.html#ths", null ],
+        [ "Support for MPI IO", "index.html#mpi", null ]
+      ] ]
+    ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -69,10 +76,10 @@ var NAVTREEINDEX =
 "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a46b4c376edc0de39137cf84a6917e6d8",
 "classpni_1_1tiff_1_1ifd__entry.html#a4973f72b85f258724a9693dfe424a52a",
 "functions_a.html",
-"index__utilities_8hpp.html#a49459b44ec44843fa752cf6c386f58e9",
-"namespacepni_1_1cbf.html#a5832842900f247913a2ff8a134042222a68ee2a216d4a6dfe366638ba39e1e08f",
-"structpni_1_1array__trait_3_01OP1_00_01scalar_3_01T_01_4_01_4.html#a125465a36bd69b3eebfa68b9e495e52e",
-"type__id__map_8hpp_source.html"
+"index__maps_8hpp.html#a11040200b54ab84c0740dac6eb9b5366",
+"namespacepni.html#aff73e4ff6a843818b2cf2e239f7dbcb6",
+"structpni_1_1array__iterator__types_3_011_01_4.html#aee792a0aae37f2ee7530f341d5e7ad0e",
+"type__erasures_2utils_8hpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
