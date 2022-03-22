@@ -23,7 +23,7 @@ RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
 
 RUN apt-get clean
 RUN pip3 install jinja2==2.11.3
-RUN pip3 install conan==1.46.2
+RUN pip3 install conan==1.46.1
 RUN pip3 install gitpython
 
 # RUN conan remote remove conan-center
