@@ -15,15 +15,15 @@ RUN chmod 644 /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian stretch main" -y
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
-RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
+RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript adduser
 RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
 RUN apt-get -qq update && apt-get -t stretch-backports-sloppy -y install libarchive13
 RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
 # RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
 RUN apt-get clean
-RUN pip3 install --upgrade jinja2
-RUN pip3 install conan
+RUN pip3 install jinja2==2.11.3
+RUN pip3 install conan==1.45.0
 RUN pip3 install gitpython
 
 # RUN conan remote remove conan-center
@@ -39,4 +39,8 @@ RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD
 
 RUN conan user
 RUN mkdir /src
+# RUN chmod 777 /src
+# RUN useradd -ms /bin/bash conan
+# RUN useradd -d /src  conan
+# USER conan
 WORKDIR /src
