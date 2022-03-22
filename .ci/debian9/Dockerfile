@@ -41,6 +41,6 @@ RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD
 RUN mkdir -p /src
 RUN chmod 777 /src
 # RUN useradd -ms /bin/bash conan
-RUN useradd  conan
+RUN useradd -d /src  conan
 USER conan
 WORKDIR /src
