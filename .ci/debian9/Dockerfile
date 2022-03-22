@@ -22,7 +22,7 @@ RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
 # RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
 RUN apt-get clean
-RUN pip3 install --upgrade jinja2
+RUN pip3 install jinja2=2.11.3
 RUN pip3 install conan==1.46.2
 RUN pip3 install gitpython
 
