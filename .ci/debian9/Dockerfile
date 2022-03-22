@@ -22,14 +22,14 @@ RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
 # RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
 RUN apt-get clean
-RUN pip3 install --upgrade jinja2
-RUN pip3 install conan
-RUN pip3 install gitpython
+# RUN pip3 install --upgrade jinja2
+# RUN pip3 install conan
+# RUN pip3 install gitpython
 
 # RUN conan remote remove conan-center
-RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
-RUN conan remote add conan-center https://conan.bintray.com
-RUN conan remote add conan-transit https://conan-transit.bintray.com
+# RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
+# RUN conan remote add conan-center https://conan.bintray.com
+# RUN conan remote add conan-transit https://conan-transit.bintray.com
 
 # install latest h5cpp
 RUN mkdir -p /opt/h5cpp
