@@ -21,15 +21,15 @@ RUN apt-get -qq update && apt-get -t stretch-backports-sloppy -y install libarch
 RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
 # RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.4.1-dev libh5cpp0.4.1
 
-RUN apt-get clean
-RUN pip3 install jinja2==2.11.3
-RUN pip3 install conan==1.45.0
-RUN pip3 install gitpython
+# RUN apt-get clean
+# RUN pip3 install jinja2==2.11.3
+# RUN pip3 install conan==1.45.0
+# RUN pip3 install gitpython
 
-# RUN conan remote remove conan-center
-RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
-RUN conan remote add conan-center https://conan.bintray.com
-RUN conan remote add conan-transit https://conan-transit.bintray.com
+# # RUN conan remote remove conan-center
+# RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
+# RUN conan remote add conan-center https://conan.bintray.com
+# RUN conan remote add conan-transit https://conan-transit.bintray.com
 
 # install latest h5cpp
 RUN mkdir -p /opt/h5cpp
@@ -37,10 +37,11 @@ RUN mkdir -p /h5cpp-src
 RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
 RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DCMAKE_CXX_STANDARD=11 -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
 
-RUN conan user
+# RUN conan user
 RUN mkdir /src
-# RUN chmod 777 /src
+RUN chmod 777 /src
 # RUN useradd -ms /bin/bash conan
-# RUN useradd -d /src  conan
-# USER conan
+RUN useradd -d /src  conan
+RUN chown conan /src
+USER conan
 WORKDIR /src
