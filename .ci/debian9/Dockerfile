@@ -38,7 +38,7 @@ RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
 RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DCMAKE_CXX_STANDARD=11 -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
 
 # RUN conan user
+RUN mkdir /src
 RUN useradd -ms /bin/bash pniuser
 USER pniuser
-RUN mkdir /src
 WORKDIR /src
