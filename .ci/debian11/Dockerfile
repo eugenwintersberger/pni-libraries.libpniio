@@ -18,6 +18,7 @@ RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
 
 RUN apt-get clean
 RUN pip3 install conan
+RUN pip3 install jinja2==3.0.3
 RUN pip3 install gitpython
 
 # RUN conan remote remove conan-center
