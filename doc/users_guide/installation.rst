@@ -45,13 +45,13 @@ For Debian (Bullseye) use
 
    $ wget http://repos.pni-hdri.de/bullseye-pni-hdri.list
 
-and for Ubuntu (Impish)
+and for Ubuntu (Jammy)
 
 .. code-block:: bash
 
-   $ wget http://repos.pni-hdri.de/impish-pni-hdri.list
+   $ wget http://repos.pni-hdri.de/jammy-pni-hdri.list
 
-The packages are also available for Debian Buster, Stretch and Focal, Bionic, Groovy. 
+The packages are also available for Debian Buster, Stretch and Ubuntu Jammy, Focal, Bionic. 
 
 Once you have downloaded the file use
 
