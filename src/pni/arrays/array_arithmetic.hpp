@@ -326,13 +326,13 @@ namespace pni{
              typename LHSArrayT,
              typename ScalarT,
              typename = enable_if<and_t<
-                        is_array<LHSArrayT>,not_t<is_array<T>>
+                        is_array<LHSArrayT>,not_t<is_array<ScalarT>>
                         >>
             >
-    mdarray<div_op<LHSArrayT,scalar<T>>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    mdarray<div_op<LHSArrayT,scalar<ScalarT>>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
     operator/(const LHSArrayT &a, const ScalarT &b)
     {
-        typedef div_op<LHSArrayT,scalar<T>> operator_type;
+        typedef div_op<LHSArrayT,scalar<ScalarT>> operator_type;
         typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
 
         return result_type(a.map(),operator_type(a,b));
@@ -362,7 +362,7 @@ namespace pni{
              typename ScalarT,
              typename RHSArrayT,
              typename = enable_if<and_t<
-                        not_t<is_array<T>>,is_array<RHSArrayT>
+                        not_t<is_array<ScalarT>>,is_array<RHSArrayT>
                         >>
             >
     mdarray<div_op<scalar<ScalarT>,RHSArrayT>,map_type<RHSArrayT>,ipa_type<RHSArrayT>>
