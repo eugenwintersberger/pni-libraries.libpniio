@@ -47,7 +47,7 @@ namespace pni{
     //! \tparam is_float true if the type is a float type
     //!
     template<
-             typename DataT,
+             typename IntegerT,
              bool is_float=false
             >
     struct min_max

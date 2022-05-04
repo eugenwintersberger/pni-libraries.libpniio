@@ -362,12 +362,12 @@ namespace pni{
         !*/ 
         //! \throws size_mismatch_error if the size of std::array and the
         //! initializer list do not match
-        //! \tparam ElementT element type of the initializer list
+        //! \tparam ListElementT element type of the initializer list
         //! \param list initializer list
         //! \return initialized instance of std::array
         //!
-        template<typename ElementT>
-        static container_type create(const std::initializer_list<ElementT> &list)
+        template<typename ListElementT>
+        static container_type create(const std::initializer_list<ListElementT> &list)
         {
             if(list.size()!=TDimN)
             {
