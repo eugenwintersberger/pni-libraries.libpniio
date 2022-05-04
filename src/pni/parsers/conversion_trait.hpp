@@ -39,15 +39,15 @@ namespace pni{
     //! type read from the string is the same as the type requested by
     //! the user.
     //!
-    //! \tparam T result type
+    //! \tparam GeneralT result type
     //!
-    template<typename T>
+    template<typename GeneralT>
     struct conversion_trait
     {
         //! the type requested by the user
-        typedef T result_type;
+        typedef GeneralT result_type;
         //! the type to read
-        typedef T read_type;
+        typedef GeneralT read_type;
 
         //!
         //! \brief conversion function

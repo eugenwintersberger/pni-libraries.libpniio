@@ -27,10 +27,10 @@
 #include <pni/arrays/scalar.hpp>
 #include "../data_generator.hpp"
 
-template<typename AT> struct fixture
+template<typename TestArrayT> struct fixture
 {
-    typedef AT                      array_type;
-    typedef typename AT::value_type value_type;
+    typedef TestArrayT                      array_type;
+    typedef typename TestArrayT::value_type value_type;
     typedef scalar<value_type>      scalar_type;
     typedef random_generator<value_type> generator_type; 
         

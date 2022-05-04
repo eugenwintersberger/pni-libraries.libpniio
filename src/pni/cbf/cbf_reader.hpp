@@ -141,7 +141,7 @@ class PNINEXUS_EXPORT cbf_reader: public image_reader
     //!
     //! @brief read image
     //!
-    //! @tparam CTYPE container type for storing data
+    //! @tparam ContainerT container type for storing data
     //!
     //! @throw memory_allocation_error if container allocation failes
     //! @throw file_error in case of IO errors
@@ -149,40 +149,40 @@ class PNINEXUS_EXPORT cbf_reader: public image_reader
     //! @param i image number to read
     //! @param c channel to read (default = 0)
     //!
-    //! @return instance of CTYPE with image data
+    //! @return instance of ContainerT with image data
     //!
-    template<typename CTYPE> CTYPE image(size_t i,size_t c=0);
+    template<typename ContainerT> ContainerT image(size_t i,size_t c=0);
 
     //-----------------------------------------------------------------
     //!
     //! @brief read data from detector file
     //!
     //! Reads a single image from a detector file and stores it in an
-    //! container of type CTYPE.
+    //! container of type ContainerT.
     //!
     //! @throws file_error if case of IO errors
     //! @throws size_mismatch_error if container and image size do not match
     //!
-    //! @tparam CTYPE container type holding the image data
-    //! @param array instance of CTYPE where data will be stored
+    //! @tparam ContainerT container type holding the image data
+    //! @param array instance of ContainerT where data will be stored
     //!
     //! @param i image number
     //! @param c channel number
     //!
-    template<typename CTYPE>
-    void image(CTYPE &array,size_t i,size_t c=0);
+    template<typename ContainerT>
+    void image(ContainerT &array,size_t i,size_t c=0);
 
 };
 
 //-------------------------------------------------------------------------
-template<typename CTYPE> CTYPE cbf_reader::image(size_t i,size_t c)
+template<typename ContainerT> ContainerT cbf_reader::image(size_t i,size_t c)
 {
   using namespace pni;
   image_info info = _image_info[i];
-  CTYPE data;
+  ContainerT data;
   try
   {
-    data=CTYPE(info.npixels());
+    data=ContainerT(info.npixels());
   }
   catch(...)
   {
@@ -205,8 +205,8 @@ template<typename CTYPE> CTYPE cbf_reader::image(size_t i,size_t c)
 }
 
 //-------------------------------------------------------------------------
-template<typename CTYPE>
-void cbf_reader::image(CTYPE &data,size_t i,size_t c)
+template<typename ContainerT>
+void cbf_reader::image(ContainerT &data,size_t i,size_t c)
 {
   using namespace pni;
   //load image information and throw exception if image and container size

@@ -52,10 +52,10 @@ namespace pni{
     //! array_type a = ...;
     //! \endcode
     //!
-    //! \tparam T element type
+    //! \tparam ElementT element type
     //!
-    template<typename T> 
-    using dynamic_array = mdarray<std::vector<T>,dynamic_cindex_map>;
+    template<typename ElementT> 
+    using dynamic_array = mdarray<std::vector<ElementT>,dynamic_cindex_map>;
 
     //-------------------------------------------------------------------------
     //!
@@ -71,14 +71,14 @@ namespace pni{
     //! typedef fixed_dim_array<uint32,2> image_type;
     //! \endcode
     //!
-    //! \tparam T element data type
-    //! \tparam D number of dimensions
+    //! \tparam ElementT element data type
+    //! \tparam TDimN number of dimensions
     //!
     template<
-             typename T,
-             size_t   D
+             typename ElementT,
+             size_t   TDimN
             >
-    using fixed_dim_array = mdarray<std::vector<T>,fixed_dim_cindex_map<D>>;
+    using fixed_dim_array = mdarray<std::vector<ElementT>,fixed_dim_cindex_map<TDimN>>;
 
     //-------------------------------------------------------------------------
     //!
@@ -99,18 +99,18 @@ namespace pni{
     //! Instances of such types usually reside on the stack which makes access 
     //! to their data elements extremely fast. 
     //! 
-    //! \tparam T element data type
-    //! \tparam NDIMS number of elements along each dimension
+    //! \tparam ElementT element data type
+    //! \tparam TDimsN number of elements along each dimension
     //!
     template<
-             typename  T,
-             size_t... NDIMS>
-    using static_array = mdarray<std::array<T,boost::mpl::times<
+             typename  ElementT,
+             size_t... TDimsN>
+    using static_array = mdarray<std::array<ElementT,boost::mpl::times<
                                               boost::mpl::size_t<1>,
-                                              boost::mpl::size_t<NDIMS>...
+                                              boost::mpl::size_t<TDimsN>...
                                               >::value
                                            >,
-                                 static_cindex_map<NDIMS...>
+                                 static_cindex_map<TDimsN...>
                                 >;
    
 //end of namespace

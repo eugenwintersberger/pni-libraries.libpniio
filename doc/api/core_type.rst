@@ -38,7 +38,7 @@ Utility functions
 
 .. doxygenfunction:: str_from_type_id(type_id_t)
 
-.. doxygenfunction:: type_id(const T&)
+.. doxygenfunction:: type_id(const GeneralT&)
    
 
 :cpp:enum:`pni::type_class_t`
@@ -78,7 +78,7 @@ Operators
 .. doxygenclass:: pni::binary_t
    :members:
    
-.. doxygenfunction:: pni::operator<<(std::ostream&, const binary_t<NTYPE>&)
+.. doxygenfunction:: pni::operator<<(std::ostream&, const binary_t<NativeT>&)
 
 
 

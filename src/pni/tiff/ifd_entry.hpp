@@ -87,8 +87,8 @@ namespace tiff{
             //! \param r vector where to store the data
             //! \param stream input stream from which to read
             //! 
-            template<typename T> 
-            void _read_entry_data(std::vector<T> &r,std::ifstream &stream);
+            template<typename ElementT> 
+            void _read_entry_data(std::vector<ElementT> &r,std::ifstream &stream);
 
             //----------------------------------------------------------------
             //!
@@ -186,7 +186,7 @@ namespace tiff{
             //! \brief get entry value
             //!
             //! Template returns the value of the entry and returs it as a 
-            //! vector of type T. Entries are in general considered as arrays
+            //! vector of type ElementT. Entries are in general considered as arrays
             //! (vectors) in TIFF. Thus the std::vector type is used to 
             //! represent each entry.
             //!
@@ -195,7 +195,7 @@ namespace tiff{
             //! \param stream input stream from which data will be read
             //! \return entry as vector
             //!
-            template<typename T> std::vector<T> value(std::ifstream &stream);
+            template<typename ElementT> std::vector<ElementT> value(std::ifstream &stream);
 
             //-----------------------------------------------------------------
             //! output operator
@@ -205,22 +205,22 @@ namespace tiff{
 
 
     //==============implementation of public template methods===================
-    template<typename T> std::vector<T> ifd_entry::value(std::ifstream &stream)
+    template<typename ElementT> std::vector<ElementT> ifd_entry::value(std::ifstream &stream)
     {
         using namespace pni;
 
         //create a vector of appropriate length
-        std::vector<T> result(this->size());
+        std::vector<ElementT> result(this->size());
         //save the original stream position
         std::streampos orig_stream_pos = stream.tellg();
 
         //set the stream to the begining of the data section
         stream.seekg(this->_data,std::ios::beg);
 
-        //here comes the tricky part. Though the user defines the type T he
-        //wants to have the IFD entry not all entry types can be converted to T
+        //here comes the tricky part. Though the user defines the type ElementT he
+        //wants to have the IFD entry not all entry types can be converted to ElementT
         //without loss of information. Thus wee need a selection function that
-        //picks for each T all acceptable types and throws an exception if the
+        //picks for each ElementT all acceptable types and throws an exception if the
         //entry is of an incompatible type. 
         //
         //This operation is carried out by the next function which cann choose
@@ -244,31 +244,31 @@ namespace tiff{
     }
 
     //--------------------------------------------------------------------------
-    template<typename T> void ifd_entry:: 
-        _read_entry_data(std::vector<T> &r,std::ifstream &stream)
+    template<typename ElementT> void ifd_entry:: 
+        _read_entry_data(std::vector<ElementT> &r,std::ifstream &stream)
     {
         using namespace pni;
 
         if(this->_tid == ifd_entry_type_id::Byte) 
-            ifd_entry_reader<T,uint8>::read(r,stream);
+            ifd_entry_reader<ElementT,uint8>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::Short)
-            ifd_entry_reader<T,uint16>::read(r,stream);
+            ifd_entry_reader<ElementT,uint16>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::Long)
-            ifd_entry_reader<T,uint32>::read(r,stream);
+            ifd_entry_reader<ElementT,uint32>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::Rational)
-            ifd_entry_reader<T,rational<uint16> >::read(r,stream);
+            ifd_entry_reader<ElementT,rational<uint16> >::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::SByte)
-            ifd_entry_reader<T,int8>::read(r,stream);
+            ifd_entry_reader<ElementT,int8>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::SShort)
-            ifd_entry_reader<T,int16>::read(r,stream);
+            ifd_entry_reader<ElementT,int16>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::SLong)
-            ifd_entry_reader<T,int32>::read(r,stream);
+            ifd_entry_reader<ElementT,int32>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::SRational)
-            ifd_entry_reader<T,rational<int32> >::read(r,stream);
+            ifd_entry_reader<ElementT,rational<int32> >::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::Float)
-            ifd_entry_reader<T,float32>::read(r,stream);
+            ifd_entry_reader<ElementT,float32>::read(r,stream);
         else if(this->_tid == ifd_entry_type_id::Double)
-            ifd_entry_reader<T,float64>::read(r,stream);
+            ifd_entry_reader<ElementT,float64>::read(r,stream);
         else
             //reset stream position
             throw type_error(EXCEPTION_RECORD,"IFD entry ["+this->name()+

@@ -69,7 +69,7 @@ of the form
 
 .. code-block:: cpp
 
-   template<typename T> class parser<std::vector<T>> {...};
+   template<typename ElementT> class parser<std::vector<ElementT>> {...};
 
 is provided. A particularly interesting choice as an element is the 
 :cpp:class:`pni::value` type erasure as it allows to parse a series of 

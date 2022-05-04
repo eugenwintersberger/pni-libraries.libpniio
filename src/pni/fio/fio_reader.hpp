@@ -121,12 +121,12 @@ namespace pni{
             \brief read parameter data
 
             This template is used internally to extract parameter data from the
-            input stream and store the result in a variable of type T. 
+            input stream and store the result in a variable of type ElementT. 
             \param stream input stream
             \param value where to store data
             */
-            template<typename T>
-                void _get_parameter_data(std::ifstream &stream,T &value) const;
+            template<typename ElementT>
+                void _get_parameter_data(std::ifstream &stream,ElementT &value) const;
 
             //------------------------------------------------------------------
             /*! 
@@ -150,8 +150,8 @@ namespace pni{
             \param index index of the column in the file
             \param array instance of the Array template where to store the data
             */
-            template<typename CTYPE> 
-                void _read_column(size_t index,CTYPE &array) const;
+            template<typename ContainerT> 
+                void _read_column(size_t index,ContainerT &array) const;
 
         public:
             //==============constructor and destructor=========================
@@ -203,10 +203,10 @@ namespace pni{
             Return the value of a parameter stored in the FIO file by name. 
             \throws key_errror if parameter name does not exist
             \param name parameter name
-            \return parameter value as type T
+            \return parameter value as type ElementT
             */
-            template<typename T> 
-            T parameter(const std::string &name) const;
+            template<typename ElementT> 
+            ElementT parameter(const std::string &name) const;
            
             //-----------------------------------------------------------------
             /*! 
@@ -217,10 +217,10 @@ namespace pni{
             \throws key_error if column does not exist
             \throws file_error if EOF is reached before end of data
             \param n name of the column
-            \return instance of ATYPE holding the data.
+            \return instance of ArrayT holding the data.
             */
-            template<typename CTYPE> 
-            CTYPE column(const std::string &n) const;
+            template<typename ContainerT> 
+            ContainerT column(const std::string &n) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -231,35 +231,35 @@ namespace pni{
             size and shape. 
             \throws key_error if the requested column does not exist
             \throws file_error in any other case of error
-            \tparam CTYPE container type
+            \tparam ContainerT container type
             \param n name of the column
-            \param c instance of CTYPE that will in the end contain the data
+            \param c instance of ContainerT that will in the end contain the data
             */
-            template<typename CTYPE> 
-                void column(const std::string &n,CTYPE &c) const;
+            template<typename ContainerT> 
+                void column(const std::string &n,ContainerT &c) const;
 
     };
     
     //==========implementation of private template methods=====================
-    template<typename T> 
-        void fio_reader::_get_parameter_data(std::ifstream &stream,T &value) const
+    template<typename ElementT> 
+        void fio_reader::_get_parameter_data(std::ifstream &stream,ElementT &value) const
     {
         stream>>value;
     }
 
     //======================template implementation============================
-    template<typename T> 
-    T fio_reader::parameter(const std::string &name) const
+    template<typename ElementT> 
+    ElementT fio_reader::parameter(const std::string &name) const
     {
-        return boost::lexical_cast<T>(_param_map.at(name));
+        return boost::lexical_cast<ElementT>(_param_map.at(name));
     }
 
     //-------------------------------------------------------------------------
-    template<typename CTYPE> 
-        void fio_reader::column(const std::string &n,CTYPE &c) const
+    template<typename ContainerT> 
+        void fio_reader::column(const std::string &n,ContainerT &c) const
     {
         using namespace pni;
-        using value_type = typename CTYPE::value_type;
+        using value_type = typename ContainerT::value_type;
 
         try
         {
@@ -279,13 +279,13 @@ namespace pni{
 
 
     //-------------------------------------------------------------------------
-    template<typename CTYPE> 
-    CTYPE fio_reader::column(const std::string &n) const
+    template<typename ContainerT> 
+    ContainerT fio_reader::column(const std::string &n) const
     {
         //create the container 
         //allocate a new array
         std::vector<size_t> s{this->nrecords()};
-        CTYPE data(this->nrecords());
+        ContainerT data(this->nrecords());
 
         this->column(n,data);
 

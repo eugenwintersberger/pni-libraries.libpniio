@@ -36,8 +36,8 @@ Functions
 Functions
 ---------
 
-.. doxygenfunction:: pni::make_array(const STYPE&)
+.. doxygenfunction:: pni::make_array(const ShapeT&)
 
-.. doxygenfunction:: pni::make_array(type_id_t, const CTYPE&)
+.. doxygenfunction:: pni::make_array(type_id_t, const ContainerT&)
 
 .. doxygenfunction:: pni::type_id(const array&)

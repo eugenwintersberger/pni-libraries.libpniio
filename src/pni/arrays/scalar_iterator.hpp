@@ -50,32 +50,32 @@ namespace pni{
     //! iterator (including all operators) it always refers to the same 
     //! scalar value. 
     //!
-    //! \tparam ITERABLE the container to iterate over
+    //! \tparam IterableT the container to iterate over
     //!
-    template<typename ITERABLE> 
+    template<typename IterableT> 
     class scalar_iterator
     {
         private:
             //! pointer to the container object
-            ITERABLE* _container;
+            IterableT* _container;
 
             //! the internal state of the iterator
             ssize_t _state;
 
             //! extract the container type from the template argument (by
             //removing a possible const-ness
-            typedef typename std::remove_const<ITERABLE>::type container_type;
+            typedef typename std::remove_const<IterableT>::type container_type;
         public:
             //====================public types==================================
             //! type of the iterator
-            typedef scalar_iterator<ITERABLE> iterator_type;
+            typedef scalar_iterator<IterableT> iterator_type;
             //! value type of the container
             typedef typename container_type::value_type value_type;
             //! pointer type the iterator provides
-            typedef typename std::conditional<std::is_const<ITERABLE>::value,
+            typedef typename std::conditional<std::is_const<IterableT>::value,
                                               const value_type*,value_type *>::type  pointer;
             //! reference type the iterator provides
-            typedef typename std::conditional<std::is_const<ITERABLE>::value,
+            typedef typename std::conditional<std::is_const<IterableT>::value,
                                               const value_type&,value_type&>::type reference;
             //! difference type of the iterator
             typedef ssize_t difference_type;
@@ -91,7 +91,7 @@ namespace pni{
             //! \param container pointer to the container object
             //! \param state initial position of the iterator
             //!
-            scalar_iterator(ITERABLE *container,size_t state=0):
+            scalar_iterator(IterableT *container,size_t state=0):
                 _container(container),
                 _state(state)
             { }
@@ -266,11 +266,11 @@ namespace pni{
     //! \param b offset to add
     //! \return new iterator 
     //!
-    template<typename ITERABLE>
-    scalar_iterator<ITERABLE> 
-    operator+(const scalar_iterator<ITERABLE> &a, ssize_t b)
+    template<typename IterableT>
+    scalar_iterator<IterableT> 
+    operator+(const scalar_iterator<IterableT> &a, ssize_t b)
     {
-        scalar_iterator<ITERABLE> iter = a;
+        scalar_iterator<IterableT> iter = a;
         iter += b;
         return iter;
     }
@@ -287,9 +287,9 @@ namespace pni{
     //! \param b original iterator
     //! \return new iterator
     //!
-    template<typename ITERABLE> 
-    scalar_iterator<ITERABLE>
-    operator+(ssize_t a, const scalar_iterator<ITERABLE> &b)
+    template<typename IterableT> 
+    scalar_iterator<IterableT>
+    operator+(ssize_t a, const scalar_iterator<IterableT> &b)
     {
         return b+a;
     }
@@ -306,11 +306,11 @@ namespace pni{
     //! \param b offset
     //! \return new iterator to new position
     //!
-    template<typename ITERABLE> 
-    scalar_iterator<ITERABLE>
-    operator-(const scalar_iterator<ITERABLE> &a, ssize_t b)
+    template<typename IterableT> 
+    scalar_iterator<IterableT>
+    operator-(const scalar_iterator<IterableT> &a, ssize_t b)
     {
-        scalar_iterator<ITERABLE> iter = a;
+        scalar_iterator<IterableT> iter = a;
         iter -= b;
         return iter;
     }
@@ -326,9 +326,9 @@ namespace pni{
     //! \param b second iterator
     //! \return offset difference
     //!
-    template<typename ITERABLE> 
-    ssize_t operator-(const scalar_iterator<ITERABLE> &a, 
-                      const scalar_iterator<ITERABLE> &b)
+    template<typename IterableT> 
+    ssize_t operator-(const scalar_iterator<IterableT> &a, 
+                      const scalar_iterator<IterableT> &b)
     {
         return a.state() - b.state();
     }

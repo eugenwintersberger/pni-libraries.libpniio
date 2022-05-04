@@ -44,21 +44,21 @@ namespace pni{
     //! In C++ terminology this iterator is a random access input iterator 
     //! (one can only read from the elements the iterator points to).
     //!
-    //! \tparam INDEXT type of the index container
-    //! \tparam IMT index map type
+    //! \tparam IndexT type of the index container
+    //! \tparam IndexMapT index map type
     //!
     template<
-             typename INDEXT,
-             typename IMT
+             typename IndexT,
+             typename IndexMapT
             > 
     class index_iterator
     {
         public:
             //===================public types==================================
             //! local index map type
-            typedef IMT map_type;
+            typedef IndexMapT map_type;
             //! local index type
-            typedef INDEXT index_type;
+            typedef IndexT index_type;
             //! type to store the index
             typedef index_type value_type;
             //! pointer type to an index
@@ -90,12 +90,12 @@ namespace pni{
             //! 
             //! Construct an index_iterator from a shape object.
             //! 
-            //! \tparam CTYPE container type for shape
+            //! \tparam ContainerT container type for shape
             //! \param shape shape for which to iterate over indices
             //! \param state iterator state at creation
             //!
-            template<typename CTYPE>
-            index_iterator(const CTYPE &shape,size_t state=0):
+            template<typename ContainerT>
+            index_iterator(const ContainerT &shape,size_t state=0):
                 _index_map(map_utils<map_type>::create(shape)),
                 _state(state),
                 _index(shape.size())
@@ -113,8 +113,8 @@ namespace pni{
             //! 
             //! \return iterator to first index
             //!
-            template<typename CTYPE>
-            static iterator_type begin(const CTYPE &shape)
+            template<typename ContainerT>
+            static iterator_type begin(const ContainerT &shape)
             {
                 return index_iterator(shape);
             }
@@ -129,8 +129,8 @@ namespace pni{
             //! 
             //! \return iterator
             //!
-            template<typename CTYPE>
-            static iterator_type end(const CTYPE &shape)
+            template<typename ContainerT>
+            static iterator_type end(const ContainerT &shape)
             {
                 size_t size=std::accumulate(shape.begin(),shape.end(),size_t(1),
                             std::multiplies<size_t>());;

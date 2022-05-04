@@ -158,18 +158,18 @@ namespace pni{
     //! This template provides information about if a type can be converted
     //! to another without having the range checked. 
     //! 
-    //! \tparam ST source type
-    //! \tparam TT target type
+    //! \tparam SourceT source type
+    //! \tparam TargetT target type
     template<
-             typename ST,
-             typename TT
+             typename SourceT,
+             typename TargetT
             >
     struct unchecked_convertible
     {
         //! select the map
-        typedef typename boost::mpl::at<unchecked_type_vectors,ST>::type map_element;
-        //! check if TT is in the map
-        typedef boost::mpl::contains<map_element,TT> c;
+        typedef typename boost::mpl::at<unchecked_type_vectors,SourceT>::type map_element;
+        //! check if TargetT is in the map
+        typedef boost::mpl::contains<map_element,TargetT> c;
         //! result of the search
         static const bool value = c::value;
     };

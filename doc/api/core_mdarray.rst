@@ -13,13 +13,13 @@ Multidimensional array API
 Operators
 ---------
 
-.. doxygenfunction:: pni::operator==(const mdarray<STORAGE,IMAP,IPA>&, const mdarray<STORAGE, IMAP, IPA>&)
+.. doxygenfunction:: pni::operator==(const mdarray<StorageT,IndexMapT,InplaceArithmeticT>&, const mdarray<StorageT, IndexMapT, InplaceArithmeticT>&)
 
-.. doxygenfunction:: pni::operator!=(const mdarray<STORAGE,IMAP,IPA>&, const mdarray<STORAGE, IMAP, IPA>&)
+.. doxygenfunction:: pni::operator!=(const mdarray<StorageT,IndexMapT,InplaceArithmeticT>&, const mdarray<StorageT, IndexMapT, InplaceArithmeticT>&)
 
-.. doxygenfunction:: pni::operator>>(std::istream&, mdarray<STORAGE, IMAP, IPA>&)
+.. doxygenfunction:: pni::operator>>(std::istream&, mdarray<StorageT, IndexMapT, InplaceArithmeticT>&)
 
-.. doxygenfunction:: pni::operator<<(std::ostream&, const mdarray<STORAGE, IMAP, IPA>&)
+.. doxygenfunction:: pni::operator<<(std::ostream&, const mdarray<StorageT, IndexMapT, InplaceArithmeticT>&)
 
 :cpp:class:`array_view`
 =======================
@@ -30,13 +30,13 @@ Operators
 Operators
 ---------
 
-.. doxygenfunction:: pni::operator==(const array_view<ATYPE>&, const array_view<ATYPE>&)
+.. doxygenfunction:: pni::operator==(const array_view<ArrayT>&, const array_view<ArrayT>&)
 
-.. doxygenfunction:: pni::operator!=(const array_view<ATYPE>&, const array_view<ATYPE>&)
+.. doxygenfunction:: pni::operator!=(const array_view<ArrayT>&, const array_view<ArrayT>&)
 
-.. doxygenfunction:: pni::operator>>(std::istream&, array_view<ATYPE>&)
+.. doxygenfunction:: pni::operator>>(std::istream&, array_view<ArrayT>&)
 
-.. doxygenfunction:: pni::operator<<(std::ostream&, const array_view<ATYPE>&)
+.. doxygenfunction:: pni::operator<<(std::ostream&, const array_view<ArrayT>&)
 
 
 :cpp:class:`scalar`
@@ -48,13 +48,13 @@ Operators
 Operators
 ---------
 
-.. doxygenfunction:: pni::operator==(const scalar<T>&, const scalar<T>&)
+.. doxygenfunction:: pni::operator==(const scalar<ElementT>&, const scalar<ElementT>&)
 
-.. doxygenfunction:: pni::operator!=(const scalar<T>&, const scalar<T>&)
+.. doxygenfunction:: pni::operator!=(const scalar<ElementT>&, const scalar<ElementT>&)
 
-.. doxygenfunction:: pni::operator<<(std::ostream&, const scalar<T>&)
+.. doxygenfunction:: pni::operator<<(std::ostream&, const scalar<ElementT>&)
 
-.. doxygenfunction:: pni::operator>>(std::istream&, scalar<T>&)
+.. doxygenfunction:: pni::operator>>(std::istream&, scalar<ElementT>&)
    
 :cpp:class:`slice`
 ==================

@@ -27,69 +27,69 @@
 #include <cmath>
 
 template<
-         typename T,
+         typename GeneralT,
          bool is_signed = true
         > struct add_ranges
 {
-    T rhs_min() const { return pni::type_info<T>::min()/T(2); }
-    T rhs_max() const { return pni::type_info<T>::max()/T(2); }
+    GeneralT rhs_min() const { return pni::type_info<GeneralT>::min()/GeneralT(2); }
+    GeneralT rhs_max() const { return pni::type_info<GeneralT>::max()/GeneralT(2); }
 
-    T lhs_min() const { return rhs_min(); }
-    T lhs_max() const { return rhs_max(); } 
+    GeneralT lhs_min() const { return rhs_min(); }
+    GeneralT lhs_max() const { return rhs_max(); } 
 };
 
-template<typename T> struct add_ranges<std::complex<T>,true>
+template<typename GeneralT> struct add_ranges<std::complex<GeneralT>,true>
 {
-    T rhs_min() const { return pni::type_info<T>::min()/T(2); }
-    T rhs_max() const { return pni::type_info<T>::max()/T(2); }
+    GeneralT rhs_min() const { return pni::type_info<GeneralT>::min()/GeneralT(2); }
+    GeneralT rhs_max() const { return pni::type_info<GeneralT>::max()/GeneralT(2); }
 
-    T lhs_min() const { return rhs_min(); }
-    T lhs_max() const { return rhs_max(); } 
+    GeneralT lhs_min() const { return rhs_min(); }
+    GeneralT lhs_max() const { return rhs_max(); } 
 };
 
-template<typename T> struct mult_ranges
+template<typename GeneralT> struct mult_ranges
 {
-    T rhs_min() const 
+    GeneralT rhs_min() const 
     { 
         using namespace boost::math;
-        T min = pni::type_info<T>::min();
+        GeneralT min = pni::type_info<GeneralT>::min();
 
-        return sign(min)*T(std::sqrt(sign(min)*min)); 
+        return sign(min)*GeneralT(std::sqrt(sign(min)*min)); 
     }
-    T rhs_max() const { return T(std::sqrt(pni::type_info<T>::max())); }
+    GeneralT rhs_max() const { return GeneralT(std::sqrt(pni::type_info<GeneralT>::max())); }
 
-    T lhs_min() const { return rhs_min(); }
-    T lhs_max() const { return rhs_max(); } 
+    GeneralT lhs_min() const { return rhs_min(); }
+    GeneralT lhs_max() const { return rhs_max(); } 
 };
 
-template<typename T> struct mult_ranges<std::complex<T>>
+template<typename GeneralT> struct mult_ranges<std::complex<GeneralT>>
 {
-    mult_ranges<T> base_range;
+    mult_ranges<GeneralT> base_range;
 
-    T rhs_min() const { return T(0.5)*base_range.rhs_min(); }
-    T rhs_max() const { return T(0.5)*base_range.rhs_max(); }
+    GeneralT rhs_min() const { return GeneralT(0.5)*base_range.rhs_min(); }
+    GeneralT rhs_max() const { return GeneralT(0.5)*base_range.rhs_max(); }
 
-    T lhs_min() const { return T(0.5)*base_range.lhs_min(); }
-    T lhs_max() const { return T(0.5)*base_range.lhs_max(); } 
+    GeneralT lhs_min() const { return GeneralT(0.5)*base_range.lhs_min(); }
+    GeneralT lhs_max() const { return GeneralT(0.5)*base_range.lhs_max(); } 
 };
 
-template<typename T> struct div_ranges
+template<typename GeneralT> struct div_ranges
 {
-    T rhs_min() const { return T(1); }
-    T rhs_max() const { return pni::type_info<T>::max()/T(2); }
+    GeneralT rhs_min() const { return GeneralT(1); }
+    GeneralT rhs_max() const { return pni::type_info<GeneralT>::max()/GeneralT(2); }
 
-    T lhs_min() const { return pni::type_info<T>::min()/T(2); }
-    T lhs_max() const { return pni::type_info<T>::max()/T(2); } 
+    GeneralT lhs_min() const { return pni::type_info<GeneralT>::min()/GeneralT(2); }
+    GeneralT lhs_max() const { return pni::type_info<GeneralT>::max()/GeneralT(2); } 
 };
 
-template<typename T> struct div_ranges<std::complex<T>>
+template<typename GeneralT> struct div_ranges<std::complex<GeneralT>>
 {
-    div_ranges<T> base_range;
+    div_ranges<GeneralT> base_range;
     
-    T rhs_min() const { return base_range.rhs_min(); }
-    T rhs_max() const { return base_range.rhs_max(); }
+    GeneralT rhs_min() const { return base_range.rhs_min(); }
+    GeneralT rhs_max() const { return base_range.rhs_max(); }
 
-    T lhs_min() const { return base_range.lhs_min(); }
-    T lhs_max() const { return base_range.lhs_max(); } 
+    GeneralT lhs_min() const { return base_range.lhs_min(); }
+    GeneralT lhs_max() const { return base_range.lhs_max(); } 
 };
 

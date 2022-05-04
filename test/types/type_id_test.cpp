@@ -48,9 +48,9 @@ typedef boost::mpl::list<uint8,int8,
                          string,bool_t,hdf5::datatype::EBool> scalar_types;
 
 
-template<typename T> using sarray = static_array<T,1>;
-template<typename T> using darray = dynamic_array<T>;
-template<typename T> using farray = fixed_dim_array<T,2>;
+template<typename ElementT> using sarray = static_array<ElementT,1>;
+template<typename ElementT> using darray = dynamic_array<ElementT>;
+template<typename ElementT> using farray = fixed_dim_array<ElementT,2>;
 
 typedef boost::mpl::list<sarray<uint8>,sarray<int8>,
                          sarray<uint16>,sarray<int16>,
@@ -91,39 +91,39 @@ typedef boost::mpl::joint_view<array_types_1,darray_types> array_types;
 
 BOOST_AUTO_TEST_SUITE(type_id_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(type_id_scalar_test,T,scalar_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(type_id_scalar_test,ElementT,scalar_types)
     {
-        type_id_t tid = type_id_map<T>::type_id;
+        type_id_t tid = type_id_map<ElementT>::type_id;
 
-        T instance;
+        ElementT instance;
         BOOST_CHECK_EQUAL(type_id(instance),tid);
-        T &reference = instance;
+        ElementT &reference = instance;
         BOOST_CHECK_EQUAL(type_id(reference),tid);
-        T *pointer = &instance;
+        ElementT *pointer = &instance;
         BOOST_CHECK_EQUAL(type_id(pointer),tid);
 
-        const T &const_reference = instance;
+        const ElementT &const_reference = instance;
         BOOST_CHECK_EQUAL(type_id(const_reference),tid);
-        const T *const_pointer = &instance;
+        const ElementT *const_pointer = &instance;
         BOOST_CHECK_EQUAL(type_id(const_pointer),tid);
     }
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(type_id_container_test,T,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(type_id_container_test,ElementT,array_types)
     {
-        type_id_t tid = type_id_map<typename T::value_type>::type_id;
-        T instance;
+        type_id_t tid = type_id_map<typename ElementT::value_type>::type_id;
+        ElementT instance;
         BOOST_CHECK_EQUAL(type_id(instance),tid);
 
         //check references
-        T &reference = instance;
+        ElementT &reference = instance;
         BOOST_CHECK_EQUAL(type_id(reference),tid);
-        const T &const_reference = instance;
+        const ElementT &const_reference = instance;
         BOOST_CHECK_EQUAL(type_id(const_reference),tid);
 
         //check pointers
-        T *pointer = &instance;
+        ElementT *pointer = &instance;
         BOOST_CHECK_EQUAL(type_id(pointer),tid);
-        const T *const_pointer = &instance;
+        const ElementT *const_pointer = &instance;
         BOOST_CHECK_EQUAL(type_id(const_pointer),tid);
     }
 

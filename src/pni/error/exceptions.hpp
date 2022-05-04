@@ -65,8 +65,8 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
 */
 //! Please note that the MUST NOT BE a semicolon at the end of this macro.
 //!
-#define EXCEPTION_FORWARD(ETYPE)\
-    catch(ETYPE &error)\
+#define EXCEPTION_FORWARD(ExceptionT)\
+    catch(ExceptionT &error)\
     {\
         error.append(EXCEPTION_RECORD);\
         throw error;\

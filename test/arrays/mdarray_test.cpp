@@ -37,9 +37,9 @@
 
 using namespace pni;
 
-template<typename AT> struct test_mdarray_fixture
+template<typename TestArrayT> struct test_mdarray_fixture
 {
-    typedef AT array_type;
+    typedef TestArrayT array_type;
     typedef typename array_type::value_type value_type;
     typedef typename array_type::storage_type storage_type;
     typedef typename array_type::map_type map_type;
@@ -68,31 +68,31 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
 #endif
                                     > array_types;
         
-    template<typename CTYPE,typename...ITYPES>
-    static void create_index(CTYPE &index,ITYPES ...indexes)
+    template<typename ContainerT,typename...IndicesT>
+    static void create_index(ContainerT &index,IndicesT ...indexes)
     {
-        index = CTYPE{indexes...};
+        index = ContainerT{indexes...};
     }
 
-    template<typename T,size_t N,typename ...ITYPES>
-    static void create_index(std::array<T,N> &c,ITYPES ...indexes)
+    template<typename ElementT,size_t TDimN,typename ...IndicesT>
+    static void create_index(std::array<ElementT,TDimN> &c,IndicesT ...indexes)
     {
-        c = std::array<T,N>{{indexes...}};
+        c = std::array<ElementT,TDimN>{{indexes...}};
     }
 
     template<
-             typename ITYPE,
-             typename ATYPE
+             typename IndexT,
+             typename ArrayT
             >
     void test_multiindex_access_with_container()
     {
-        typedef test_mdarray_fixture<ATYPE> fixture_type;
+        typedef test_mdarray_fixture<ArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
 
-        auto a = ATYPE::create(fixture.shape);
-        ITYPE index;
+        auto a = ArrayT::create(fixture.shape);
+        IndexT index;
             
         for(size_t i=0;i<fixture.shape[0];i++)
             for(size_t j=0;j<fixture.shape[1];j++)
@@ -108,9 +108,9 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
 
     //========================================================================
     // Create a mdarray instance from a view
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_view_construction,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_view_construction,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type; 
+        typedef test_mdarray_fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
         typedef dynamic_array<value_type> darray_type;
 
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
         std::generate(a.begin(),a.end(),fixture.generator);
 
         auto view = a(slice(0,2),slice(0,3),slice(0,5));
-        AT target(view);
+        TestArrayT target(view);
         auto view_shape = view.template shape<shape_t>();
         auto target_shape = target.template shape<shape_t>();
     
@@ -142,28 +142,28 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_inquery,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_inquery,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         BOOST_CHECK_EQUAL(a.size(),30u);
         BOOST_CHECK_EQUAL(a.rank(),3u);
-        BOOST_CHECK(AT::type_id == type_id_map<value_type>::type_id);
+        BOOST_CHECK(TestArrayT::type_id == type_id_map<value_type>::type_id);
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_operator,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_operator,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
-        const AT &ca = a;
+        auto a = TestArrayT::create(fixture.shape);
+        const TestArrayT &ca = a;
         for(size_t index=0;index<a.size();++index)
         {
             value_type v = fixture.generator();
@@ -174,13 +174,13 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_pointer,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_pointer,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         
         fixture_type fixture; 
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         std::generate(a.begin(),a.end(),fixture.generator);
         auto ptr = a.data();
 
@@ -189,15 +189,15 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_at,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_at,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
-        const AT &ca = a;
+        auto a = TestArrayT::create(fixture.shape);
+        const TestArrayT &ca = a;
         for(size_t index=0;index<a.size();++index)
         {
             value_type v = fixture.generator();
@@ -210,17 +210,17 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_iter,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_iter,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
 
-        typename AT::iterator iter = a.begin();
-        typename AT::const_iterator citer = a.begin();
+        typename TestArrayT::iterator iter = a.begin();
+        typename TestArrayT::const_iterator citer = a.begin();
 
         for(;iter!=a.end();++iter,++citer)
         {
@@ -232,17 +232,17 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_riter,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_riter,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
 
-        typename AT::reverse_iterator iter = a.rbegin();
-        typename AT::const_reverse_iterator citer = a.rbegin();
+        typename TestArrayT::reverse_iterator iter = a.rbegin();
+        typename TestArrayT::const_reverse_iterator citer = a.rbegin();
 
         for(;iter!=a.rend();++iter,++citer)
         {
@@ -254,14 +254,14 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multiindex_access,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multiindex_access,TestArrayT,array_types)
     {
-        typedef test_mdarray_fixture<AT> fixture_type;
+        typedef test_mdarray_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
 
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
             
         for(size_t i=0;i<fixture.shape[0];i++)
             for(size_t j=0;j<fixture.shape[1];j++)
@@ -274,16 +274,16 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_muldiindex_access_container,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_muldiindex_access_container,TestArrayT,array_types)
     {
 
-        test_multiindex_access_with_container<std::vector<size_t>,AT>();
-        test_multiindex_access_with_container<std::array<size_t,3>,AT>();
-        test_multiindex_access_with_container<std::list<size_t>,AT>();
+        test_multiindex_access_with_container<std::vector<size_t>,TestArrayT>();
+        test_multiindex_access_with_container<std::array<size_t,3>,TestArrayT>();
+        test_multiindex_access_with_container<std::list<size_t>,TestArrayT>();
 
-        test_multiindex_access_with_container<std::vector<uint64>,AT>();
-        test_multiindex_access_with_container<std::array<uint64,3>,AT>();
-        test_multiindex_access_with_container<std::list<uint64>,AT>();
+        test_multiindex_access_with_container<std::vector<uint64>,TestArrayT>();
+        test_multiindex_access_with_container<std::array<uint64,3>,TestArrayT>();
+        test_multiindex_access_with_container<std::list<uint64>,TestArrayT>();
     }
 
 BOOST_AUTO_TEST_SUITE_END()

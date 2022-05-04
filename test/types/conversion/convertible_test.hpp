@@ -54,72 +54,72 @@ class convertible_test : public CppUnit::TestFixture
         CPPUNIT_TEST_SUITE_END();
 
         //--------------------------------------------------------------------
-        template<typename T> void always_fails()
+        template<typename GeneralT> void always_fails()
         {
-            CPPUNIT_ASSERT(!(convertible<T,bool_t>::value));
-            CPPUNIT_ASSERT(!(convertible<T,hdf5::datatype::EBool>::value));
-            CPPUNIT_ASSERT(!(convertible<T,binary>::value));
-            CPPUNIT_ASSERT(!(convertible<T,string>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,bool_t>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,hdf5::datatype::EBool>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,binary>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,string>::value));
         }
 
         //--------------------------------------------------------------------
-        template<typename T> void uint_always_fails()
+        template<typename GeneralT> void uint_always_fails()
         {
-            CPPUNIT_ASSERT(!(convertible<T,uint8>::value));
-            CPPUNIT_ASSERT(!(convertible<T,uint16>::value));
-            CPPUNIT_ASSERT(!(convertible<T,uint32>::value));
-            CPPUNIT_ASSERT(!(convertible<T,uint64>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,uint8>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,uint16>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,uint32>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,uint64>::value));
         }
 
         //--------------------------------------------------------------------
-        template<typename T> void int_always_fails()
+        template<typename GeneralT> void int_always_fails()
         {
-            CPPUNIT_ASSERT(!(convertible<T,int8>::value));
-            CPPUNIT_ASSERT(!(convertible<T,int16>::value));
-            CPPUNIT_ASSERT(!(convertible<T,int32>::value));
-            CPPUNIT_ASSERT(!(convertible<T,int64>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,int8>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,int16>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,int32>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,int64>::value));
         }
 
         //--------------------------------------------------------------------
-        template<typename T> void float_always_fails()
+        template<typename GeneralT> void float_always_fails()
         {
-            CPPUNIT_ASSERT(!(convertible<T,float32>::value));
-            CPPUNIT_ASSERT(!(convertible<T,float64>::value));
-            CPPUNIT_ASSERT(!(convertible<T,float128>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,float32>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,float64>::value));
+            CPPUNIT_ASSERT(!(convertible<GeneralT,float128>::value));
         }
         
         //--------------------------------------------------------------------
-        template<typename T> void float_always_pass()
+        template<typename GeneralT> void float_always_pass()
         {
-            CPPUNIT_ASSERT((convertible<T,float32>::value));
-            CPPUNIT_ASSERT((convertible<T,float64>::value));
-            CPPUNIT_ASSERT((convertible<T,float128>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,float32>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,float64>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,float128>::value));
         }
 
         //--------------------------------------------------------------------
-        template<typename T> void complex_always_pass()
+        template<typename GeneralT> void complex_always_pass()
         {
-            CPPUNIT_ASSERT((convertible<T,complex32>::value));
-            CPPUNIT_ASSERT((convertible<T,complex64>::value));
-            CPPUNIT_ASSERT((convertible<T,complex128>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,complex32>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,complex64>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,complex128>::value));
         }
         
         //--------------------------------------------------------------------
-        template<typename T> void uint_always_pass()
+        template<typename GeneralT> void uint_always_pass()
         {
-            CPPUNIT_ASSERT((convertible<T,uint8>::value));
-            CPPUNIT_ASSERT((convertible<T,uint16>::value));
-            CPPUNIT_ASSERT((convertible<T,uint32>::value));
-            CPPUNIT_ASSERT((convertible<T,uint64>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,uint8>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,uint16>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,uint32>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,uint64>::value));
         }
 
         //--------------------------------------------------------------------
-        template<typename T> void int_always_pass()
+        template<typename GeneralT> void int_always_pass()
         {
-            CPPUNIT_ASSERT((convertible<T,int8>::value));
-            CPPUNIT_ASSERT((convertible<T,int16>::value));
-            CPPUNIT_ASSERT((convertible<T,int32>::value));
-            CPPUNIT_ASSERT((convertible<T,int64>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,int8>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,int16>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,int32>::value));
+            CPPUNIT_ASSERT((convertible<GeneralT,int64>::value));
         }
     public:
         void setUp();

@@ -36,8 +36,8 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
 {
     using namespace pni;
 
-    //typedef GTYPE group_type;
-    //typedef typename GTYPE::value_type object_type;
+    //typedef GroupT group_type;
+    //typedef typename GroupT::value_type object_type;
 
     //fetch the name for the group
     std::string name = group_node.name();

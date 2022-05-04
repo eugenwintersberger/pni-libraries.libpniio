@@ -52,15 +52,15 @@ namespace pni{
     //! function for the first two containers. A special overload exists 
     //! for std::array.
     //!
-    //! \tparam CTYPE target container type (typically a list or vector)
+    //! \tparam ContainerT target container type (typically a list or vector)
     //! 
-    template<typename CTYPE> 
+    template<typename ContainerT> 
     struct container_utils
     {
         //! type of the container 
-        typedef CTYPE container_type;
+        typedef ContainerT container_type;
         //! the element type of the container
-        typedef typename CTYPE::value_type value_type;
+        typedef typename ContainerT::value_type value_type;
 
         //---------------------------------------------------------------------
         //!
@@ -107,16 +107,16 @@ namespace pni{
         //!  
         //! The range can be passed either as a pair of iterators or pointers.
         //! 
-        //! \tparam ITERT iterator type
+        //! \tparam IteratorT iterator type
         //! \param begin iterator to the first element
         //! \param end iterator to the last element
         //! \return instance of container_type
         //!
         template<
-                 typename ITERT,
-                 typename = enable_if<or_t<not_t<is_pod<ITERT>>,is_ptr<ITERT>>>
+                 typename IteratorT,
+                 typename = enable_if<or_t<not_t<is_pod<IteratorT>>,is_ptr<IteratorT>>>
                 >
-        static container_type create(ITERT begin,ITERT end)
+        static container_type create(IteratorT begin,IteratorT end)
         {
             container_type c(std::distance(begin,end));
             std::copy(begin,end,c.begin());
@@ -139,15 +139,15 @@ namespace pni{
         auto l = container_utils<list_type>::create(c);
         \endcode
         !*/ 
-        //! \tparam OCTYPE type of the source container
+        //! \tparam OriginalContainerT type of the source container
         //! \param o reference to the original container
         //! \return instance of container_type with data from o
         //!
         template<
-                 typename OCTYPE,
-                 typename = enable_if<not_t<is_pod<OCTYPE>>>
+                 typename OriginalContainerT,
+                 typename = enable_if<not_t<is_pod<OriginalContainerT>>>
                 >
-        static container_type create(const OCTYPE &o)
+        static container_type create(const OriginalContainerT &o)
         {
             container_type c(o.size());
             std::copy(o.begin(),o.end(),c.begin());
@@ -170,12 +170,12 @@ namespace pni{
         auto l = container_utils<list_type>::create({1,2,3,4});
         \endcode
         !*/ 
-        //! \tparam T element type of the initializer list
+        //! \tparam ElementT element type of the initializer list
         //! \param list initializer list instance
         //! \return container with data from initializer list
         //!
-        template<typename T>
-        static container_type create(const std::initializer_list<T> &list)
+        template<typename ElementT>
+        static container_type create(const std::initializer_list<ElementT> &list)
         {
             container_type c(list.size());
             std::copy(list.begin(),list.end(),c.begin());
@@ -194,19 +194,19 @@ namespace pni{
     //! construction. This specialization of the container_utils template takes 
     //! care about all the peculiarities of std::array.
     //! 
-    //! \tparam T data type for std::array
-    //! \tparam N number of elements for std::array
+    //! \tparam ElementT data type for std::array
+    //! \tparam TDimN number of elements for std::array
     //!
     template<
-             typename T,
-             size_t   N
+             typename ElementT,
+             size_t   TDimN
             > 
-    struct container_utils<std::array<T,N>>
+    struct container_utils<std::array<ElementT,TDimN>>
     {
         //! type of the container
-        typedef std::array<T,N> container_type;
+        typedef std::array<ElementT,TDimN> container_type;
         //! value type of the container
-        typedef T value_type;
+        typedef ElementT value_type;
 
         //---------------------------------------------------------------------
         //!
@@ -233,11 +233,11 @@ namespace pni{
         static container_type create(size_t n,
                                      value_type default_value=value_type())
         {
-            if(n!=N)
+            if(n!=TDimN)
             {
                 std::stringstream message;
                 message<<"Number of elements ("<<n<<") not supported by ";
-                message<<"array type which has ("<<N<<")!";
+                message<<"array type which has ("<<TDimN<<")!";
                 throw size_mismatch_error(EXCEPTION_RECORD,message.str());
             }
 
@@ -265,24 +265,24 @@ namespace pni{
         !*/
         //! \throws size_mismatch_error if the number of elements spanned by 
         //! the iterator range does not match the size of the array
-        //! \tparam ITERT iterator type
+        //! \tparam IteratorT iterator type
         //! \param begin iterator to the first element
         //! \param end iterator to the last+1 element
         //! \return initialized instance of std::array
         //!
         template<
-                 typename ITERT,
+                 typename IteratorT,
                  typename = enable_if<or_t<
-                            not_t<is_pod<ITERT>>,is_ptr<ITERT> 
+                            not_t<is_pod<IteratorT>>,is_ptr<IteratorT> 
                             >>
                 >
-        static container_type create(ITERT begin,ITERT end)
+        static container_type create(IteratorT begin,IteratorT end)
         {
-            if(N!=std::distance(begin,end))
+            if(TDimN!=std::distance(begin,end))
             {
                 std::stringstream message;
                 message<<"Iterators span ("<<std::distance(begin,end)<<")";
-                message<<" only ("<<N<<") supported by the array type!";
+                message<<" only ("<<TDimN<<") supported by the array type!";
                 throw size_mismatch_error(EXCEPTION_RECORD,message.str());
             }
 
@@ -307,21 +307,21 @@ namespace pni{
         !*/
         //! \throws size_mismatch_error if the container size does not match 
         //! the array size
-        //! \tparam OCTYPE container type 
+        //! \tparam OriginalContainerT container type 
         //! \param o reference to the original container
-        //! \return initialized instance of OCTYPE
+        //! \return initialized instance of OriginalContainerT
         //!
         template<
-                 typename OCTYPE,
-                 typename = enable_if<not_t<is_pod<OCTYPE>>>
+                 typename OriginalContainerT,
+                 typename = enable_if<not_t<is_pod<OriginalContainerT>>>
                 >
-        static container_type create(const OCTYPE &o)
+        static container_type create(const OriginalContainerT &o)
         {
-           if(o.size() != N)
+           if(o.size() != TDimN)
            {
                std::stringstream message;
                message<<"Original container has ("<<o.size()<<") elements, ";
-               message<<"array supports only ("<<N<<")!";
+               message<<"array supports only ("<<TDimN<<")!";
                throw size_mismatch_error(EXCEPTION_RECORD,message.str());
            }
 
@@ -339,7 +339,7 @@ namespace pni{
         //! 
         //! \param c reference to the original array
         //! \return new instance of the array
-        static container_type create(const std::array<T,N> &c)
+        static container_type create(const std::array<ElementT,TDimN> &c)
         {
             return c;
         }
@@ -362,18 +362,18 @@ namespace pni{
         !*/ 
         //! \throws size_mismatch_error if the size of std::array and the
         //! initializer list do not match
-        //! \tparam ET element type of the initializer list
+        //! \tparam ListElementT element type of the initializer list
         //! \param list initializer list
         //! \return initialized instance of std::array
         //!
-        template<typename ET>
-        static container_type create(const std::initializer_list<ET> &list)
+        template<typename ListElementT>
+        static container_type create(const std::initializer_list<ListElementT> &list)
         {
-            if(list.size()!=N)
+            if(list.size()!=TDimN)
             {
                 std::stringstream message;
                 message<<"Initializer list has ("<<list.size()<<") elements, ";
-                message<<"array supports only ("<<N<<")!";
+                message<<"array supports only ("<<TDimN<<")!";
                 throw size_mismatch_error(EXCEPTION_RECORD,message.str());
             }
 
@@ -389,19 +389,19 @@ namespace pni{
     //=========================================================================
    
     //-------------------------------------------------------------------------
-    template<typename STYPE>
-    bool check_size(STYPE)
+    template<typename ShapeT>
+    bool check_size(ShapeT)
     {
         return true;
     }
 
     //-------------------------------------------------------------------------
     template<
-             typename    STYPE,
-             typename    CTYPE,
-             typename ...CTYPES
+             typename    ShapeT,
+             typename    ContainerT,
+             typename ...ContainersT
             >
-    bool check_size(STYPE s,const CTYPE &c,const CTYPES& ...cs)
+    bool check_size(ShapeT s,const ContainerT &c,const ContainersT& ...cs)
     {
         return s!=c.size()?false:check_size(c.size(),cs...);
     }
@@ -430,17 +430,17 @@ namespace pni{
     \endcode
     !*/
     //!
-    //! \tparam CTYPE container type of first argument
-    //! \tparam CTYPES residual arguments types
+    //! \tparam ContainerT container type of first argument
+    //! \tparam ContainersT residual arguments types
     //! \param c first container instance
     //! \param cs residual containers
     //! \return true if all of samme size, false otherwise
     //!
     template<
-             typename    CTYPE,
-             typename ...CTYPES
+             typename    ContainerT,
+             typename ...ContainersT
             >
-    bool check_equal_size(const CTYPE &c,const CTYPES& ...cs)
+    bool check_equal_size(const ContainerT &c,const ContainersT& ...cs)
     {
         return check_size(c.size(),cs...);
     }

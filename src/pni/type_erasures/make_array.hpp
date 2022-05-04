@@ -38,18 +38,18 @@ namespace pni{
     //! at compile time via a template parameters. The underlying mdarray 
     //! specialization is dynamic_array. 
     //!
-    //! \tparam T data type of the elements
-    //! \tparam STYPE shape type
+    //! \tparam ElementT data type of the elements
+    //! \tparam ShapeT shape type
     //! \param shape number of elements along each dimension
     //! \return instance of array
     //! 
     template<
-             typename T,
-             typename STYPE
+             typename ElementT,
+             typename ShapeT
             >
-    array make_array(const STYPE &shape)
+    array make_array(const ShapeT &shape)
     {
-        typedef dynamic_array<T> array_type;
+        typedef dynamic_array<ElementT> array_type;
 
         return array(array_type::create(shape));
     }
@@ -63,13 +63,13 @@ namespace pni{
     //! by an argument and thus can be set at runtime.
     //!
     //! \throws type_error if the passed data type cannot be handled
-    //! \tparam CTYPE container type for the shape
+    //! \tparam ContainerT container type for the shape
     //! \param tid type id for the array
     //! \param shape number of elements along each dimension
     //! \return instance of array
     //! 
-    template<typename CTYPE> 
-    array make_array(type_id_t tid,const CTYPE &shape)
+    template<typename ContainerT> 
+    array make_array(type_id_t tid,const ContainerT &shape)
     {
         if(tid == type_id_t::UInt8)
             return make_array<uint8>(shape);

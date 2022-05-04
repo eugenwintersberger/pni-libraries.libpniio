@@ -35,11 +35,11 @@
 
 using namespace pni;
 
-template<typename AT> struct dynamic_array_test_fixture
+template<typename TestArrayT> struct dynamic_array_test_fixture
 {
-    typedef AT array_type;
-    typedef typename AT::map_type map_type; 
-    typedef typename AT::storage_type storage_type;
+    typedef TestArrayT array_type;
+    typedef typename TestArrayT::map_type map_type; 
+    typedef typename TestArrayT::storage_type storage_type;
     typedef typename array_type::value_type value_type;
     typedef random_generator<value_type> generator_type;
     
@@ -54,29 +54,29 @@ template<typename AT> struct dynamic_array_test_fixture
 
 BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_default_construction,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_default_construction,TestArrayT,all_dynamic_arrays)
     {
-        AT a;
+        TestArrayT a;
         BOOST_CHECK_EQUAL(a.size(),0u);
         BOOST_CHECK_EQUAL(a.rank(),0u);
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_standard_construction,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_standard_construction,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type; 
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type; 
         fixture_type fixture;
         
         auto map = map_utils<typename fixture_type::map_type>::create(fixture.shape);
         BOOST_CHECK_EQUAL(map.max_elements(),30u);
         typename fixture_type::storage_type storage(map.max_elements()); 
         BOOST_CHECK_EQUAL(storage.size(),30u);
-        AT a(map,storage);
+        TestArrayT a(map,storage);
 
         BOOST_CHECK_EQUAL(a.size(),storage.size());
         BOOST_CHECK_EQUAL(a.rank(),3u);
 
-        AT a2(std::move(map),std::move(storage));
+        TestArrayT a2(std::move(map),std::move(storage));
         BOOST_CHECK_EQUAL(a2.size(),a.size());
         BOOST_CHECK_EQUAL(a2.rank(),a.rank());
         BOOST_CHECK_EQUAL(map.rank(),0u);
@@ -84,31 +84,31 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_construction,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_construction,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type; 
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type; 
         fixture_type fixture;
 
         auto map = map_utils<typename fixture_type::map_type>::create(fixture.shape);
         typename fixture_type::storage_type storage(map.max_elements()); 
-        AT a(map,storage);
+        TestArrayT a(map,storage);
 
-        AT b(a);
+        TestArrayT b(a);
         BOOST_CHECK_EQUAL(a.size(),b.size());
         BOOST_CHECK_EQUAL(a.rank(),b.rank());
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_construction,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_construction,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type; 
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type; 
         fixture_type fixture;
 
         auto map = map_utils<typename fixture_type::map_type>::create(fixture.shape);
         typename fixture_type::storage_type storage(map.max_elements()); 
-        AT a(map,storage);
+        TestArrayT a(map,storage);
 
-        AT b(std::move(a));
+        TestArrayT b(std::move(a));
         BOOST_CHECK_EQUAL(a.size(),0u);
         BOOST_CHECK_EQUAL(a.rank(),0u);
         BOOST_CHECK_EQUAL(b.size(),storage.size());
@@ -116,9 +116,9 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_fixed_dim_construction,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_fixed_dim_construction,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type;
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
         typedef fixed_dim_array<value_type,3> farray_type;
 
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
 
         auto farray = farray_type::create(fixture.shape);
         std::generate(farray.begin(),farray.begin(),fixture.generator);
-        AT a(farray);
+        TestArrayT a(farray);
         auto s = a.template shape<shape_t>();
         BOOST_CHECK_EQUAL_COLLECTIONS(s.begin(),s.end(),fixture.shape.begin(),
                                       fixture.shape.end());
@@ -136,9 +136,9 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_static_construction,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_static_construction,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type; 
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
         typedef static_array<value_type,2,3,5> sarray_type; 
 
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
 
         auto sarray = sarray_type::create(fixture.shape);
         std::generate(sarray.begin(),sarray.end(),fixture.generator);
-        AT a(sarray);
+        TestArrayT a(sarray);
         auto s = a.template shape<shape_t>();
         BOOST_CHECK_EQUAL_COLLECTIONS(s.begin(),s.end(),fixture.shape.begin(),
                                       fixture.shape.end());
@@ -155,9 +155,9 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_assignment,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_assignment,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type;
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::map_type map_type;
         typedef typename fixture_type::storage_type storage_type; 
 
@@ -165,19 +165,19 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
 
         auto map = map_utils<map_type>::create(fixture.shape);
         storage_type storage(map.max_elements());
-        AT a(std::move(map),std::move(storage));
+        TestArrayT a(std::move(map),std::move(storage));
         std::generate(a.begin(),a.end(),fixture.generator);
 
-        AT b = a;
+        TestArrayT b = a;
         BOOST_CHECK_EQUAL(b.size(),a.size());
         BOOST_CHECK_EQUAL(b.rank(),a.rank());
         BOOST_CHECK_EQUAL_COLLECTIONS(a.begin(),a.end(),b.begin(),b.end());
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_assignment,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_assignment,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type;
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::map_type map_type;
         typedef typename fixture_type::storage_type storage_type; 
 
@@ -186,9 +186,9 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
         auto map = map_utils<map_type>::create(fixture.shape);
         storage_type storage(map.max_elements());
         std::generate(storage.begin(),storage.end(),fixture.generator);
-        AT a(map,storage);
+        TestArrayT a(map,storage);
 
-        AT b = std::move(a);
+        TestArrayT b = std::move(a);
         BOOST_CHECK_EQUAL(b.size(),storage.size());
         BOOST_CHECK_EQUAL(b.rank(),map.rank());
         BOOST_CHECK_EQUAL_COLLECTIONS(b.begin(),b.end(),
@@ -199,9 +199,9 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assign_from_fixed_dim,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assign_from_fixed_dim,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type;
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type;
         typedef typename fixture_type::value_type value_type;
         typedef fixed_dim_array<value_type,3> farray_type;
 
@@ -209,16 +209,16 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
 
         auto farray = farray_type::create(fixture.shape);
         std::generate(farray.begin(),farray.begin(),fixture.generator);
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         a = farray;
         BOOST_CHECK_EQUAL_COLLECTIONS(a.begin(),a.end(),
                                       farray.begin(),farray.end());
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assign_from_static,AT,all_dynamic_arrays)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assign_from_static,TestArrayT,all_dynamic_arrays)
     {
-        typedef dynamic_array_test_fixture<AT> fixture_type; 
+        typedef dynamic_array_test_fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
         typedef static_array<value_type,2,3,5> sarray_type; 
 
@@ -226,7 +226,7 @@ BOOST_AUTO_TEST_SUITE(dynamic_mdarray_test)
 
         auto sarray = sarray_type::create(fixture.shape);
         std::generate(sarray.begin(),sarray.end(),fixture.generator);
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         a = sarray;
         BOOST_CHECK_EQUAL_COLLECTIONS(a.begin(),a.end(),
                                       sarray.begin(),sarray.end());

@@ -35,11 +35,11 @@
 
 using namespace pni;
 
-template<typename T> struct scalar_fixture
+template<typename GeneralT> struct scalar_fixture
 {
-    typedef random_generator<T> generator_type;
+    typedef random_generator<GeneralT> generator_type;
     generator_type generator;
-    T v;
+    GeneralT v;
 
     scalar_fixture():
         generator(),
@@ -48,68 +48,68 @@ template<typename T> struct scalar_fixture
 };
 
 #define SETUP_SCALAR_FIXTURE() \
-    typedef scalar_fixture<T> fixture_type; \
+    typedef scalar_fixture<GeneralT> fixture_type; \
     fixture_type fixture
 
 BOOST_AUTO_TEST_SUITE(scalar_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction,T,numeric_types)   
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction,GeneralT,numeric_types)   
     {
         SETUP_SCALAR_FIXTURE();
 
-        scalar<T> s;
+        scalar<GeneralT> s;
         BOOST_CHECK_EQUAL(s.rank(),0u);
         BOOST_CHECK_EQUAL(s.size(),1u);
 
         //check the default constructor
-        scalar<T> s1(fixture.v);
-        BOOST_CHECK_EQUAL(T(s1),fixture.v);
+        scalar<GeneralT> s1(fixture.v);
+        BOOST_CHECK_EQUAL(GeneralT(s1),fixture.v);
 
         //copy construction
-        scalar<T> s2 = s1;
-        BOOST_CHECK_EQUAL(T(s2),T(s1));
+        scalar<GeneralT> s2 = s1;
+        BOOST_CHECK_EQUAL(GeneralT(s2),GeneralT(s1));
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assignment,T,numeric_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assignment,GeneralT,numeric_types)
     {
         SETUP_SCALAR_FIXTURE();
 
-        scalar<T> s(fixture.v);
-        scalar<T> a;
+        scalar<GeneralT> s(fixture.v);
+        scalar<GeneralT> a;
 
         a = s;
-        BOOST_CHECK_EQUAL(T(a),T(s));
+        BOOST_CHECK_EQUAL(GeneralT(a),GeneralT(s));
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_access_unchecked,T,numeric_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_access_unchecked,GeneralT,numeric_types)
     {
         SETUP_SCALAR_FIXTURE();
 
-        scalar<T> s = fixture.v;
+        scalar<GeneralT> s = fixture.v;
         BOOST_CHECK_EQUAL(s[0],fixture.v);
         BOOST_CHECK_EQUAL(s[1],fixture.v);
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_access_checked,T,numeric_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_access_checked,GeneralT,numeric_types)
     {
         SETUP_SCALAR_FIXTURE();
 
-        scalar<T> s = fixture.v;
+        scalar<GeneralT> s = fixture.v;
         BOOST_CHECK_EQUAL(s.at(0),fixture.v);
         BOOST_CHECK_EQUAL(s.at(1),fixture.v);
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_comparison,T,numeric_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_comparison,GeneralT,numeric_types)
     {
         SETUP_SCALAR_FIXTURE();
 
-        scalar<T> a = fixture.generator();
-        scalar<T> b = a;
-        scalar<T> c(fixture.generator());
+        scalar<GeneralT> a = fixture.generator();
+        scalar<GeneralT> b = a;
+        scalar<GeneralT> c(fixture.generator());
 
         BOOST_CHECK(a==b);
         BOOST_CHECK(a==a);

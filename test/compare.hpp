@@ -47,20 +47,20 @@ except for floating point values.
 
 //----------------------------------------------------------------------------
 template< 
-         typename TA,
-         typename TB,
+         typename OperandAT,
+         typename OperandBT,
          bool is_float
         >
 struct comperator;
 
 //----------------------------------------------------------------------------
 template<
-         typename TA,
-         typename TB
+         typename OperandAT,
+         typename OperandBT
         >
-struct comperator<TA,TB,false>
+struct comperator<OperandAT,OperandBT,false>
 {
-    static void compare(const TA &a,const TB &b)
+    static void compare(const OperandAT &a,const OperandBT &b)
     {
         CPPUNIT_ASSERT(a==b);
     }
@@ -68,12 +68,12 @@ struct comperator<TA,TB,false>
 
 //----------------------------------------------------------------------------
 template<
-         typename TA,
-         typename TB
+         typename OperandAT,
+         typename OperandBT
         >
-struct comperator<TA,TB,true >
+struct comperator<OperandAT,OperandBT,true >
 {
-    static void compare(const TA &a,const TB &b)
+    static void compare(const OperandAT &a,const OperandBT &b)
     {
         CPPUNIT_ASSERT_DOUBLES_EQUAL(a,b,1.e-12);
     }
@@ -86,26 +86,26 @@ struct comperator<TA,TB,true >
 //! This template function compares two values which are integers and strings. 
 //! 
 template<
-         typename TA,
-         typename TB
+         typename OperandAT,
+         typename OperandBT
         > 
-void compare(const TA &a,const TB &b)
+void compare(const OperandAT &a,const OperandBT &b)
 {
-    static const bool is_float = std::is_floating_point<TA>::value || 
-                                 std::is_floating_point<TB>::value;
-    comperator<TA,TB,is_float>::compare(a,b);
+    static const bool is_float = std::is_floating_point<OperandAT>::value || 
+                                 std::is_floating_point<OperandBT>::value;
+    comperator<OperandAT,OperandBT,is_float>::compare(a,b);
 }
 
 
 template<
-         typename TA,
-         typename TB
+         typename OperandAT,
+         typename OperandBT
         >
-void compare(TA &&a,TB &&b)
+void compare(OperandAT &&a,OperandBT &&b)
 {
-    static const bool is_float = std::is_floating_point<TA>::value || 
-                                 std::is_floating_point<TB>::value;
-    comperator<TA,TB,is_float>::compare(a,b);
+    static const bool is_float = std::is_floating_point<OperandAT>::value || 
+                                 std::is_floating_point<OperandBT>::value;
+    comperator<OperandAT,OperandBT,is_float>::compare(a,b);
 }
 
 //---------------------------------------------------------------------------
@@ -114,8 +114,8 @@ void compare(TA &&a,TB &&b)
 //! 
 //! Function template comparing two complex numbers
 //!
-template<typename T>
-void compare(const std::complex<T> &a,const std::complex<T> &b)
+template<typename GeneralT>
+void compare(const std::complex<GeneralT> &a,const std::complex<GeneralT> &b)
 {
     compare(a.real(),b.real());
     compare(a.imag(),b.imag());
@@ -125,18 +125,18 @@ void compare(const std::complex<T> &a,const std::complex<T> &b)
 //!
 //! \brief comparison of value_ref instances
 //!
-template<typename T> void compare(const value_ref &a, const T &b)
+template<typename GeneralT> void compare(const value_ref &a, const GeneralT &b)
 {
-    type_id_t t_id = type_id_map<T>::type_id;
+    type_id_t t_id = type_id_map<GeneralT>::type_id;
     type_id_t r_id = a.type_id();
 
-    if(t_id == r_id) compare(a.as<T>(),b);
+    if(t_id == r_id) compare(a.as<GeneralT>(),b);
     
 }
 
 
 //----------------------------------------------------------------------------
-template<typename T> void compare(const T &a,const value_ref &b)
+template<typename GeneralT> void compare(const GeneralT &a,const value_ref &b)
 {
     compare(b,a);
 }

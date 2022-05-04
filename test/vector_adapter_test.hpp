@@ -35,20 +35,20 @@
 
 using namespace pni;
 
-template<typename T> class vector_adapter_test : public CppUnit::TestFixture
+template<typename ElementT> class vector_adapter_test : public CppUnit::TestFixture
 {
     private:
-        CPPUNIT_TEST_SUITE(vector_adapter_test<T>);
+        CPPUNIT_TEST_SUITE(vector_adapter_test<ElementT>);
         CPPUNIT_TEST(test_create);
         CPPUNIT_TEST(test_assign);
         CPPUNIT_TEST(test_copy_data);
         CPPUNIT_TEST(test_reverse_iterator);
         CPPUNIT_TEST_SUITE_END();
     
-        typedef vector_adapter<T> adapter_type;
-        typedef std::vector<T>    vector_type;
-        typedef random_generator<T> random_type;
-        T *test_data;
+        typedef vector_adapter<ElementT> adapter_type;
+        typedef std::vector<ElementT>    vector_type;
+        typedef random_generator<ElementT> random_type;
+        ElementT *test_data;
         size_t n = 1000;
     public:
         void setUp();
@@ -61,19 +61,19 @@ template<typename T> class vector_adapter_test : public CppUnit::TestFixture
 };
 
 //-----------------------------------------------------------------------------
-template<typename T> void vector_adapter_test<T>::setUp()
+template<typename ElementT> void vector_adapter_test<ElementT>::setUp()
 {
-    test_data = new T[n];
+    test_data = new ElementT[n];
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void vector_adapter_test<T>::tearDown()
+template<typename ElementT> void vector_adapter_test<ElementT>::tearDown()
 {
     if(test_data) delete [] test_data;
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void vector_adapter_test<T>::test_create()
+template<typename ElementT> void vector_adapter_test<ElementT>::test_create()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
     //testing the default constructor
@@ -101,7 +101,7 @@ template<typename T> void vector_adapter_test<T>::test_create()
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void vector_adapter_test<T>::test_assign()
+template<typename ElementT> void vector_adapter_test<ElementT>::test_assign()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
@@ -128,7 +128,7 @@ template<typename T> void vector_adapter_test<T>::test_assign()
 }
 
 //------------------------------------------------------------------------------
-template<typename T> void vector_adapter_test<T>::test_copy_data()
+template<typename ElementT> void vector_adapter_test<ElementT>::test_copy_data()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 
@@ -147,7 +147,7 @@ template<typename T> void vector_adapter_test<T>::test_copy_data()
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> void vector_adapter_test<T>::test_reverse_iterator()
+template<typename ElementT> void vector_adapter_test<ElementT>::test_reverse_iterator()
 {
     std::cout<<BOOST_CURRENT_FUNCTION<<std::endl;
 

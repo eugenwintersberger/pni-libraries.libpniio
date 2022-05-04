@@ -28,32 +28,32 @@
 
 namespace pni{
     
-    template<typename ATYPE> class array_view;
+    template<typename ArrayT> class array_view;
 
     //! 
     //! \ingroup mdim_array_internal_classes
     //! \brief Division expression template
     //! 
-    //! \tparam OP1T type of the left operand
-    //! \tparam OP2T type of the right operand
+    //! \tparam Operand1T type of the left operand
+    //! \tparam Operand2T type of the right operand
     //!
     template<
-             typename OP1T,
-             typename OP2T
+             typename Operand1T,
+             typename Operand2T
             > 
     class div_op
     {
         private:
             //! reference to the left operand
-            typename op_trait<OP1T>::ref_type _op1;
+            typename op_trait<Operand1T>::ref_type _op1;
             //! reference to the right operand
-            typename op_trait<OP2T>::ref_type _op2;
+            typename op_trait<Operand2T>::ref_type _op2;
         public:
             //--------------------public types---------------------------------
             //! result type of the operation
-            typedef typename OP1T::value_type value_type;
+            typedef typename Operand1T::value_type value_type;
             //! type of the expression template
-            typedef div_op<OP1T,OP2T> array_type;
+            typedef div_op<Operand1T,Operand2T> array_type;
             //! storage type
             typedef void storage_type;
             //! non-const iterator - just for interface
@@ -67,9 +67,9 @@ namespace pni{
             //! view type
             typedef array_view<array_type> view_type;
             //! index map type
-            typedef typename array_trait<OP1T,OP2T>::map_type map_type;
+            typedef typename array_trait<Operand1T,Operand2T>::map_type map_type;
             //! inplace arithmetic type
-            typedef typename array_trait<OP1T,OP2T>::inplace_arithmetic
+            typedef typename array_trait<Operand1T,Operand2T>::inplace_arithmetic
                 inplace_arithmetic;
 
             //===================constructors==================================
@@ -79,7 +79,7 @@ namespace pni{
             //! \param o1 left operand
             //! \param o2 right operand
             //!
-            div_op(const OP1T &o1,const OP2T &o2):
+            div_op(const Operand1T &o1,const Operand2T &o2):
                 _op1(o1),
                 _op2(o2)
             {}

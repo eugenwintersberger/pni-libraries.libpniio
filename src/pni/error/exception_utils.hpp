@@ -44,12 +44,12 @@ namespace pni{
     //! Print the content of an interable as a vector. The output is  
     //! embraced by () and each element is separated by a comma.  
     //! 
-    //! \tparam VTYPE container type
+    //! \tparam VectorT container type
     //! \param o output stream 
     //! \param v iterable instance
     //!
-    template<typename VTYPE>
-    void print_vector(std::ostream &o,const VTYPE &v)
+    template<typename VectorT>
+    void print_vector(std::ostream &o,const VectorT &v)
     {
         o<<"( ";
         for(auto x: v) o<<x<<" ";
@@ -66,17 +66,17 @@ namespace pni{
     //! Both container types have to provide a size() method returning the 
     //! number of elements the container can hold. 
     //! 
-    //! \tparam A first container type
-    //! \tparam B second container type
-    //! \param a reference to an instance of A
-    //! \param b reference to an instance of B
+    //! \tparam ContainerAT first container type
+    //! \tparam ContainerBT second container type
+    //! \param a reference to an instance of ContainerAT
+    //! \param b reference to an instance of ContainerBT
     //! \return true if a and b have same size, false otherwise
     //! 
     template<
-             typename A,
-             typename B
+             typename ContainerAT,
+             typename ContainerBT
             >
-    bool check_equal_size(const A &a,const B &b) 
+    bool check_equal_size(const ContainerAT &a,const ContainerBT &b) 
     {
         return a.size() == b.size();
     }
@@ -92,25 +92,25 @@ namespace pni{
     //! If the sizes do not match an exception is thrown.
     //! 
     //! \throws size_mismatch_error if sizes do not match
-    //! \tparam A first container type
-    //! \tparam B second container type
-    //! \param a instance of container type A
-    //! \param b instance of container type B
+    //! \tparam ContainerAT first container type
+    //! \tparam ContainerBT second container type
+    //! \param a instance of container type ContainerAT
+    //! \param b instance of container type ContainerBT
     //! \param i exception_record for the location where to perform the check
     //! performed
     //!
     template<
-             typename A,
-             typename B
+             typename ContainerAT,
+             typename ContainerBT
             > 
-    void check_equal_size(const A &a,const B &b,const exception_record &i)
+    void check_equal_size(const ContainerAT &a,const ContainerBT &b,const exception_record &i)
     {
         if(!check_equal_size(a,b))
         {
             std::stringstream ss;
-            ss<<"Size of "<<boost::units::detail::demangle(typeid(A).name())<<" (";
+            ss<<"Size of "<<boost::units::detail::demangle(typeid(ContainerAT).name())<<" (";
             ss<<a.size()<<") ";
-            ss<<"does not match size of "<<boost::units::detail::demangle(typeid(B).name())<<" (";
+            ss<<"does not match size of "<<boost::units::detail::demangle(typeid(ContainerBT).name())<<" (";
             ss<<b.size()<<")!";
             throw size_mismatch_error(i,string(ss.str()));
         }
@@ -156,17 +156,17 @@ namespace pni{
     //! Check if all index values stored in a container do not exceed their
     //! dimensions limits. 
     //!
-    //! \tparam ITYPE index container type
-    //! \tparam STYPE shape container type
+    //! \tparam IndexT index container type
+    //! \tparam ShapeT shape container type
     //! \param index reference to an index container
     //! \param shape reference to a shape container
     //! \return true if all indexes are in their bounds
     //!
     template<
-             typename ITYPE,
-             typename STYPE
+             typename IndexT,
+             typename ShapeT
             >
-    bool check_indexes(const ITYPE &index,const STYPE &shape)
+    bool check_indexes(const IndexT &index,const ShapeT &shape)
     {
         if(!check_equal_size(index,shape)) return false;
 
@@ -192,17 +192,17 @@ namespace pni{
     //! elements in its dimension
     //! \throws shape_mismatch_error if the number of indexes does not match 
     //! the number of dimensions (elements in the shape)
-    //! \tparam ITYPE index container type
-    //! \tparam STYPE shape container type
+    //! \tparam IndexT index container type
+    //! \tparam ShapeT shape container type
     //! \param index container with index data
     //! \param shape container with shape data
     //! \param record the exception record of the calling function
     //!
     template<
-             typename ITYPE,
-             typename STYPE
+             typename IndexT,
+             typename ShapeT
             >
-    void check_indexes(const ITYPE &index,const STYPE &shape,
+    void check_indexes(const IndexT &index,const ShapeT &shape,
                        const exception_record &record)
     {
         //check size - if it does not match throw an exception
@@ -237,17 +237,17 @@ namespace pni{
     //! Return true of the two array like objects have an equal number of 
     //! dimensions. In any other case return false.
     //! 
-    //! \tparam A first array type
-    //! \tparam B second array type
-    //! \param a reference to an instance of A
-    //! \param b reference to an instance of B
+    //! \tparam ContainerAT first array type
+    //! \tparam ContainerBT second array type
+    //! \param a reference to an instance of ContainerAT
+    //! \param b reference to an instance of ContainerBT
     //! \return true if a and b have equal rank, false otherwise
     //! 
     template<
-             typename A,
-             typename B
+             typename ContainerAT,
+             typename ContainerBT
             >
-    bool check_equal_rank(const A &a,const B &b)
+    bool check_equal_rank(const ContainerAT &a,const ContainerBT &b)
     {
         return a.rank() == b.rank();
     }
@@ -260,17 +260,17 @@ namespace pni{
     //! Throwing version of check_equal_rank. 
     //!
     //! \throws shape_mismatch_error if a and b have different rank
-    //! \tparam A first array type
-    //! \tparam B second array type
-    //! \param a reference to an instance of A
-    //! \param b reference to an instance of B
+    //! \tparam ContainerAT first array type
+    //! \tparam ContainerBT second array type
+    //! \param a reference to an instance of ContainerAT
+    //! \param b reference to an instance of ContainerBT
     //! \param i exception record of the calling function
     //!
     template<
-             typename A,
-             typename B
+             typename ContainerAT,
+             typename ContainerBT
             >
-    void check_equal_rank(const A &a,const B &b,const exception_record &i)
+    void check_equal_rank(const ContainerAT &a,const ContainerBT &b,const exception_record &i)
     {
         if(!check_equal_rank(a,b))
         {
@@ -290,10 +290,10 @@ namespace pni{
     //! 
     //! 
     template<
-             typename A,
-             typename B
+             typename ContainerAT,
+             typename ContainerBT
             >
-    bool check_equal_shape(const A &a,const B &b)
+    bool check_equal_shape(const ContainerAT &a,const ContainerBT &b)
     {
         //check if the sizes match
         if(!check_equal_size(a,b)) return false;
@@ -317,16 +317,16 @@ namespace pni{
     //! Checks if two Shape objects are equal and throws an exception if they 
     //! are not.
     //! 
-    //! \tparam A container type for the first shape
-    //! \tparam B container type for the second shape
+    //! \tparam ContainerAT container type for the first shape
+    //! \tparam ContainerBT container type for the second shape
     //! \throws size_mismatch_error if array sizes do not match
     //! \throws shape_mismatch_error if shapes do not match
     //! \param a first shape
     //! \param b second shape
     //! \param i exception_record for the location where to perform the check
     //!
-    template<typename A,typename B>
-    void check_equal_shape(const A &a,const B &b,const exception_record &i)
+    template<typename ContainerAT,typename ContainerBT>
+    void check_equal_shape(const ContainerAT &a,const ContainerBT &b,const exception_record &i)
     {
         check_equal_size(a,b,i);
         check_equal_rank(a,b,i);
@@ -354,13 +354,13 @@ namespace pni{
     \param o object to check
     \param i exception_record for the location where to perform the check
     */
-    template<typename OTYPE> 
-    void check_allocation_state(const OTYPE &o,const exception_record &i)
+    template<typename ObjectT> 
+    void check_allocation_state(const ObjectT &o,const exception_record &i)
     {
         if(!o.size())
         {
             std::stringstream ss;
-            ss<<"Instance of "<<boost::units::detail::demangle(typeid(OTYPE).name());
+            ss<<"Instance of "<<boost::units::detail::demangle(typeid(ObjectT).name());
             ss<<" not allocated!";
             throw memory_not_allocated_error(i,ss.str());
         }
@@ -376,8 +376,8 @@ namespace pni{
     //! \param ptr pointer to check
     //! \param i exception_record for the location where to perform the check
     //!
-    template<typename T> 
-    void check_ptr_state(const T *ptr,const exception_record &i)
+    template<typename GeneralT> 
+    void check_ptr_state(const GeneralT *ptr,const exception_record &i)
     {
         if(!ptr)
         {

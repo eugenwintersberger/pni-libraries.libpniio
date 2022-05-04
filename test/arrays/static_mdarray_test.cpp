@@ -40,9 +40,9 @@ using namespace pni;
 #if GCC_VERSION > 40800
 
 
-template<typename AT> struct static_mdarray_test_fixture
+template<typename TestArrayT> struct static_mdarray_test_fixture
 {
-    typedef AT array_type;
+    typedef TestArrayT array_type;
     typedef typename array_type::value_type value_type;
     typedef typename array_type::map_type map_type;
 
@@ -62,37 +62,37 @@ BOOST_AUTO_TEST_SUITE(static_mdarray_test)
     
     typedef all_static_arrays<2,3,5> array_types;
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_default_constructor,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_default_constructor,TestArrayT,array_types)
     {
-        AT a;
+        TestArrayT a;
         BOOST_CHECK_EQUAL(a.size(),30u);
         BOOST_CHECK_EQUAL(a.rank(),3u);
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_constructor,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_constructor,TestArrayT,array_types)
     {
-        typedef static_mdarray_test_fixture<AT> fixture_type;
+        typedef static_mdarray_test_fixture<TestArrayT> fixture_type;
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         std::generate(a.begin(),a.end(),fixture.generator);
-        AT b = a;
+        TestArrayT b = a;
         BOOST_CHECK_EQUAL_COLLECTIONS(a.begin(),a.end(),b.begin(),b.end());
         BOOST_CHECK_EQUAL(b.size(),a.size());
         BOOST_CHECK_EQUAL(b.rank(),a.rank());
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_constructor,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_constructor,TestArrayT,array_types)
     {
-        typedef static_mdarray_test_fixture<AT> fixture_type;
+        typedef static_mdarray_test_fixture<TestArrayT> fixture_type;
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         std::generate(a.begin(),a.end(),fixture.generator);
-        AT b(a);
-        AT c(std::move(b));
+        TestArrayT b(a);
+        TestArrayT c(std::move(b));
         
         BOOST_CHECK_EQUAL_COLLECTIONS(a.begin(),a.end(),c.begin(),c.end());
         BOOST_CHECK_EQUAL(c.size(),a.size());
@@ -100,14 +100,14 @@ BOOST_AUTO_TEST_SUITE(static_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_assignment,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_assignment,TestArrayT,array_types)
     {
-        typedef static_mdarray_test_fixture<AT> fixture_type;
+        typedef static_mdarray_test_fixture<TestArrayT> fixture_type;
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         std::generate(a.begin(),a.end(),fixture.generator);
-        AT b;
+        TestArrayT b;
         
         b = a;
         BOOST_CHECK_EQUAL(b.size(),a.size());
@@ -116,15 +116,15 @@ BOOST_AUTO_TEST_SUITE(static_mdarray_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_assignment,AT,array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_assignment,TestArrayT,array_types)
     {
-        typedef static_mdarray_test_fixture<AT> fixture_type;
+        typedef static_mdarray_test_fixture<TestArrayT> fixture_type;
         fixture_type fixture;
 
-        auto a = AT::create(fixture.shape);
+        auto a = TestArrayT::create(fixture.shape);
         std::generate(a.begin(),a.end(),fixture.generator);
-        AT b(a);
-        AT c;
+        TestArrayT b(a);
+        TestArrayT c;
         
         c = std::move(b);
         BOOST_CHECK_EQUAL(c.size(),a.size());

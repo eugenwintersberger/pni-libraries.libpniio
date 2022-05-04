@@ -33,51 +33,51 @@
 using namespace pni;
 
 //----------------------------------------------------------------------------
-template<typename T,bool is_int> struct uniform_distribution_map;
+template<typename GeneralT,bool is_int> struct uniform_distribution_map;
 
 //----------------------------------------------------------------------------
-template<typename T> struct uniform_distribution_map<T,true>
+template<typename GeneralT> struct uniform_distribution_map<GeneralT,true>
 {
-    typedef std::uniform_int_distribution<T> distribution_type;
+    typedef std::uniform_int_distribution<GeneralT> distribution_type;
 };
 
 //----------------------------------------------------------------------------
-template<typename T> struct uniform_distribution_map<T,false>
+template<typename GeneralT> struct uniform_distribution_map<GeneralT,false>
 {
-    typedef std::uniform_real_distribution<T> distribution_type;
+    typedef std::uniform_real_distribution<GeneralT> distribution_type;
 };
 
 //----------------------------------------------------------------------------
-template<typename T>
-using uniform_dist_map = uniform_distribution_map<T,pni::type_info<T>::is_integer>;
+template<typename GeneralT>
+using uniform_dist_map = uniform_distribution_map<GeneralT,pni::type_info<GeneralT>::is_integer>;
 
 //----------------------------------------------------------------------------
-template<typename T> class uniform_distribution
+template<typename GeneralT> class uniform_distribution
 {
     private:
         std::mt19937_64 _engine;
-        typename uniform_dist_map<T>::distribution_type _distribution;
+        typename uniform_dist_map<GeneralT>::distribution_type _distribution;
     public:
         uniform_distribution():
             _engine(),
-            _distribution(0.2*pni::type_info<T>::min(),
-                          0.2*pni::type_info<T>::max())
+            _distribution(0.2*pni::type_info<GeneralT>::min(),
+                          0.2*pni::type_info<GeneralT>::max())
         {
             _engine.seed(std::random_device()());
         }
 
-        T operator()()
+        GeneralT operator()()
         {
             return _distribution(_engine);
         }
 };
 
 //----------------------------------------------------------------------------
-template<typename T> class uniform_distribution<std::complex<T> >
+template<typename GeneralT> class uniform_distribution<std::complex<GeneralT> >
 {
     private:
         std::mt19937_64 _engine;
-        typename uniform_dist_map<T>::distribution_type _distribution;
+        typename uniform_dist_map<GeneralT>::distribution_type _distribution;
     public:
         uniform_distribution():
             _engine(),
@@ -87,9 +87,9 @@ template<typename T> class uniform_distribution<std::complex<T> >
             _engine.seed(std::random_device()());
         }
 
-        std::complex<T> operator()()
+        std::complex<GeneralT> operator()()
         {
-            return std::complex<T>(_distribution(_engine),
+            return std::complex<GeneralT>(_distribution(_engine),
                                    _distribution(_engine));
         }
 };

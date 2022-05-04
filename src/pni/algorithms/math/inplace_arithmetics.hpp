@@ -72,20 +72,20 @@ namespace pni{
         \endcode
         !*/
         //! 
-        //! \tparam LTYPE array type
-        //! \param a reference to an instance of LTYPE
-        //! \param b scalar value of type LTYPE::value_type
+        //! \tparam LeftT array type
+        //! \param a reference to an instance of LeftT
+        //! \param b scalar value of type LeftT::value_type
         //!
         template<
-                 typename LTYPE,
-                 typename T,
+                 typename LeftT,
+                 typename ScalarT,
                  typename = enable_if<or_t<
-                           is_pod<T>,is_cmplx<T>
+                           is_pod<ScalarT>,is_cmplx<ScalarT>
                            >>
                 > 
-        static void add(LTYPE &a,T b)
+        static void add(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LTYPE);
+            CHECK_ARITHMETIC_SINGLE(LeftT);
 
             size_t n = a.size();
             for(size_t i = 0;i<n;++i) a[i] += b;
@@ -106,21 +106,21 @@ namespace pni{
         \endcode
         !*/
         //!
-        //! \tparam LTYPE l.h.s. type 
-        //! \tparam RTYPE r.h.s. type
-        //! \param a reference to an array of type LTYPE 
-        //! \param b reference to an array of type RTYPE
+        //! \tparam LeftT l.h.s. type 
+        //! \tparam RightT r.h.s. type
+        //! \param a reference to an array of type LeftT 
+        //! \param b reference to an array of type RightT
         //!
         template<
-                 typename LTYPE,
-                 typename RTYPE,
+                 typename LeftT,
+                 typename RightT,
                  typename = enable_if<not_t<
-                            or_t<is_pod<RTYPE>,is_cmplx<RTYPE>>
+                            or_t<is_pod<RightT>,is_cmplx<RightT>>
                             >>
                 >
-        static void add(LTYPE &a,const RTYPE &b)
+        static void add(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LTYPE,RTYPE);
+            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] += b[i];
         }
@@ -139,20 +139,20 @@ namespace pni{
         inplace_arithmetics::sub(a,s);
         \endcode
         !*/
-        //! \tparam LTYPE l.h.s. array type
+        //! \tparam LeftT l.h.s. array type
         //! \param a reference to the l.h.s.
         //! \param b scalar value on the r.h.s.
         //!
         template<
-                 typename LTYPE,
-                 typename T,
+                 typename LeftT,
+                 typename ScalarT,
                  typename = enable_if<or_t< 
-                            is_pod<T>,is_cmplx<T> 
+                            is_pod<ScalarT>,is_cmplx<ScalarT> 
                             >>
                 >
-        static void sub(LTYPE &a,T b)
+        static void sub(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LTYPE);
+            CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] -= b;
         }
@@ -171,21 +171,21 @@ namespace pni{
         inplace_arithmetics::sub(a,b);
         \endcode
         !*/
-        //! \tparam LTYPE l.h.s. array type
-        //! \tparam RTYPE r.h.s. array type
+        //! \tparam LeftT l.h.s. array type
+        //! \tparam RightT r.h.s. array type
         //! \param a reference to the l.h.s.
         //! \param b reference to the r.h.s.
         //!
         template<
-                 typename LTYPE,
-                 typename RTYPE,
+                 typename LeftT,
+                 typename RightT,
                  typename = enable_if<not_t<
-                            or_t<is_pod<RTYPE>,is_cmplx<RTYPE>>
+                            or_t<is_pod<RightT>,is_cmplx<RightT>>
                             >>
                 >
-        static void sub(LTYPE &a,const RTYPE &b)
+        static void sub(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LTYPE,RTYPE);
+            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] -= b[i];
         }
@@ -205,20 +205,20 @@ namespace pni{
         inplace_arithmetics::mult(array,scalar);
         \endcode
         !*/
-        //! \tparam LTYPE l.h.s. array type
+        //! \tparam LeftT l.h.s. array type
         //! \param a reference to the l.h.s.
         //! \param b scalar r.h.s. value
         //!
         template<
-                 typename LTYPE,
-                 typename T,
+                 typename LeftT,
+                 typename ScalarT,
                  typename = enable_if<or_t< 
-                            is_pod<T>,is_cmplx<T> 
+                            is_pod<ScalarT>,is_cmplx<ScalarT> 
                             >>
                 >
-        static void mult(LTYPE &a,T b)
+        static void mult(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LTYPE);
+            CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n=a.size();
             for(size_t i=0;i<n;++i) a[i] *= b;
         }
@@ -237,21 +237,21 @@ namespace pni{
         inplace_arithemtics::mult(a,b);
         \endcode
         !*/
-        //! \tparam LTYPE l.h.s. array type
-        //! \tparam RTYPE r.h.s. array type
+        //! \tparam LeftT l.h.s. array type
+        //! \tparam RightT r.h.s. array type
         //! \param a reference to the l.h.s.
         //! \param b reference to the r.h.s.
         //!
         template<
-                 typename LTYPE,
-                 typename RTYPE,
+                 typename LeftT,
+                 typename RightT,
                  typename = enable_if<not_t<
-                            or_t<is_pod<RTYPE>,is_cmplx<RTYPE>>
+                            or_t<is_pod<RightT>,is_cmplx<RightT>>
                             >>
                 >
-        static void mult(LTYPE &a,const RTYPE &b)
+        static void mult(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LTYPE,RTYPE);
+            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n=a.size();
             for(size_t i=0;i<n;++i) a[i] *= b[i];
         }
@@ -270,20 +270,20 @@ namespace pni{
         inplace_arithmetics::div(a,s);
         \endcode
         !*/
-        //! \tparam LTYPE l.h.s. array type
+        //! \tparam LeftT l.h.s. array type
         //! \param a reference to the l.h.s.
         //! \param b scalar r.h.s. value
         //!
         template<
-                 typename LTYPE,
-                 typename T,
+                 typename LeftT,
+                 typename ScalarT,
                  typename = enable_if<or_t< 
-                            is_pod<T>,is_cmplx<T> 
+                            is_pod<ScalarT>,is_cmplx<ScalarT> 
                             >>
                 >
-        static void div(LTYPE &a,T b)
+        static void div(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LTYPE);
+            CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] /= b;
         }
@@ -302,21 +302,21 @@ namespace pni{
         inplace_arithemtics::div(a,b);
         \endcode
         !*/
-        //! \tparam LTYPE l.h.s. array type
-        //! \tparam RTYPE r.h.s. array type
+        //! \tparam LeftT l.h.s. array type
+        //! \tparam RightT r.h.s. array type
         //! \param a reference to the l.h.s.
         //! \param b reference to the r.h.s.
         //!
         template<
-                 typename LTYPE,
-                 typename RTYPE,
+                 typename LeftT,
+                 typename RightT,
                  typename = enable_if<not_t<
-                            or_t<is_pod<RTYPE>,is_cmplx<RTYPE>>
+                            or_t<is_pod<RightT>,is_cmplx<RightT>>
                             >>
                 >
-        static void div(LTYPE &a,const RTYPE &b)
+        static void div(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LTYPE,RTYPE);
+            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] /= b[i];
         }

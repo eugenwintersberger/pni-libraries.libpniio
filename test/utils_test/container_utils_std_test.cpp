@@ -77,9 +77,9 @@ typedef boost::mpl::joint_view<vector_test_types,list_test_types> test_types;
 BOOST_AUTO_TEST_SUITE(container_utils_std_test)
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_size,CTYPE,test_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_size,ContainerT,test_types)
     {
-        typedef test_trait<CTYPE> trait_type;
+        typedef test_trait<ContainerT> trait_type;
         typedef typename trait_type::utils_type utils_type;
         typedef typename trait_type::generator_type generator_type;
 
@@ -94,9 +94,9 @@ BOOST_AUTO_TEST_SUITE(container_utils_std_test)
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_range,CTYPE,test_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_range,ContainerT,test_types)
     {
-        typedef test_trait<CTYPE> trait_type;
+        typedef test_trait<ContainerT> trait_type;
         typedef typename trait_type::utils_type utils_type;
         typedef typename trait_type::ref_type   vector_type;
         typedef typename trait_type::generator_type generator_type; 
@@ -111,9 +111,9 @@ BOOST_AUTO_TEST_SUITE(container_utils_std_test)
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_container,CTYPE,test_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_container,ContainerT,test_types)
     {
-        typedef test_trait<CTYPE> trait_type;
+        typedef test_trait<ContainerT> trait_type;
         typedef typename trait_type::utils_type utils_type;
         typedef typename trait_type::ref_type   vector_type;
         typedef typename trait_type::generator_type generator_type;
@@ -128,9 +128,9 @@ BOOST_AUTO_TEST_SUITE(container_utils_std_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_init_list,CTYPE,test_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_init_list,ContainerT,test_types)
     {
-        typedef test_trait<CTYPE> trait_type;
+        typedef test_trait<ContainerT> trait_type;
         typedef typename trait_type::utils_type utils_type;
         typedef typename trait_type::ref_type   vector_type;
 

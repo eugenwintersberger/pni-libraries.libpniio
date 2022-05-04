@@ -43,10 +43,10 @@ typedef std::vector<record_type> table_type;
 //----------------------------------------------------------------------------
 // complex number praser
 //----------------------------------------------------------------------------
-template<typename ITERT>
-struct complex_parser : public qi::grammar<ITERT,complex_type()>
+template<typename IteratorT>
+struct complex_parser : public qi::grammar<IteratorT,complex_type()>
 {
-    qi::rule<ITERT,complex_type()> complex_rule;
+    qi::rule<IteratorT,complex_type()> complex_rule;
 
     complex_parser() : complex_parser::base_type(complex_rule)
     {
@@ -64,12 +64,12 @@ struct complex_parser : public qi::grammar<ITERT,complex_type()>
 //----------------------------------------------------------------------------
 // parse a single value
 //----------------------------------------------------------------------------
-template<typename ITERT>
-struct value_parser : public qi::grammar<ITERT,pni::value()>
+template<typename IteratorT>
+struct value_parser : public qi::grammar<IteratorT,pni::value()>
 {
-    qi::rule<ITERT,pni::value()> value_rule;
+    qi::rule<IteratorT,pni::value()> value_rule;
 
-    complex_parser<ITERT> complex_;
+    complex_parser<IteratorT> complex_;
 
     value_parser() : value_parser::base_type(value_rule)
     {
@@ -95,12 +95,12 @@ struct value_parser : public qi::grammar<ITERT,pni::value()>
 //----------------------------------------------------------------------------
 // parse an entire record
 //----------------------------------------------------------------------------
-template<typename ITERT>
-struct record_parser : public qi::grammar<ITERT,record_type()>
+template<typename IteratorT>
+struct record_parser : public qi::grammar<IteratorT,record_type()>
 {
-    qi::rule<ITERT,record_type()> record_rule;
+    qi::rule<IteratorT,record_type()> record_rule;
 
-    value_parser<ITERT> value_;
+    value_parser<IteratorT> value_;
 
     record_parser() : record_parser::base_type(record_rule)
     {

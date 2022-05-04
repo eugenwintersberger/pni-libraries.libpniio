@@ -40,7 +40,7 @@ namespace tiff{
     //! This template reads IFD entries of a particular type and returns the 
     //! result as a vector of a particular result type. 
     //!
-    template<typename RTYPE,typename ETYPE> class ifd_entry_reader
+    template<typename ReadT,typename EntryDataT> class ifd_entry_reader
     {
         public:
             //!
@@ -54,18 +54,18 @@ namespace tiff{
             //! \param r number of elements to read
             //! \param stream input stream from which to read data
             //!
-            static void read(std::vector<RTYPE> &r,std::ifstream &stream);
+            static void read(std::vector<ReadT> &r,std::ifstream &stream);
     };
 
     //-------------------------------------------------------------------------
-    template<typename RTYPE,typename ETYPE> void ifd_entry_reader<RTYPE,ETYPE>::
-        read(std::vector<RTYPE> &r,std::ifstream &stream)
+    template<typename ReadT,typename EntryDataT> void ifd_entry_reader<ReadT,EntryDataT>::
+        read(std::vector<ReadT> &r,std::ifstream &stream)
     {
 
-        ETYPE buffer;
+        EntryDataT buffer;
 
         //check size of entire entry data
-        if(sizeof(ETYPE)*r.size()>4){
+        if(sizeof(EntryDataT)*r.size()>4){
             //if the data does not fit into 4 Byte we interpret data as an
             //offset and move the stream pointer to this new position
             pni::int32 offset;
@@ -74,10 +74,10 @@ namespace tiff{
         }
 
         //read the data
-        for(RTYPE &value: r)
+        for(ReadT &value: r)
         {
-            stream.read((char*)(&buffer),sizeof(ETYPE));
-            value = (RTYPE)(buffer);
+            stream.read((char*)(&buffer),sizeof(EntryDataT));
+            value = (ReadT)(buffer);
         }
 
     }

@@ -118,13 +118,13 @@ namespace pni{
             //! \param c (default = 0) image channel to read
             //! \return instance of ArrayType holding the channel data
             //!
-            template<typename ATYPE> ATYPE image(size_t i,size_t c) 
+            template<typename ArrayT> ArrayT image(size_t i,size_t c) 
             {
                 using namespace pni;
                 throw not_implemented_error(EXCEPTION_RECORD,
                         "Method not implemented!");
 
-                return ATYPE(); //just to make the compiler happy
+                return ArrayT(); //just to make the compiler happy
             }
            
             //-----------------------------------------------------------------
@@ -143,8 +143,8 @@ namespace pni{
             //! \param i index of the image in the file
             //! \param c (default = 0) index of the channel from which to read data.
             //!
-            template<typename ATYPE> 
-                void image(ATYPE & array,size_t i,size_t c) 
+            template<typename ArrayT> 
+                void image(ArrayT & array,size_t i,size_t c) 
             {
                 using namespace pni;
                 throw not_implemented_error(EXCEPTION_RECORD,

@@ -40,29 +40,29 @@ namespace pni{
     //! \brief converter class
     //! 
     //! This template provides a static conversion function from the source 
-    //! type ST to the target type TT. The convertible template parameters 
+    //! type SourceT to the target type TargetT. The convertible template parameters 
     //! makes a decission about whether or not the conversion can be done. 
     //! The default value of the convertible parameter is false, causing 
     //! the static convert() member function to throw a type_error 
     //! exception. We need this special system here as in the generic code 
-    //! we may need to compile TT and ST pairs where the plain convert()
+    //! we may need to compile TargetT and SourceT pairs where the plain convert()
     //! function template would throw a static assertion.
     //! 
-    //! \tparam TT target type
-    //! \tparam ST source type
+    //! \tparam TargetT target type
+    //! \tparam SourceT source type
     //! \tparam convertible if true the conversion is possible, otherwise not
     //! 
     template<
-             typename TT,
-             typename ST,
+             typename TargetT,
+             typename SourceT,
              bool     convertible=false
             > 
     struct value_converter
     {
         //! target type alias
-        typedef TT target_type;
+        typedef TargetT target_type;
         //! source type alias
-        typedef ST source_type;
+        typedef SourceT source_type;
         
         //! 
         //! \brief static conversion function
@@ -90,19 +90,19 @@ namespace pni{
     //! Specialization of the value_converter template for convertible 
     //! types. 
     //! 
-    //! \tparam TT target type
-    //! \tparam ST source type
+    //! \tparam TargetT target type
+    //! \tparam SourceT source type
     //! 
     template<
-             typename TT,
-             typename ST
+             typename TargetT,
+             typename SourceT
             >
-    struct value_converter<TT,ST,true>
+    struct value_converter<TargetT,SourceT,true>
     {
         //! target type alias 
-        typedef TT target_type;
+        typedef TargetT target_type;
         //! source type alias 
-        typedef ST source_type;
+        typedef SourceT source_type;
 
         //!
         //! \brief conversion function
@@ -111,10 +111,10 @@ namespace pni{
         //! the target type. 
         //! 
         //! \throws range_error if v does not fit in the range spanned by 
-        //!                     TT
+        //!                     TargetT
         //! \throws type_error in case of any other type related error 
         //! \param v reference to the source value
-        //! \return instance of TT with the converted value
+        //! \return instance of TargetT with the converted value
         //! 
         static target_type convert(const source_type &v)
         {
@@ -124,10 +124,10 @@ namespace pni{
 
     //------------------------------------------------------------------------
     template<
-             typename TT,
-             typename ST
+             typename TargetT,
+             typename SourceT
             >
-    using strategy = value_converter<TT,ST,convertible<ST,TT>::value>;
+    using strategy = value_converter<TargetT,SourceT,convertible<SourceT,TargetT>::value>;
 
     //------------------------------------------------------------------------
     //!
@@ -136,9 +136,9 @@ namespace pni{
     //! A simple alias for the std::reference_wrapper template to reduce
     //! typing work. 
     //!
-    //! \tparam T type of the reference
+    //! \tparam GeneralT type of the reference
     //!
-    template<typename T> using ref_type = std::reference_wrapper<T>;
+    template<typename GeneralT> using ref_type = std::reference_wrapper<GeneralT>;
 
     //------------------------------------------------------------------------
     //!
@@ -152,18 +152,18 @@ namespace pni{
     //! cast based on the original data type T (which can be obtained 
     //! from the type ID of the value. 
     //! 
-    //! \tparam T erased data type
-    //! \tparam PTR interface pointer type
+    //! \tparam DataT erased data type
+    //! \tparam PointerT interface pointer type
     //! \param ptr reference to the interface pointer
     //! \return pointer of value_holder<T> type
     //! 
     template<
-             typename T,
-             typename PTR
+             typename DataT,
+             typename PointerT
             >
-    value_holder<T> *get_holder_ptr(PTR &ptr)
+    value_holder<DataT> *get_holder_ptr(PointerT &ptr)
     {
-        typedef value_holder<T> holder_type;
+        typedef value_holder<DataT> holder_type;
                 
         return dynamic_cast<holder_type*>(ptr.get());
     }
@@ -180,21 +180,21 @@ namespace pni{
     //!                     in the range of the requested target type T 
     //! \throws type_error in case of any other type related error 
     //! 
-    //! \tparam T target type
-    //! \tparam S source type (the original type)
-    //! \tparam PTR holder pointer type
+    //! \tparam TargetT target type
+    //! \tparam SourceT source type (the original type)
+    //! \tparam PointerT holder pointer type
     //! 
     //! \param holder_ptr pointer to the original holder 
     //! \return value as an instance of type T 
     //!
     template<
-             typename T,
-             typename S,
-             typename PTR
+             typename TargetT,
+             typename SourceT,
+             typename PointerT
             > 
-    T get_value(PTR holder_ptr)  
+    TargetT get_value(PointerT holder_ptr)  
     {
-        typedef strategy<T,S>   strategy_type;
+        typedef strategy<TargetT,SourceT>   strategy_type;
 
         return strategy_type::convert(holder_ptr->as()); 
     }
@@ -210,21 +210,21 @@ namespace pni{
     //! \throws range_error if v does not fit in the range provided by S 
     //! \throws type_error in case of any other type related error
     //! 
-    //! \tparam S target type (the holder type)
-    //! \tparam T source type (provided by the user)
-    //! \tparam PTR holder pointer type 
+    //! \tparam TargetT target type (the holder type)
+    //! \tparam SourceT source type (provided by the user)
+    //! \tparam PointerT holder pointer type 
     //! 
     //! \param holder_ptr pointer to the typed value_holder
     //! \param v reference to the value of type T 
     //! 
     template<
-             typename S,
-             typename T,
-             typename PTR
+             typename TargetT,
+             typename SourceT,
+             typename PointerT
             >
-    void set_value(PTR holder_ptr,const T &v)
+    void set_value(PointerT holder_ptr,const SourceT &v)
     {
-        typedef strategy<S,T> strategy_type;
+        typedef strategy<TargetT,SourceT> strategy_type;
 
         holder_ptr->as() = strategy_type::convert(v);
     }

@@ -52,7 +52,7 @@ namespace pni{
     public:
     };
 
-    template<typename T> struct format_str {};
+    template<typename ElementT> struct format_str {};
 
 
 

@@ -31,8 +31,8 @@
 #include <h5cpp/contrib/nexus/ebool.hpp>
 
 
-template<typename T> using sarray = pni::static_array<T,3,2>;
-template<typename T> using farray = pni::fixed_dim_array<T,2>;
+template<typename ElementT> using sarray = pni::static_array<ElementT,3,2>;
+template<typename ElementT> using farray = pni::fixed_dim_array<ElementT,2>;
 
 typedef boost::mpl::list<pni::dynamic_array<pni::uint8>,
                          pni::dynamic_array<pni::int8>,

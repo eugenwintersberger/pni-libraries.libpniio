@@ -36,21 +36,21 @@ namespace pni{
     //! \ingroup mdim_array_arithmetic_classes
     //! \brief struct identifying a type as an array type
     //! 
-    //! If T is an array type value is true, otherwise it is false. 
+    //! If GeneralT is an array type value is true, otherwise it is false. 
     //! 
-    template<typename T> struct is_array
+    template<typename GeneralT> struct is_array
     {
         //! 
-        //! true if T is an arra type, false otherwise
+        //! true if GeneralT is an arra type, false otherwise
         //!
-        const static bool value = container_trait<T>::is_multidim;
+        const static bool value = container_trait<GeneralT>::is_multidim;
     };
 
-    template<typename T>
-    using map_type = typename T::map_type;
+    template<typename GeneralT>
+    using map_type = typename GeneralT::map_type;
 
-    template<typename T>
-    using ipa_type = typename T::inplace_arithmetic;
+    template<typename GeneralT>
+    using ipa_type = typename GeneralT::inplace_arithmetic;
 
 
     //======================binary addition operator===========================
@@ -68,22 +68,22 @@ namespace pni{
     //! c = a+b;
     //! \endcode
     //! 
-    //! \tparam LHS left hand side array type
-    //! \tparam RHS right hand side array type
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam RHSArrayT right hand side array type
     //! \param a left operand instance
     //! \param b right operand instance
     //! \return mdarray with the expression template
     //!
     template<
-             typename LHS,
-             typename RHS,
-             typename = enable_if<and_t<is_array<LHS>,is_array<RHS>>>
+             typename LHSArrayT,
+             typename RHSArrayT,
+             typename = enable_if<and_t<is_array<LHSArrayT>,is_array<RHSArrayT>>>
             >
-    mdarray<add_op<LHS,RHS>,map_type<LHS>,ipa_type<LHS>>
-    operator+(const LHS &a,const RHS &b)
+    mdarray<add_op<LHSArrayT,RHSArrayT>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator+(const LHSArrayT &a,const RHSArrayT &b)
     {
-        typedef add_op<LHS,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> return_type;
+        typedef add_op<LHSArrayT,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> return_type;
 
         return return_type(a.map(),operator_type(a,b));
     }
@@ -102,24 +102,24 @@ namespace pni{
     //! c = a+d;
     //! \endcode
     //! 
-    //! \tparam LHS left hand side array type
-    //! \tparam T   scalar data type
-    //! \param a reference to LHS operand
-    //! \param b reference to RHS operand
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam ScalarT   scalar data type
+    //! \param a reference to LHSArrayT operand
+    //! \param b reference to RHSArrayT operand
     //! \return mdarray with the expression template
     //!
     template<
-             typename LHS,
-             typename T,
+             typename LHSArrayT,
+             typename ScalarT,
              typename = enable_if<and_t<
-                        is_array<LHS>,not_t<is_array<T>> 
+                        is_array<LHSArrayT>,not_t<is_array<ScalarT>> 
                         >>
             >
-    mdarray<add_op<LHS,scalar<T>>,map_type<LHS>,ipa_type<LHS>>
-    operator+(const LHS &a, const T& b)
+    mdarray<add_op<LHSArrayT,scalar<ScalarT>>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator+(const LHSArrayT &a, const ScalarT& b)
     {
-        typedef add_op<LHS,scalar<T>> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> return_type;
+        typedef add_op<LHSArrayT,scalar<ScalarT>> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> return_type;
 
         return return_type(a.map(),operator_type(a,b));
     }
@@ -138,25 +138,25 @@ namespace pni{
     //! c = d+a;
     //! \endcode
     //! 
-    //! \tparam T data type of the scalar operand
-    //! \tparam RHS data type of the right hand side operand
+    //! \tparam ScalarT data type of the scalar operand
+    //! \tparam RHSArrayT data type of the right hand side operand
     //! \param a scalar value
-    //! \param b instance of an RHS array
+    //! \param b instance of an RHSArrayT array
     //! \return mdarray instance with the expression template
     //!
     template<
-             typename T,
-             typename RHS,
+             typename ScalarT,
+             typename RHSArrayT,
              typename = enable_if<and_t<
-                        not_t<is_array<T>>,is_array<RHS>
+                        not_t<is_array<ScalarT>>,is_array<RHSArrayT>
                         >>
             >
-    mdarray<add_op<scalar<T>,RHS>,map_type<RHS>,ipa_type<RHS>>
-    operator+(const T& a, const RHS &b)
+    mdarray<add_op<scalar<ScalarT>,RHSArrayT>,map_type<RHSArrayT>,ipa_type<RHSArrayT>>
+    operator+(const ScalarT& a, const RHSArrayT &b)
     {
-        typedef add_op<scalar<T>,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<RHS>,ipa_type<RHS>> result_type;
-        typedef scalar<T> scalar_type;
+        typedef add_op<scalar<ScalarT>,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<RHSArrayT>,ipa_type<RHSArrayT>> result_type;
+        typedef scalar<ScalarT> scalar_type;
         
         return result_type(b.map(),operator_type(scalar_type(a),b));
     }
@@ -176,22 +176,22 @@ namespace pni{
     //! c = a - b;
     //! \endcode
     //! 
-    //! \tparam LHS left hand side operator type
-    //! \tparam RHS right hand side operator type
+    //! \tparam LHSArrayT left hand side operator type
+    //! \tparam RHSArrayT right hand side operator type
     //! \param a left operand
     //! \param b right operand
     //! \return mdarray with the expression template
     //!
     template<
-             typename LHS,
-             typename RHS,
-             typename = enable_if<and_t<is_array<LHS>,is_array<RHS>>>
+             typename LHSArrayT,
+             typename RHSArrayT,
+             typename = enable_if<and_t<is_array<LHSArrayT>,is_array<RHSArrayT>>>
             >
-    mdarray<sub_op<LHS,RHS >,map_type<LHS>,ipa_type<LHS>>
-    operator-(const LHS &a, const RHS &b)
+    mdarray<sub_op<LHSArrayT,RHSArrayT >,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator-(const LHSArrayT &a, const RHSArrayT &b)
     {
-        typedef sub_op<LHS,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> result_type;
+        typedef sub_op<LHSArrayT,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
 
         return result_type(a.map(),operator_type(a,b));
     }
@@ -210,24 +210,24 @@ namespace pni{
     //! c = a - b; 
     //! \endcode
     //!
-    //! \tparam LHS left hand side array type
-    //! \tparam T right handside scalar type
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam ScalarT right handside scalar type
     //! \param a left operand 
     //! \param b right operand 
     //! \return mdarray instance with the expression template
     //! 
     template<
-             typename LHS,
-             typename T,
+             typename LHSArrayT,
+             typename ScalarT,
              typename = enable_if<and_t<
-                      is_array<LHS>,not_t<is_array<T>>
+                      is_array<LHSArrayT>,not_t<is_array<ScalarT>>
                       >>
             >
-    mdarray<sub_op<LHS,scalar<T> >,map_type<LHS>,ipa_type<LHS>>
-    operator-(const LHS &a, const T& b)
+    mdarray<sub_op<LHSArrayT,scalar<ScalarT> >,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator-(const LHSArrayT &a, const ScalarT& b)
     {
-        typedef sub_op<LHS,scalar<T>> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> result_type;
+        typedef sub_op<LHSArrayT,scalar<ScalarT>> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
 
         return result_type(a.map(),operator_type(a,b));
     }
@@ -246,24 +246,24 @@ namespace pni{
     //! c = b - a;
     //! \endcode
     //! 
-    //! \tparam T scalar right handside type
-    //! \tparam RHS right hand side array type
+    //! \tparam ScalarT scalar right handside type
+    //! \tparam RHSArrayT right hand side array type
     //! \param a scalar value
     //! \param b array like right handside
     //! \return instance of NumArray with an expression template
     //!
     template<
-             typename T,
-             typename RHS,
+             typename ScalarT,
+             typename RHSArrayT,
              typename = enable_if<and_t<
-                        not_t<is_array<T>>,is_array<RHS> 
+                        not_t<is_array<ScalarT>>,is_array<RHSArrayT> 
                         >>
             >
-    mdarray<sub_op<scalar<T>,RHS>,map_type<RHS>,ipa_type<RHS>>
-    operator-(const T &a, const RHS &b)
+    mdarray<sub_op<scalar<ScalarT>,RHSArrayT>,map_type<RHSArrayT>,ipa_type<RHSArrayT>>
+    operator-(const ScalarT &a, const RHSArrayT &b)
     {
-        typedef sub_op<scalar<T>,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<RHS>,ipa_type<RHS>> result_type;
+        typedef sub_op<scalar<ScalarT>,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<RHSArrayT>,ipa_type<RHSArrayT>> result_type;
         
         return result_type(b.map(),operator_type(a,b));
     }
@@ -282,22 +282,22 @@ namespace pni{
     //! c = a / b;
     //! \endcode
     //!
-    //! \tparam LHS left hand side array type
-    //! \tparam RHS right hand side array type
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam RHSArrayT right hand side array type
     //! \param a left operand
     //! \param b right operand
     //! \return mdarray with the expression template
     //!
     template<
-             typename LHS,
-             typename RHS,
-             typename = enable_if<and_t<is_array<LHS>,is_array<RHS>>>
+             typename LHSArrayT,
+             typename RHSArrayT,
+             typename = enable_if<and_t<is_array<LHSArrayT>,is_array<RHSArrayT>>>
             >
-    mdarray<div_op<LHS,RHS>,map_type<LHS>,ipa_type<LHS>>
-    operator/(const LHS &a, const RHS &b)
+    mdarray<div_op<LHSArrayT,RHSArrayT>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator/(const LHSArrayT &a, const RHSArrayT &b)
     {
-        typedef div_op<LHS,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> result_type;
+        typedef div_op<LHSArrayT,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
 
         return result_type(a.map(),operator_type(a,b));
     }
@@ -316,24 +316,24 @@ namespace pni{
     //! c = a/b;
     //! \endcode
     //!
-    //! \tparam LHS left hand side array type
-    //! \tparam T right hand side scalar type
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam ScalarT right hand side scalar type
     //! \param a left operand
     //! \param b right operand 
     //! \return mdarray with the expression template
     //!
     template<
-             typename LHS,
-             typename T,
+             typename LHSArrayT,
+             typename ScalarT,
              typename = enable_if<and_t<
-                        is_array<LHS>,not_t<is_array<T>>
+                        is_array<LHSArrayT>,not_t<is_array<ScalarT>>
                         >>
             >
-    mdarray<div_op<LHS,scalar<T>>,map_type<LHS>,ipa_type<LHS>>
-    operator/(const LHS &a, const T &b)
+    mdarray<div_op<LHSArrayT,scalar<ScalarT>>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator/(const LHSArrayT &a, const ScalarT &b)
     {
-        typedef div_op<LHS,scalar<T>> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> result_type;
+        typedef div_op<LHSArrayT,scalar<ScalarT>> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
 
         return result_type(a.map(),operator_type(a,b));
     }
@@ -352,24 +352,24 @@ namespace pni{
     //! c = b / a;
     //! \endcode
     //! 
-    //! \tparam T left hand side scalar type
-    //! \tparam RHS right hand side array type
+    //! \tparam ScalarT left hand side scalar type
+    //! \tparam RHSArrayT right hand side array type
     //! \param a scalar value
     //! \param b array instance
     //! \return mdarray with the expression template
     //!
     template<
-             typename T,
-             typename RHS,
+             typename ScalarT,
+             typename RHSArrayT,
              typename = enable_if<and_t<
-                        not_t<is_array<T>>,is_array<RHS>
+                        not_t<is_array<ScalarT>>,is_array<RHSArrayT>
                         >>
             >
-    mdarray<div_op<scalar<T>,RHS>,map_type<RHS>,ipa_type<RHS>>
-    operator/(const T &a, const RHS &b)
+    mdarray<div_op<scalar<ScalarT>,RHSArrayT>,map_type<RHSArrayT>,ipa_type<RHSArrayT>>
+    operator/(const ScalarT &a, const RHSArrayT &b)
     {
-        typedef div_op<scalar<T>,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<RHS>,ipa_type<RHS>> result_type;
+        typedef div_op<scalar<ScalarT>,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<RHSArrayT>,ipa_type<RHSArrayT>> result_type;
 
         return result_type(b.map(),operator_type(a,b));
     }
@@ -387,22 +387,22 @@ namespace pni{
     //! c = a * b;
     //! \endcode
     //!
-    //! \tparam LHS left hand side array type
-    //! \tparam RHS right hand side array type
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam RHSArrayT right hand side array type
     //! \param a left operand
     //! \param b right operand
     //! \return return mdarray instance with expression template
     //!
     template<
-             typename LHS,
-             typename RHS,
-             typename = enable_if<and_t<is_array<LHS>,is_array<RHS> >>
+             typename LHSArrayT,
+             typename RHSArrayT,
+             typename = enable_if<and_t<is_array<LHSArrayT>,is_array<RHSArrayT> >>
             >
-    mdarray<mult_op<LHS,RHS>,map_type<LHS>,ipa_type<LHS>>
-    operator*(const LHS &a, const RHS &b)
+    mdarray<mult_op<LHSArrayT,RHSArrayT>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator*(const LHSArrayT &a, const RHSArrayT &b)
     {
-        typedef mult_op<LHS,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> result_type;
+        typedef mult_op<LHSArrayT,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
 
         return result_type(a.map(),operator_type(a,b));
     }
@@ -421,24 +421,24 @@ namespace pni{
     //! c = a * b;
     //! \endcode
     //! 
-    //! \tparam LHS left hand side array type
-    //! \tparam T right hand scalar type
+    //! \tparam LHSArrayT left hand side array type
+    //! \tparam ScalarT right hand scalar type
     //! \param a left operand 
     //! \param b right operand 
     //! \return mdarray with the expression template
     //!
     template<
-             typename LHS,
-             typename T,
+             typename LHSArrayT,
+             typename ScalarT,
              typename = enable_if<and_t<
-                        is_array<LHS>,not_t<is_array<T>>
+                        is_array<LHSArrayT>,not_t<is_array<ScalarT>>
                         >>
             >
-    mdarray<mult_op<LHS,scalar<T>>,map_type<LHS>,ipa_type<LHS>>
-    operator*(const LHS &a, const T &b)
+    mdarray<mult_op<LHSArrayT,scalar<ScalarT>>,map_type<LHSArrayT>,ipa_type<LHSArrayT>>
+    operator*(const LHSArrayT &a, const ScalarT &b)
     {
-        typedef mult_op<LHS,scalar<T>> operator_type;
-        typedef mdarray<operator_type,map_type<LHS>,ipa_type<LHS>> result_type;
+        typedef mult_op<LHSArrayT,scalar<ScalarT>> operator_type;
+        typedef mdarray<operator_type,map_type<LHSArrayT>,ipa_type<LHSArrayT>> result_type;
         
         return result_type(a.map(),operator_type(a,b));
     }
@@ -457,24 +457,24 @@ namespace pni{
     //! c = b * a;
     //! \endcode
     //!
-    //! \tparam T left hand side scalar type
-    //! \tparam RHS right hand side array type
+    //! \tparam ScalarT left hand side scalar type
+    //! \tparam RHSArrayT right hand side array type
     //! \param a left operand
     //! \param b right operand 
     //! \return mdarray with the expression template
     //!
     template< 
-             typename T,
-             typename RHS,
+             typename ScalarT,
+             typename RHSArrayT,
              typename = enable_if<and_t<
-                        not_t<is_array<T>>,is_array<RHS>
+                        not_t<is_array<ScalarT>>,is_array<RHSArrayT>
                         >>
             >
-    mdarray<mult_op<scalar<T>,RHS>,map_type<RHS>,ipa_type<RHS>>
-    operator*(const T &a, const RHS &b)
+    mdarray<mult_op<scalar<ScalarT>,RHSArrayT>,map_type<RHSArrayT>,ipa_type<RHSArrayT>>
+    operator*(const ScalarT &a, const RHSArrayT &b)
     {
-        typedef mult_op<scalar<T>,RHS> operator_type;
-        typedef mdarray<operator_type,map_type<RHS>,ipa_type<RHS>> result_type;
+        typedef mult_op<scalar<ScalarT>,RHSArrayT> operator_type;
+        typedef mdarray<operator_type,map_type<RHSArrayT>,ipa_type<RHSArrayT>> result_type;
 
         return result_type(b.map(),operator_type(a,b));
     }

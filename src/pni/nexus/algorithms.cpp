@@ -34,8 +34,8 @@
 namespace pni {
 namespace nexus {
 
-template<typename ITERT>
-NodeList search_(ITERT begin,ITERT end,
+template<typename IteratorT>
+NodeList search_(IteratorT begin,IteratorT end,
                                  const NodePredicate &predicate)
 {
   pni::nexus::NodeList result;

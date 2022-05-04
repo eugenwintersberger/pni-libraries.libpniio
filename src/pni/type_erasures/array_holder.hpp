@@ -33,12 +33,12 @@ namespace pni{
     //! \brief get array pointer
     //! 
     //! Return a pointer to the data stored in an array. 
-    //! \tparam ATYPE array type
-    //! \param a instance of ATYPE
+    //! \tparam ArrayT array type
+    //! \param a instance of ArrayT
     //! \return pointer to array data
     //! 
-    template<typename ATYPE> 
-    const void *get_pointer(const ATYPE &a)
+    template<typename ArrayT> 
+    const void *get_pointer(const ArrayT &a)
     {
         return (void *)(a.data());
     }
@@ -50,31 +50,31 @@ namespace pni{
     //! \brief array holder template 
     //! 
     //! Template for the array holder used in the array type erasure.
-    //! \tparam OT array type
+    //! \tparam ObjectT array type
     //!
-    template<typename OT> 
+    template<typename ObjectT> 
     class array_holder:public array_holder_interface
     {
         private:
-            OT _object; //!< the original object 
+            ObjectT _object; //!< the original object 
         public:
             //==================constructors and destructor====================
             //!construct by copying o
-            array_holder(const OT &o):_object(o) {}
+            array_holder(const ObjectT &o):_object(o) {}
 
             //-----------------------------------------------------------------
             //!construct by moving o
-            array_holder(OT &&o):_object(std::move(o)) {}
+            array_holder(ObjectT &&o):_object(std::move(o)) {}
 
             //-----------------------------------------------------------------
             //!copy constructor
-            array_holder(const array_holder<OT> &o):
+            array_holder(const array_holder<ObjectT> &o):
                 _object(o._object) 
             {}
 
             //-----------------------------------------------------------------
             //!move constructor
-            array_holder(array_holder<OT> &&o):
+            array_holder(array_holder<ObjectT> &&o):
                 _object(std::move(o._object)) 
             {}
 
@@ -92,12 +92,12 @@ namespace pni{
             //!
             virtual array_holder_interface *clone() const 
             {
-                return new array_holder<OT>(_object);
+                return new array_holder<ObjectT>(_object);
             }
 
             //====================public member functions======================
             //! return type ID of the held array
-            virtual type_id_t type_id() const{ return OT::type_id; }
+            virtual type_id_t type_id() const{ return ObjectT::type_id; }
             
             //-----------------------------------------------------------------
             //! return the rank of the held array
@@ -215,7 +215,7 @@ namespace pni{
             //! return the name of the type
             virtual string type_name() const
             {
-                return typeid(OT).name();
+                return typeid(ObjectT).name();
             }
 
             //-----------------------------------------------------------------

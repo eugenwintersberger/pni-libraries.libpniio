@@ -35,12 +35,12 @@ namespace pni{
     //! Return the reference to its argument. This function template produces 
     //! no code. It just passes the reference through.
     //! 
-    //! \tparam T type of the reference
+    //! \tparam GeneralT type of the reference
     //! \param v input reference
     //! \return reference to the argument
     //!
-    template<typename T> 
-    T& get_ref(T &v) noexcept
+    template<typename GeneralT> 
+    GeneralT& get_ref(GeneralT &v) noexcept
     { 
         return v;
     } 
@@ -52,12 +52,12 @@ namespace pni{
     //!
     //! Return a const reference from a primitive type. 
     //!
-    //! \tparam T primitive type
+    //! \tparam PrimitiveT primitive type
     //! \param v const reference to the primitive type
-    //! \return const reference to T
+    //! \return const reference to PrimitiveT
     //!
-    template<typename T> 
-    const T& get_const_ref(const T &v) noexcept
+    template<typename PrimitiveT> 
+    const PrimitiveT& get_const_ref(const PrimitiveT &v) noexcept
     { 
         return v; 
     }
@@ -69,12 +69,12 @@ namespace pni{
     //!
     //! Return the reference stored in a std::reference_wrapper. 
     //! 
-    //! \tparam T type wrapped by std::reference_wrapper
+    //! \tparam GeneralT type wrapped by std::reference_wrapper
     //! \param v input reference
     //! \return reference to the argument
     //!
-    template<typename T> 
-    T& get_ref(std::reference_wrapper<T> &v) noexcept
+    template<typename GeneralT> 
+    GeneralT& get_ref(std::reference_wrapper<GeneralT> &v) noexcept
     {
         return v.get();
     }
@@ -90,8 +90,8 @@ namespace pni{
     //! \param v const reference 
     //! \return reference to the argument
     //!
-    template<typename T> 
-    const T& get_const_ref(const std::reference_wrapper<T> &v) noexcept
+    template<typename GeneralT> 
+    const GeneralT& get_const_ref(const std::reference_wrapper<GeneralT> &v) noexcept
     {
         return v.get();
     }
@@ -102,11 +102,11 @@ namespace pni{
     //! \ingroup type_erasure_clases_internal
     //! \brief check if type is reference
     //!
-    //! Value is true if T is a reference type (an instance f the
-    //! std::reference_wrapper<T> template). In this default case the value 
+    //! Value is true if GeneralT is a reference type (an instance f the
+    //! std::reference_wrapper<GeneralT> template). In this default case the value 
     //! member is set to false.
     //!
-    template<typename T> struct is_reference_holder
+    template<typename GeneralT> struct is_reference_holder
     {
         //! value set to false
         static const bool value = false;
@@ -120,7 +120,7 @@ namespace pni{
     //! Specialization of the is_reference_holder template. In this case the 
     //! value member is set to true.
     //!
-    template<typename T> struct is_reference_holder<std::reference_wrapper<T> >
+    template<typename GeneralT> struct is_reference_holder<std::reference_wrapper<GeneralT> >
     {
         //! value set to true
         static const bool value = true;
@@ -131,16 +131,16 @@ namespace pni{
     //! \ingroup type_erasure_classes_internal
     //! \brief get original type of reference
     //!
-    //! In this case T is just pushed through.
+    //! In this case GeneralT is just pushed through.
     //!
-    template<typename T> struct get_reference_type
+    template<typename GeneralT> struct get_reference_type
     {
         //! original reference type
-        typedef T value_type;
+        typedef GeneralT value_type;
         //! reference type
-        typedef T &reference_type;
+        typedef GeneralT &reference_type;
         //! const reference type
-        typedef const T &const_reference_type;
+        typedef const GeneralT &const_reference_type;
     };
 
     //-------------------------------------------------------------------------
@@ -148,17 +148,17 @@ namespace pni{
     //! \ingroup type_erasure_classes_internal
     //! \brief get the original type of reference
     //!
-    //! In this case value_type is T which is the template parameter of the 
+    //! In this case value_type is GeneralT which is the template parameter of the 
     //! original std::reference_wrapper<> template.
     //!
-    template<typename T> struct get_reference_type<std::reference_wrapper<T> >
+    template<typename GeneralT> struct get_reference_type<std::reference_wrapper<GeneralT> >
     {
         //! original reference type
-        typedef T value_type;
+        typedef GeneralT value_type;
         //! reference type
-        typedef T &reference_type;
+        typedef GeneralT &reference_type;
         //! const reference type
-        typedef const  T &const_reference_type;
+        typedef const  GeneralT &const_reference_type;
     };
 
     //-------------------------------------------------------------------------
@@ -167,31 +167,31 @@ namespace pni{
     //! \brief implementation of the holder interface
     //! 
     //! This template implements the holder interface for the value class.
-    //! \tparam T type of the data wrapped
+    //! \tparam GeneralT type of the data wrapped
     //!
-    template<typename T> 
+    template<typename GeneralT> 
     class value_holder : public value_holder_interface
     {
         private:
-            T _value; //!< the data value
+            GeneralT _value; //!< the data value
 
         public:
             //----------------------------------------------------------------
             //!
             //! default constructor
             //!
-            value_holder():_value(T(0)) {}
+            value_holder():_value(GeneralT(0)) {}
 
             //----------------------------------------------------------------
             //!
             //! \brief constructor 
             //! 
             //! Construct a value_holder instance from a concrete value of 
-            //! type T. 
+            //! type GeneralT. 
             //! 
             //! \param v value from which to construct the holder
             //!
-            value_holder(T v):_value(v) {}
+            value_holder(GeneralT v):_value(v) {}
 
 
             //====================public inerface implementation==============
@@ -202,7 +202,7 @@ namespace pni{
             //! 
             virtual type_id_t type_id() const noexcept
             {
-                typedef typename get_reference_type<T>::value_type value_type;
+                typedef typename get_reference_type<GeneralT>::value_type value_type;
                 return type_id_map<value_type >::type_id;
             }
 
@@ -214,7 +214,7 @@ namespace pni{
             //! 
             virtual value_holder_interface *clone() const
             {
-                return new value_holder<T>(_value);
+                return new value_holder<GeneralT>(_value);
             }
 
             //----------------------------------------------------------------
@@ -223,9 +223,9 @@ namespace pni{
             //!
             //! Return the value stored.
             //!
-            //! \return value of type T
+            //! \return value of type GeneralT
             //!
-            typename get_reference_type<T>::value_type as() const 
+            typename get_reference_type<GeneralT>::value_type as() const 
             { 
                 return get_const_ref(_value);
             } 
@@ -236,7 +236,7 @@ namespace pni{
             //! 
             //! \return reference to the stored value
             //! 
-            typename get_reference_type<T>::reference_type as()
+            typename get_reference_type<GeneralT>::reference_type as()
             {
                 return get_ref(_value);
             }
@@ -249,7 +249,7 @@ namespace pni{
             //! 
             virtual bool holds_reference() const
             {
-                return is_reference_holder<T>::value;
+                return is_reference_holder<GeneralT>::value;
             }
     };
 

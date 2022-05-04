@@ -51,30 +51,30 @@ namespace pni{
             //! internal pointer type 
             using pointer_type = std::unique_ptr<value_holder_interface>;
 
-            template<typename T>
-            using enable_primitive = std::enable_if<is_primitive_type<T>::value>;
+            template<typename GeneralT>
+            using enable_primitive = std::enable_if<is_primitive_type<GeneralT>::value>;
             
             //----------------------------------------------------------------
             //! 
             //! \brief return value
             //!
             //! Return the value of the variable the reference refers to. 
-            //! T denotes the data type requested by the  user. S denotes 
+            //! TargetT denotes the data type requested by the  user. SourceT denotes 
             //! the type of the variable the reference points to.
             //! 
             //! \throws type_error if the conversion is not possible
             //! \throws range_error if the value 
-            //! \tparam T target type
-            //! \tparam S source type
-            //! \return value as T
+            //! \tparam TargetT target type
+            //! \tparam SourceT source type
+            //! \return value as TargetT
             //!
             template<
-                     typename T,
-                     typename S 
+                     typename TargetT,
+                     typename SourceT 
                     > 
-            T _get() const
+            TargetT _get() const
             {
-                return get_value<T,S>(get_holder_ptr<S>(_ptr));
+                return get_value<TargetT,SourceT>(get_holder_ptr<SourceT>(_ptr));
             }
 
             //----------------------------------------------------------------
@@ -86,16 +86,16 @@ namespace pni{
             //! \throws type_error if the conversion is not possible
             //! \throws range_error if the passed value does not fit in the
             //! target type
-            //! \tparam S type of the variable
-            //! \tparam T type of the value the user passed
+            //! \tparam VariableT type of the variable
+            //! \tparam UserValueT type of the value the user passed
             //! \param v value to set  
             template<
-                     typename S,
-                     typename T
+                     typename VariableT,
+                     typename UserValueT
                     > 
-            void _set(const T& v) const
+            void _set(const UserValueT& v) const
             {
-                return set_value<S,T>(get_holder_ptr<S>(_ptr),v);
+                return set_value<VariableT,UserValueT>(get_holder_ptr<VariableT>(_ptr),v);
             }
 
             //! pointer holding the value stored
@@ -117,14 +117,14 @@ namespace pni{
             //!
             //! This constructor accepts all primitive types from libpninexus.
             //!
-            //! \tparam T primitive type
+            //! \tparam PrimitiveT primitive type
             //! \param v value to store in the type erasure
             //! 
             template<
-                     typename T,
-                     typename = typename enable_primitive<T>::type 
+                     typename PrimitiveT,
+                     typename = typename enable_primitive<PrimitiveT>::type 
                     > 
-            explicit value(T v):_ptr(new value_holder<T>(v)){}
+            explicit value(PrimitiveT v):_ptr(new value_holder<PrimitiveT>(v)){}
 
             //-----------------------------------------------------------------
             //!
@@ -145,7 +145,7 @@ namespace pni{
             //! \param v reference to the new value
             //! \return instance of value
             //!
-            template<typename VT> value &operator=(const VT &v);
+            template<typename ValueT> value &operator=(const ValueT &v);
 
             //-----------------------------------------------------------------
             //! copy assignment
@@ -163,19 +163,19 @@ namespace pni{
             //!
             //! \brief get the stored value
             //!
-            //! Return the stored value as type T. If the value instance has 
+            //! Return the stored value as type TargetT. If the value instance has 
             //! not been initialized before an exception is thrown. In 
             //! addition, if the data type passed as a template parameter 
             //! does not fit the type used to store the data an exception 
             //! will be thrown.
             //!
             //! \throws memory_not_allocate_error if value is uninitialized
-            //! \throws type_error if T does not match the original data type
+            //! \throws type_error if TargetT does not match the original data type
             //! \throws range_error if the value stored does not fit into the 
             //! requested type.
-            //! \return value of type T 
+            //! \return value of type TargetT 
             //!
-            template<typename T> T as() const;
+            template<typename TargetT> TargetT as() const;
 
             //-----------------------------------------------------------------
             //!
@@ -190,29 +190,29 @@ namespace pni{
     };
 
     //=====================implementation of template member functions=========
-    template<typename T> T value::as() const
+    template<typename TargetT> TargetT value::as() const
     {
         type_id_t tid = type_id();
         switch(tid)
         {
-            case type_id_t::UInt8:      return _get<T,uint8>();
-            case type_id_t::Int8:       return _get<T,int8>();
-            case type_id_t::UInt16:     return _get<T,uint16>();
-            case type_id_t::Int16:      return _get<T,int16>();
-            case type_id_t::UInt32:     return _get<T,uint32>();
-            case type_id_t::Int32:      return _get<T,int32>();
-            case type_id_t::UInt64:     return _get<T,uint64>();
-            case type_id_t::Int64:      return _get<T,int64>();
-            case type_id_t::Float32:    return _get<T,float32>();
-            case type_id_t::Float64:    return _get<T,float64>();
-            case type_id_t::Float128:   return _get<T,float128>();
-            case type_id_t::Complex32:  return _get<T,complex32>();
-            case type_id_t::Complex64:  return _get<T,complex64>();
-            case type_id_t::Complex128: return _get<T,complex128>(); 
-            case type_id_t::String:     return _get<T,string>();
-            case type_id_t::Binary:     return _get<T,binary>();
-            case type_id_t::Bool:       return _get<T,bool_t>();
-            case type_id_t::EBool:      return _get<T,hdf5::datatype::EBool>();
+            case type_id_t::UInt8:      return _get<TargetT,uint8>();
+            case type_id_t::Int8:       return _get<TargetT,int8>();
+            case type_id_t::UInt16:     return _get<TargetT,uint16>();
+            case type_id_t::Int16:      return _get<TargetT,int16>();
+            case type_id_t::UInt32:     return _get<TargetT,uint32>();
+            case type_id_t::Int32:      return _get<TargetT,int32>();
+            case type_id_t::UInt64:     return _get<TargetT,uint64>();
+            case type_id_t::Int64:      return _get<TargetT,int64>();
+            case type_id_t::Float32:    return _get<TargetT,float32>();
+            case type_id_t::Float64:    return _get<TargetT,float64>();
+            case type_id_t::Float128:   return _get<TargetT,float128>();
+            case type_id_t::Complex32:  return _get<TargetT,complex32>();
+            case type_id_t::Complex64:  return _get<TargetT,complex64>();
+            case type_id_t::Complex128: return _get<TargetT,complex128>(); 
+            case type_id_t::String:     return _get<TargetT,string>();
+            case type_id_t::Binary:     return _get<TargetT,binary>();
+            case type_id_t::Bool:       return _get<TargetT,bool_t>();
+            case type_id_t::EBool:      return _get<TargetT,hdf5::datatype::EBool>();
             default:
                 throw type_error(EXCEPTION_RECORD,"Uknown type!");
         }
@@ -220,7 +220,7 @@ namespace pni{
     }
 
     //-------------------------------------------------------------------------
-    template<typename VT> value &value::operator=(const VT &v)
+    template<typename ValueT> value &value::operator=(const ValueT &v)
     {
         type_id_t tid = type_id();
 
@@ -272,12 +272,12 @@ namespace pni{
     //! 
     //! Create a value instance for a particular type. 
     //!
-    //! \tparam T requested type
-    //! \return instance of value holding a value of T
+    //! \tparam RequestedT requested type
+    //! \return instance of value holding a value of RequestedT
     //!
-    template<typename T> value make_value()
+    template<typename RequestedT> value make_value()
     {
-        return value(T{});
+        return value(RequestedT{});
     }
 
     //------------------------------------------------------------------------

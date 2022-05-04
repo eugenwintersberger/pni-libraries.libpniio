@@ -35,15 +35,15 @@ namespace pni{
     //! \ingroup type_classes
     //! \brief check integer type
     //! 
-    //! Set the value member to true if T is an integer type, otherwise value
+    //! Set the value member to true if GeneralT is an integer type, otherwise value
     //! will be false.
     //!
-    //! \tparam T type to check
+    //! \tparam GeneralT type to check
     //!
-    template<typename T> struct is_integer_type
+    template<typename GeneralT> struct is_integer_type
     {
-        //! true if T is an integer, false otherwise
-        static const bool value = boost::mpl::contains<integer_types,T>::value;
+        //! true if GeneralT is an integer, false otherwise
+        static const bool value = boost::mpl::contains<integer_types,GeneralT>::value;
     };
 
     //------------------------------------------------------------------------
@@ -51,15 +51,15 @@ namespace pni{
     //! \ingroup type_classes
     //! \brief check float type
     //!
-    //! Set the value member to true if T is a float type, otherwise value 
+    //! Set the value member to true if GeneralT is a float type, otherwise value 
     //! will be false.
     //!
-    //! \tparam T type to check
+    //! \tparam GeneralT type to check
     //!
-    template<typename T> struct is_float_type
+    template<typename GeneralT> struct is_float_type
     {
-        //! true if T is a floating point type, false otherwise
-        static const bool value = boost::mpl::contains<float_types,T>::value;
+        //! true if GeneralT is a floating point type, false otherwise
+        static const bool value = boost::mpl::contains<float_types,GeneralT>::value;
     };
 
     //------------------------------------------------------------------------
@@ -67,15 +67,15 @@ namespace pni{
     //! \ingroup type_classes
     //! \brief check complex type
     //! 
-    //! Set the value  member to true if T is a complex number type, otherwise
+    //! Set the value  member to true if GeneralT is a complex number type, otherwise
     //! value will be false.
     //!
-    //! \tparam T type to check. 
+    //! \tparam GeneralT type to check. 
     //!
-    template<typename T> struct is_complex_type
+    template<typename GeneralT> struct is_complex_type
     {
-        //! true if T is a complex type, false otherwise 
-        static const bool value = boost::mpl::contains<complex_types,T>::value;
+        //! true if GeneralT is a complex type, false otherwise 
+        static const bool value = boost::mpl::contains<complex_types,GeneralT>::value;
     };
 
     //-------------------------------------------------------------------------
@@ -83,16 +83,16 @@ namespace pni{
     //! \ingroup type_classes
     //! \brief check numeric type
     //!
-    //! Set the value member to true if T is a numeric type, otherwise value
+    //! Set the value member to true if GeneralT is a numeric type, otherwise value
     //! will be false. Numeric types are either integer, float, or complex
     //! types.
     //!
-    //! \tparam T type to check
+    //! \tparam GeneralT type to check
     //!
-    template<typename T> struct is_numeric_type
+    template<typename GeneralT> struct is_numeric_type
     {
-        //! true if T is a numeric type, false otherwise
-        static const bool value = boost::mpl::contains<numeric_types,T>::value;
+        //! true if GeneralT is a numeric type, false otherwise
+        static const bool value = boost::mpl::contains<numeric_types,GeneralT>::value;
     };
 
     //-------------------------------------------------------------------------
@@ -100,17 +100,17 @@ namespace pni{
     //! \ingroup type_classes
     //! \brief check non numeric type
     //! 
-    //! Set the value member to true if T is one of the non numeric types.
+    //! Set the value member to true if GeneralT is one of the non numeric types.
     //! For all other types value will be false. Non numeric types are 
     //! bool, binary, and none. 
     //!
-    //! \tparam T type to check
+    //! \tparam GeneralT type to check
     //! 
-    template<typename T> struct is_non_numeric_type
+    template<typename GeneralT> struct is_non_numeric_type
     {
-        //! true if T is not a numeric type, false otherwise 
+        //! true if GeneralT is not a numeric type, false otherwise 
         static const bool value =
-            boost::mpl::contains<non_numeric_types,T>::value;
+            boost::mpl::contains<non_numeric_types,GeneralT>::value;
     };
 
     //-------------------------------------------------------------------------
@@ -118,16 +118,16 @@ namespace pni{
     //! \ingroup type_classes
     //! \brief check primitive type
     //!
-    //! Set the value member to true if T belongs to the primitive types 
+    //! Set the value member to true if GeneralT belongs to the primitive types 
     //! provided by libpninexus. For all other types value will be false. 
     //!
-    //! \tparam T type to check
+    //! \tparam GeneralT type to check
     //!
-    template<typename T> struct is_primitive_type
+    template<typename GeneralT> struct is_primitive_type
     {
-        //! true if T is a primitive type, false otherwise 
+        //! true if GeneralT is a primitive type, false otherwise 
         static const bool value =  
-            boost::mpl::contains<primitive_types,T>::value;
+            boost::mpl::contains<primitive_types,GeneralT>::value;
     };
 
     //------------------------------------------------------------------------

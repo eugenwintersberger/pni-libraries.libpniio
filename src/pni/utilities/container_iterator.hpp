@@ -39,13 +39,13 @@ namespace pni{
     //! interface
     /*!
     \code
-    template<typename T> class Iterable<T>
+    template<typename GeneralT> class Iterable<GeneralT>
     {
         public:
-            typedef T value_type;
+            typedef GeneralT value_type;
             size_t size() const;
-            T &operator[](size_t i);
-            T operator[](size_t i) const;
+            GeneralT &operator[](size_t i);
+            GeneralT operator[](size_t i) const;
     };
     \endcode
     !*/ 
@@ -53,17 +53,17 @@ namespace pni{
     //! iterators an exception is thrown if one tries to dereference an invalid 
     //! iterator
     //! 
-    //! \tparam ITERABLE iterable type 
+    //! \tparam IterableT iterable type 
     //!
-    template<typename ITERABLE> class container_iterator
+    template<typename IterableT> class container_iterator
     {
         private:
             //! type of the container object
-            typedef typename std::remove_const<ITERABLE>::type container_type;
+            typedef typename std::remove_const<IterableT>::type container_type;
             //! pointer type of the container
-            typedef ITERABLE *cptr_type;
+            typedef IterableT *cptr_type;
             //! pointer to the container object
-            ITERABLE *_container; 
+            IterableT *_container; 
 
             //! actual position state of the iterator
             ssize_t _state;                    
@@ -76,17 +76,17 @@ namespace pni{
             //! value type of the container
             typedef typename container_type::value_type value_type;
             //! pointer type the iterator provides
-            typedef typename std::conditional<std::is_const<ITERABLE>::value,
+            typedef typename std::conditional<std::is_const<IterableT>::value,
                                              const value_type*,value_type*>::type pointer;
             //! reference type the iterator provides
-            typedef typename std::conditional<std::is_const<ITERABLE>::value,
+            typedef typename std::conditional<std::is_const<IterableT>::value,
                                               const value_type&,value_type&>::type reference;
             //! difference type of the iterator
             typedef ssize_t difference_type;
             //! type of iterator
             typedef std::random_access_iterator_tag iterator_category;
             //! iterator type
-            typedef container_iterator<ITERABLE> iterator_type;
+            typedef container_iterator<IterableT> iterator_type;
             //================constructor and destructor========================
             //! default constructor
             container_iterator():_container(nullptr),_state(0),_maxsize(0) {}
@@ -185,7 +185,7 @@ namespace pni{
             //! \throws IteratorError if the iterator is invalid
             //! \return reference or value of the actual object
             //!
-            typename std::conditional<std::is_const<ITERABLE>::value,
+            typename std::conditional<std::is_const<IterableT>::value,
                                       value_type,reference>::type
             operator*()
             {
@@ -347,16 +347,16 @@ namespace pni{
     //! Iteartor<...> iter2 = iter+2;
     //! \endcode
     //! 
-    //! \tparam ITER iterable type
+    //! \tparam IterableT iterable type
     //! \param a original iterator
     //! \param b offset to add
     //! \return new iterator 
     //!
-    template<typename ITER> 
-    container_iterator<ITER> operator+(const container_iterator<ITER> &a, 
+    template<typename IterableT> 
+    container_iterator<IterableT> operator+(const container_iterator<IterableT> &a, 
                                        ssize_t b)
     {
-        container_iterator<ITER> iter = a;
+        container_iterator<IterableT> iter = a;
         iter += b;
         return iter;
     }
@@ -368,14 +368,14 @@ namespace pni{
     //! Add an offset to the iterator and thus increment its internal state by 
     //! this offset.
     //! 
-    //! \tparam ITER iterable type
+    //! \tparam IterableT iterable type
     //! \param a offset to add
     //! \param b original iterator
     //! \return new iterator
     //!
-    template<typename ITER> 
-    container_iterator<ITER> operator+(ssize_t a, 
-                                       const container_iterator<ITER> &b)
+    template<typename IterableT> 
+    container_iterator<IterableT> operator+(ssize_t a, 
+                                       const container_iterator<IterableT> &b)
     {
         return b+a;
     }
@@ -387,16 +387,16 @@ namespace pni{
     //! Subtract an integer offset from the iterator and thus decrement the 
     //! internal state of the iterator by this value. 
     //!
-    //! \tparam ITER iterable type
+    //! \tparam IterableT iterable type
     //! \param a original iterator
     //! \param b offset
     //! \return new iterator to new position
     //!
-    template<typename ITER> 
-    container_iterator<ITER> operator-(const container_iterator<ITER> &a, 
+    template<typename IterableT> 
+    container_iterator<IterableT> operator-(const container_iterator<IterableT> &a, 
                                        ssize_t b)
     {
-        container_iterator<ITER> iter = a;
+        container_iterator<IterableT> iter = a;
         iter -= b;
         return iter;
     }
@@ -408,14 +408,14 @@ namespace pni{
     //! Subtract to iterators and return the offset difference between this
     //! two iterators.
     //!
-    //! \tparam ITER iterable type
+    //! \tparam IterableT iterable type
     //! \param a first iterator
     //! \param b second iterator
     //! \return offset difference
     //!
-    template<typename ITER> 
-    ssize_t operator-(const container_iterator<ITER> &a, 
-                      const container_iterator<ITER> &b)
+    template<typename IterableT> 
+    ssize_t operator-(const container_iterator<IterableT> &a, 
+                      const container_iterator<IterableT> &b)
     {
         return a.state() - b.state();
     }

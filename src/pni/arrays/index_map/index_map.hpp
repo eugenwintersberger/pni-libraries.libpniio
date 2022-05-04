@@ -67,25 +67,25 @@ namespace pni{
     //! dimensions, fixed number of elements along each dimensions): 
     //! static_index_map.
     //!
-    //! \tparam SHAPE_STORE type storing the shape information
-    //! \tparam MAP_IMP map implementation type
+    //! \tparam ShapeStoreT type storing the shape information
+    //! \tparam MapImpT map implementation type
     //! \sa static_index_map
     //! \sa c_index_map_imp
     //! 
     template<
-             typename SHAPE_STORE,
-             typename MAP_IMP
+             typename ShapeStoreT,
+             typename MapImpT
             > 
     class index_map
     {
         public:
             //=================public types====================================
             //! storage type
-            typedef SHAPE_STORE storage_type;
+            typedef ShapeStoreT storage_type;
             //! index type
             typedef typename storage_type::value_type value_type;
             //! policy type
-            typedef MAP_IMP     implementation_type;
+            typedef MapImpT     implementation_type;
             //! read write iterator
             typedef typename storage_type::iterator iterator;
             //! constant iterator over the map
@@ -243,19 +243,19 @@ namespace pni{
             size_t offset = map.offset(std::list<size_t>{3,2,1});
             \endcode
             !*/
-            //! \tparam CTYPE container type for index data
-            //! \param index instance of CTYPE with container data
+            //! \tparam ContainerT container type for index data
+            //! \param index instance of ContainerT with container data
             //! \return linear offset
             //! 
             template<
-                     typename CTYPE,
+                     typename ContainerT,
                      typename = typename std::enable_if<
                      std::is_compound<
-                     typename std::remove_reference<CTYPE>::type
+                     typename std::remove_reference<ContainerT>::type
                      >::value
                      >::type
                     >
-            size_t offset(const CTYPE &index) const
+            size_t offset(const ContainerT &index) const
             {
                 return implementation_type::template offset(_shape,index);
             }
@@ -276,19 +276,19 @@ namespace pni{
             size_t offset = map.offset(s,index);
             \endcode
             !*/
-            //! \tparam CTYPE container type for the index
+            //! \tparam ContainerT container type for the index
             //! \param s lvalue reference to the selection 
             //! \param index lvalue reference to the index 
             //! \return linear offset to the element
             //! 
-            template<typename CTYPE,
+            template<typename ContainerT,
                      typename = typename std::enable_if<
                      std::is_compound<
-                     typename std::remove_reference<CTYPE>::type
+                     typename std::remove_reference<ContainerT>::type
                      >::value
                      >::type
                     >
-            size_t offset(const array_selection &s,const CTYPE &index) const
+            size_t offset(const array_selection &s,const ContainerT &index) const
             {
                 return implementation_type::template offset(s,_shape,index);
             }
@@ -306,13 +306,13 @@ namespace pni{
             auto index = map.index<shape_t>(3);
             \endcode
             !*/
-            //! \tparam CTYPE container type for the index
+            //! \tparam ContainerT container type for the index
             //! \param offset linear offset for which to compute the index
-            //! \return instance of CTYPE with index values
+            //! \return instance of ContainerT with index values
             //! 
-            template<typename CTYPE> CTYPE index(size_t offset) const
+            template<typename ContainerT> ContainerT index(size_t offset) const
             {
-                CTYPE index = container_utils<CTYPE>::create(rank()); 
+                ContainerT index = container_utils<ContainerT>::create(rank()); 
                 implementation_type::template index(_shape,index,offset);
                 return index;
 

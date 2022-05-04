@@ -40,12 +40,12 @@
 using namespace pni;
 
 //=============we need different distributions for integer and float============
-template<typename T,bool is_int> struct distribution_map;
+template<typename GeneralT,bool is_int> struct distribution_map;
 
 //------------distribution for integral types-----------------------------------
-template<typename T> struct distribution_map<T,true>
+template<typename GeneralT> struct distribution_map<GeneralT,true>
 {
-    typedef std::uniform_int_distribution<T> distribution_type;
+    typedef std::uniform_int_distribution<GeneralT> distribution_type;
 };
 
 #ifdef _MSC_VER
@@ -61,21 +61,21 @@ template<> struct distribution_map<int8, true>
 #endif
 
 //------------------distribution for floating point types-----------------------
-template<typename T> struct distribution_map<T,false>
+template<typename GeneralT> struct distribution_map<GeneralT,false>
 {
-    typedef std::uniform_real_distribution<T> distribution_type;
+    typedef std::uniform_real_distribution<GeneralT> distribution_type;
 };
 
 //=================the default generator=======================================
-template<typename T> class random_generator
+template<typename GeneralT> class random_generator
 {
     private:
         std::mt19937_64 _engine;
-		typedef distribution_map<T, pni::type_info<T>::is_integer> map_t;
+		typedef distribution_map<GeneralT, pni::type_info<GeneralT>::is_integer> map_t;
         typename map_t::distribution_type _distribution;
 
     public:
-        random_generator(T a,T b):
+        random_generator(GeneralT a,GeneralT b):
             _engine(std::random_device()()),
             _distribution(a,b)
         {}
@@ -90,14 +90,14 @@ template<typename T> class random_generator
 // warning of MSVC.
 #pragma warning(disable:4244)
 #endif
-            _distribution(0.2*pni::type_info<T>::min(),
-				          0.2*pni::type_info<T>::max())
+            _distribution(0.2*pni::type_info<GeneralT>::min(),
+				          0.2*pni::type_info<GeneralT>::max())
         {}
 #ifdef _MSC_VER
 #pragma warning(default:4244)
 #endif
 
-        T operator()()
+        GeneralT operator()()
         {
             return _distribution(_engine);
         }
@@ -145,14 +145,14 @@ public:
 };
 #endif
 //--------------------------------------			----
-template<typename T> class random_generator<std::complex<T>>
+template<typename GeneralT> class random_generator<std::complex<GeneralT>>
 {
     private:
-        typedef pni::type_info<T> tinfo_type;
-        random_generator<T> _real_generator;
-       	random_generator<T> _imag_generator;
+        typedef pni::type_info<GeneralT> tinfo_type;
+        random_generator<GeneralT> _real_generator;
+       	random_generator<GeneralT> _imag_generator;
     public:
-        random_generator(T a,T b):
+        random_generator(GeneralT a,GeneralT b):
             _real_generator(a,b),
             _imag_generator(a,b)
         {}
@@ -162,9 +162,9 @@ template<typename T> class random_generator<std::complex<T>>
             _imag_generator()
         {}
         
-        std::complex<T> operator()()
+        std::complex<GeneralT> operator()()
         {
-            return std::complex<T>(_real_generator(),
+            return std::complex<GeneralT>(_real_generator(),
                                    _imag_generator());
         }
 };

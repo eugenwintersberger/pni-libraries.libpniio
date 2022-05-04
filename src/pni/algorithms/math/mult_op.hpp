@@ -29,32 +29,32 @@
 namespace pni{
 
     
-    template<typename ATYPE>  class array_view;
+    template<typename ArrayT>  class array_view;
 
     //!
     //! \ingroup mdim_array_internal_classes
     //! \brief Multiplication expression template
     //! 
-    //! \tparam OP1T left hand operand type
-    //! \tparam OP2T right hand operand type
+    //! \tparam Operand1T left hand operand type
+    //! \tparam Operand2T right hand operand type
     //! 
     template<
-             typename OP1T,
-             typename OP2T
+             typename Operand1T,
+             typename Operand2T
             > 
     class mult_op
     {
         private:
             //! left operand
-            typename op_trait<OP1T>::ref_type _op1;
+            typename op_trait<Operand1T>::ref_type _op1;
             //! right operand
-            typename op_trait<OP2T>::ref_type _op2;
+            typename op_trait<Operand2T>::ref_type _op2;
         public:
             //--------------------public types---------------------------------
             //! value type of the multiplication
-            typedef typename OP1T::value_type value_type;
+            typedef typename Operand1T::value_type value_type;
             //! type of the operation class
-            typedef mult_op<OP1T,OP2T> array_type;
+            typedef mult_op<Operand1T,Operand2T> array_type;
             //! storage type
             typedef void storage_type;
             //! non-const iterator type - this is only to satsify the interaface
@@ -69,9 +69,9 @@ namespace pni{
             typedef array_view<array_type> view_type;
 
             //! index map type
-            typedef typename array_trait<OP1T,OP2T>::map_type map_type;
+            typedef typename array_trait<Operand1T,Operand2T>::map_type map_type;
             //! inplace arithmetic type
-            typedef typename array_trait<OP1T,OP2T>::inplace_arithmetic
+            typedef typename array_trait<Operand1T,Operand2T>::inplace_arithmetic
                 inplace_arithmetic;
 
             //===================constructors==================================
@@ -82,7 +82,7 @@ namespace pni{
             //! \param o1 left operand
             //! \param o2 right operand
             //!
-            mult_op(const OP1T &o1,const OP2T &o2):
+            mult_op(const Operand1T &o1,const Operand2T &o2):
                 _op1(o1),
                 _op2(o2)
             {}

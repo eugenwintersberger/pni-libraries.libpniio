@@ -27,25 +27,25 @@
 #include <pni/types.hpp>
 #include "../../data_generator.hpp"
 
-template<typename AT> struct md_array_trait
+template<typename TestArrayT> struct md_array_trait
 {
-    typedef AT mdarray_type; 
+    typedef TestArrayT mdarray_type; 
     typedef typename mdarray_type::value_type value_type;
     typedef random_generator<value_type> generator_type; 
 };
 
-template<typename AT> struct fixture
+template<typename TestArrayT> struct fixture
 {
-    typename md_array_trait<AT>::generator_type generator; 
+    typename md_array_trait<TestArrayT>::generator_type generator; 
     pni::shape_t shape; 
-    AT mdarray_1;
-    AT mdarray_2; 
+    TestArrayT mdarray_1;
+    TestArrayT mdarray_2; 
 
     fixture():
         generator(),
         shape(pni::shape_t{3,2}),
-        mdarray_1(AT::create(shape)),
-        mdarray_2(AT::create(shape))
+        mdarray_1(TestArrayT::create(shape)),
+        mdarray_2(TestArrayT::create(shape))
     {
         std::generate(mdarray_1.begin(),mdarray_1.end(),generator); 
         std::generate(mdarray_2.begin(),mdarray_2.end(),generator);

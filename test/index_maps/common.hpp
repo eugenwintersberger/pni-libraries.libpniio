@@ -33,24 +33,24 @@ typedef std::vector<pni::slice> slice_vector;
 
 
 template<
-         typename MAPT,
-         typename INDEXT
+         typename MapT,
+         typename IndexT
         >
 struct offset_arg
     {
-        MAPT map;
-        INDEXT index;
+        MapT map;
+        IndexT index;
         size_t expected_offset;
     };
 
 template<
-         typename MAPT,
-         typename INDEXT
+         typename MapT,
+         typename IndexT
         >
 struct selection_offset_arg
 {
     slice_vector slices;
-    MAPT map;
-    INDEXT sel_index;
+    MapT map;
+    IndexT sel_index;
     size_t expected_offset;
 };

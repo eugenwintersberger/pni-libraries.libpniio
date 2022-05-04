@@ -150,19 +150,19 @@ namespace pni{
             //! internal array of type array_type encapsulated by the type 
             //! erasure.
             //! 
-            //! \tparam T type of the object. 
+            //! \tparam ObjectT type of the object. 
             //! \param o const reference to the original object
             //!
-            template<typename T,
+            template<typename ObjectT,
                      //this template expression is necessary to avoid that this
                      //constructor is callend when data_object itself is to be
                      //copied (see below for the correct copy constructor)
                      typename  = typename std::enable_if<
                                        !std::is_same<array,typename
-                                       std::remove_reference<T>::type >::value 
+                                       std::remove_reference<ObjectT>::type >::value 
                                        >::type
                     > 
-            explicit array(const T &o):_ptr(new array_holder<T>(o))
+            explicit array(const ObjectT &o):_ptr(new array_holder<ObjectT>(o))
             { }
 
             //------------------------------------------------------------------
@@ -175,22 +175,22 @@ namespace pni{
             array a = DArray<UInt16>(shape_t{1024,1024});
             \endcode
             !*/
-            //! \tparam T original type
+            //! \tparam ObjectT original type
             //! \param o rvalue reference to the original object
             //!
-            template<typename T,
+            template<typename ObjectT,
                      //this template expression is necessary to avoid that this
                      //constructor is used when a data_object by itself is to be
                      //moved (seel below for the correct move constructor)
                      typename = typename std::enable_if<
                                        !std::is_same<array,typename
-                                       std::remove_reference<T>::type >::value 
+                                       std::remove_reference<ObjectT>::type >::value 
                                        >::type
                     > 
-            explicit array(T &&o):
+            explicit array(ObjectT &&o):
                 _ptr(new array_holder<typename std::remove_cv<
-                                typename std::remove_reference<T>::type>::type>
-                                (std::forward<T>(o)))
+                                typename std::remove_reference<ObjectT>::type>::type>
+                                (std::forward<ObjectT>(o)))
             { }
 
 
@@ -253,13 +253,13 @@ namespace pni{
             auto s = array.shape<std::list<size_t> >();
             \endcode
             !*/
-            //! If the wrapped type is a scalar an empty instance of CTYPE is
+            //! If the wrapped type is a scalar an empty instance of ContainerT is
             //! returned.
             //!
-            //! \tparam CTYPE container type
-            //! \return instance of CTYPE
+            //! \tparam ContainerT container type
+            //! \return instance of ContainerT
             //!
-            template<typename CTYPE> CTYPE shape() const;
+            template<typename ContainerT> ContainerT shape() const;
 
             //-----------------------------------------------------------------
             //! 
@@ -376,10 +376,10 @@ namespace pni{
     };
 
     //======================implementation of template members=================
-    template<typename CTYPE> CTYPE array::shape() const
+    template<typename ContainerT> ContainerT array::shape() const
     {
         shape_t s = this->shape();
-        CTYPE c(s.size());
+        ContainerT c(s.size());
         std::copy(s.begin(),s.end(),c.begin());
         return c;
     }

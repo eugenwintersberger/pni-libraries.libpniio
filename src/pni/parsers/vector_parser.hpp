@@ -61,11 +61,11 @@ namespace pni{
 //!
 //! @tparam T the value type of the vector
 //!
-template<typename T>
-class parser<std::vector<T>>
+template<typename ElementT>
+class parser<std::vector<ElementT>>
 {
   public:
-    using value_type = T;
+    using value_type = ElementT;
   private:
     parser<value_type>  _value_parser;
     container_io_config _config;

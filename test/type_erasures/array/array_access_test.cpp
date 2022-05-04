@@ -39,10 +39,10 @@ using namespace pni;
 BOOST_AUTO_TEST_SUITE(array_access_test)
    
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_read_at,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_read_at,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a(f.mdarray_1);
         const array &aref = a;
@@ -56,10 +56,10 @@ BOOST_AUTO_TEST_SUITE(array_access_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_write_at,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_write_at,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a1(f.mdarray_1);
         array a2(f.mdarray_2);
@@ -75,10 +75,10 @@ BOOST_AUTO_TEST_SUITE(array_access_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_read_operator,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_read_operator,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a(f.mdarray_1);
         const array &aref = a;
@@ -92,10 +92,10 @@ BOOST_AUTO_TEST_SUITE(array_access_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_write_operator,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_write_operator,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
         
         array a1(f.mdarray_1);
         array a2(f.mdarray_2);
@@ -111,11 +111,11 @@ BOOST_AUTO_TEST_SUITE(array_access_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_read_multidim,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_read_multidim,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
         typedef array::element_index index_type;
-        fixture<AT> f;
+        fixture<TestArrayT> f;
 
         array a(f.mdarray_1);
         const array &aref = a;
@@ -134,11 +134,11 @@ BOOST_AUTO_TEST_SUITE(array_access_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_write_multidim,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_write_multidim,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
         typedef array::element_index index_type;
-        fixture<AT> f;
+        fixture<TestArrayT> f;
 
         array a1(f.mdarray_1);
         array a2(f.mdarray_2);

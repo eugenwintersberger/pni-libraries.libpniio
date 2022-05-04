@@ -41,34 +41,34 @@ struct data_policy
     //! Create a multidimensional array of type T and shape s. The data 
     //! in the array is not initialized. 
     //! 
-    //! \tparam T data type of the array elements
+    //! \tparam ElementT data type of the array elements
     //! \pararm s shape of the array
-    //! \return instance of pni::dynamic_array<T> 
+    //! \return instance of pni::dynamic_array<ElementT> 
     //! 
-    template<typename T> 
-    static pni::dynamic_array<T> 
+    template<typename ElementT> 
+    static pni::dynamic_array<ElementT> 
     create_array(const pni::shape_t &s) 
     {
-        return pni::dynamic_array<T>::create(s);
+        return pni::dynamic_array<ElementT>::create(s);
     }
 
     //------------------------------------------------------------------------
     //!
     //! \brief create a multidimensional array with random data
     //! 
-    //! Create a multidimensional array of type T and shape s, initialized 
+    //! Create a multidimensional array of type ElementT and shape s, initialized 
     //! with uniform random data.
     //! 
-    //! \tparam T data type of the array elements
+    //! \tparam ElementT data type of the array elements
     //! \param s shape of the array
-    //! \return instance of pni::dynamic_array<T> with random data
+    //! \return instance of pni::dynamic_array<ElementT> with random data
     //! 
-    template<typename T>
-    static pni::dynamic_array<T> 
+    template<typename ElementT>
+    static pni::dynamic_array<ElementT> 
     create_random_array(const pni::shape_t &s)
     {
-        auto a = create_array<T>(s);
-        std::generate(a.begin(),a.end(),uniform_distribution<T>());
+        auto a = create_array<ElementT>(s);
+        std::generate(a.begin(),a.end(),uniform_distribution<ElementT>());
         return a;
     }
 
@@ -79,13 +79,13 @@ struct data_policy
     //! Return a random scalar value. The random value is drawn from a uniform
     //! distribution.
     //!
-    //! \tparam T data type for the value
-    //! \return instance of T with a random value. 
+    //! \tparam ElementT data type for the value
+    //! \return instance of ElementT with a random value. 
     //!
-    template<typename T>
-    static T create_random_scalar() 
+    template<typename ElementT>
+    static ElementT create_random_scalar() 
     {
-        uniform_distribution<T> rand_dist;
+        uniform_distribution<ElementT> rand_dist;
         return rand_dist();
     }
 
@@ -96,32 +96,32 @@ struct data_policy
     //! Create a buffer of size size. The data in the buffer is not 
     //! initialized. 
     //! 
-    //! \tparam T data type of the buffer elements
+    //! \tparam ElementT data type of the buffer elements
     //! \param size the number of elements in the buffer
-    //! \return instance of std::vector<T> of size size
+    //! \return instance of std::vector<ElementT> of size size
     //! 
-    template<typename T> 
-    static std::vector<T> create_buffer(size_t size) 
+    template<typename ElementT> 
+    static std::vector<ElementT> create_buffer(size_t size) 
     {
-        return std::vector<T>(size);
+        return std::vector<ElementT>(size);
     }
 
     //------------------------------------------------------------------------
     //!
     //! \brief create buffer with random data
     //!
-    //! Create a buffer of size size and element type T initialized with 
+    //! Create a buffer of size size and element type ElementT initialized with 
     //! random data drawn from a uniform distribution. 
     //!
-    //! \tparam  T data type of the buffer elements
+    //! \tparam  ElementT data type of the buffer elements
     //! \param size number of elements in the buffer
-    //! \return instance of std::vector<T> of size size with random data
+    //! \return instance of std::vector<ElementT> of size size with random data
     //!
-    template<typename T> 
-    static std::vector<T> create_random_buffer(size_t size) 
+    template<typename ElementT> 
+    static std::vector<ElementT> create_random_buffer(size_t size) 
     {
-        auto b = create_buffer<T>(size);
-        std::generate(b.begin(),b.end(),uniform_distribution<T>());
+        auto b = create_buffer<ElementT>(size);
+        std::generate(b.begin(),b.end(),uniform_distribution<ElementT>());
         return b;
     }
 

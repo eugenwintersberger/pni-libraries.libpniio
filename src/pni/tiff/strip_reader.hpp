@@ -66,17 +66,17 @@ namespace tiff {
             //! array itself and are not of importance here.
             //!
             //! \tparam IT data type used in the image file
-            //! \tparam CTYPE container type where the data shoule be stored
+            //! \tparam ContainerT container type where the data shoule be stored
             //! \param c number of the channel to read
             //! \param stream input stream from which to read data
             //! \param data target container where to store the data
             //!
             template<
-                     typename IT,
-                     typename CTYPE
+                     typename BufferT,
+                     typename ContainerT
                     > 
             void _read_interlace(size_t c,std::ifstream &stream,
-                                 CTYPE &data) const;
+                                 ContainerT &data) const;
 
         public:
             //====================constructors and destructor==================
@@ -150,8 +150,8 @@ namespace tiff {
             //! \param stream input stream from which to read data
             //! \param data reference to the container where to store the data
             //!
-            template<typename CTYPE> 
-                void read(size_t c,std::ifstream &stream,CTYPE &data) 
+            template<typename ContainerT> 
+                void read(size_t c,std::ifstream &stream,ContainerT &data) 
             {
                 using namespace pni;
                 //first we need to determine the datatype of the
@@ -188,11 +188,11 @@ namespace tiff {
         };
 
     //-------------------------------------------------------------------------
-    template<typename IT,typename CTYPE> 
+    template<typename BufferT,typename ContainerT> 
         void strip_reader::_read_interlace(size_t channel,
-                std::ifstream &stream,CTYPE &data) const
+                std::ifstream &stream,ContainerT &data) const
     {
-        typedef typename CTYPE::value_type value_type;
+        typedef typename ContainerT::value_type value_type;
         //compute the size of a pixel in bytes
         size_t pixel_size = std::accumulate(_bits_per_channel.begin(),
                                             _bits_per_channel.end(),0)/8;
@@ -204,11 +204,11 @@ namespace tiff {
                                                0)/8;
 
         //size of the sample type
-        size_t sample_size = sizeof(IT);
+        size_t sample_size = sizeof(BufferT);
 
-        IT sample_buffer; 
+        BufferT sample_buffer; 
 
-        typename CTYPE::iterator piter = data.begin(); //pixel iterator
+        typename ContainerT::iterator piter = data.begin(); //pixel iterator
         while(piter != data.end())
         {
             //loop over all strips

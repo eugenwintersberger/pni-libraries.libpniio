@@ -54,27 +54,27 @@ namespace pni {
     //! \ingroup mdim_array_classes
     //! \brief template for a multi-dimensional array class
     //!
-    //! \tparam STORAGE storage object to use to keep the data
-    //! \tparam IMAP the index map 
-    //! \tparam IPA unary (inplace) arithmetics implementation
+    //! \tparam StorageT storage object to use to keep the data
+    //! \tparam IndexMapT the index map 
+    //! \tparam InplaceArithmeticT unary (inplace) arithmetics implementation
     //!
     template<
-             typename STORAGE,
-             typename IMAP=dynamic_cindex_map,
-             typename IPA =inplace_arithmetics
+             typename StorageT,
+             typename IndexMapT=dynamic_cindex_map,
+             typename InplaceArithmeticT =inplace_arithmetics
             > 
     class mdarray
     {
         public:
             //================public types=====================================
             //! type of the buffer object
-            typedef STORAGE storage_type;
+            typedef StorageT storage_type;
             //! arrays element type
             typedef typename storage_type::value_type value_type;  
             //! index map type
-            typedef IMAP map_type;
+            typedef IndexMapT map_type;
             //! type of the array
-            typedef mdarray<storage_type,map_type,IPA> array_type;
+            typedef mdarray<storage_type,map_type,InplaceArithmeticT> array_type;
             //! iterator type
             typedef typename storage_type::iterator iterator;
             //! const iterator type
@@ -85,7 +85,7 @@ namespace pni {
             typedef typename storage_type::const_reverse_iterator
                 const_reverse_iterator;
             //! inplace arithmetics type
-            typedef IPA inplace_arithmetic;
+            typedef InplaceArithmeticT inplace_arithmetic;
             //! view type
             typedef array_view<array_type> view_type;
             //! const view type
@@ -98,10 +98,10 @@ namespace pni {
             //! type ID of the element type
             static constexpr type_id_t type_id = type_id_map<value_type>::type_id;
         private:
-            //! instance of STORAGE
-            STORAGE _data;
+            //! instance of StorageT
+            StorageT _data;
             //! Index map of the array
-            IMAP _imap;
+            IndexMapT _imap;
         public:
 
             //=================constructors and destructor=====================
@@ -144,11 +144,11 @@ namespace pni {
             //! instance.  The resulting array object has the same shape as 
             //! the view. 
             //! 
-            //! \tparam ATYPE storage type of the view
+            //! \tparam ArrayT storage type of the view
             //! \param view reference to the view
             //!
-            template<typename ATYPE>
-            explicit mdarray(const array_view<ATYPE> &view):
+            template<typename ArrayT>
+            explicit mdarray(const array_view<ArrayT> &view):
                 _data(container_utils<storage_type>::create(view.size())),
                 _imap(map_utils<map_type>::create(view.template shape<shape_t>()))
             {
@@ -164,11 +164,11 @@ namespace pni {
             //! expression templates in order to construct an array from an 
             //! expression. 
             //! 
-            //! \tparam MDARGS template parameters of mdarray
+            //! \tparam MDArrayArgsT template parameters of mdarray
             //! \param array reference to the source array
             //!
-            template<typename ...MDARGS>
-            explicit mdarray(const mdarray<MDARGS...> &array):
+            template<typename ...MDArrayArgsT>
+            explicit mdarray(const mdarray<MDArrayArgsT...> &array):
                 _data(container_utils<storage_type>::create(array.size())),
                 _imap(map_utils<map_type>::create(array.template shape<shape_t>()))
             {
@@ -184,16 +184,16 @@ namespace pni {
             //! This function can be used for easy array construction. It uses 
             //! the array_factory template in the background. 
             //!
-            //! \tparam ARGS variadic argument types
+            //! \tparam ArrayArgsT variadic argument types
             //! \param arguments variadic argument list
             //! \return array instance
             //!
-            template<typename ...ARGS>
-            static array_type create(ARGS... arguments)
+            template<typename ...ArrayArgsT>
+            static array_type create(ArrayArgsT... arguments)
             {
                 typedef array_factory<array_type> factory_type;
 
-                return factory_type::create(std::forward<ARGS>(arguments)...);
+                return factory_type::create(std::forward<ArrayArgsT>(arguments)...);
             }
 
             //-----------------------------------------------------------------
@@ -204,17 +204,17 @@ namespace pni {
             //! list. The first initializer list holds shape information while
             //! the second holds the data which will be stored in the array.
             //!
-            //! \tparam T1 element type of shape list
-            //! \tparam T2 element type of data list
+            //! \tparam Element1T element type of shape list
+            //! \tparam Element2T element type of data list
             //! \param l1 instance of shape list
             //! \param l2 instance of data list
             //! \return instance of array_type
             template<
-                     typename T1,
-                     typename T2
+                     typename Element1T,
+                     typename Element2T
                     >
-            static array_type create(const std::initializer_list<T1> &l1,
-                                     const std::initializer_list<T2> &l2)
+            static array_type create(const std::initializer_list<Element1T> &l1,
+                                     const std::initializer_list<Element2T> &l2)
             {
                 typedef array_factory<array_type> factory_type;
 
@@ -231,12 +231,12 @@ namespace pni {
             //! 
             //! \throws size_mismatch_error if array sizes do not match
             //! \throws shape_mismatch_error if shapes do not match
-            //! \tparam MDARGS template parameters of the source type
+            //! \tparam MDArrayArgsT template parameters of the source type
             //! \param array reference to the source array
             //! \return reference to the updated array
             //!
-            template<typename ...MDARGS>
-            array_type &operator=(const mdarray<MDARGS...> &array)
+            template<typename ...MDArrayArgsT>
+            array_type &operator=(const mdarray<MDArrayArgsT...> &array)
             {
                 if((void*)this == (void*)&array) return *this;
     
@@ -283,15 +283,15 @@ namespace pni {
             //! 
             //! \brief shape to container
             //! 
-            //! This returns a container of type CTYPE with the number of
+            //! This returns a container of type ContainerT with the number of
             //! elements stored in the array. 
             //! 
-            //! \tparam CTYPE container type 
-            //! \return instance of CTYPE with shape data
+            //! \tparam ContainerT container type 
+            //! \return instance of ContainerT with shape data
             //!
-            template<typename CTYPE> CTYPE shape() const
+            template<typename ContainerT> ContainerT shape() const
             {
-                auto c = container_utils<CTYPE>::create(_imap.rank());
+                auto c = container_utils<ContainerT>::create(_imap.rank());
                 std::copy(_imap.begin(),_imap.end(),c.begin());
                 return c;
             }
@@ -430,18 +430,18 @@ namespace pni {
             //!
             //! Returns the reference to a single elemnt of the array 
             //! determined by a multidimensional index of unsigned integers 
-            //! stored in a container of type CTYPE. This method performs no 
+            //! stored in a container of type ContainerT. This method performs no 
             //! range checking. 
             //!
-            //! \tparam CTYPE index container type
+            //! \tparam ContainerT index container type
             //! \param index reference to index container
             //! \return reference to the element
             //!
             template<
-                     typename CTYPE,
-                     typename = typename enable_element_cont<CTYPE>::type
+                     typename ContainerT,
+                     typename = typename enable_element_cont<ContainerT>::type
                     >
-            value_type &operator()(const CTYPE &index)
+            value_type &operator()(const ContainerT &index)
             {
                return _data[_imap.offset(index)]; 
             }
@@ -452,18 +452,18 @@ namespace pni {
             //!
             //! Returns the value of a single elemnt of the array determined 
             //! by a multidimensional index of unsigned integers stored in a
-            //! container of type CTYPE. This method performs no range 
+            //! container of type ContainerT. This method performs no range 
             //! checking. 
             //!
-            //! \tparam CTYPE index container type
+            //! \tparam ContainerT index container type
             //! \param index reference to index container
             //! \return value of the element
             //!
             template<
-                     typename CTYPE,
-                     typename = typename enable_element_cont<CTYPE>::type
+                     typename ContainerT,
+                     typename = typename enable_element_cont<ContainerT>::type
                     >
-            value_type operator()(const CTYPE &index) const
+            value_type operator()(const ContainerT &index) const
             {
                 return _data[_imap.offset(index)];
             }
@@ -473,18 +473,18 @@ namespace pni {
             //! \brief return array view
             //!
             //! Return a view on the array determined by a set of slices 
-            //! stored in a container type CTYPE. 
+            //! stored in a container type ContainerT. 
             //!
-            //! \tparam CTYPE slice container type
+            //! \tparam ContainerT slice container type
             //! \param slices reference to the container
             //! \return array_view instance
             //!
             template<
-                     typename CTYPE,
-                     typename = typename enable_view_cont<CTYPE>::type
+                     typename ContainerT,
+                     typename = typename enable_view_cont<ContainerT>::type
                     >
             array_view<const array_type> 
-            operator()(const CTYPE &slices) const
+            operator()(const ContainerT &slices) const
             {
                 typedef array_view<const array_type> view_type;
 
@@ -497,18 +497,18 @@ namespace pni {
             //! \brief return array view
             //!
             //! Return a view on the array determined by a set of slices 
-            //! stored in a container type CTYPE. 
+            //! stored in a container type ContainerT. 
             //!
-            //! \tparam CTYPE slice container type
+            //! \tparam ContainerT slice container type
             //! \param slices reference to the container
             //! \return array_view instance
             //!
             template<
-                     typename CTYPE,
-                     typename = typename enable_view_cont<CTYPE>::type
+                     typename ContainerT,
+                     typename = typename enable_view_cont<ContainerT>::type
                     >
             array_view<array_type> 
-            operator()(const CTYPE &slices)
+            operator()(const ContainerT &slices)
             {
                 typedef array_view<array_type> view_type;
 
@@ -527,18 +527,18 @@ namespace pni {
             //! checking is required have a look the corresponding at() 
             //! member function.
             //!
-            //! \tparam ITYPES index types
+            //! \tparam IndicesT index types
             //! \param indexes list of index values
             //! \return reference to the value at the given index
             //!
             template<
-                     typename... ITYPES,
-                     typename = typename enable_valid_index<ITYPES...>::type
+                     typename... IndicesT,
+                     typename = typename enable_valid_index<IndicesT...>::type
                     >
-            typename view_type_trait<array_type,ITYPES...>::type 
-            operator()(ITYPES... indexes)
+            typename view_type_trait<array_type,IndicesT...>::type 
+            operator()(IndicesT... indexes)
             {
-                typedef view_provider<array_type,is_view_index<ITYPES...>::value>
+                typedef view_provider<array_type,is_view_index<IndicesT...>::value>
                     provider_type;
                 return provider_type::get_reference(*this,_imap,indexes...);
             }
@@ -555,18 +555,18 @@ namespace pni {
             //! index checking is required have a look the corresponding at() 
             //! member function.
             //!
-            //! \tparam ITYPES index types
+            //! \tparam IndicesT index types
             //! \param indexes list of index values
             //! \return value at the given index
             //!
             template<
-                     typename... ITYPES,
-                     typename = typename enable_valid_index<ITYPES...>::type
+                     typename... IndicesT,
+                     typename = typename enable_valid_index<IndicesT...>::type
                     >
-            typename view_type_trait<const array_type,ITYPES...>::const_type
-            operator()(ITYPES ...indexes) const
+            typename view_type_trait<const array_type,IndicesT...>::const_type
+            operator()(IndicesT ...indexes) const
             {
-                typedef view_provider<array_type,is_view_index<ITYPES...>::value>
+                typedef view_provider<array_type,is_view_index<IndicesT...>::value>
                     provider_type;
                 return provider_type::get_value(*this,_imap,indexes...);
             }
@@ -721,7 +721,7 @@ namespace pni {
             //!
             array_type &operator+=(value_type s) 
             { 
-                IPA::add(*this,s); 
+                InplaceArithmeticT::add(*this,s); 
                 return *this;
             }
 
@@ -736,14 +736,14 @@ namespace pni {
             a += b;
             \endcode
             !*/
-            //! \tparam ATYPE type of the array to add
+            //! \tparam ArrayT type of the array to add
             //! \param v reference to the array to add 
             //! \return reference to the original array
             //!
-            template<typename ATYPE> 
-            array_type &operator+=(const ATYPE &v) 
+            template<typename ArrayT> 
+            array_type &operator+=(const ArrayT &v) 
             { 
-                IPA::add(*this,v); 
+                InplaceArithmeticT::add(*this,v); 
                 return *this;
             }
 
@@ -763,7 +763,7 @@ namespace pni {
             //!
             array_type &operator-=(value_type s) 
             { 
-                IPA::sub(*this,s); 
+                InplaceArithmeticT::sub(*this,s); 
                 return *this;
             }
 
@@ -778,14 +778,14 @@ namespace pni {
             a -= b;
             \endcode
             !*/
-            //! \tparam ATYPE type of the array to subtract
+            //! \tparam ArrayT type of the array to subtract
             //! \param v reference to the array to subtract 
             //! \return reference to the original array
             //!
-            template<typename ATYPE> 
-            array_type &operator-=(const ATYPE &v) 
+            template<typename ArrayT> 
+            array_type &operator-=(const ArrayT &v) 
             { 
-                IPA::sub(*this,v); 
+                InplaceArithmeticT::sub(*this,v); 
                 return *this; 
             }
 
@@ -805,7 +805,7 @@ namespace pni {
             //!
             array_type &operator*=(value_type s) 
             { 
-                IPA::mult(*this,s); 
+                InplaceArithmeticT::mult(*this,s); 
                 return *this; 
             }
 
@@ -820,14 +820,14 @@ namespace pni {
             a *= b;
             \endcode
             !*/
-            //! \tparam ATYPE type of the array to multiply 
+            //! \tparam ArrayT type of the array to multiply 
             //! \param v reference to the array to multiply 
             //! \return reference to the original array
             //!
-            template<typename ATYPE>
-            array_type &operator*=(const ATYPE &v) 
+            template<typename ArrayT>
+            array_type &operator*=(const ArrayT &v) 
             { 
-                IPA::mult(*this,v); 
+                InplaceArithmeticT::mult(*this,v); 
                 return *this;
             }
 
@@ -847,7 +847,7 @@ namespace pni {
             //!
             array_type &operator/=(value_type s) 
             { 
-                IPA::div(*this,s); 
+                InplaceArithmeticT::div(*this,s); 
                 return *this;
             }
 
@@ -862,14 +862,14 @@ namespace pni {
             a /= b;
             \endcode
             !*/ 
-            //! \tparam ATYPE type of the array to divide by  
+            //! \tparam ArrayT type of the array to divide by  
             //! \param v reference to the array to divide by 
             //! \return reference to the original array
             //!
-            template<typename ATYPE>
-            array_type &operator/=(const ATYPE &v) 
+            template<typename ArrayT>
+            array_type &operator/=(const ArrayT &v) 
             { 
-                IPA::div(*this,v); 
+                InplaceArithmeticT::div(*this,v); 
                 return *this;
             }
 
@@ -883,16 +883,16 @@ namespace pni {
     //! 
     //! Specialization of the container_trait for mdarray.
     //!
-    //! \tparam STORAGE array storage type
-    //! \tparam IMAP index map type
-    //! \tparam IPA inplace arithmetic type
+    //! \tparam StorageT array storage type
+    //! \tparam IndexMapT index map type
+    //! \tparam InplaceArithmeticT inplace arithmetic type
     //! 
     template<
-             typename STORAGE,
-             typename IMAP,
-             typename IPA
+             typename StorageT,
+             typename IndexMapT,
+             typename InplaceArithmeticT
             >
-    struct container_trait<mdarray<STORAGE,IMAP,IPA>>
+    struct container_trait<mdarray<StorageT,IndexMapT,InplaceArithmeticT>>
     {
         //! mdarray provides random access
         static const bool is_random_access = true;
@@ -901,14 +901,14 @@ namespace pni {
         //! whether or not an mdarray has contiguous memory depends on the
         //! underlying storage type
         static const bool is_contiguous =
-            container_trait<STORAGE>::is_contiguous;
+            container_trait<StorageT>::is_contiguous;
         //! mdarray is a multidimensional container
         static const bool is_multidim = true;
     };
 
     //need a declaration for the static constexpr attribute
-    template<typename STORAGE,typename IMAP,typename IPA>
-    constexpr type_id_t mdarray<STORAGE,IMAP,IPA>::type_id;
+    template<typename StorageT,typename IndexMapT,typename InplaceArithmeticT>
+    constexpr type_id_t mdarray<StorageT,IndexMapT,InplaceArithmeticT>::type_id;
     
     //=====================non-member operators================================
 
@@ -922,11 +922,11 @@ namespace pni {
     //! \return output stream
     //!
     template<
-             typename STORAGE,
-             typename IMAP,
-             typename IPA
+             typename StorageT,
+             typename IndexMapT,
+             typename InplaceArithmeticT
             >
-    std::ostream &operator<<(std::ostream &o,const mdarray<STORAGE,IMAP,IPA> &a)
+    std::ostream &operator<<(std::ostream &o,const mdarray<StorageT,IndexMapT,InplaceArithmeticT> &a)
     {
         for(auto iter = a.begin();iter!=a.end();++iter)
             o<<*iter<<" ";
@@ -945,11 +945,11 @@ namespace pni {
     //! \return reference to input stream
     //!
     template<
-             typename STORAGE,
-             typename IMAP,
-             typename IPA
+             typename StorageT,
+             typename IndexMapT,
+             typename InplaceArithmeticT
             >
-    std::istream &operator>>(std::istream &is,mdarray<STORAGE,IMAP,IPA> &a)
+    std::istream &operator>>(std::istream &is,mdarray<StorageT,IndexMapT,InplaceArithmeticT> &a)
     {
         for(auto iter=a.begin();iter!=a.end();++iter)
             is>>*iter;
@@ -971,12 +971,12 @@ namespace pni {
     //! \return true if all elements are equal, false otherwise
     //!
     template<
-             typename STORAGE,
-             typename IMAP,
-             typename IPA
+             typename StorageT,
+             typename IndexMapT,
+             typename InplaceArithmeticT
             >
-    bool operator==(const mdarray<STORAGE,IMAP,IPA> &b1, 
-                    const mdarray<STORAGE,IMAP,IPA> &b2) 
+    bool operator==(const mdarray<StorageT,IndexMapT,InplaceArithmeticT> &b1, 
+                    const mdarray<StorageT,IndexMapT,InplaceArithmeticT> &b2) 
     {
         return std::equal(b1.begin(),b1.end(),b2.begin());
     }
@@ -994,12 +994,12 @@ namespace pni {
     //! \return true if not equal, false otherwise
     //!
     template<
-             typename STORAGE,
-             typename IMAP,
-             typename IPA
+             typename StorageT,
+             typename IndexMapT,
+             typename InplaceArithmeticT
             >
-    bool operator!=(const mdarray<STORAGE,IMAP,IPA> &b1, 
-                    const mdarray<STORAGE,IMAP,IPA> &b2) 
+    bool operator!=(const mdarray<StorageT,IndexMapT,InplaceArithmeticT> &b1, 
+                    const mdarray<StorageT,IndexMapT,InplaceArithmeticT> &b2) 
     {
         return !(b1==b2);
     }

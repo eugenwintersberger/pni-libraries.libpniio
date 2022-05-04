@@ -34,8 +34,8 @@ using namespace pni;
 //some usefull type definitions
 typedef dynamic_array<float64> darray_type;
 
-template<typename ATYPE>
-void show_info(const ATYPE &a)
+template<typename ArrayT>
+void show_info(const ArrayT &a)
 {
     std::cout<<"Data type: "<<type_id(a)<<std::endl;
     std::cout<<"Rank     : "<<a.rank()<<std::endl;

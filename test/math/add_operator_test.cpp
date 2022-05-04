@@ -39,12 +39,12 @@ using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(add_operator_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(construction_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(construction_test,TestArrayT,all_array_types)
     {
-        typedef fixture<AT> fixture_type; 
-        typedef add_op<AT,AT> aa_add_op;
-        typedef add_op<typename fixture_type::scalar_type,AT> sa_add_op;
-        typedef add_op<AT,typename fixture_type::scalar_type> as_add_op;
+        typedef fixture<TestArrayT> fixture_type; 
+        typedef add_op<TestArrayT,TestArrayT> aa_add_op;
+        typedef add_op<typename fixture_type::scalar_type,TestArrayT> sa_add_op;
+        typedef add_op<TestArrayT,typename fixture_type::scalar_type> as_add_op;
 
         fixture_type f((add_ranges<typename fixture_type::value_type>()));
 
@@ -60,40 +60,40 @@ BOOST_AUTO_TEST_SUITE(add_operator_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(access_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(access_test,TestArrayT,all_array_types)
     {
-        typedef fixture<AT> fixture_type; 
+        typedef fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
         typedef typename fixture_type::scalar_type scalar_type;
 
         fixture_type f((add_ranges<value_type>()));
 
-        add_op<AT,AT> o1(f.lhs,f.rhs);
+        add_op<TestArrayT,TestArrayT> o1(f.lhs,f.rhs);
         for(size_t index=0;index<o1.size();++index)
             BOOST_CHECK_EQUAL(o1[index],f.lhs[index]+f.rhs[index]);
 
-        add_op<AT,scalar_type> o2(f.lhs,f.rhs_s);
+        add_op<TestArrayT,scalar_type> o2(f.lhs,f.rhs_s);
         for(size_t index=0;index<o2.size();++index)
             BOOST_CHECK_EQUAL(o2[index], 
                               value_type(f.lhs[index]+f.rhs_s[index]));
 
-        add_op<scalar_type,AT> o3(f.lhs_s,f.rhs);
+        add_op<scalar_type,TestArrayT> o3(f.lhs_s,f.rhs);
         for(size_t index=0;index<o3.size();++index)
             BOOST_CHECK_EQUAL(o3[index], 
                               value_type(f.lhs_s[index]+f.rhs[index]));
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(iterator_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(iterator_test,TestArrayT,all_array_types)
     {
-        typedef fixture<AT> fixture_type; 
+        typedef fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
         typedef typename fixture_type::scalar_type scalar_type;
 
         fixture_type f((add_ranges<value_type>()));
 
         size_t index=0;
-        add_op<AT,AT> o1(f.lhs,f.rhs);
+        add_op<TestArrayT,TestArrayT> o1(f.lhs,f.rhs);
         for(auto v: o1)
         {
             BOOST_CHECK_EQUAL(v,value_type(f.lhs[index]+f.rhs[index]));
@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_SUITE(add_operator_test)
         }
 
         
-        add_op<scalar_type,AT> o2(f.lhs_s,f.rhs);
+        add_op<scalar_type,TestArrayT> o2(f.lhs_s,f.rhs);
         index=0;
         for(auto v: o2)
         {
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_SUITE(add_operator_test)
             index++;
         }
 
-        add_op<AT,scalar_type> o3(f.lhs,f.rhs_s);
+        add_op<TestArrayT,scalar_type> o3(f.lhs,f.rhs_s);
         index=0;
         for(auto v: o3)
         {
@@ -119,13 +119,13 @@ BOOST_AUTO_TEST_SUITE(add_operator_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(operator_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(operator_test,TestArrayT,all_array_types)
     {
-        typedef fixture<AT> fixture_type; 
+        typedef fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
 
         fixture_type f((add_ranges<value_type>()));
-        auto result = AT::create(f.shape);
+        auto result = TestArrayT::create(f.shape);
 
         result = f.lhs+f.rhs;
         BOOST_CHECK_EQUAL(result.size(),f.lhs.size());
@@ -145,9 +145,9 @@ BOOST_AUTO_TEST_SUITE(add_operator_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(operator_on_view_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(operator_on_view_test,TestArrayT,all_array_types)
     {
-        typedef fixture<AT> fixture_type; 
+        typedef fixture<TestArrayT> fixture_type; 
         typedef typename fixture_type::value_type value_type;
         typedef dynamic_array<value_type> result_type;
 

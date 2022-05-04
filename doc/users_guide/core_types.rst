@@ -345,12 +345,12 @@ function template. The declaration of the template looks somehow like this
 
 .. code-block:: cpp
 
-    template<typename ST,typename TT> TT convert(const ST &v);
+    template<typename SourceT,typename TargetT> TargetT convert(const SourceT &v);
 
 A value of a particular source type (denoted by the template parameter 
-:cpp:type:`ST`) is passed as an argument to the :cpp:func:`convert` template. The value 
+:cpp:type:`SourceT`) is passed as an argument to the :cpp:func:`convert` template. The value 
 of this argument will then be converted to a value of the target type 
-:cpp:type:`TT` and returned from the function template. 
+:cpp:type:`TargetT` and returned from the function template. 
 This function template throws two exceptions
 
 ======================= =========================================================

@@ -29,28 +29,28 @@
 #include "../../data_generator.hpp"
 
 
-template<typename T> struct fixture
+template<typename GeneralT> struct fixture
 {   
-    typedef random_generator<T> generator_type;
+    typedef random_generator<GeneralT> generator_type;
     generator_type generator;
-    T value_1;
-    T value_2;
+    GeneralT value_1;
+    GeneralT value_2;
 
-    fixture(T lbound=1,T ubound=10):
+    fixture(GeneralT lbound=1,GeneralT ubound=10):
         generator(lbound,ubound),
         value_1(generator()),
         value_2(generator())
     {}
 };
 
-template<typename T> struct fixture<std::complex<T>>
+template<typename GeneralT> struct fixture<std::complex<GeneralT>>
 {   
-    typedef random_generator<T> generator_type;
+    typedef random_generator<GeneralT> generator_type;
     generator_type generator;
-    std::complex<T> value_1;
-    std::complex<T> value_2;
+    std::complex<GeneralT> value_1;
+    std::complex<GeneralT> value_2;
 
-    fixture(T lbound=1,T ubound=10):
+    fixture(GeneralT lbound=1,GeneralT ubound=10):
         generator(lbound,ubound),
         value_1(generator()),
         value_2(generator())
