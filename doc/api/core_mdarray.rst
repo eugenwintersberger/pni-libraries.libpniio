@@ -48,13 +48,13 @@ Operators
 Operators
 ---------
 
-.. doxygenfunction:: pni::operator==(const scalar<T>&, const scalar<T>&)
+.. doxygenfunction:: pni::operator==(const scalar<ElementT>&, const scalar<ElementT>&)
 
-.. doxygenfunction:: pni::operator!=(const scalar<T>&, const scalar<T>&)
+.. doxygenfunction:: pni::operator!=(const scalar<ElementT>&, const scalar<ElementT>&)
 
-.. doxygenfunction:: pni::operator<<(std::ostream&, const scalar<T>&)
+.. doxygenfunction:: pni::operator<<(std::ostream&, const scalar<ElementT>&)
 
-.. doxygenfunction:: pni::operator>>(std::istream&, scalar<T>&)
+.. doxygenfunction:: pni::operator>>(std::istream&, scalar<ElementT>&)
    
 :cpp:class:`slice`
 ==================

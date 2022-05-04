@@ -38,7 +38,7 @@ Utility functions
 
 .. doxygenfunction:: str_from_type_id(type_id_t)
 
-.. doxygenfunction:: type_id(const T&)
+.. doxygenfunction:: type_id(const GeneralT&)
    
 
 :cpp:enum:`pni::type_class_t`

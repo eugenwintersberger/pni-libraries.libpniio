@@ -65,6 +65,6 @@ Macros
 Utility functions
 =================
 
-.. doxygenfunction:: check_equal_size(const A&, const B&)
+.. doxygenfunction:: check_equal_size(const ContainerAT&, const ContainerBT&)
 
-.. doxygenfunction:: check_equal_size(const A&, const B&, const exception_record&)
+.. doxygenfunction:: check_equal_size(const ContainerAT&, const ContainerBT&, const exception_record&)
