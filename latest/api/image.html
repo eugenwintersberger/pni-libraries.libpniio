@@ -341,8 +341,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni12image_reader5imageE5ATYPE6size_t6size_t">
-<span id="_CPPv3I0EN3pni12image_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni12image_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ATYPE</code>&gt;<br /><span class="target" id="classpni_1_1image__reader_1a173a346ff02f956310bae21828aff0ab"></span><a class="reference internal" href="#_CPPv4I0EN3pni12image_reader5imageE5ATYPE6size_t6size_t" title="pni::image_reader::image::ATYPE">ATYPE</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni12image_reader5imageE5ATYPE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni12image_reader5imageE6ArrayT6size_t6size_t">
+<span id="_CPPv3I0EN3pni12image_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni12image_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ArrayT</code>&gt;<br /><span class="target" id="classpni_1_1image__reader_1a6a842c1c1d68cdf5a007fc9878e42a1a"></span><a class="reference internal" href="#_CPPv4I0EN3pni12image_reader5imageE6ArrayT6size_t6size_t" title="pni::image_reader::image::ArrayT">ArrayT</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni12image_reader5imageE6ArrayT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>method to read a single channel </p>
 <p>This method returns an object determined by ArrayType holding the data from channel c (default is 0) of image i in the file. <p> This method must be implemented by all child classes of ImageReader. It is assumed that the method will allocate enough memory and configure the returning object appropriately.</p>
 </p>
@@ -359,8 +359,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni12image_reader5imageEvR5ATYPE6size_t6size_t">
-<span id="_CPPv3I0EN3pni12image_reader5imageER5ATYPE6size_t6size_t"></span><span id="_CPPv2I0EN3pni12image_reader5imageER5ATYPE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ATYPE</code>&gt;<br /><span class="target" id="classpni_1_1image__reader_1ac8bd2f4e0a870c007cde2e46aaa58649"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni12image_reader5imageEvR5ATYPE6size_t6size_t" title="pni::image_reader::image::ATYPE">ATYPE</a> &amp;<em>array</em>, size_t <em>i</em>, size_t <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni12image_reader5imageEvR5ATYPE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni12image_reader5imageEvR6ArrayT6size_t6size_t">
+<span id="_CPPv3I0EN3pni12image_reader5imageER6ArrayT6size_t6size_t"></span><span id="_CPPv2I0EN3pni12image_reader5imageER6ArrayT6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ArrayT</code>&gt;<br /><span class="target" id="classpni_1_1image__reader_1a3bfb3e1dd44b53871d9f2f4471cac984"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni12image_reader5imageEvR6ArrayT6size_t6size_t" title="pni::image_reader::image::ArrayT">ArrayT</a> &amp;<em>array</em>, size_t <em>i</em>, size_t <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni12image_reader5imageEvR6ArrayT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>method to read a single image channel </p>
 <p>This method reads the data from channle c (default = 0) of image i in the file and stores it in an Array template supplied by the user. The array must provide enough space to hold the data otherwise exceptions will be thrown. The addvantage of this method is that it does not waste time with memory allocation. It is thus useful in cases where data from many files of same size must be read.</p>
 <p><dl class="simple">
@@ -475,10 +475,10 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni11tiff_reader5imageE5CTYPE6size_t6size_t">
-<span id="_CPPv3I0EN3pni11tiff_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni11tiff_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">CTYPE</code>&gt;<br /><span class="target" id="classpni_1_1tiff__reader_1aa3374e83822629139a6a2e48a5ecc313"></span><a class="reference internal" href="#_CPPv4I0EN3pni11tiff_reader5imageE5CTYPE6size_t6size_t" title="pni::tiff_reader::image::CTYPE">CTYPE</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni11tiff_reader5imageE5CTYPE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni11tiff_reader5imageE10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni11tiff_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni11tiff_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1tiff__reader_1a0d0e1a85d26f531f05d2ebce861395c5"></span><a class="reference internal" href="#_CPPv4I0EN3pni11tiff_reader5imageE10ContainerT6size_t6size_t" title="pni::tiff_reader::image::ContainerT">ContainerT</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni11tiff_reader5imageE10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read image data </p>
-<p>Template method to read image data from the file. The returns an instance of the the template Array&lt;T,BT&gt; and does all the configuration and memory allocation work for this object. <dl class="simple">
+<p>Template method to read image data from the file. The returns an instance of the the template Array&lt;T,BaseT&gt; and does all the configuration and memory allocation work for this object. <dl class="simple">
 <dt><strong>Return</strong></dt><dd><p>instance of an array template </p>
 </dd>
 <dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
@@ -495,8 +495,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni11tiff_reader5imageEvR5CTYPE6size_t6size_t">
-<span id="_CPPv3I0EN3pni11tiff_reader5imageER5CTYPE6size_t6size_t"></span><span id="_CPPv2I0EN3pni11tiff_reader5imageER5CTYPE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">CTYPE</code>&gt;<br /><span class="target" id="classpni_1_1tiff__reader_1af2d47cfced8624d59388c97b175de948"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni11tiff_reader5imageEvR5CTYPE6size_t6size_t" title="pni::tiff_reader::image::CTYPE">CTYPE</a> &amp;<em>data</em>, size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni11tiff_reader5imageEvR5CTYPE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni11tiff_reader5imageEvR10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni11tiff_reader5imageER10ContainerT6size_t6size_t"></span><span id="_CPPv2I0EN3pni11tiff_reader5imageER10ContainerT6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1tiff__reader_1ae5771091255ce4f78710546cb3187708"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni11tiff_reader5imageEvR10ContainerT6size_t6size_t" title="pni::tiff_reader::image::ContainerT">ContainerT</a> &amp;<em>data</em>, size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni11tiff_reader5imageEvR10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read image data </p>
 <p>Reads the image data from the file and stores it in a user suppliedb array object. The method checks if the arrays shape and allocation state fits the requirements of the image. The advantage of this method is that memory allocation must be done only once before this method is called. This increases performance dramatically in particular if many images of equal size should be read.</p>
 <p><dl class="simple">
@@ -505,7 +505,7 @@
 </ul>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: instance of CTYPE where data will be stored </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: instance of ContainerT where data will be stored </p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image in the file </p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: index of the image channel to read </p></li>
 </ul>
@@ -637,14 +637,14 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni10cbf_reader5imageE5CTYPE6size_t6size_t">
-<span id="_CPPv3I0EN3pni10cbf_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni10cbf_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">CTYPE</code>&gt;<br /><span class="target" id="classpni_1_1cbf__reader_1ad081b3b5d91d90566dfc502f4e5ed7e9"></span><a class="reference internal" href="#_CPPv4I0EN3pni10cbf_reader5imageE5CTYPE6size_t6size_t" title="pni::cbf_reader::image::CTYPE">CTYPE</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10cbf_reader5imageE5CTYPE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni10cbf_reader5imageE10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni10cbf_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni10cbf_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1cbf__reader_1a4c0b1f081f45a9996981633dccbd3242"></span><a class="reference internal" href="#_CPPv4I0EN3pni10cbf_reader5imageE10ContainerT6size_t6size_t" title="pni::cbf_reader::image::ContainerT">ContainerT</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10cbf_reader5imageE10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read image </p>
 <p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>instance of CTYPE with image data </p>
+<dt><strong>Return</strong></dt><dd><p>instance of ContainerT with image data </p>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CTYPE</span></code>: container type for storing data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type for storing data</p></li>
 </ul>
 </dd>
 <dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
@@ -662,10 +662,10 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni10cbf_reader5imageEvR5CTYPE6size_t6size_t">
-<span id="_CPPv3I0EN3pni10cbf_reader5imageER5CTYPE6size_t6size_t"></span><span id="_CPPv2I0EN3pni10cbf_reader5imageER5CTYPE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">CTYPE</code>&gt;<br /><span class="target" id="classpni_1_1cbf__reader_1a8a74fe80f291aa07a8b54e516235f050"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni10cbf_reader5imageEvR5CTYPE6size_t6size_t" title="pni::cbf_reader::image::CTYPE">CTYPE</a> &amp;<em>array</em>, size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10cbf_reader5imageEvR5CTYPE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni10cbf_reader5imageEvR10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni10cbf_reader5imageER10ContainerT6size_t6size_t"></span><span id="_CPPv2I0EN3pni10cbf_reader5imageER10ContainerT6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1cbf__reader_1a883627407a9d003ee54f69a6498e9091"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni10cbf_reader5imageEvR10ContainerT6size_t6size_t" title="pni::cbf_reader::image::ContainerT">ContainerT</a> &amp;<em>array</em>, size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10cbf_reader5imageEvR10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read data from detector file </p>
-<p>Reads a single image from a detector file and stores it in an container of type CTYPE.</p>
+<p>Reads a single image from a detector file and stores it in an container of type ContainerT.</p>
 <p><dl class="simple">
 <dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
 <li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1file__error"><span class="std std-ref"><span class="pre">file_error</span></span></a></code>: if case of IO errors </p></li>
@@ -673,11 +673,11 @@
 </ul>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CTYPE</span></code>: container type holding the image data </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type holding the image data </p></li>
 </ul>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: instance of CTYPE where data will be stored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: instance of ContainerT where data will be stored</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: image number </p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: channel number </p></li>
 </ul>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PNI NeXus Library: pni::conversion_strategy&lt; T, S, unchecked_convertible &gt; Struct Template Reference</title>
+<title>PNI NeXus Library: pni::conversion_strategy&lt; TargetT, SourceT, unchecked_convertible &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,7 +64,7 @@ $(document).ready(function(){initNavTree('structpni_1_1conversion__strategy.html
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pni::conversion_strategy&lt; T, S, unchecked_convertible &gt; Struct Template Reference</div>  </div>
+<div class="title">pni::conversion_strategy&lt; TargetT, SourceT, unchecked_convertible &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -75,39 +75,39 @@ $(document).ready(function(){initNavTree('structpni_1_1conversion__strategy.html
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a30b2f7075c40c0f90fecd4773cca4c90"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1conversion__strategy.html#a30b2f7075c40c0f90fecd4773cca4c90">convert</a> (const S &amp;<a class="el" href="classpni_1_1value.html">value</a>)</td></tr>
-<tr class="memdesc:a30b2f7075c40c0f90fecd4773cca4c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform conversion  <a href="structpni_1_1conversion__strategy.html#a30b2f7075c40c0f90fecd4773cca4c90">More...</a><br /></td></tr>
-<tr class="separator:a30b2f7075c40c0f90fecd4773cca4c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4e0b4d86c1cd4ef59ac2c1861096d9f"><td class="memItemLeft" align="right" valign="top">static TargetT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1conversion__strategy.html#ab4e0b4d86c1cd4ef59ac2c1861096d9f">convert</a> (const SourceT &amp;<a class="el" href="classpni_1_1value.html">value</a>)</td></tr>
+<tr class="memdesc:ab4e0b4d86c1cd4ef59ac2c1861096d9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">perform conversion  <a href="structpni_1_1conversion__strategy.html#ab4e0b4d86c1cd4ef59ac2c1861096d9f">More...</a><br /></td></tr>
+<tr class="separator:ab4e0b4d86c1cd4ef59ac2c1861096d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T, typename S, bool unchecked_convertible = true&gt;<br />
-struct pni::conversion_strategy&lt; T, S, unchecked_convertible &gt;</h3>
+<div class="textblock"><h3>template&lt;typename TargetT, typename SourceT, bool unchecked_convertible = true&gt;<br />
+struct pni::conversion_strategy&lt; TargetT, SourceT, unchecked_convertible &gt;</h3>
 
 <p>This strategy implements a simple unchecked type conversion.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>target type </td></tr>
-    <tr><td class="paramname">S</td><td>source type </td></tr>
+    <tr><td class="paramname">TargetT</td><td>target type </td></tr>
+    <tr><td class="paramname">SourceT</td><td>source type </td></tr>
     <tr><td class="paramname"><a class="el" href="structpni_1_1unchecked__convertible.html" title="check if a type is unchecked convertible">unchecked_convertible</a></td><td>a flag if true use this strategy </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a30b2f7075c40c0f90fecd4773cca4c90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30b2f7075c40c0f90fecd4773cca4c90">&#9670;&nbsp;</a></span>convert()</h2>
+<a id="ab4e0b4d86c1cd4ef59ac2c1861096d9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4e0b4d86c1cd4ef59ac2c1861096d9f">&#9670;&nbsp;</a></span>convert()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , typename S , bool unchecked_convertible = true&gt; </div>
+template&lt;typename TargetT , typename SourceT , bool unchecked_convertible = true&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static T <a class="el" href="structpni_1_1conversion__strategy.html">pni::conversion_strategy</a>&lt; T, S, <a class="el" href="structpni_1_1unchecked__convertible.html">unchecked_convertible</a> &gt;::convert </td>
+          <td class="memname">static TargetT <a class="el" href="structpni_1_1conversion__strategy.html">pni::conversion_strategy</a>&lt; TargetT, SourceT, <a class="el" href="structpni_1_1unchecked__convertible.html">unchecked_convertible</a> &gt;::convert </td>
           <td>(</td>
-          <td class="paramtype">const S &amp;&#160;</td>
+          <td class="paramtype">const SourceT &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
@@ -138,7 +138,7 @@ template&lt;typename T , typename S , bool unchecked_convertible = true&gt; </di
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="structpni_1_1conversion__strategy.html">conversion_strategy</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:37 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -78,22 +78,22 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6a544ad872b410589f6ecc33deef28be"><td class="memItemLeft" align="right" valign="top">static std::streampos&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1cbf_1_1dectris__reader.html#a6a544ad872b410589f6ecc33deef28be">read_header</a> (std::ifstream &amp;is, std::vector&lt; <a class="el" href="classpni_1_1image__info.html">pni::image_info</a> &gt; &amp;info, <a class="el" href="namespacepni_1_1cbf.html#a5832842900f247913a2ff8a134042222">compression_id</a> &amp;ct)</td></tr>
 <tr class="memdesc:a6a544ad872b410589f6ecc33deef28be"><td class="mdescLeft">&#160;</td><td class="mdescRight">read header information  <a href="classpni_1_1cbf_1_1dectris__reader.html#a6a544ad872b410589f6ecc33deef28be">More...</a><br /></td></tr>
 <tr class="separator:a6a544ad872b410589f6ecc33deef28be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a496d9c51ab8ca3bd6fe7558691997d00"><td class="memTemplParams" colspan="2">template&lt;typename CBFT , typename CTYPE &gt; </td></tr>
-<tr class="memitem:a496d9c51ab8ca3bd6fe7558691997d00"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">read_data_byte_offset</a> (std::ifstream &amp;is, const <a class="el" href="classpni_1_1image__info.html">pni::image_info</a> &amp;info, CTYPE &amp;data)</td></tr>
-<tr class="memdesc:a496d9c51ab8ca3bd6fe7558691997d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">read data  <a href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">More...</a><br /></td></tr>
-<tr class="separator:a496d9c51ab8ca3bd6fe7558691997d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ebc5b447c4d60404ce0c0d6515699a"><td class="memTemplParams" colspan="2">template&lt;typename CBFBufferT , typename ContainerT &gt; </td></tr>
+<tr class="memitem:a46ebc5b447c4d60404ce0c0d6515699a"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">read_data_byte_offset</a> (std::ifstream &amp;is, const <a class="el" href="classpni_1_1image__info.html">pni::image_info</a> &amp;info, ContainerT &amp;data)</td></tr>
+<tr class="memdesc:a46ebc5b447c4d60404ce0c0d6515699a"><td class="mdescLeft">&#160;</td><td class="mdescRight">read data  <a href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">More...</a><br /></td></tr>
+<tr class="separator:a46ebc5b447c4d60404ce0c0d6515699a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This type provides static method to read data from CBF files written by detectors from DECTRIS. <br  />
  </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a496d9c51ab8ca3bd6fe7558691997d00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a496d9c51ab8ca3bd6fe7558691997d00">&#9670;&nbsp;</a></span>read_data_byte_offset()</h2>
+<a id="a46ebc5b447c4d60404ce0c0d6515699a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46ebc5b447c4d60404ce0c0d6515699a">&#9670;&nbsp;</a></span>read_data_byte_offset()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename CBFT , typename CTYPE &gt; </div>
+template&lt;typename CBFBufferT , typename ContainerT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -113,7 +113,7 @@ template&lt;typename CBFT , typename CTYPE &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CTYPE &amp;&#160;</td>
+          <td class="paramtype">ContainerT &amp;&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -131,8 +131,8 @@ template&lt;typename CBFT , typename CTYPE &gt; </div>
 <p>Static method to read byte offset compressed data from DECTRIS CBF files.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CBFT</td><td>type used for data in the file </td></tr>
-    <tr><td class="paramname">CTYPE</td><td>container type where to store the data </td></tr>
+    <tr><td class="paramname">CBFBufferT</td><td>type used for data in the file </td></tr>
+    <tr><td class="paramname">ContainerT</td><td>container type where to store the data </td></tr>
   </table>
   </dd>
 </dl>
@@ -208,7 +208,7 @@ template&lt;typename CBFT , typename CTYPE &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="namespacepni_1_1cbf.html">cbf</a></li><li class="navelem"><a class="el" href="classpni_1_1cbf_1_1dectris__reader.html">dectris_reader</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:37 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

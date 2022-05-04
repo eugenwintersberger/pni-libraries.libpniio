@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PNI NeXus Library: pni::tiff::ifd_entry_reader&lt; RTYPE, ETYPE &gt; Class Template Reference</title>
+<title>PNI NeXus Library: pni::tiff::ifd_entry_reader&lt; ReadT, EntryDataT &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,7 +64,7 @@ $(document).ready(function(){initNavTree('classpni_1_1tiff_1_1ifd__entry__reader
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">pni::tiff::ifd_entry_reader&lt; RTYPE, ETYPE &gt; Class Template Reference</div>  </div>
+<div class="title">pni::tiff::ifd_entry_reader&lt; ReadT, EntryDataT &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -75,31 +75,31 @@ $(document).ready(function(){initNavTree('classpni_1_1tiff_1_1ifd__entry__reader
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1ccd48d5a60b498f234b58c99a66987d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1ifd__entry__reader.html#a1ccd48d5a60b498f234b58c99a66987d">read</a> (std::vector&lt; RTYPE &gt; &amp;r, std::ifstream &amp;stream)</td></tr>
-<tr class="memdesc:a1ccd48d5a60b498f234b58c99a66987d"><td class="mdescLeft">&#160;</td><td class="mdescRight">read entry data  <a href="classpni_1_1tiff_1_1ifd__entry__reader.html#a1ccd48d5a60b498f234b58c99a66987d">More...</a><br /></td></tr>
-<tr class="separator:a1ccd48d5a60b498f234b58c99a66987d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba04f78532078d9ac26d19789c17fbc1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1ifd__entry__reader.html#aba04f78532078d9ac26d19789c17fbc1">read</a> (std::vector&lt; ReadT &gt; &amp;r, std::ifstream &amp;stream)</td></tr>
+<tr class="memdesc:aba04f78532078d9ac26d19789c17fbc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">read entry data  <a href="classpni_1_1tiff_1_1ifd__entry__reader.html#aba04f78532078d9ac26d19789c17fbc1">More...</a><br /></td></tr>
+<tr class="separator:aba04f78532078d9ac26d19789c17fbc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename RTYPE, typename ETYPE&gt;<br />
-class pni::tiff::ifd_entry_reader&lt; RTYPE, ETYPE &gt;</h3>
+<div class="textblock"><h3>template&lt;typename ReadT, typename EntryDataT&gt;<br />
+class pni::tiff::ifd_entry_reader&lt; ReadT, EntryDataT &gt;</h3>
 
 <p>This template reads IFD entries of a particular type and returns the result as a vector of a particular result type. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1ccd48d5a60b498f234b58c99a66987d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ccd48d5a60b498f234b58c99a66987d">&#9670;&nbsp;</a></span>read()</h2>
+<a id="aba04f78532078d9ac26d19789c17fbc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba04f78532078d9ac26d19789c17fbc1">&#9670;&nbsp;</a></span>read()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename RTYPE , typename ETYPE &gt; </div>
+template&lt;typename ReadT , typename EntryDataT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classpni_1_1tiff_1_1ifd__entry__reader.html">pni::tiff::ifd_entry_reader</a>&lt; RTYPE, ETYPE &gt;::read </td>
+          <td class="memname">void <a class="el" href="classpni_1_1tiff_1_1ifd__entry__reader.html">pni::tiff::ifd_entry_reader</a>&lt; ReadT, EntryDataT &gt;::read </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; RTYPE &gt; &amp;&#160;</td>
+          <td class="paramtype">std::vector&lt; ReadT &gt; &amp;&#160;</td>
           <td class="paramname"><em>r</em>, </td>
         </tr>
         <tr>
@@ -139,7 +139,7 @@ template&lt;typename RTYPE , typename ETYPE &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="namespacepni_1_1tiff.html">tiff</a></li><li class="navelem"><a class="el" href="classpni_1_1tiff_1_1ifd__entry__reader.html">ifd_entry_reader</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:37 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

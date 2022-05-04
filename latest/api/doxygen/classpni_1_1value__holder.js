@@ -1,11 +1,11 @@
 var classpni_1_1value__holder =
 [
-    [ "value_holder", "classpni_1_1value__holder.html#adfbdb3d15e6cee99f98ffe17061e6b1f", null ],
-    [ "value_holder", "classpni_1_1value__holder.html#a501b35230e8e4141ef6eacb04ffde63c", null ],
-    [ "as", "classpni_1_1value__holder.html#aa5236215e95ff70d23c8e3ea9d323780", null ],
-    [ "as", "classpni_1_1value__holder.html#a79c5a45a61f0b6564a4188932ce60707", null ],
-    [ "clone", "classpni_1_1value__holder.html#a4f97d89f2a1207b57fd9567bded6e09b", null ],
-    [ "holds_reference", "classpni_1_1value__holder.html#a3210f608394d9145911c4166be75e844", null ],
-    [ "type_id", "classpni_1_1value__holder.html#a0a795176449c5058ec37cb0ba49253ed", null ],
-    [ "_value", "classpni_1_1value__holder.html#ae9193ea51bea6d8507fc1d4cdba6982e", null ]
+    [ "value_holder", "classpni_1_1value__holder.html#a9812b4ee043e0a7b4371f1c3aea51bc9", null ],
+    [ "value_holder", "classpni_1_1value__holder.html#ace44a82a7d2e51cd8e70d05600f4dc15", null ],
+    [ "as", "classpni_1_1value__holder.html#a7ac8f2d98334ffcfc125eb524399da37", null ],
+    [ "as", "classpni_1_1value__holder.html#a5a2170dcfc86a7a05c6fca2de00cd62b", null ],
+    [ "clone", "classpni_1_1value__holder.html#a139ceecdd9c02707eda594c14a2150ad", null ],
+    [ "holds_reference", "classpni_1_1value__holder.html#af11c34ca8a6df354029932fc92be804e", null ],
+    [ "type_id", "classpni_1_1value__holder.html#a627fe26257cb9d735649f120a677151c", null ],
+    [ "_value", "classpni_1_1value__holder.html#a3b11a165f7db419c178449997597321c", null ]
 ];

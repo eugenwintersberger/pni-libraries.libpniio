@@ -108,7 +108,7 @@ used with <code class="xref cpp cpp-class docutils literal notranslate"><span cl
 should be one of the primitive types or a value.
 For this purpose a specialization of the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a> template
 of the form</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">parser</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="p">{...};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">parser</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="o">&gt;&gt;</span> <span class="p">{...};</span>
 </pre></div>
 </div>
 <p>is provided. A particularly interesting choice as an element is the

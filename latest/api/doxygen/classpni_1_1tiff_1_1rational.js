@@ -1,15 +1,15 @@
 var classpni_1_1tiff_1_1rational =
 [
-    [ "rational", "classpni_1_1tiff_1_1rational.html#a59c12edc30cb601750ba075be0665a94", null ],
-    [ "rational", "classpni_1_1tiff_1_1rational.html#a093342e8de228e8dc6002fca14451796", null ],
-    [ "rational", "classpni_1_1tiff_1_1rational.html#a11be83314111db239b3698f0c1aae34d", null ],
-    [ "~rational", "classpni_1_1tiff_1_1rational.html#ae74b61299eead08482191a2d61fd32f5", null ],
-    [ "denominator", "classpni_1_1tiff_1_1rational.html#afc2847aa7d4d48f5bcbb94d764c29a87", null ],
-    [ "denominator", "classpni_1_1tiff_1_1rational.html#a797b6fd6341e98a267efb17c3d670518", null ],
-    [ "numerator", "classpni_1_1tiff_1_1rational.html#a7fcaf28a0a2d2c68362c7fc512631fed", null ],
-    [ "numerator", "classpni_1_1tiff_1_1rational.html#a6730b8790a70aed55ee84aac2e6f332f", null ],
-    [ "operator U", "classpni_1_1tiff_1_1rational.html#a6c10058f96be6fd6981e58acae1793ca", null ],
-    [ "operator=", "classpni_1_1tiff_1_1rational.html#a56bb2bc56bd67bbf34919894be4b880d", null ],
-    [ "_denominator", "classpni_1_1tiff_1_1rational.html#af826a2580b448501848d7655734fc351", null ],
-    [ "_numerator", "classpni_1_1tiff_1_1rational.html#a0777fc0f2896fad5d3f0ababeb2361fb", null ]
+    [ "rational", "classpni_1_1tiff_1_1rational.html#a1df3deff9fa2d09d2a2b37275a934487", null ],
+    [ "rational", "classpni_1_1tiff_1_1rational.html#ab49a49e2581718c65c0b68b7e09a96c7", null ],
+    [ "rational", "classpni_1_1tiff_1_1rational.html#aa0c82c6f326aee270bd47afd2d1929b4", null ],
+    [ "~rational", "classpni_1_1tiff_1_1rational.html#a1e223bb14a68d67a51d011b7e45c26eb", null ],
+    [ "denominator", "classpni_1_1tiff_1_1rational.html#ae7b936c2ba9954ffb61223b9ede5bf7f", null ],
+    [ "denominator", "classpni_1_1tiff_1_1rational.html#a78aa16d276d7a96abaa7d13bac9e5675", null ],
+    [ "numerator", "classpni_1_1tiff_1_1rational.html#a8433ca68c929d1a38b84ab17cb2033d0", null ],
+    [ "numerator", "classpni_1_1tiff_1_1rational.html#a10cca41dfadcb9d4acf69f8cc21499aa", null ],
+    [ "operator ScalarT", "classpni_1_1tiff_1_1rational.html#a953f99b1088156a3f8471e065c62cb4f", null ],
+    [ "operator=", "classpni_1_1tiff_1_1rational.html#a62d23d0a36a8b49bf1d036ac8f978673", null ],
+    [ "_denominator", "classpni_1_1tiff_1_1rational.html#a188f46a2c7649b76028903a7543e437e", null ],
+    [ "_numerator", "classpni_1_1tiff_1_1rational.html#a407d2c11cc78fab6724f653869d06741", null ]
 ];

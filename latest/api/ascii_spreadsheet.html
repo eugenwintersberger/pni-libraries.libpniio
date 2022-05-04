@@ -372,11 +372,11 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0ENK3pni10fio_reader9parameterE1TRKNSt6stringE">
-<span id="_CPPv3I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1a0de84dcfb3685a2fbfdcf69c55ee40fb"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader9parameterE1TRKNSt6stringE" title="pni::fio_reader::parameter::T">T</a> <code class="sig-name descname">parameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader9parameterE1TRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE">
+<span id="_CPPv3I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span>template&lt;typename <code class="sig-name descname">ElementT</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1ad85fc61cf5ec66ed10b399ec27879869"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE" title="pni::fio_reader::parameter::ElementT">ElementT</a> <code class="sig-name descname">parameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get parameter by name </p>
 <p>Return the value of a parameter stored in the FIO file by name. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>parameter value as type T </p>
+<dt><strong>Return</strong></dt><dd><p>parameter value as type ElementT </p>
 </dd>
 <dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">key_errror</span></code>: if parameter name does not exist </p></li>
@@ -391,11 +391,11 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0ENK3pni10fio_reader6columnE5CTYPERKNSt6stringE">
-<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringE"></span>template&lt;typename <code class="sig-name descname">CTYPE</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1a8bc2755f2af43580eea33b4724a4353d"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnE5CTYPERKNSt6stringE" title="pni::fio_reader::column::CTYPE">CTYPE</a> <code class="sig-name descname">column</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>n</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnE5CTYPERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE">
+<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringE"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1a0ba048f74b1c52677bacaa8216d33116"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE" title="pni::fio_reader::column::ContainerT">ContainerT</a> <code class="sig-name descname">column</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>n</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get single column </p>
 <p>Returns a single column and stores the data into an array object. If the column name does not exist an exception is thrown. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>instance of ATYPE holding the data. </p>
+<dt><strong>Return</strong></dt><dd><p>instance of ArrayT holding the data. </p>
 </dd>
 <dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
 <li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1key__error"><span class="std std-ref"><span class="pre">key_error</span></span></a></code>: if column does not exist </p></li>
@@ -411,8 +411,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER5CTYPE">
-<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringER5CTYPE"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringER5CTYPE"></span>template&lt;typename <code class="sig-name descname">CTYPE</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1ab16120086e5c3ba6a34c5b28c553e353"></span>void <code class="sig-name descname">column</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>n</em>, <a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER5CTYPE" title="pni::fio_reader::column::CTYPE">CTYPE</a> &amp;<em>c</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER5CTYPE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT">
+<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringER10ContainerT"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringER10ContainerT"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1a5178f78a512c5686d9a570833187b1b4"></span>void <code class="sig-name descname">column</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>n</em>, <a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT" title="pni::fio_reader::column::ContainerT">ContainerT</a> &amp;<em>c</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read single column </p>
 <p>Read a single column and stores the result in an appropriate container. The method assumes that the container is of appropriate size and shape. <dl class="simple">
 <dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
@@ -421,12 +421,12 @@
 </ul>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CTYPE</span></code>: container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type </p></li>
 </ul>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the column </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: instance of CTYPE that will in the end contain the data </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: instance of ContainerT that will in the end contain the data </p></li>
 </ul>
 </dd>
 </dl>

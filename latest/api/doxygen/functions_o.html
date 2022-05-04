@@ -68,16 +68,16 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 : <a class="el" href="classpni_1_1object__error.html#a42a727903451b30074c4fa6d66e74b5c">pni::object_error</a>
 </li>
 <li>object_from_xml()
-: <a class="el" href="classpni_1_1nx_1_1xml_1_1link.html#a5a04b4a60fc15f8d8c217a73b9e60d14">pni::nx::xml::link</a>
+: <a class="el" href="classpni_1_1nx_1_1xml_1_1link.html#a36379ab712524e5bd295c9f65f85f297">pni::nx::xml::link</a>
 </li>
 <li>ObjectBuilder()
 : <a class="el" href="classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#ab758abce457f2ae0bc539a156cd501ca">pni::nexus::xml::ObjectBuilder</a>
 </li>
 <li>offset()
 : <a class="el" href="classpni_1_1array__selection.html#a681aa97518db137d63ac74ebddd1232f">pni::array_selection</a>
-, <a class="el" href="classpni_1_1c__index__map__imp.html#ada50227199d43ce7f6f38c5275ca1323">pni::c_index_map_imp</a>
-, <a class="el" href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt;</a>
-, <a class="el" href="classpni_1_1static__index__map.html#ab7035c505dee24183bcf675820bc7be5">pni::static_index_map&lt; MAP_IMP, DIMS &gt;</a>
+, <a class="el" href="classpni_1_1c__index__map__imp.html#aec5d4e83357f736d6eb9f13858c3f3e0">pni::c_index_map_imp</a>
+, <a class="el" href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">pni::index_map&lt; ShapeStoreT, MapImpT &gt;</a>
+, <a class="el" href="classpni_1_1static__index__map.html#a98d5361ce7a02761553be5dcb7e48c64">pni::static_index_map&lt; MapImpT, TDimsN &gt;</a>
 </li>
 <li>open()
 : <a class="el" href="classpni_1_1cbf__reader.html#af647d5e6e5a72de91254f81408e9152d">pni::cbf_reader</a>
@@ -90,11 +90,14 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 <li>operator bool()
 : <a class="el" href="classpni_1_1array__iterator.html#a37e6b98534c34e59f52da6d6e18db3f0">pni::array_iterator&lt; const_flag &gt;</a>
 , <a class="el" href="classpni_1_1bool__t.html#a37d8fcd08f5e2ff79192d380dfec826d">pni::bool_t</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a2fdbc6b5853f8cc316b0a9ea9499acbe">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a1d253b4819407a7023734f3b01f04310">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#acd797027c0659af8cb095002f2ddf71d">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a7186ee6fd00c2b3d2d7ce2faf486677f">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator DatasetList()
 : <a class="el" href="classpni_1_1nexus_1_1PathObjectList.html#a8dc31d2bd5279a20784db0dbaf678d27">pni::nexus::PathObjectList</a>
+</li>
+<li>operator ElementT()
+: <a class="el" href="classpni_1_1scalar.html#a60dc8cfb987b92d54264e0328bb4083b">pni::scalar&lt; ElementT &gt;</a>
 </li>
 <li>operator GroupList()
 : <a class="el" href="classpni_1_1nexus_1_1PathObjectList.html#a15a2f83ead7e485e21b9be9b5a1b63e1">pni::nexus::PathObjectList</a>
@@ -117,35 +120,32 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 <li>operator hdf5::Path()
 : <a class="el" href="classpni_1_1nexus_1_1Path.html#a49d013b95d8694b7e00a5fecf2b018a6">pni::nexus::Path</a>
 </li>
+<li>operator NativeT()
+: <a class="el" href="classpni_1_1binary__t.html#af164ab5afbd4529b4139c9cdf3f863a0">pni::binary_t&lt; NativeT &gt;</a>
+</li>
 <li>operator NodeList()
 : <a class="el" href="classpni_1_1nexus_1_1PathObjectList.html#ab1950f5d1df0ebf028acdb4a8c7ea8d0">pni::nexus::PathObjectList</a>
 </li>
-<li>operator NTYPE()
-: <a class="el" href="classpni_1_1binary__t.html#a71caeb971aa0ac72e834b56a02ebd3fe">pni::binary_t&lt; NTYPE &gt;</a>
-</li>
-<li>operator T()
-: <a class="el" href="classpni_1_1scalar.html#ae5a09a567d82efd4e89c1e1d4f757e03">pni::scalar&lt; T &gt;</a>
-</li>
-<li>operator U()
-: <a class="el" href="classpni_1_1tiff_1_1rational.html#a6c10058f96be6fd6981e58acae1793ca">pni::tiff::rational&lt; T &gt;</a>
+<li>operator ScalarT()
+: <a class="el" href="classpni_1_1tiff_1_1rational.html#a953f99b1088156a3f8471e065c62cb4f">pni::tiff::rational&lt; IntegerT &gt;</a>
 </li>
 <li>operator value()
 : <a class="el" href="classpni_1_1value__ref.html#a8d741753e2e25ab2797bea49df0d4d89">pni::value_ref</a>
 </li>
 <li>operator!=()
 : <a class="el" href="classpni_1_1array__iterator.html#a0deaa6ab4425ef60842af71d64ed6ae7">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a0a601ad95ea44b664ef0eb140818ca69">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#a40abd9300629eb850457b1ba8cf4f7bc">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a563e772aaeb9e5a7ef8f79fbd15de15a">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#a5292ef08432e197222f13ddf43f1cf2b">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
 , <a class="el" href="classpni_1_1nexus_1_1Path.html#ae005cee55afac429e2e11acc2320616f">pni::nexus::Path</a>
 , <a class="el" href="classpni_1_1nexus_1_1Version.html#af192a8aa94cfed1457157a830f3b0fe9">pni::nexus::Version</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a93793e935756ca7055ef4d62531fb409">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#ad7c56f9ae588918bc12c6e01bdcc2d2f">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator()()
 : <a class="el" href="classpni_1_1array.html#a991b2ef51f4de805a8987888a8db6a5d">pni::array</a>
-, <a class="el" href="classpni_1_1array__holder.html#a29dd8183bb2ec5124446784ab65b7e4e">pni::array_holder&lt; OT &gt;</a>
+, <a class="el" href="classpni_1_1array__holder.html#a90aed9e79ccc8416a4d9a4c562659405">pni::array_holder&lt; ObjectT &gt;</a>
 , <a class="el" href="classpni_1_1array__holder__interface.html#a38ac2cfe831e8c64dcbc38e6b987e39d">pni::array_holder_interface</a>
-, <a class="el" href="classpni_1_1array__view.html#aa9beda8c1d507ca7538b5c12c3e0938e">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#ac377e9db25f758b0cd44b82d1395e915">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
+, <a class="el" href="classpni_1_1array__view.html#ac5f4fc1e73de50b94ff3bb33ce88d2bf">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#a0b74af574265775b7588ce52d7ff268a">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
 , <a class="el" href="classpni_1_1nexus_1_1IsBaseClass.html#a35bd5e7bcfd17e496af2793b81247bb8">pni::nexus::IsBaseClass</a>
 , <a class="el" href="classpni_1_1nexus_1_1IsValidNeXusName.html#a6539f415b4483755c76d81688a0ed71b">pni::nexus::IsValidNeXusName</a>
 , <a class="el" href="classpni_1_1nexus_1_1NodePredicate.html#a6b7c8d26a42eded792a1fe023d916342">pni::nexus::NodePredicate</a>
@@ -155,65 +155,65 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 , <a class="el" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a070e97c502d7916517a6edd847ec4f70">pni::parser&lt; pni::slice &gt;</a>
 , <a class="el" href="classpni_1_1parser_3_01pni_1_1string_01_4.html#a6e30aa6914c49dea87df71104b006d94">pni::parser&lt; pni::string &gt;</a>
 , <a class="el" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a6fae3c80b19dcff0aa8b089668ca62f7">pni::parser&lt; pni::value &gt;</a>
-, <a class="el" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1ebebe0073653de34ff0c7443acde4f9">pni::parser&lt; std::complex&lt; T &gt; &gt;</a>
-, <a class="el" href="classpni_1_1parser_3_01std_1_1vector_3_01T_01_4_01_4.html#af11f6aea06d1a642951ba54f0443dc8e">pni::parser&lt; std::vector&lt; T &gt; &gt;</a>
-, <a class="el" href="classpni_1_1scalar.html#aabf24185c314f09375bd7061b4a568ca">pni::scalar&lt; T &gt;</a>
-, <a class="el" href="classpni_1_1type__id__container__builder.html#a84913a433502ddf9ad04718f0b42f89f">pni::type_id_container_builder&lt; CTYPE &gt;</a>
+, <a class="el" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#ab82655a4c5a887dafffd10da1e6570a3">pni::parser&lt; std::complex&lt; BaseT &gt; &gt;</a>
+, <a class="el" href="classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4.html#a2cc8085c5d92537abff73e8284bbcd12">pni::parser&lt; std::vector&lt; ElementT &gt; &gt;</a>
+, <a class="el" href="classpni_1_1scalar.html#ae40355a70eb192aa4f0ee2ad182f2c6a">pni::scalar&lt; ElementT &gt;</a>
+, <a class="el" href="classpni_1_1type__id__container__builder.html#aad4b9a68251ea6a469dc594bb309b1b5">pni::type_id_container_builder&lt; ContainerT &gt;</a>
 </li>
 <li>operator*()
 : <a class="el" href="classpni_1_1array__iterator.html#a0b44e012cf345a3d620e40ac5d853882">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a70e6a042eb1b807a560807a351f3e7f7">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#a15e513f3a3ba9ca5086e431a2da132db">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a64f60ee9afa2963c535abf3d1cdbf568">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#ac81e668fde94709bfb576c203a90699c">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#a04769a87c915bfe14687025b9d80f2d4">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#ab59f08990d4dfb5a4a367f213414b2d9">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator*=()
-: <a class="el" href="classpni_1_1array__view.html#a19fbada70076ca746f5fc878871d6833">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1binary__t.html#a59e51c91ca6489738af344251fa23aa2">pni::binary_t&lt; NTYPE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#a6d9c60b455e342dc95e819a81aede30d">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#ac4cfcf7d788c9fcabe5188f042a65b02">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1binary__t.html#ab189a539e7b3724cd6b9c2ecef47fecf">pni::binary_t&lt; NativeT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#ae91003d248c9c922f5b562e1424f391d">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
 </li>
 <li>operator++()
 : <a class="el" href="classpni_1_1array__iterator.html#a374769a97020bb61c33d3b5a92260200">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#af835f400a8907d4045a7618a027cccc9">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#a0fbd05d8b4beafa03d0ef4a88918ed8c">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a3c6fe127c0770ca466bd29b0b7e1d752">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a4467020243ae6aab61788504c6ca62b6">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#a9ba91de30b98e8a21e63d6d4efd7f4e5">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a2a7c3adc02ed3228d4d522dd547f1664">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator+=()
 : <a class="el" href="classpni_1_1array__iterator.html#a64837f6e321d87be15aab5abb968c861">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1array__view.html#a618c168270c8791446e12f02dd3fc6d0">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1binary__t.html#a7033f5966e52bb516e38304b73db01a7">pni::binary_t&lt; NTYPE &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#ae97907cfce070dba8d1d0436327c03f4">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#a4bf3beeb730a690714dea9d45a3cf6fd">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a9662c854d6da9771e32bae667e6a3c82">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1array__view.html#a821808f3941761bd4a9d24ed0db36a44">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1binary__t.html#a60bf1f9414eda3e0eac7b062d049b93e">pni::binary_t&lt; NativeT &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#ab02cc95d25bcf341ba3a8ab0a5963e18">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#a78a44f2eb2810494d5ca7ba8d9eef3ce">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a5c202f8877e67d57c835ff664809b724">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator--()
 : <a class="el" href="classpni_1_1array__iterator.html#a3c42e67433da8b2d022b51fd337a314d">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a9c39fcb4539b2a552ab318159328e72e">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#a567455ecf0a8adda4bae671ceb5f027d">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a03b08d2b8139f6d2c1cc2dc60ba90f86">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a960dcea6eb1ba36ce155a76e1a135202">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#a8997c00f420f14eda8aec66f80f2e7ba">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a3579d447ab444ddd877e8ca0245189ed">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator-=()
 : <a class="el" href="classpni_1_1array__iterator.html#acfca34873e75a09cfe1ec03ccc896ad7">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1array__view.html#a683ec9b77c5bc67c86f117618fa7b15e">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1binary__t.html#ac8b4020a97db1b32217cd62f43392900">pni::binary_t&lt; NTYPE &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#af0a40755f1295f23b2e04278387197b2">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#aed266150044c9cbd6ee819ff2125ddb6">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a85701e2b3160e8e99d7d56563b122fc4">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1array__view.html#a91952d856a117af1d3a0e8b0299e2cb9">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1binary__t.html#ade034cd8dfe30760050032eab95422d9">pni::binary_t&lt; NativeT &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#af71ba3c14d67af5850cc6cab63f6eb1a">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#a02d1cbdc381d9a0408e0257f2a0bc83d">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a0e0c7f4fb32d9e0027ebea1aaf9db866">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator-&gt;()
-: <a class="el" href="classpni_1_1container__iterator.html#ab66683327ae53d626ca3a0c597f9531f">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#ad8632a733865153a182baa797f61add5">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a35c7d8d6691d8b4761920ec5ae4f5748">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+: <a class="el" href="classpni_1_1container__iterator.html#a9ee2b352d37f6363f613e04d69b9cbff">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#adc6613f09ee12376881089eb7bfbf17f">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a61bb754eb440e78cf5b349d428164438">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator/=()
-: <a class="el" href="classpni_1_1array__view.html#a6fedc6e74c5d2b3fe52e383aa3fb3c96">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1binary__t.html#a326f21b3fdde157d1b5ada5419c8b1bb">pni::binary_t&lt; NTYPE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#aae11d65f160cbe5dbef51ba329ebba03">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#a38dac8941743d60ee355941b3018539f">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1binary__t.html#a9c2e115912a3cf05769c60909ec6111c">pni::binary_t&lt; NativeT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#aa4533de2160b8677783fa88aa4c17266">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
 </li>
 <li>operator&lt;()
 : <a class="el" href="classpni_1_1array__iterator.html#abeb977e44e45d8f420c832592295f0c7">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#afad2a89a657f6d9f3c282ef8c2313e36">pni::container_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a0338bca904b10a790d542ceac7f63b0c">pni::container_iterator&lt; IterableT &gt;</a>
 , <a class="el" href="classpni_1_1nexus_1_1Version.html#aec9018faebe5510fdda33ecd00c20d95">pni::nexus::Version</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a114d241a66de24fbfcab9fa75413f041">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a53a5aedb1ad1097f1581316b35135d97">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator&lt;&lt;
 : <a class="el" href="classpni_1_1cli__argument__error.html#a389cd3f51dd8f505de780ae4bf2e8168">pni::cli_argument_error</a>
@@ -249,69 +249,69 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 </li>
 <li>operator&lt;=()
 : <a class="el" href="classpni_1_1array__iterator.html#a6da43320134832180c7bec315d8a4a9e">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a3639b69aa44c435771b0771c92c40443">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a67d60d27f0e218443d97a896e4c936ca">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#ac33d1bc11f544a59418c800861c3ff6c">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a59d9534196d5b075260b0fe34b4c6b75">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator=()
 : <a class="el" href="classpni_1_1array.html#ae9b26fa0b0c9fd5a3ee8ea3c1ed10c0a">pni::array</a>
 , <a class="el" href="classpni_1_1array__selection.html#ae9b7b31760879c37ad2ce39e2d77560e">pni::array_selection</a>
-, <a class="el" href="classpni_1_1array__view.html#a8446c210d66df442918a2f85dabd0f67">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1binary__t.html#ad0f4bc38f6a22f2bcb6a86f530659649">pni::binary_t&lt; NTYPE &gt;</a>
+, <a class="el" href="classpni_1_1array__view.html#af30c506e6aa218b95ffa3c9281844f61">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1binary__t.html#a47d638c36fadac41b615e8c4160a1734">pni::binary_t&lt; NativeT &gt;</a>
 , <a class="el" href="classpni_1_1cbf__reader.html#abfdc320c6eeba13f1db7adbdd1d3a3f7">pni::cbf_reader</a>
 , <a class="el" href="classpni_1_1column__info.html#ab057110f62283f00c0d87dc191aad4aa">pni::column_info</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a87a9911b04b1fa93225e2424036e43d7">pni::container_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#aaea1125c84a13bda29de34b388f5ebf5">pni::container_iterator&lt; IterableT &gt;</a>
 , <a class="el" href="classpni_1_1data__reader.html#aa4c9798fbb0f2e5fac3c79c71c552659">pni::data_reader</a>
 , <a class="el" href="classpni_1_1fio__reader.html#a62f275f730682b768237d0b73fb44a3c">pni::fio_reader</a>
-, <a class="el" href="classpni_1_1image__info.html#a4460480f9f59b055ddbb99c528d1ac76">pni::image_info</a>
+, <a class="el" href="classpni_1_1image__info.html#a69d63403ac0aa4a5ab602f05230967b9">pni::image_info</a>
 , <a class="el" href="classpni_1_1image__reader.html#a1e66da7c35413de7506c0b33eeab1298">pni::image_reader</a>
-, <a class="el" href="classpni_1_1index__map.html#a9726c949af32756ea827faec11b6c807">pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#a3ba6596b11680b3f9a6a39106e5e5fb0">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
-, <a class="el" href="classpni_1_1scalar.html#a2aef1fea74d478ce7c49f918be07cc2d">pni::scalar&lt; T &gt;</a>
+, <a class="el" href="classpni_1_1index__map.html#a44f7de6c94e65c388caf5c451a82f046">pni::index_map&lt; ShapeStoreT, MapImpT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#a3ace9770e3431e9743b9e14f75136978">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
+, <a class="el" href="classpni_1_1scalar.html#a8c2b3d81470ccfd8125d4c483f4851b4">pni::scalar&lt; ElementT &gt;</a>
 , <a class="el" href="classpni_1_1slice.html#afdc9e36b23d4eaa8feb6bc1dffeb976d">pni::slice</a>
-, <a class="el" href="classpni_1_1spreadsheet__reader.html#a77362b1b832744de7f3e98c824113040">pni::spreadsheet_reader</a>
+, <a class="el" href="classpni_1_1spreadsheet__reader.html#aa900f7360d50378e587eea4fae8d4181">pni::spreadsheet_reader</a>
 , <a class="el" href="classpni_1_1tiff_1_1ifd.html#a71ce4c4f06470c71a0075be3b542a8e6">pni::tiff::ifd</a>
-, <a class="el" href="classpni_1_1tiff_1_1ifd__entry.html#a2194d992534e02396ef058c98bcb786a">pni::tiff::ifd_entry</a>
-, <a class="el" href="classpni_1_1tiff_1_1rational.html#a56bb2bc56bd67bbf34919894be4b880d">pni::tiff::rational&lt; T &gt;</a>
+, <a class="el" href="classpni_1_1tiff_1_1ifd__entry.html#a384d200e7a5587444e10c1ff73b784f9">pni::tiff::ifd_entry</a>
+, <a class="el" href="classpni_1_1tiff_1_1rational.html#a62d23d0a36a8b49bf1d036ac8f978673">pni::tiff::rational&lt; IntegerT &gt;</a>
 , <a class="el" href="classpni_1_1tiff_1_1strip__reader.html#a3266c6808494be9f55f59f52436982c2">pni::tiff::strip_reader</a>
-, <a class="el" href="classpni_1_1tiff__reader.html#ae54aab0c498c682797e7fb8375b924ae">pni::tiff_reader</a>
+, <a class="el" href="classpni_1_1tiff__reader.html#a2489ddc486915139ffa8fe514b67e457">pni::tiff_reader</a>
 , <a class="el" href="classpni_1_1value.html#aaea2e1d758a5c88d6f82594b9cc4e5cc">pni::value</a>
-, <a class="el" href="classpni_1_1value__ref.html#a445b7f5ca326da37a4a9ffe0de2fdca5">pni::value_ref</a>
+, <a class="el" href="classpni_1_1value__ref.html#afec668e233c2609ffef81c09fe8fadef">pni::value_ref</a>
 </li>
 <li>operator==()
 : <a class="el" href="classpni_1_1array__iterator.html#a1889e0753cdc83ac84987c348af20ff3">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a72b71a67126e9b44681dc2acb4ef11ee">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#a0cd4dfad39ea2a025d8caf450de853c7">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a982fd7897941518cb09836985374cbcb">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#ade8d413e9926ab26a8dfd72e5a822880">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
 , <a class="el" href="classpni_1_1nexus_1_1Path.html#a38e7ad955ddd85eab1713c224cd531bb">pni::nexus::Path</a>
 , <a class="el" href="classpni_1_1nexus_1_1Version.html#a5af5628a654419e4feeddb9d7db0099f">pni::nexus::Version</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a8eae18883b398135abb7e8940f10087b">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#af5f27b95d85e95ed03f013d26e356cdc">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator&gt;()
 : <a class="el" href="classpni_1_1array__iterator.html#a21124410b88cdab1ec58625dc2f15088">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a4ea62bcf0461a4cd47cedf572bbba580">pni::container_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a600ad9f0975641e7e23501ea3434a9b5">pni::container_iterator&lt; IterableT &gt;</a>
 , <a class="el" href="classpni_1_1nexus_1_1Version.html#abeda8db1f1d807da9054bb586de64a7f">pni::nexus::Version</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a6cae2619bf3f4dde392c4d8a82c43a18">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#afd64dfd160bd66ee8738d21af5f64733">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator&gt;=()
 : <a class="el" href="classpni_1_1array__iterator.html#a5740bf87c2968a5a82ac60a96321032d">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#ad8f9ce8e8a721692379b2a5714b358e9">pni::container_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a44020b4a3eedda04b401f56e4cc86e62">pni::container_iterator&lt; IterableT &gt;</a>
 , <a class="el" href="classpni_1_1nexus_1_1Version.html#a15a6a7cba24c203db6ccc95de9aa2068">pni::nexus::Version</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a1e3c80551b1be67478c928a3e811f8b3">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a17781ad60aedb4a1c4a17c5ced35c96b">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>operator&gt;&gt;()
 : <a class="el" href="classpni_1_1nexus_1_1Path.html#a93d6f6d2bb783cebe4db39d77627abee">pni::nexus::Path</a>
 , <a class="el" href="classpni_1_1nexus_1_1Version.html#ac8ae7725330a50038999cdb85d210c16">pni::nexus::Version</a>
 </li>
 <li>operator[]()
-: <a class="el" href="classpni_1_1add__op.html#a7513ab49284ffe9c79b3fb8e219ed703">pni::add_op&lt; OP1T, OP2T &gt;</a>
+: <a class="el" href="classpni_1_1add__op.html#afc9cb444431c3ebd32dd6ddc80332972">pni::add_op&lt; Operand1T, Operand2T &gt;</a>
 , <a class="el" href="classpni_1_1array.html#a444f0029dd39874e75bd80027e8290d7">pni::array</a>
-, <a class="el" href="classpni_1_1array__holder.html#a744a5b5f04be8547dc9b42bcd3f2cf1b">pni::array_holder&lt; OT &gt;</a>
+, <a class="el" href="classpni_1_1array__holder.html#a3f3195178c31ddaac7f014232f8a38d9">pni::array_holder&lt; ObjectT &gt;</a>
 , <a class="el" href="classpni_1_1array__holder__interface.html#aff455084a2eb6e537140fbe21075eed9">pni::array_holder_interface</a>
-, <a class="el" href="classpni_1_1array__view.html#ad3620f3ddaf52261594fb14df7bed417">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1div__op.html#ad4351bc645966e2e97943b8add215dfa">pni::div_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#a1203d5ee715f1b7a6920e58ddb12e989">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
-, <a class="el" href="classpni_1_1mult__op.html#a0253525215aea81a88c2f900f1902a2f">pni::mult_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1scalar.html#a8a6c8b87180a70d4b7cc490a7166a52a">pni::scalar&lt; T &gt;</a>
-, <a class="el" href="classpni_1_1sub__op.html#a7692f93169224faaed389d0f7a2ddc26">pni::sub_op&lt; OP1T, OP2T &gt;</a>
+, <a class="el" href="classpni_1_1array__view.html#abc816e6bb34debe78240aeb205c8d7af">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1div__op.html#ade250e0024cde18b45afd9df39af9e4f">pni::div_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#a12686356aecb7470e1438490cff232aa">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
+, <a class="el" href="classpni_1_1mult__op.html#ab3a36f0d6cbe2dd24561010c5e08085e">pni::mult_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1scalar.html#a0193aefb0bbedbe25af0c462e946dd39">pni::scalar&lt; ElementT &gt;</a>
+, <a class="el" href="classpni_1_1sub__op.html#a240d4454c330a35b08d32fc8aab86921">pni::sub_op&lt; Operand1T, Operand2T &gt;</a>
 , <a class="el" href="classpni_1_1tiff_1_1ifd.html#ac7a9f024848a71993b0c0096c6984b4f">pni::tiff::ifd</a>
 </li>
 </ul>
@@ -320,7 +320,7 @@ $(document).ready(function(){initNavTree('functions_o.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed May 4 2022 05:57:37 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

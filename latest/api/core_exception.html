@@ -413,7 +413,7 @@ denote different failure situations.</p>
 
 <dl class="cpp macro">
 <dt id="c.EXCEPTION_FORWARD">
-<span class="target" id="error_2exceptions_8hpp_1a22e4136fed8f3773d754cbda93e7e9c2"></span><code class="sig-name descname">EXCEPTION_FORWARD</code><span class="sig-paren">(</span><em>ETYPE</em><span class="sig-paren">)</span><a class="headerlink" href="#c.EXCEPTION_FORWARD" title="Permalink to this definition">¶</a><br /></dt>
+<span class="target" id="error_2exceptions_8hpp_1aeefce5606b2ee21990fac0c0946336ed"></span><code class="sig-name descname">EXCEPTION_FORWARD</code><span class="sig-paren">(</span><em>ExceptionT</em><span class="sig-paren">)</span><a class="headerlink" href="#c.EXCEPTION_FORWARD" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>forward an exception </p>
 <p>This macro can be used to forward an exception caught from another function. It appends the exception_record of the current function to the existing exception and throws the exception again. Consider the following examples</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span> <span class="n">value</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">);</span> <span class="p">}</span>
@@ -428,21 +428,21 @@ denote different failure situations.</p>
 <div class="section" id="utility-functions">
 <h2>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp function">
-<dt id="_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B">
-<span id="_CPPv3I00EN3pni16check_equal_sizeERK1ARK1B"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK1ARK1B"></span>template&lt;typename <code class="sig-name descname">A</code>, typename <code class="sig-name descname">B</code>&gt;<br /><span class="target" id="namespacepni_1a93bff1ce40a57456405720695ad26e3b"></span>bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">check_equal_size</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="pni::check_equal_size::A">A</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="pni::check_equal_size::B">B</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK1ARK1B" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN3pni16check_equal_sizeEbRK11ContainerATRK11ContainerBT">
+<span id="_CPPv3I00EN3pni16check_equal_sizeERK11ContainerATRK11ContainerBT"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK11ContainerATRK11ContainerBT"></span>template&lt;typename <code class="sig-name descname">ContainerAT</code>, typename <code class="sig-name descname">ContainerBT</code>&gt;<br /><span class="target" id="namespacepni_1a49f2d0ee91d2c32f6c2f91812ed3cfd1"></span>bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">check_equal_size</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK11ContainerATRK11ContainerBT" title="pni::check_equal_size::ContainerAT">ContainerAT</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK11ContainerATRK11ContainerBT" title="pni::check_equal_size::ContainerBT">ContainerBT</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEbRK11ContainerATRK11ContainerBT" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two container have equal size </p>
 <p>This helper function checks if two container instances have equal size and returns true if this is the case. Otherwise false will be returned. Both container types have to provide a <a class="reference internal" href="core_mdarray.html#namespacepni_1ab20a3d8d51f1c5aee26a971b5fe2cf65"><span class="std std-ref">size()</span></a> method returning the number of elements the container can hold.</p>
 <p><dl class="simple">
 <dt><strong>Return</strong></dt><dd><p>true if a and b have same size, false otherwise </p>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code>: first container type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">B</span></code>: second container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerAT</span></code>: first container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerBT</span></code>: second container type </p></li>
 </ul>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to an instance of A </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: reference to an instance of B </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to an instance of ContainerAT </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: reference to an instance of ContainerBT </p></li>
 </ul>
 </dd>
 </dl>
@@ -450,8 +450,8 @@ denote different failure situations.</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record">
-<span id="_CPPv3I00EN3pni16check_equal_sizeERK1ARK1BRK16exception_record"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK1ARK1BRK16exception_record"></span>template&lt;typename <code class="sig-name descname">A</code>, typename <code class="sig-name descname">B</code>&gt;<br /><span class="target" id="namespacepni_1afd1eccdd371aa50b808d32bad059a7b7"></span>void <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">check_equal_size</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="pni::check_equal_size::A">A</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="pni::check_equal_size::B">B</a> &amp;<em>b</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK1ARK1BRK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN3pni16check_equal_sizeEvRK11ContainerATRK11ContainerBTRK16exception_record">
+<span id="_CPPv3I00EN3pni16check_equal_sizeERK11ContainerATRK11ContainerBTRK16exception_record"></span><span id="_CPPv2I00EN3pni16check_equal_sizeERK11ContainerATRK11ContainerBTRK16exception_record"></span>template&lt;typename <code class="sig-name descname">ContainerAT</code>, typename <code class="sig-name descname">ContainerBT</code>&gt;<br /><span class="target" id="namespacepni_1a4cf4ebfd00fbbd8e435e32cc61761c15"></span>void <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">check_equal_size</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK11ContainerATRK11ContainerBTRK16exception_record" title="pni::check_equal_size::ContainerAT">ContainerAT</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK11ContainerATRK11ContainerBTRK16exception_record" title="pni::check_equal_size::ContainerBT">ContainerBT</a> &amp;<em>b</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni16exception_recordE" title="pni::exception_record">exception_record</a> &amp;<em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni16check_equal_sizeEvRK11ContainerATRK11ContainerBTRK16exception_record" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two objects have different size </p>
 <p>This utilty function can be used to check for the equality of the size of two objects. It is typically used to compare the size of a shape and a buffer or any other container object. If the sizes do not match an exception is thrown.</p>
 <p><dl class="simple">
@@ -460,13 +460,13 @@ denote different failure situations.</p>
 </ul>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">A</span></code>: first container type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">B</span></code>: second container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerAT</span></code>: first container type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerBT</span></code>: second container type </p></li>
 </ul>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: instance of container type A </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: instance of container type B </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: instance of container type ContainerAT </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: instance of container type ContainerBT </p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: <a class="reference internal" href="#classpni_1_1exception__record"><span class="std std-ref">exception_record</span></a> for the location where to perform the check performed </p></li>
 </ul>
 </dd>

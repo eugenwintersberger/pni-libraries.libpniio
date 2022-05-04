@@ -113,8 +113,8 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">    pni::exception_record(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="error_2exceptions_8hpp.html#a22e4136fed8f3773d754cbda93e7e9c2">   68</a></span>&#160;<span class="preprocessor">#define EXCEPTION_FORWARD(ETYPE)\</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    catch(ETYPE &amp;error)\</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">   68</a></span>&#160;<span class="preprocessor">#define EXCEPTION_FORWARD(ExceptionT)\</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    catch(ExceptionT &amp;error)\</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">    {\</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">        error.append(EXCEPTION_RECORD);\</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">        throw error;\</span></div>
@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment"></span>    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> </div>
-<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="namespacepni.html#ab3c8434813fb9d112b4dec2961b8c09a">  130</a></span>&#160;    std::ostream &amp; <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1exception__record.html">exception_record</a> &amp;rec); </div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="namespacepni.html#ab3c8434813fb9d112b4dec2961b8c09a">  130</a></span>&#160;    std::ostream &amp; <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1exception__record.html">exception_record</a> &amp;rec); </div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment"></span><span class="preprocessor">#ifdef _MSC_VER</span></div>
@@ -243,7 +243,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;            <span class="comment">//-----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00338"></a><span class="lineno"><a class="line" href="classpni_1_1memory__allocation__error.html#a663227c60adc792fe098c0a8aa2f5e27">  338</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1memory__allocation__error.html">memory_allocation_error</a> &amp;e);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1memory__allocation__error.html">memory_allocation_error</a> &amp;e);</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    };</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
@@ -288,7 +288,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00416"></a><span class="lineno"><a class="line" href="classpni_1_1shape__mismatch__error.html#a0efb225e2c8b164dd69827148f996ea5">  416</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1shape__mismatch__error.html">shape_mismatch_error</a> &amp;e);</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1shape__mismatch__error.html">shape_mismatch_error</a> &amp;e);</div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    };</div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -309,7 +309,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160; </div>
 <div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00454"></a><span class="lineno"><a class="line" href="classpni_1_1size__mismatch__error.html#a1c8d24fb917741a5723732eb0c564960">  454</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1size__mismatch__error.html">size_mismatch_error</a> &amp;e);</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1size__mismatch__error.html">size_mismatch_error</a> &amp;e);</div>
 <div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    };</div>
 <div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160; </div>
 <div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -329,7 +329,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
 <div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00491"></a><span class="lineno"><a class="line" href="classpni_1_1index__error.html#a3c44b902a16bfb8ea4caaf4b8430b7a0">  491</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1index__error.html">index_error</a> &amp;e);</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1index__error.html">index_error</a> &amp;e);</div>
 <div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    };</div>
 <div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
 <div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -348,7 +348,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160; </div>
 <div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00526"></a><span class="lineno"><a class="line" href="classpni_1_1key__error.html#a699a731a39f782108bc12102dc9afae5">  526</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1key__error.html">key_error</a> &amp;e);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1key__error.html">key_error</a> &amp;e);</div>
 <div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;    };</div>
 <div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
 <div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -367,7 +367,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160; </div>
 <div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00561"></a><span class="lineno"><a class="line" href="classpni_1_1file__error.html#a3966b4f2f0307c42798e69d55f4a910f">  561</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1file__error.html">file_error</a> &amp;e);</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1file__error.html">file_error</a> &amp;e);</div>
 <div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160; </div>
 <div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;    };</div>
 <div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160; </div>
@@ -387,7 +387,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160; </div>
 <div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00597"></a><span class="lineno"><a class="line" href="classpni_1_1type__error.html#ad1d3150b0628e0bd87846bc74b582099">  597</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1type__error.html">type_error</a> &amp;e);</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1type__error.html">type_error</a> &amp;e);</div>
 <div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;    };</div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
 <div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -406,7 +406,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160; </div>
 <div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00633"></a><span class="lineno"><a class="line" href="classpni_1_1value__error.html#a75972c44e93d97bf71debbcca6491217">  633</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1value__error.html">value_error</a> &amp;e);</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1value__error.html">value_error</a> &amp;e);</div>
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;    };</div>
 <div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
 <div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -425,7 +425,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160; </div>
 <div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00669"></a><span class="lineno"><a class="line" href="classpni_1_1range__error.html#aa568552f00d4db21a6edbb76f4f37623">  669</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1range__error.html">range_error</a> &amp;e);</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1range__error.html">range_error</a> &amp;e);</div>
 <div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    };</div>
 <div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160; </div>
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -447,7 +447,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
 <div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00709"></a><span class="lineno"><a class="line" href="classpni_1_1not__implemented__error.html#a8416a81c593c79bd33be0457eea10c0a">  709</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1not__implemented__error.html">not_implemented_error</a> &amp;e);</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1not__implemented__error.html">not_implemented_error</a> &amp;e);</div>
 <div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;    };</div>
 <div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160; </div>
 <div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160; </div>
@@ -467,7 +467,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
 <div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;            <span class="comment">//-----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00746"></a><span class="lineno"><a class="line" href="classpni_1_1iterator__error.html#a554502919e3890f05c02c304154fd1c9">  746</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1iterator__error.html">iterator_error</a> &amp;e);</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1iterator__error.html">iterator_error</a> &amp;e);</div>
 <div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;    };</div>
 <div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;    </div>
 <div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160; </div>
@@ -488,7 +488,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160; </div>
 <div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;            <span class="comment">//------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00783"></a><span class="lineno"><a class="line" href="classpni_1_1cli__argument__error.html#a389cd3f51dd8f505de780ae4bf2e8168">  783</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;                <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1cli__argument__error.html">cli_argument_error</a> &amp;e);</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;                <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1cli__argument__error.html">cli_argument_error</a> &amp;e);</div>
 <div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;    };</div>
 <div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
 <div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -508,7 +508,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160; </div>
 <div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;            <span class="comment">//------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00818"></a><span class="lineno"><a class="line" href="classpni_1_1cli__option__error.html#a921be00809c6f3ec341ac25a8dc27077">  818</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;            <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1cli__option__error.html">cli_option_error</a> &amp;e);</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;            <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1cli__option__error.html">cli_option_error</a> &amp;e);</div>
 <div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;    };</div>
 <div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160; </div>
 <div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;    <span class="comment">//--------------------------------------------------------------------------</span></div>
@@ -547,7 +547,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160; </div>
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;            <span class="comment">//----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00889"></a><span class="lineno"><a class="line" href="classpni_1_1cli__help__request.html#aad82dd6c93a4b9b9fd6b424f2a3e1d34">  889</a></span>&#160;<span class="comment"></span>            <span class="keyword">friend</span> <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;            <a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1cli__help__request.html">cli_help_request</a> &amp;e);</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;            <a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1cli__help__request.html">cli_help_request</a> &amp;e);</div>
 <div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;    };</div>
 <div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;}</div>
 <div class="ttc" id="aclasspni_1_1cli__argument__error_html"><div class="ttname"><a href="classpni_1_1cli__argument__error.html">pni::cli_argument_error</a></div><div class="ttdoc">command line argument error</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:760</div></div>
@@ -647,7 +647,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div class="ttc" id="aclasspni_1_1value__error_html_a79278a380013ef3bb417cd9a23b92edc"><div class="ttname"><a href="classpni_1_1value__error.html#a79278a380013ef3bb417cd9a23b92edc">pni::value_error::value_error</a></div><div class="ttdeci">value_error(const exception_record &amp;i, const string &amp;d)</div><div class="ttdoc">constructor</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:623</div></div>
 <div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:76</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="anamespacepni_html_a0c4c3da0670cb4207f02dbf341a3cce5"><div class="ttname"><a href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">pni::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const array_view&lt; ATYPE &gt; &amp;v)</div><div class="ttdoc">output operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:906</div></div>
+<div class="ttc" id="anamespacepni_html_ac1ee966073630add8e2830bc712c1455"><div class="ttname"><a href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">pni::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const array_view&lt; ArrayT &gt; &amp;v)</div><div class="ttdoc">output operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:906</div></div>
 <div class="ttc" id="atypes_2types_8hpp_html"><div class="ttname"><a href="types_2types_8hpp.html">types.hpp</a></div></div>
 <div class="ttc" id="awindows_8hpp_html"><div class="ttname"><a href="windows_8hpp.html">windows.hpp</a></div></div>
 <div class="ttc" id="awindows_8hpp_html_abcc7ce29ca8863e31e7945d1905a72f6"><div class="ttname"><a href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a></div><div class="ttdeci">#define PNINEXUS_EXPORT</div><div class="ttdef"><b>Definition:</b> windows.hpp:33</div></div>
@@ -657,7 +657,7 @@ $(document).ready(function(){initNavTree('error_2exceptions_8hpp_source.html',''
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_348784b3bb391197734e378dc2c036a6.html">error</a></li><li class="navelem"><a class="el" href="error_2exceptions_8hpp.html">exceptions.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:36 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

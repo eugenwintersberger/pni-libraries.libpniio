@@ -112,36 +112,36 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="comment">//-----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"></span>            <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                     <span class="keyword">typename</span> CBFT,</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                     <span class="keyword">typename</span> CTYPE</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                     <span class="keyword">typename</span> CBFBufferT,</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                     <span class="keyword">typename</span> ContainerT</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    &gt;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> read_data_byte_offset(std::ifstream &amp;is,</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                              <span class="keyword">const</span> <a class="code" href="classpni_1_1image__info.html">pni::image_info</a> &amp;info,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                              CTYPE &amp;data);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                              ContainerT &amp;data);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;             <span class="keyword">typename</span> CBFT,</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;             <span class="keyword">typename</span> CTYPE</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;             <span class="keyword">typename</span> CBFBufferT,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;             <span class="keyword">typename</span> ContainerT</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            &gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">   94</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">dectris_reader::read_data_byte_offset</a>(std::ifstream &amp;is,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                 <span class="keyword">const</span> <a class="code" href="classpni_1_1image__info.html">pni::image_info</a> &amp;, CTYPE &amp;data)</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">   94</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">dectris_reader::read_data_byte_offset</a>(std::ifstream &amp;is,</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                 <span class="keyword">const</span> <a class="code" href="classpni_1_1image__info.html">pni::image_info</a> &amp;, ContainerT &amp;data)</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">using namespace </span><a class="code" href="namespacepni.html">pni</a>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="comment">//unsigned long i;</span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">//size_t ecnt = 0; // element counter</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="comment">//?? CBFT buffer = 0; // single element buffer</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="comment">//?? CBFBufferT buffer = 0; // single element buffer</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>  buffer = 0; <span class="comment">// single element buffer</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="comment">//initializing the container with 0</span></div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        std::fill(data.begin(),data.end(),0);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="comment">// typename CTYPE::iterator iter = data.begin();</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">typename</span> CTYPE::value_type v_old = 0;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="comment">// typename ContainerT::iterator iter = data.begin();</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">typename</span> ContainerT::value_type v_old = 0;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">typename</span> CTYPE::value_type &amp;v: data)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">typename</span> ContainerT::value_type &amp;v: data)</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        {</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            v = v_old; <span class="comment">//set the new value to the previous</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
@@ -203,7 +203,7 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
 <div class="ttc" id="acbf_2types_8hpp_html"><div class="ttname"><a href="cbf_2types_8hpp.html">types.hpp</a></div></div>
 <div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html">pni::cbf::dectris_reader</a></div><div class="ttdoc">reader for DECTRIS detector data</div><div class="ttdef"><b>Definition:</b> dectris_reader.hpp:47</div></div>
-<div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html_a496d9c51ab8ca3bd6fe7558691997d00"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">pni::cbf::dectris_reader::read_data_byte_offset</a></div><div class="ttdeci">static void read_data_byte_offset(std::ifstream &amp;is, const pni::image_info &amp;info, CTYPE &amp;data)</div><div class="ttdoc">read data</div><div class="ttdef"><b>Definition:</b> dectris_reader.hpp:94</div></div>
+<div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html_a46ebc5b447c4d60404ce0c0d6515699a"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">pni::cbf::dectris_reader::read_data_byte_offset</a></div><div class="ttdeci">static void read_data_byte_offset(std::ifstream &amp;is, const pni::image_info &amp;info, ContainerT &amp;data)</div><div class="ttdoc">read data</div><div class="ttdef"><b>Definition:</b> dectris_reader.hpp:94</div></div>
 <div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html_a6a544ad872b410589f6ecc33deef28be"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html#a6a544ad872b410589f6ecc33deef28be">pni::cbf::dectris_reader::read_header</a></div><div class="ttdeci">static std::streampos read_header(std::ifstream &amp;is, std::vector&lt; pni::image_info &gt; &amp;info, compression_id &amp;ct)</div><div class="ttdoc">read header information</div></div>
 <div class="ttc" id="aclasspni_1_1file__error_html"><div class="ttname"><a href="classpni_1_1file__error.html">pni::file_error</a></div><div class="ttdoc">file IO fails</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:538</div></div>
 <div class="ttc" id="aclasspni_1_1image__info_html"><div class="ttname"><a href="classpni_1_1image__info.html">pni::image_info</a></div><div class="ttdoc">image information type</div><div class="ttdef"><b>Definition:</b> image_info.hpp:43</div></div>
@@ -219,7 +219,7 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_5adda928dbc4372bbe0f178f6f220a1e.html">cbf</a></li><li class="navelem"><a class="el" href="dectris__reader_8hpp.html">dectris_reader.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:36 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

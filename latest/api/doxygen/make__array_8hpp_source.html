@@ -98,19 +98,19 @@ $(document).ready(function(){initNavTree('make__array_8hpp_source.html',''); ini
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;             <span class="keyword">typename</span> T,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;             <span class="keyword">typename</span> STYPE</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;             <span class="keyword">typename</span> ElementT,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;             <span class="keyword">typename</span> ShapeT</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            &gt;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="namespacepni.html#a1464f67be530947a3cad100d53b282a1">   50</a></span>&#160;    <a class="code" href="classpni_1_1array.html">array</a> <a class="code" href="namespacepni.html#a1464f67be530947a3cad100d53b282a1">make_array</a>(<span class="keyword">const</span> STYPE &amp;shape)</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="namespacepni.html#ac427a052c509018e0f067b7c9dd226d6">   50</a></span>&#160;    <a class="code" href="classpni_1_1array.html">array</a> <a class="code" href="namespacepni.html#ac427a052c509018e0f067b7c9dd226d6">make_array</a>(<span class="keyword">const</span> ShapeT &amp;shape)</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classpni_1_1mdarray.html">dynamic_array&lt;T&gt;</a> array_type;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classpni_1_1mdarray.html">dynamic_array&lt;ElementT&gt;</a> array_type;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classpni_1_1array.html">array</a>(array_type::create(shape));</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> CTYPE&gt; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespacepni.html#ab3ed84f95157ccb7672c2ca6af191eec">   72</a></span>&#160;    <a class="code" href="classpni_1_1array.html">array</a> <a class="code" href="namespacepni.html#a1464f67be530947a3cad100d53b282a1">make_array</a>(<a class="code" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">type_id_t</a> tid,<span class="keyword">const</span> CTYPE &amp;shape)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ContainerT&gt; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespacepni.html#a2325f4650bec5fe449645a794567ce88">   72</a></span>&#160;    <a class="code" href="classpni_1_1array.html">array</a> <a class="code" href="namespacepni.html#ac427a052c509018e0f067b7c9dd226d6">make_array</a>(<a class="code" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">type_id_t</a> tid,<span class="keyword">const</span> ContainerT &amp;shape)</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">if</span>(tid == <a class="code" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdab31df9c476d20e85ff898121efe11b5a">type_id_t::UInt8</a>)</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> make_array&lt;uint8&gt;(shape);</div>
@@ -180,14 +180,14 @@ $(document).ready(function(){initNavTree('make__array_8hpp_source.html',''); ini
 <div class="ttc" id="agroup__type__classes_html_gga2c8ca0de37c42914554a1a9e500b31cdaee63a91375f038924d9671f9fec7059b"><div class="ttname"><a href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdaee63a91375f038924d9671f9fec7059b">pni::type_id_t::Complex128</a></div><div class="ttdeci">@ Complex128</div><div class="ttdoc">128Bit IEEE floating point complex</div></div>
 <div class="ttc" id="agroup__type__classes_html_gga2c8ca0de37c42914554a1a9e500b31cdafbde23b11d7e59af7828e81144c8b487"><div class="ttname"><a href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdafbde23b11d7e59af7828e81144c8b487">pni::type_id_t::Int64</a></div><div class="ttdeci">@ Int64</div><div class="ttdoc">signed 64Bit integer</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="anamespacepni_html_a1464f67be530947a3cad100d53b282a1"><div class="ttname"><a href="namespacepni.html#a1464f67be530947a3cad100d53b282a1">pni::make_array</a></div><div class="ttdeci">array make_array(const STYPE &amp;shape)</div><div class="ttdoc">create an array</div><div class="ttdef"><b>Definition:</b> make_array.hpp:50</div></div>
+<div class="ttc" id="anamespacepni_html_ac427a052c509018e0f067b7c9dd226d6"><div class="ttname"><a href="namespacepni.html#ac427a052c509018e0f067b7c9dd226d6">pni::make_array</a></div><div class="ttdeci">array make_array(const ShapeT &amp;shape)</div><div class="ttdoc">create an array</div><div class="ttdef"><b>Definition:</b> make_array.hpp:50</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_9a01e76c9ba32292e5d1e50948f9c01a.html">type_erasures</a></li><li class="navelem"><a class="el" href="make__array_8hpp.html">make_array.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:36 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

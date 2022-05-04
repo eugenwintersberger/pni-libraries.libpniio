@@ -104,26 +104,26 @@ $(document).ready(function(){initNavTree('arrays_8hpp_source.html',''); initResi
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">//define here a new set of array templates using aliases</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="namespacepni.html#a7a2f9637356fbf9d387ab4007842a8eb">   58</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1mdarray.html">dynamic_array</a> = <a class="code" href="classpni_1_1mdarray.html">mdarray&lt;std::vector&lt;T&gt;</a>,<a class="code" href="classpni_1_1index__map.html">dynamic_cindex_map</a>&gt;;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ElementT&gt; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="namespacepni.html#adfa0215db65153bfad1d6e8ea655bf4c">   58</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1mdarray.html">dynamic_array</a> = <a class="code" href="classpni_1_1mdarray.html">mdarray&lt;std::vector&lt;ElementT&gt;</a>,<a class="code" href="classpni_1_1index__map.html">dynamic_cindex_map</a>&gt;;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;             <span class="keyword">typename</span> T,</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;             <span class="keywordtype">size_t</span>   D</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;             <span class="keyword">typename</span> ElementT,</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;             <span class="keywordtype">size_t</span>   TDimN</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            &gt;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="namespacepni.html#a6dfa46ffb2aaa65106c694506022c529">   81</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1mdarray.html">fixed_dim_array</a> = <a class="code" href="classpni_1_1mdarray.html">mdarray&lt;std::vector&lt;T&gt;</a>,<a class="code" href="classpni_1_1index__map.html">fixed_dim_cindex_map&lt;D&gt;</a>&gt;;</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="namespacepni.html#a1f3aea22461538ee4d1f82521b4959c3">   81</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1mdarray.html">fixed_dim_array</a> = <a class="code" href="classpni_1_1mdarray.html">mdarray&lt;std::vector&lt;ElementT&gt;</a>,<a class="code" href="classpni_1_1index__map.html">fixed_dim_cindex_map&lt;TDimN&gt;</a>&gt;;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;             <span class="keyword">typename</span>  T,</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;             <span class="keywordtype">size_t</span>... NDIMS&gt;</div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="namespacepni.html#aaea5944580420e2fd46289081a2c31e3">  108</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1mdarray.html">static_array</a> = <a class="code" href="classpni_1_1mdarray.html">mdarray</a>&lt;std::array&lt;T,boost::mpl::times&lt;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;             <span class="keyword">typename</span>  ElementT,</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;             <span class="keywordtype">size_t</span>... TDimsN&gt;</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="namespacepni.html#ab7e1a86e625a986d556f76ccdfc64c39">  108</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1mdarray.html">static_array</a> = <a class="code" href="classpni_1_1mdarray.html">mdarray</a>&lt;std::array&lt;ElementT,boost::mpl::times&lt;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                                              boost::mpl::size_t&lt;1&gt;,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                                              boost::mpl::size_t&lt;NDIMS&gt;...</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                                              boost::mpl::size_t&lt;TDimsN&gt;...</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                                              &gt;<a class="code" href="classpni_1_1value.html">::value</a></div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                                           &gt;,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                                 <a class="code" href="classpni_1_1static__index__map.html">static_cindex_map</a>&lt;NDIMS...&gt;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                                 <a class="code" href="classpni_1_1static__index__map.html">static_cindex_map</a>&lt;TDimsN...&gt;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                                &gt;;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;   </div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">//end of namespace</span></div>
@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('arrays_8hpp_source.html',''); initResi
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="arrays_8hpp.html">arrays.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 05:57:36 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

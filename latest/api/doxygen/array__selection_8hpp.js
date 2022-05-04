@@ -1,8 +1,8 @@
 var array__selection_8hpp =
 [
     [ "array_selection", "classpni_1_1array__selection.html", "classpni_1_1array__selection" ],
-    [ "is_contiguous", "array__selection_8hpp.html#a7dbbcb29b6fa171122e4a984b21d7930", null ],
-    [ "last_offset", "array__selection_8hpp.html#a4f43c6595406f0efdcf86bc2e35ddd6f", null ],
-    [ "offset", "array__selection_8hpp.html#a2ad907fcd914dfa92f042a2bdd97a7ed", null ],
-    [ "start_offset", "array__selection_8hpp.html#a09ff2283432a3ed54dc94236a24237b0", null ]
+    [ "is_contiguous", "array__selection_8hpp.html#a50c13016075a9210809a9c8bf866b214", null ],
+    [ "last_offset", "array__selection_8hpp.html#a93b5f93cbfde86db957f65e220d84980", null ],
+    [ "offset", "array__selection_8hpp.html#ae7a1ebbf6e5ba0b68ea3d9a523ed2228", null ],
+    [ "start_offset", "array__selection_8hpp.html#ab01896ba81995c4540b4230baa6e13cc", null ]
 ];

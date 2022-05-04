@@ -18,7 +18,7 @@ var error_2exceptions_8hpp =
     [ "cli_option_error", "classpni_1_1cli__option__error.html", "classpni_1_1cli__option__error" ],
     [ "cli_error", "classpni_1_1cli__error.html", "classpni_1_1cli__error" ],
     [ "cli_help_request", "classpni_1_1cli__help__request.html", "classpni_1_1cli__help__request" ],
-    [ "EXCEPTION_FORWARD", "error_2exceptions_8hpp.html#a22e4136fed8f3773d754cbda93e7e9c2", null ],
+    [ "EXCEPTION_FORWARD", "error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed", null ],
     [ "EXCEPTION_RECORD", "error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb", null ],
     [ "operator<<", "error_2exceptions_8hpp.html#ab3c8434813fb9d112b4dec2961b8c09a", null ]
 ];

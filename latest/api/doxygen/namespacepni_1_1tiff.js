@@ -23,7 +23,7 @@ var namespacepni_1_1tiff =
       [ "Float", "namespacepni_1_1tiff.html#a2fbe7af1ba1b5a746af470fdaa837a19a22ae0e2b89e5e3d477f988cc36d3272b", null ],
       [ "Double", "namespacepni_1_1tiff.html#a2fbe7af1ba1b5a746af470fdaa837a19ad909d38d705ce75386dd86e611a82f5b", null ]
     ] ],
-    [ "operator<<", "namespacepni_1_1tiff.html#a98da39a859ca7b5cdb152738c4d79777", null ],
+    [ "operator<<", "namespacepni_1_1tiff.html#ac669ffdccaa0276ef83bc6a8b0086c45", null ],
     [ "tiff_compression_tag_map", "namespacepni_1_1tiff.html#aba3ec31b16c9effc721a8efb75b26b4a", null ],
     [ "tiff_photo_tag_map", "namespacepni_1_1tiff.html#a6725ba612ae38e4d0df3abad1454e3cd", null ],
     [ "tiff_tag_name_map", "namespacepni_1_1tiff.html#a7d76a4f23418370c3da118106f8fb495", null ]

@@ -356,15 +356,15 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni7type_idE9type_id_tRK1T">
-<span id="_CPPv3I0EN3pni7type_idERK1T"></span><span id="_CPPv2I0EN3pni7type_idERK1T"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><span class="target" id="group__type__classes_1ga3010b6522ee2bce81fc338fb0f2ff2d1"></span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK1T" title="pni::type_id::T">T</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK1T" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT">
+<span id="_CPPv3I0EN3pni7type_idERK8GeneralT"></span><span id="_CPPv2I0EN3pni7type_idERK8GeneralT"></span>template&lt;typename <code class="sig-name descname">GeneralT</code>&gt;<br /><span class="target" id="group__type__classes_1ga3e9d1dd5f5654e103f9dc31e9d68de16"></span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT" title="pni::type_id::GeneralT">GeneralT</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get type id of an object </p>
 <p>This function returns the type ID of an instance of an object. In the case of scalar data the type if a variable is returned. If the argument passed is a container the type id of the element type is returned.</p>
 <p><dl class="simple">
 <dt><strong>Return</strong></dt><dd><p>type ID </p>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: type if the object </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GeneralT</span></code>: type if the object </p></li>
 </ul>
 </dd>
 </dl>
@@ -542,7 +542,7 @@
 <h2><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::binary_t</span></code></a><a class="headerlink" href="#pni-binary-t" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp class">
 <dt id="_CPPv4I0EN3pni8binary_tE">
-<span id="_CPPv3I0EN3pni8binary_tE"></span><span id="_CPPv2I0EN3pni8binary_tE"></span>template&lt;typename <code class="sig-name descname">NTYPE</code>&gt;<br /><span class="target" id="classpni_1_1binary__t"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">binary_t</code><a class="headerlink" href="#_CPPv4I0EN3pni8binary_tE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3I0EN3pni8binary_tE"></span><span id="_CPPv2I0EN3pni8binary_tE"></span>template&lt;typename <code class="sig-name descname">NativeT</code>&gt;<br /><span class="target" id="classpni_1_1binary__t"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">binary_t</code><a class="headerlink" href="#_CPPv4I0EN3pni8binary_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Binary data type. </p>
 <p>This class represents a binary data type. Typically binary data is represented by a typedef to an unsigned char type. However, this has an inconvenience: the unsigned char and the typedef for binary are indistinguishable by the compiler. Thus, such a binary type cannot be used for function overloading or for template specialization - it would always be treated by the compiler as the underlying unsigned char type. </p>
 <p>To circumvent this problem <code class="docutils literal notranslate"><span class="pre">libpninexus</span></code> defines this binary type which can be used instead of a simple typedef to unsigned char. The BinaryType template has several advantages:</p>
@@ -554,7 +554,7 @@
 </p>
 <p><dl class="simple">
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NTYPE</span></code>: native type used to store binary data </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NativeT</span></code>: native type used to store binary data </p></li>
 </ul>
 </dd>
 </dl>
@@ -563,7 +563,7 @@
 <p class="breathe-sectiondef-title rubric">Public Types</p>
 <dl class="cpp type">
 <dt id="_CPPv4N3pni8binary_t12storage_typeE">
-<span id="_CPPv3N3pni8binary_t12storage_typeE"></span><span id="_CPPv2N3pni8binary_t12storage_typeE"></span><span id="pni::binary_t::storage_type"></span><span class="target" id="classpni_1_1binary__t_1ae09d2b032bc4926773ba9ad5054741a9"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t::NTYPE">NTYPE</a> <code class="sig-name descname">storage_type</code><a class="headerlink" href="#_CPPv4N3pni8binary_t12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N3pni8binary_t12storage_typeE"></span><span id="_CPPv2N3pni8binary_t12storage_typeE"></span><span id="pni::binary_t::storage_type"></span><span class="target" id="classpni_1_1binary__t_1ac7018c065a00c842d45d6416ed30c22e"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t::NativeT">NativeT</a> <code class="sig-name descname">storage_type</code><a class="headerlink" href="#_CPPv4N3pni8binary_t12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>native type that is used for binary data </p>
 </dd></dl>
 
@@ -572,42 +572,42 @@
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="cpp function">
 <dt id="_CPPv4N3pni8binary_t8binary_tEv">
-<span id="_CPPv3N3pni8binary_t8binary_tEv"></span><span id="_CPPv2N3pni8binary_t8binary_tEv"></span><span id="pni::binary_t::binary_t"></span><span class="target" id="classpni_1_1binary__t_1a92fd3661f9579a7371e8c608c860ad9b"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N3pni8binary_t8binary_tEv"></span><span id="_CPPv2N3pni8binary_t8binary_tEv"></span><span id="pni::binary_t::binary_t"></span><span class="target" id="classpni_1_1binary__t_1afb0b2a804050279ffbbff8cd286ab482"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N3pni8binary_t8binary_tERK12storage_type">
-<span id="_CPPv3N3pni8binary_t8binary_tERK12storage_type"></span><span id="_CPPv2N3pni8binary_t8binary_tERK12storage_type"></span><span id="pni::binary_t::binary_t__storage_typeCR"></span><span class="target" id="classpni_1_1binary__t_1a24f7e1934bed4ef707a482328e3d11ed"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type">storage_type</a> &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK12storage_type" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N3pni8binary_t8binary_tERK12storage_type"></span><span id="_CPPv2N3pni8binary_t8binary_tERK12storage_type"></span><span id="pni::binary_t::binary_t__storage_typeCR"></span><span class="target" id="classpni_1_1binary__t_1aa9967391d5804f2fd9bde460209234b1"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type">storage_type</a> &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK12storage_type" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
 <dt id="_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE">
-<span id="_CPPv3N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="_CPPv2N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="pni::binary_t::binary_t__binary_t:storage_type:CR"></span><span class="target" id="classpni_1_1binary__t_1a8d38d40951cbac40473374b275b224be"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="pni::binary_t::binary_t">binary_t</a>&lt;<a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type">storage_type</a>&gt; &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="_CPPv2N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="pni::binary_t::binary_t__binary_t:storage_type:CR"></span><span class="target" id="classpni_1_1binary__t_1a3ac008397b9a0641d9250455d25a7e38"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="pni::binary_t::binary_t">binary_t</a>&lt;<a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type">storage_type</a>&gt; &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni8binary_tcv5NTYPEEv">
-<span id="_CPPv3NK3pni8binary_tcv5NTYPEEv"></span><span id="_CPPv2NK3pni8binary_tcv5NTYPEEv"></span><span id="pni::binary_t::castto-NTYPE-operatorC"></span><span class="target" id="classpni_1_1binary__t_1a71caeb971aa0ac72e834b56a02ebd3fe"></span><code class="sig-name descname">operator NTYPE</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni8binary_tcv5NTYPEEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4NK3pni8binary_tcv7NativeTEv">
+<span id="_CPPv3NK3pni8binary_tcv7NativeTEv"></span><span id="_CPPv2NK3pni8binary_tcv7NativeTEv"></span><span id="pni::binary_t::castto-NativeT-operatorC"></span><span class="target" id="classpni_1_1binary__t_1af164ab5afbd4529b4139c9cdf3f863a0"></span><code class="sig-name descname">operator NativeT</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni8binary_tcv7NativeTEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>conversion operator</p>
-<p>Allows a conversion from BinaryType&lt;NTYPE&gt; to the underlying NTYPE. </p>
+<p>Allows a conversion from BinaryType&lt;NativeT&gt; to the underlying NativeT. </p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI5NTYPEE">
-<span id="_CPPv3I0EN3pnilsERNSt7ostreamERK8binary_tI5NTYPEE"></span><span id="_CPPv2I0EN3pnilsERNSt7ostreamERK8binary_tI5NTYPEE"></span>template&lt;typename <code class="sig-name descname">NTYPE</code>&gt;<br /><span class="target" id="group__type__classes_1ga089d6143fd72fa023a8ec8290cd6d003"></span>std::ostream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>os</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t">binary_t</a>&lt;<a class="reference internal" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI5NTYPEE" title="pni::operator&lt;&lt;::NTYPE">NTYPE</a>&gt; &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI5NTYPEE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE">
+<span id="_CPPv3I0EN3pnilsERNSt7ostreamERK8binary_tI7NativeTE"></span><span id="_CPPv2I0EN3pnilsERNSt7ostreamERK8binary_tI7NativeTE"></span>template&lt;typename <code class="sig-name descname">NativeT</code>&gt;<br /><span class="target" id="group__type__classes_1ga62d81b395f0abab9dc37fac6a767c06d"></span>std::ostream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>os</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t">binary_t</a>&lt;<a class="reference internal" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE" title="pni::operator&lt;&lt;::NativeT">NativeT</a>&gt; &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>output stream operator for binary data </p>
 <p>This is the overloaded output stream operator for binary data.</p>
 <p><dl class="simple">
 <dt><strong>Return</strong></dt><dd><p>reference to the modified output stream </p>
 </dd>
 <dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NTYPE</span></code>: basic type for binary </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NativeT</span></code>: basic type for binary </p></li>
 </ul>
 </dd>
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">

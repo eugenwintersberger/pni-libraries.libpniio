@@ -1,6 +1,6 @@
 var structpni_1_1get__reference__type =
 [
-    [ "const_reference_type", "structpni_1_1get__reference__type.html#abb05b183b4269d0c2d5776071b715da7", null ],
-    [ "reference_type", "structpni_1_1get__reference__type.html#a15fab58aec70213f21073849c26380c0", null ],
-    [ "value_type", "structpni_1_1get__reference__type.html#aec1620fd1cdb35032386210404ec1dea", null ]
+    [ "const_reference_type", "structpni_1_1get__reference__type.html#a26628881c3053f86c8b2bdc7374187c1", null ],
+    [ "reference_type", "structpni_1_1get__reference__type.html#aa55c3744d59d16e222b799fdb806b524", null ],
+    [ "value_type", "structpni_1_1get__reference__type.html#a3fd967caa20ab1022fb5588b635621e6", null ]
 ];

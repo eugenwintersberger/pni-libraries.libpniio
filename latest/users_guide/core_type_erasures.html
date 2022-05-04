@@ -517,10 +517,10 @@ as will be shown here.</p>
 59
 60
 61
-62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ITERT</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">complex_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span>
+62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">complex_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">complex_rule</span><span class="p">;</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">complex_rule</span><span class="p">;</span>
 
     <span class="n">complex_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">complex_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">complex_rule</span><span class="p">)</span>
     <span class="p">{</span>
@@ -571,12 +571,12 @@ parser in <em>boost::spirit</em>.</p>
 90
 91
 92
-93</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ITERT</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">value_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span>
+93</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">value_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">value_rule</span><span class="p">;</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">value_rule</span><span class="p">;</span>
 
-    <span class="n">complex_parser</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="o">&gt;</span> <span class="n">complex_</span><span class="p">;</span>
+    <span class="n">complex_parser</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="o">&gt;</span> <span class="n">complex_</span><span class="p">;</span>
 
     <span class="n">value_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">value_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">value_rule</span><span class="p">)</span>
     <span class="p">{</span>
@@ -619,12 +619,12 @@ results in containers.</p>
 108
 109
 110
-111</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ITERT</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">record_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span>
+111</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">record_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">record_rule</span><span class="p">;</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">record_rule</span><span class="p">;</span>
 
-    <span class="n">value_parser</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="o">&gt;</span> <span class="n">value_</span><span class="p">;</span>
+    <span class="n">value_parser</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="o">&gt;</span> <span class="n">value_</span><span class="p">;</span>
 
     <span class="n">record_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">record_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">record_rule</span><span class="p">)</span>
     <span class="p">{</span>

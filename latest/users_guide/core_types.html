@@ -739,13 +739,13 @@ used.</p>
 <h3>The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> function template<a class="headerlink" href="#the-convert-function-template" title="Permalink to this headline">¶</a></h3>
 <p>At the heart of <cite>libpninexus</cite> s type conversion system is the cpp{convert}
 function template. The declaration of the template looks somehow like this</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ST</span><span class="p">,</span><span class="k">typename</span> <span class="nc">TT</span><span class="o">&gt;</span> <span class="n">TT</span> <span class="n">convert</span><span class="p">(</span><span class="k">const</span> <span class="n">ST</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SourceT</span><span class="p">,</span><span class="k">typename</span> <span class="nc">TargetT</span><span class="o">&gt;</span> <span class="n">TargetT</span> <span class="n">convert</span><span class="p">(</span><span class="k">const</span> <span class="n">SourceT</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A value of a particular source type (denoted by the template parameter
-<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">ST</span></code>) is passed as an argument to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> template. The value
+<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">SourceT</span></code>) is passed as an argument to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> template. The value
 of this argument will then be converted to a value of the target type
-<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">TT</span></code> and returned from the function template.
+<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">TargetT</span></code> and returned from the function template.
 This function template throws two exceptions</p>
 <table class="docutils align-default">
 <colgroup>
