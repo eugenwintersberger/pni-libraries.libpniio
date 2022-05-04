@@ -27,10 +27,10 @@
 #include "../data_generator.hpp"
 
 
-template<typename T> struct test_trait
+template<typename GeneralT> struct test_trait
 {
-    typedef container_utils<T>           utils_type;
-    typedef typename T::value_type       value_type;
+    typedef container_utils<GeneralT>           utils_type;
+    typedef typename GeneralT::value_type       value_type;
     typedef std::vector<value_type>      ref_type; 
     typedef random_generator<value_type> generator_type;
 };

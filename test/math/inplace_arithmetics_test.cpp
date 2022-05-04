@@ -45,7 +45,7 @@ namespace math{
     //utility funtion template to check for the finiteness of a 
     //comples value. This is only the case if real and imaginary part 
     //are finite.
-    template<typename T> bool isfinite(std::complex<T> v)
+    template<typename GeneralT> bool isfinite(std::complex<GeneralT> v)
     {
 
         return isfinite(v.real()) && isfinite(v.imag());

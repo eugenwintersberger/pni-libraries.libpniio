@@ -27,9 +27,9 @@
 #include <pni/types.hpp>
 #include <h5cpp/contrib/nexus/ebool.hpp>
 
-template<typename T> struct scalar_ref_data
+template<typename GeneralT> struct scalar_ref_data
 {
-    static const T data;
+    static const GeneralT data;
 };
 
 #define GENERATE_SCALAR_REFERENCE_DATA(type,...)\

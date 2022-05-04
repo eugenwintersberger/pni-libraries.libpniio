@@ -39,8 +39,8 @@
 
 using namespace pni;
 
-template<typename T>
-using array_type = std::array<T,4>;
+template<typename ElementT>
+using array_type = std::array<ElementT,4>;
 
 //data types for which to test container construction
 typedef boost::mpl::list<array_type<uint8>,
@@ -66,9 +66,9 @@ typedef boost::mpl::list<array_type<uint8>,
 BOOST_AUTO_TEST_SUITE(container_utils_array_test)
 
 //-----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_size,CT,test_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(test_create_from_size,GeneralT,test_types)
 {
-    typedef test_trait<CT> trait_type;
+    typedef test_trait<GeneralT> trait_type;
     typedef typename trait_type::generator_type generator_type;
     typedef typename trait_type::utils_type utils_type;
     generator_type generator;

@@ -28,9 +28,9 @@
 #include <vector>
 #include <h5cpp/contrib/nexus/ebool.hpp>
 
-template<typename T> struct mdim_ref_data
+template<typename ElementT> struct mdim_ref_data
 {
-    static const std::vector<T> data;
+    static const std::vector<ElementT> data;
 };
 
 #define GENERATE_MDIM_REFERENCE_DATA(type,...)\

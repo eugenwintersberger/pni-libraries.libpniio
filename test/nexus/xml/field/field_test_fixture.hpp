@@ -47,33 +47,33 @@ struct FieldTestFixture : BaseFixture,XMLBaseFixture
     }
 
     //-------------------------------------------------------------------------
-    template<typename T>
+    template<typename ElementT>
     static pni::type_id_t get_type_id() 
     {
-        return pni::type_id_map<T>::type_id;
+        return pni::type_id_map<ElementT>::type_id;
     }
 
     //-------------------------------------------------------------------------
-    template<typename T> 
+    template<typename ElementT> 
     pni::string xml_file_name()
     {
-        return group_prefix+pni::str_from_type_id(get_type_id<T>())+".xml";
+        return group_prefix+pni::str_from_type_id(get_type_id<ElementT>())+".xml";
     }
 
     //-------------------------------------------------------------------------
-    template<typename T>
+    template<typename ElementT>
     pni::string parent_name()
     {
-        return group_prefix+pni::str_from_type_id(get_type_id<T>());
+        return group_prefix+pni::str_from_type_id(get_type_id<ElementT>());
     }
 
     //-------------------------------------------------------------------------
-    template<typename T> void set_parent()
+    template<typename ElementT> void set_parent()
     {
-        if(root.nodes.exists(parent_name<T>()))
-            nx_parent = root.nodes[parent_name<T>()];
+        if(root.nodes.exists(parent_name<ElementT>()))
+            nx_parent = root.nodes[parent_name<ElementT>()];
         else
-            nx_parent = pni::nexus::BaseClass(root,parent_name<T>(),"NXentry");
+            nx_parent = pni::nexus::BaseClass(root,parent_name<ElementT>(),"NXentry");
     }
 
 };

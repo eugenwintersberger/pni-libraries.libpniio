@@ -28,10 +28,10 @@
 
 using namespace pni;
 
-template<typename T> void show_type_info()
+template<typename GeneralT> void show_type_info()
 {
-    typedef pni::type_info<T> info_type;
-    type_id_t tid = type_id_map<T>::type_id;
+    typedef pni::type_info<GeneralT> info_type;
+    type_id_t tid = type_id_map<GeneralT>::type_id;
     string type_name = str_from_type_id(tid);
     std::cout<<std::setw(12)<<type_name
         <<"  size = "<<std::setw(2)<<info_type::size

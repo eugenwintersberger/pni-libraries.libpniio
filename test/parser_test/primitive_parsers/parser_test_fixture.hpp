@@ -24,10 +24,10 @@
 
 #include <pni/parsers.hpp>
 
-template<typename T>
+template<typename GeneralT>
 struct parser_test_fixture
 {
-    typedef T result_type;
+    typedef GeneralT result_type;
     typedef pni::parser<result_type> parser_type;
     parser_type p;
 };

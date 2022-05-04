@@ -27,23 +27,23 @@
 
 using namespace pni;
 
-template<typename T> void show_range(const T &r,char op)
+template<typename GeneralT> void show_range(const GeneralT &r,char op)
 {
     std::cout<<"["<<r.lhs_min()<<":"<<r.lhs_max()<<"]"<<op;
     std::cout<<"["<<r.rhs_min()<<":"<<r.rhs_max()<<"]"<<std::endl;
 }
 
-template<typename T> void show_ranges()
+template<typename GeneralT> void show_ranges()
 {
-    type_id_t tid = type_id_map<T>::type_id;
+    type_id_t tid = type_id_map<GeneralT>::type_id;
     string tname = str_from_type_id(tid);
 
     std::cout<<tname<<"\t";
-    show_range(add_ranges<T>(),'+');
+    show_range(add_ranges<GeneralT>(),'+');
     std::cout<<tname<<"\t";
-    show_range(div_ranges<T>(),'/');
+    show_range(div_ranges<GeneralT>(),'/');
     std::cout<<tname<<"\t";
-    show_range(mult_ranges<T>(),'*');
+    show_range(mult_ranges<GeneralT>(),'*');
     std::cout<<std::endl;
 }
 

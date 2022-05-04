@@ -37,55 +37,55 @@
 using namespace pni; 
 
 //============================================================================
-template<typename T> void always_fails()
+template<typename GeneralT> void always_fails()
 {
-    BOOST_CHECK(!(checked_convertible<T,bool_t>::value));
-    BOOST_CHECK(!(checked_convertible<T,hdf5::datatype::EBool>::value));
-    BOOST_CHECK(!(checked_convertible<T,binary>::value));
-    BOOST_CHECK(!(checked_convertible<T,string>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,bool_t>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,hdf5::datatype::EBool>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,binary>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,string>::value));
 }
 
 //============================================================================
-template<typename T> void uint_always_fails()
+template<typename GeneralT> void uint_always_fails()
 {
-    BOOST_CHECK(!(checked_convertible<T,uint8>::value));
-    BOOST_CHECK(!(checked_convertible<T,uint16>::value));
-    BOOST_CHECK(!(checked_convertible<T,uint32>::value));
-    BOOST_CHECK(!(checked_convertible<T,uint64>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,uint8>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,uint16>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,uint32>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,uint64>::value));
 }
 
 //============================================================================
-template<typename T> void int_always_fails()
+template<typename GeneralT> void int_always_fails()
 {
-    BOOST_CHECK(!(checked_convertible<T,int8>::value));
-    BOOST_CHECK(!(checked_convertible<T,int16>::value));
-    BOOST_CHECK(!(checked_convertible<T,int32>::value));
-    BOOST_CHECK(!(checked_convertible<T,int64>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,int8>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,int16>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,int32>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,int64>::value));
 }
 
 //============================================================================
-template<typename T> void float_always_fails()
+template<typename GeneralT> void float_always_fails()
 {
-    BOOST_CHECK(!(checked_convertible<T,float32>::value));
-    BOOST_CHECK(!(checked_convertible<T,float64>::value));
-    BOOST_CHECK(!(checked_convertible<T,float128>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,float32>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,float64>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,float128>::value));
 }
 
 //============================================================================
-template<typename T> void complex_always_fails()
+template<typename GeneralT> void complex_always_fails()
 {
-    BOOST_CHECK(!(checked_convertible<T,complex32>::value));
-    BOOST_CHECK(!(checked_convertible<T,complex64>::value));
-    BOOST_CHECK(!(checked_convertible<T,complex128>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,complex32>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,complex64>::value));
+    BOOST_CHECK(!(checked_convertible<GeneralT,complex128>::value));
 }
 
 //============================================================================
-template<typename T> void uint_always_pass()
+template<typename GeneralT> void uint_always_pass()
 {
-    BOOST_CHECK((checked_convertible<T,uint8>::value));
-    BOOST_CHECK((checked_convertible<T,uint16>::value));
-    BOOST_CHECK((checked_convertible<T,uint32>::value));
-    BOOST_CHECK((checked_convertible<T,uint64>::value));
+    BOOST_CHECK((checked_convertible<GeneralT,uint8>::value));
+    BOOST_CHECK((checked_convertible<GeneralT,uint16>::value));
+    BOOST_CHECK((checked_convertible<GeneralT,uint32>::value));
+    BOOST_CHECK((checked_convertible<GeneralT,uint64>::value));
 }
 
 

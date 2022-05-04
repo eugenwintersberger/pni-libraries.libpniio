@@ -26,32 +26,32 @@
 #include <boost/test/unit_test.hpp>
 #include <pni/types.hpp>
 
-template<typename T>
-using is_float = pni::is_float_type<T>;
+template<typename GeneralT>
+using is_float = pni::is_float_type<GeneralT>;
 
 //-----------------------------------------------------------------------------
 template<
-         typename T,
-         typename std::enable_if<!is_float<T>::value>::type* = nullptr
+         typename GeneralT,
+         typename std::enable_if<!is_float<GeneralT>::value>::type* = nullptr
         > 
-void check_equal(const T &a,const T &b)
+void check_equal(const GeneralT &a,const GeneralT &b)
 {
     BOOST_CHECK(a == b);
 }
 
 //-----------------------------------------------------------------------------
 template<
-         typename T,
-         typename std::enable_if<is_float<T>::value>::type* = nullptr
+         typename GeneralT,
+         typename std::enable_if<is_float<GeneralT>::value>::type* = nullptr
         > 
-void check_equal(const T &a,const T &b)
+void check_equal(const GeneralT &a,const GeneralT &b)
 {
     BOOST_CHECK_CLOSE_FRACTION(a,b,1.e-8); 
 }
 
 //-----------------------------------------------------------------------------
-template<typename T> 
-void check_equal(const std::complex<T> &a,const std::complex<T> &b)
+template<typename GeneralT> 
+void check_equal(const std::complex<GeneralT> &a,const std::complex<GeneralT> &b)
 {
     BOOST_CHECK_CLOSE_FRACTION(a.real(),b.real(),1.e-8);
     BOOST_CHECK_CLOSE_FRACTION(a.imag(),b.imag(),1.e-8);
