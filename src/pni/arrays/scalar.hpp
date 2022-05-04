@@ -262,7 +262,7 @@ namespace pni {
                      template<typename ...> class ContainerT,
                      typename ...ContainerTemplateArgumentsT
                     >
-            T &operator()(const ContainerT<ContainerTemplateArgumentsT...> &)
+            ElementT &operator()(const ContainerT<ContainerTemplateArgumentsT...> &)
             {
                 return this->_data[0];
             }
