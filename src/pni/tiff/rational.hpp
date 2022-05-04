@@ -61,9 +61,9 @@ namespace tiff{
             //! scalar value.  It will be typically used to convert from a 
             //! rational number to a floating point type. 
             //!
-            template<typename U> operator U()
+            template<typename ScalarT> operator ScalarT()
             {
-                return (U)((U)(_numerator))/((U)(_denominator));
+                return (ScalarT)((ScalarT)(_numerator))/((ScalarT)(_denominator));
             }
 
             //================assignment operator===========================

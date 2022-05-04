@@ -174,15 +174,15 @@ namespace pni{
             //! \brief read data from the file
             //! 
             //! Reads data form the file and stores it into a container of 
-            //! type CTYPE.
+            //! type ContainerT.
             //!
-            //! \tparam CTYPE container type where to store the data 
+            //! \tparam ContainerT container type where to store the data 
             //! \param i image number
             //! \param c channel number of the selected image
-            //! \param data instance of CTYPE which will hold the data
+            //! \param data instance of ContainerT which will hold the data
             //!
-            template<typename CTYPE> 
-            void _read_data(size_t i,size_t c,CTYPE &data);
+            template<typename ContainerT> 
+            void _read_data(size_t i,size_t c,ContainerT &data);
         public:
             //==============constructors and destructor========================
             //! default constructor
@@ -248,19 +248,19 @@ namespace pni{
             //! \brief read image data
             //!
             //! Template method to read image data from the file. The returns 
-            //! an instance of the the template Array<T,BT> and does all the
+            //! an instance of the the template Array<T,BaseT> and does all the
             //! configuration and memory allocation work for this object.
             //! \throws memory_allocation_error if array allocation fails
             //! \param i index of the image in the file
             //! \param c index of the image channel to read
             //! \return instance of an array template
             //!
-            template<typename CTYPE> CTYPE image(size_t i,size_t c=0) 
+            template<typename ContainerT> ContainerT image(size_t i,size_t c=0) 
             {
                 using namespace pni;
                 image_info info = this->info(i);
-                CTYPE data;
-                try { data = CTYPE(info.npixels()); }
+                ContainerT data;
+                try { data = ContainerT(info.npixels()); }
                 catch(...)
                 {
                     throw memory_allocation_error(EXCEPTION_RECORD,
@@ -286,12 +286,12 @@ namespace pni{
             //!
             //! \throws size_mismatch_error if the size of the container does 
             //! not match the number of pixels stored in the image
-            //! \param data instance of CTYPE where data will be stored
+            //! \param data instance of ContainerT where data will be stored
             //! \param i index of the image in the file
             //! \param c index of the image channel to read
             //!
-            template<typename CTYPE> 
-            void image(CTYPE &data,size_t i,size_t c=0) 
+            template<typename ContainerT> 
+            void image(ContainerT &data,size_t i,size_t c=0) 
             {
                 using namespace pni;
                 image_info info = this->info(i);
@@ -314,8 +314,8 @@ namespace pni{
 
     };
 
-    template<typename CTYPE> 
-        void tiff_reader::_read_data(size_t i,size_t c,CTYPE &data)
+    template<typename ContainerT> 
+        void tiff_reader::_read_data(size_t i,size_t c,ContainerT &data)
     {
         //obtain the proper IFD
         tiff::ifd &ifd = this->_ifds.at(i);

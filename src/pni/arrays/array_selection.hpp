@@ -87,16 +87,16 @@ namespace pni{
             //! 
             //! Selection construction from arbitary containers.
             //! 
-            //! \tparam CTYPE container template for arguments
-            //! \tparam OTS template parameters for CTYPE
+            //! \tparam ContainerT container template for arguments
+            //! \tparam ContainerTemplateArgumentsT template parameters for ContainerT
             //! \param oshape selection shape in the original array
             //! \param ooffset offset of the selection 
             //! \param ostride stride of the selection
             //!
-            template<template<typename ...> class CTYPE,typename ...OTS>
-            explicit array_selection(const CTYPE<OTS...> &oshape,
-                                     const CTYPE<OTS...> &ooffset,
-                                     const CTYPE<OTS...> &ostride):
+            template<template<typename ...> class ContainerT,typename ...ContainerTemplateArgumentsT>
+            explicit array_selection(const ContainerT<ContainerTemplateArgumentsT...> &oshape,
+                                     const ContainerT<ContainerTemplateArgumentsT...> &ooffset,
+                                     const ContainerT<ContainerTemplateArgumentsT...> &ostride):
                 _oshape(oshape.size()),
                 _offset(ooffset.size()),
                 _stride(ostride.size())
@@ -165,12 +165,12 @@ namespace pni{
 
             //-----------------------------------------------------------------
             //! static creation function
-            template<typename CTYPE,
+            template<typename ContainerT,
                      typename = typename std::enable_if<
-                     std::is_same<typename CTYPE::value_type,pni::slice>::value
+                     std::is_same<typename ContainerT::value_type,pni::slice>::value
                      >::type
                     >
-            static array_selection create(const CTYPE &s)
+            static array_selection create(const ContainerT &s)
             {
                 typedef container_utils<index_type> cutils_type;
                 auto shape  = cutils_type::create(s.size());
@@ -213,10 +213,10 @@ namespace pni{
             //! container. If a single scalar element is selected the return 
             //! value will be an empty container. 
             //! 
-            //! \tparam CTYPE container type
-            //! \return instance of CTYPE with effective shape
+            //! \tparam ContainerT container type
+            //! \return instance of ContainerT with effective shape
             //!
-            template<typename CTYPE> CTYPE shape() const;
+            template<typename ContainerT> ContainerT shape() const;
 
             //----------------------------------------------------------------- 
             //! 
@@ -248,10 +248,10 @@ namespace pni{
             //! Return the full shape of the selection stored in an arbitrary
             //! container type.
             //! 
-            //! \tparam CTYPE container type
-            //! \return instance of CTYPE with the full shape
+            //! \tparam ContainerT container type
+            //! \return instance of ContainerT with the full shape
             //!
-            template<typename CTYPE> CTYPE full_shape() const;
+            template<typename ContainerT> ContainerT full_shape() const;
 
             //-----------------------------------------------------------------
             //!
@@ -269,10 +269,10 @@ namespace pni{
             //! \brief get offset 
             //! 
             //! Return the offset values of the selection in an arbitary container.
-            //! \tparam CTYPE container type
-            //! \return instance of CTYPE with offset values
+            //! \tparam ContainerT container type
+            //! \return instance of ContainerT with offset values
             //!
-            template<typename CTYPE> CTYPE offset() const;
+            template<typename ContainerT> ContainerT offset() const;
 
             //-----------------------------------------------------------------
             //! 
@@ -289,10 +289,10 @@ namespace pni{
             //! 
             //! Return the stride of the selection stored in an arbitrary STL
             //! container type. 
-            //! \tparam CTYPE container type
-            //! \return instance of CTYPE with the stride values
+            //! \tparam ContainerT container type
+            //! \return instance of ContainerT with the stride values
             //!
-            template<typename CTYPE> CTYPE stride() const;
+            template<typename ContainerT> ContainerT stride() const;
 
             //================get indices======================================
             //! 
@@ -328,42 +328,42 @@ namespace pni{
             //! of the selection or if oindex does not match the rank of the 
             //! original array
             //! 
-            //! \tparam ITYPE container type for the indices
+            //! \tparam ContainerIndexT container type for the indices
             //! \param sindex original index of the selection
             //! \param oindex new index with the rank of the original array
             //!
             template<
-                     typename ITYPE,
-                     typename OITYPE
+                     typename ContainerIndexT,
+                     typename OriginalIndexT
                     > 
-            void index(const ITYPE &sindex,OITYPE &oindex) const;
+            void index(const ContainerIndexT &sindex,OriginalIndexT &oindex) const;
 
             //-----------------------------------------------------------------
             //!
             //! \brief compute the original index
             //! 
-            //! This is virtually the same as index(const ITYPE &sindex,
-            //! const ITYPE &oindex) except that one does not have to take 
+            //! This is virtually the same as index(const ContainerIndexT &sindex,
+            //! const ContainerIndexT &oindex) except that one does not have to take 
             //! care about allocating the container for the original index.
             //! 
-            //! \tparam ITYPE container type (determined by the argument)
-            //! \tparam OITYPE container type for the original index
+            //! \tparam ContainerIndexT container type (determined by the argument)
+            //! \tparam OriginalIndexT container type for the original index
             //! \param sindex selection index
-            //! \return instance of ITYPE with the index in the original array
-            //! \sa template<typename ITYPE> index(const ITYPE &sindex,const ITYPE
+            //! \return instance of ContainerIndexT with the index in the original array
+            //! \sa template<typename ContainerIndexT> index(const ContainerIndexT &sindex,const ContainerIndexT
             //! &oindex) const
             //!
             template<
-                     typename OITYPE,
-                     typename ITYPE
+                     typename OriginalIndexT,
+                     typename ContainerIndexT
                     > 
-            OITYPE index(const ITYPE &sindex) const;
+            OriginalIndexT index(const ContainerIndexT &sindex) const;
     };
 
-    template<typename CTYPE>
-    CTYPE array_selection::shape() const
+    template<typename ContainerT>
+    ContainerT array_selection::shape() const
     {
-        typedef container_utils<CTYPE>  cutils_type;
+        typedef container_utils<ContainerT>  cutils_type;
         auto c = cutils_type::create(rank());
 
         //now we have to copy only those values from the original shape
@@ -373,28 +373,28 @@ namespace pni{
         return c;
     }
 
-    template<typename CTYPE> CTYPE
+    template<typename ContainerT> ContainerT
 	array_selection::full_shape() const
     {
-        typedef container_utils<CTYPE> cutils_type;
+        typedef container_utils<ContainerT> cutils_type;
         auto c = cutils_type::create(_oshape.size());
         std::copy(_oshape.begin(),_oshape.end(),c.begin());
         return c;
     }
 
-    template<typename CTYPE>
-    CTYPE array_selection::offset() const
+    template<typename ContainerT>
+    ContainerT array_selection::offset() const
     {
-        typedef container_utils<CTYPE> cutils_type;
+        typedef container_utils<ContainerT> cutils_type;
         auto c = cutils_type::create(_offset.size());
         std::copy(_offset.begin(),_offset.end(),c.begin());
         return c;
     }
 
-    template<typename CTYPE>
-    CTYPE array_selection::stride() const
+    template<typename ContainerT>
+    ContainerT array_selection::stride() const
     {
-    	typedef container_utils<CTYPE> cutils_type;
+    	typedef container_utils<ContainerT> cutils_type;
     	auto c = cutils_type::create(_stride.size());
 
     	std::copy(_stride.begin(),_stride.end(),c.begin());
@@ -402,10 +402,10 @@ namespace pni{
     }
 
     template<
-	typename ITYPE,
-	typename OITYPE
+	typename ContainerIndexT,
+	typename OriginalIndexT
 	>
-    void array_selection::index(const ITYPE &sindex,OITYPE &oindex) const
+    void array_selection::index(const ContainerIndexT &sindex,OriginalIndexT &oindex) const
     {
 #ifdef DEBUG
 //check here if the size (rank) of the original shape of the
@@ -413,7 +413,7 @@ namespace pni{
     	check_equal_size(_oshape,oindex,EXCEPTION_RECORD);
     	//check if the size of the selection index container matches the
     	//effective rank of the selection
-    	check_equal_size(shape<ITYPE>(),sindex,EXCEPTION_RECORD);
+    	check_equal_size(shape<ContainerIndexT>(),sindex,EXCEPTION_RECORD);
 #endif
 
     	//now we have to add index*stride from the selection index too
@@ -435,12 +435,12 @@ namespace pni{
     }
 
     template<
-	typename OITYPE,
-	typename ITYPE
+	typename OriginalIndexT,
+	typename ContainerIndexT
 	>
-    OITYPE array_selection::index(const ITYPE &sindex) const
+    OriginalIndexT array_selection::index(const ContainerIndexT &sindex) const
     {
-    	typedef container_utils<OITYPE> cutils_type;
+    	typedef container_utils<OriginalIndexT> cutils_type;
     	auto oindex = cutils_type::create(_oshape.size());
 
     	try{ index(sindex,oindex); }
@@ -460,22 +460,22 @@ namespace pni{
     //! The index is expected to have the effective size of the selection. This
     //! means that its rank can be smaller than that of the map.
     //! 
-    //! \tparam MAPT map type of the original array
-    //! \tparam CTYPE index type for the selection index 
+    //! \tparam MapT map type of the original array
+    //! \tparam ContainerT index type for the selection index 
     //! \param map reference to the original index map
     //! \param s reference to the selection object
     //! \param index reference to the selection index 
     //! \return linear offset of the element in the original array
     //!
     template<
-             typename MAPT,
-             typename CTYPE
+             typename MapT,
+             typename ContainerT
             >
-    size_t offset(const MAPT &map,const array_selection &s,
-                  const CTYPE &index)
+    size_t offset(const MapT &map,const array_selection &s,
+                  const ContainerT &index)
     {
         //compute the original index of the selection index 
-        auto orig_index = container_utils<CTYPE>::create(map.rank());
+        auto orig_index = container_utils<ContainerT>::create(map.rank());
         s.index(index,orig_index);
 
         return map.offset(orig_index);
@@ -489,14 +489,14 @@ namespace pni{
     //! Compute the offset in the original array of the first element in the
     //! selection. 
     //! 
-    //! \tparam MAPT original index map type
-    //! \tparam INDEXT index type of the selection
+    //! \tparam MapT original index map type
+    //! \tparam IndexT index type of the selection
     //! \param map reference to the original index map
     //! \param s reference to the selection 
     //! \return offset of the first selection element
     //!
-    template<typename MAPT>
-    size_t start_offset(const MAPT &map,const array_selection &s)
+    template<typename MapT>
+    size_t start_offset(const MapT &map,const array_selection &s)
     {
         typedef std::vector<size_t> index_type;
 
@@ -515,14 +515,14 @@ namespace pni{
     //! Compute the linear offset in the original array for the last element 
     //! in a selection. 
     //! 
-    //! \tparam MAPT index map type of the original array
-    //! \tparam INDEXT index type of the array selection
+    //! \tparam MapT index map type of the original array
+    //! \tparam IndexT index type of the array selection
     //! \param map reference to the original index map
     //! \param s reference to the selection object
     //! \return offset of the last element
     //!
-    template<typename MAPT>
-    size_t last_offset(const MAPT &map,const array_selection &s)
+    template<typename MapT>
+    size_t last_offset(const MapT &map,const array_selection &s)
     {
         typedef std::vector<size_t> index_type;
 
@@ -543,12 +543,12 @@ namespace pni{
     //! index map. A selection is considered as contiguous if the number of
     //! it spans in the original array is equal to the size of the selection.
     //!
-    //! \tparam MAPT index map type
+    //! \tparam MapT index map type
     //! \param map reference to the index mape
     //! \param s reerence to the selection. 
     //! \return true if contiguous, false otherwise
-    template<typename MAPT>
-    bool is_contiguous(const MAPT &map,const array_selection &s)
+    template<typename MapT>
+    bool is_contiguous(const MapT &map,const array_selection &s)
     {
 
         size_t orig_first_offset = start_offset(map,s);

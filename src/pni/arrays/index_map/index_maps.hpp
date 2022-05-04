@@ -44,10 +44,10 @@ namespace pni{
     //! static_cindex_map<3,3> matrix_map; 
     //! \endcode
     //! 
-    //! \tparam DIMS number of elements along each dimension
+    //! \tparam DimsT number of elements along each dimension
     //! 
-    template<size_t... DIMS> 
-    using static_cindex_map = static_index_map<c_index_map_imp,DIMS...>;
+    template<size_t... DimsT> 
+    using static_cindex_map = static_index_map<c_index_map_imp,DimsT...>;
 
     //-------------------------------------------------------------------------
     //!
@@ -75,9 +75,9 @@ namespace pni{
     //! typedef fixed_dim_cindex_map<2> image_map; 
     //! \endcode
     //!
-    //! \tparam NDIMS number of dimensions
-    template<size_t NDIMS> 
-    using fixed_dim_cindex_map = index_map<std::array<size_t,NDIMS>,c_index_map_imp>;
+    //! \tparam NDimsT number of dimensions
+    template<size_t NDimsT> 
+    using fixed_dim_cindex_map = index_map<std::array<size_t,NDimsT>,c_index_map_imp>;
 
     //=================define some convienance function========================
 
@@ -94,13 +94,13 @@ namespace pni{
     thrown if one tries to construct a map of a rank which does not match the
     size of the std::array storage.
 
-    \tparam MAPT index map type
+    \tparam MapT index map type
     */
-    template<typename MAPT> struct map_utils
+    template<typename MapT> struct map_utils
     {
         //! index map type
-        typedef MAPT map_type;
-        //! storage type for MAPT
+        typedef MapT map_type;
+        //! storage type for MapT
         typedef typename map_type::storage_type storage_type;
 
         /*!
@@ -121,11 +121,11 @@ namespace pni{
         exception will be thrown. 
 
         \throws shape_mismatch_error in case of shape problems.
-        \tparam CTYPE container type
-        \param c instance of CTYPE with shape information
-        \return instance of MAPT
+        \tparam ContainerT container type
+        \param c instance of ContainerT with shape information
+        \return instance of MapT
         */
-        template<typename CTYPE> static MAPT create(const CTYPE &c)
+        template<typename ContainerT> static MapT create(const ContainerT &c)
         {
             storage_type storage; 
 
@@ -143,7 +143,7 @@ namespace pni{
                 throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
             }
             std::copy(c.begin(),c.end(),storage.begin());
-            return MAPT(std::move(storage)); 
+            return MapT(std::move(storage)); 
         }
 
         //---------------------------------------------------------------------
@@ -153,10 +153,10 @@ namespace pni{
         Create anew map from an initializer list. 
         \throws shape_mismatch_error
         \param shape initializer list with shape data
-        \return instance of MAPT
+        \return instance of MapT
         */
-        template<typename IT> 
-        static MAPT create(std::initializer_list<IT> shape)
+        template<typename IndexT> 
+        static MapT create(std::initializer_list<IndexT> shape)
         {
             storage_type storage;
 
@@ -173,7 +173,7 @@ namespace pni{
                     +boost::lexical_cast<string>(map_type().rank())+")!");
             }
             std::copy(shape.begin(),shape.end(),storage.begin());
-            return MAPT(std::move(storage));
+            return MapT(std::move(storage));
         }
     };
 
@@ -186,26 +186,26 @@ namespace pni{
     instantiation (all information is fixed at compile time. 
     
     
-    \tparam POLTYPE policy type
-    \tparam DIMS number of elements along each dimension
+    \tparam PolicyT policy type
+    \tparam DimsT number of elements along each dimension
     */
-    template<typename POLTYPE,size_t...DIMS>
-    struct map_utils<static_index_map<POLTYPE,DIMS...> >
+    template<typename PolicyT,size_t...DimsT>
+    struct map_utils<static_index_map<PolicyT,DimsT...> >
     {
         //! index map type
-        typedef static_index_map<POLTYPE,DIMS...> map_type;
+        typedef static_index_map<PolicyT,DimsT...> map_type;
 
         //!
         //! \brief creat map from container
         //! 
         //! Create an index map from a container. The number of elements along
-        //! dimension are passed in a container of type CTYPE.
+        //! dimension are passed in a container of type ContainerT.
         //! 
-        //! \tparam CTYPE shape container type
+        //! \tparam ContainerT shape container type
         //! \param c container instance with shape information
         //! \return instance of map_type
         //! 
-        template<typename CTYPE> static map_type create(const CTYPE &c)
+        template<typename ContainerT> static map_type create(const ContainerT &c)
         {
             map_type map;
             if(c.size() != map.rank())
@@ -225,12 +225,12 @@ namespace pni{
         //! 
         //! Uses an initializer list to build an index map.
         //! 
-        //! \tparam IT index typ
+        //! \tparam IndexT index typ
         //! \param shape initializer list with shape information
         //! \return map_type instance
         //!
-        template<typename IT> 
-        static map_type create(std::initializer_list<IT> shape)
+        template<typename IndexT> 
+        static map_type create(std::initializer_list<IndexT> shape)
         {
             map_type map;
             if(shape.size() != map.rank())

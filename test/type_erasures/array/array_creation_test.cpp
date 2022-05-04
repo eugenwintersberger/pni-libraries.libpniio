@@ -52,10 +52,10 @@ BOOST_AUTO_TEST_SUITE(array_creation)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_mdarray_copy,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_mdarray_copy,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
         
         array a(f.mdarray_1);
     
@@ -74,10 +74,10 @@ BOOST_AUTO_TEST_SUITE(array_creation)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_mdarray_move,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_mdarray_move,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
         std::copy(f.mdarray_1.begin(),f.mdarray_1.end(),f.mdarray_2.begin());
         
         array a(std::move(f.mdarray_1));
@@ -92,10 +92,10 @@ BOOST_AUTO_TEST_SUITE(array_creation)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_view_copy,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_view_copy,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         auto view = f.mdarray_1(slice(0,3),1);
         array a(view);
@@ -114,10 +114,10 @@ BOOST_AUTO_TEST_SUITE(array_creation)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_view_move,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_from_view_move,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         auto view = f.mdarray_1(slice(0,3),1);
         array a(f.mdarray_1(slice(0,3),1));
@@ -136,10 +136,10 @@ BOOST_AUTO_TEST_SUITE(array_creation)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_construction,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_copy_construction,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a1(f.mdarray_1);
         array a2(a1);
@@ -158,10 +158,10 @@ BOOST_AUTO_TEST_SUITE(array_creation)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_construction,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_move_construction,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a1(f.mdarray_1);
         array a2(std::move(a1));

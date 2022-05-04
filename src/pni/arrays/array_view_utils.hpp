@@ -46,11 +46,11 @@ namespace pni{
     //! There are two specializations of this template available: one for 
     //! views and one for single elements. 
     //!
-    //! \tparam ATYPE array type
+    //! \tparam ArrayT array type
     //! \tparam is_view true if the index represents a view, false otherwise
     //!
     template<
-             typename ATYPE,
+             typename ArrayT,
              bool is_view
             > 
     struct array_view_trait;
@@ -64,15 +64,15 @@ namespace pni{
     //! types in case that the indexes passed to the ()-operator represent 
     //! a view. 
     //!
-    //! \tparam ATYPE array type
+    //! \tparam ArrayT array type
     //!
-    template<typename ATYPE> 
-    struct array_view_trait<ATYPE,true>    
+    template<typename ArrayT> 
+    struct array_view_trait<ArrayT,true>    
     {
         //! non-const view type
-        using type = array_view<ATYPE>;
+        using type = array_view<ArrayT>;
         //! const view type
-        using const_type = array_view<const ATYPE>;
+        using const_type = array_view<const ArrayT>;
     };
 
     //-------------------------------------------------------------------------
@@ -83,13 +83,13 @@ namespace pni{
     //! This is the specialization of array_view_trait for single element 
     //! access.
     //!
-    template<typename ATYPE> 
-    struct array_view_trait<ATYPE,false>
+    template<typename ArrayT> 
+    struct array_view_trait<ArrayT,false>
     {
         //! single element reference
-        using type = typename ATYPE::value_type&;
+        using type = typename ArrayT::value_type&;
         //! single element value 
-        using const_type = typename ATYPE::value_type;
+        using const_type = typename ArrayT::value_type;
 
     };
 
@@ -105,7 +105,7 @@ namespace pni{
     //! extract 
     //!
     template<
-             typename RTYPE,
+             typename RightT,
              bool is_view
             > 
     struct view_provider;
@@ -119,15 +119,15 @@ namespace pni{
     //! access.  This is the case when all indices passed to the () operator of
     //! original array are of an unsinged integer type.
     //!
-    //! \tparam ATYPE array type
+    //! \tparam ArrayT array type
     //! 
-    template<typename ATYPE> 
-    struct view_provider<ATYPE,false>
+    template<typename ArrayT> 
+    struct view_provider<ArrayT,false>
     {
         //! reference type
-        using ref_type = typename array_view_trait<ATYPE,false>::type;
+        using ref_type = typename array_view_trait<ArrayT,false>::type;
         //! const type (value type)
-        using type = typename array_view_trait<ATYPE,false>::const_type;
+        using type = typename array_view_trait<ArrayT,false>::const_type;
        
         //---------------------------------------------------------------------
         //!
@@ -137,22 +137,22 @@ namespace pni{
         //! the offset for a particular container by means of an index map. 
         //! This overload works with indexes passed as variadic arguments.
         //!
-        //! \tparam CTYPE container type 
+        //! \tparam ContainerT container type 
         //! \tparam MAP index map type
-        //! \tparam ITYPES indices of the element
+        //! \tparam IndicesT indices of the element
         //! \param c reference to the data container 
         //! \param map reference to the index map
         //! \param indexes index values
         //! \return reference to the single element
         //!
         template<
-                 typename CTYPE,
+                 typename ContainerT,
                  typename MAP,
-                 typename... ITYPES
+                 typename... IndicesT
                 > 
-        static ref_type get_reference(CTYPE &c,MAP &map,ITYPES ...indexes)
+        static ref_type get_reference(ContainerT &c,MAP &map,IndicesT ...indexes)
         {
-            using array_type = std::array<size_t,sizeof...(ITYPES)>;
+            using array_type = std::array<size_t,sizeof...(IndicesT)>;
 #ifdef DEBUG
             array_type buffer{{size_t(indexes)...}};
             check_indexes(buffer,map,EXCEPTION_RECORD);
@@ -170,22 +170,22 @@ namespace pni{
         //! the linear offset. Here the indexes are passed as variadic
         //! arguments.
         //!
-        //! \tparam CTYPE data container type
+        //! \tparam ContainerT data container type
         //! \tparam MAP index map type
-        //! \tparam ITYPES index types
+        //! \tparam IndicesT index types
         //! \param c reference to the data container
         //! \param map reference to the index map
         //! \param indexes index values as variadic arguments
         //! \return value of the referenced data element.
         //!
         template<
-                 typename CTYPE,
+                 typename ContainerT,
                  typename MAP,
-                 typename ...ITYPES
+                 typename ...IndicesT
                 >
-        static type get_value(const CTYPE &c,MAP &map,ITYPES ...indexes)
+        static type get_value(const ContainerT &c,MAP &map,IndicesT ...indexes)
         {
-            using array_type = std::array<size_t,sizeof...(ITYPES)>;
+            using array_type = std::array<size_t,sizeof...(IndicesT)>;
 #ifdef DEBUG
             array_type buffer{{size_t(indexes)...}};
             check_indexes(buffer,map,EXCEPTION_RECORD);
@@ -205,15 +205,15 @@ namespace pni{
     //! This overload of the view_provider template returns array_view
     //! instances. 
     //! 
-    //! \tparam ATYPE array type
+    //! \tparam ArrayT array type
     //!
-    template<typename ATYPE> 
-    struct view_provider<ATYPE,true>
+    template<typename ArrayT> 
+    struct view_provider<ArrayT,true>
     {
         //! reference type
-        using ref_type = typename array_view_trait<ATYPE,true>::type;
+        using ref_type = typename array_view_trait<ArrayT,true>::type;
         //! const reference type
-        using type = typename array_view_trait<ATYPE,true>::const_type;
+        using type = typename array_view_trait<ArrayT,true>::const_type;
        
         //---------------------------------------------------------------------
         //!
@@ -222,21 +222,21 @@ namespace pni{
         //! Return a non-const view instance on the array. The indexes (slices) 
         //! determining the view are passed as variadic arguments. 
         //!
-        //! \tparam CTYPE array type
+        //! \tparam ContainerT array type
         //! \tparam MAP index map type
-        //! \tparam ITYPES index types
+        //! \tparam IndicesT index types
         //! \param c reference to the data container
         //! \param indexes variadic argument list
         //! \return array view on array
         //!
         template<
-                 typename CTYPE,
+                 typename ContainerT,
                  typename MAP,
-                 typename... ITYPES
+                 typename... IndicesT
                 > 
-        static ref_type get_reference(CTYPE &c,MAP &,ITYPES ...indexes)
+        static ref_type get_reference(ContainerT &c,MAP &,IndicesT ...indexes)
         {
-            using array_type = std::array<slice,sizeof...(ITYPES)>;
+            using array_type = std::array<slice,sizeof...(IndicesT)>;
 
             return ref_type(c,array_selection::create(
                             array_type{{slice(indexes)...}}));
@@ -250,21 +250,21 @@ namespace pni{
         //! This overload returns a const view of an array. The indexes and
         //! slices are passed as variaidc templates to the function.
         //!
-        //! \tparam CTYPE array type
+        //! \tparam ContainerT array type
         //! \tparam MAP index map type
-        //! \tparam ITYPES index and slice types
+        //! \tparam IndicesT index and slice types
         //! \param c reference to the data container
         //! \param indexes variadic argument list
         //! \return const array view
         //! 
         template<
-                 typename CTYPE,
+                 typename ContainerT,
                  typename MAP,
-                 typename ...ITYPES
+                 typename ...IndicesT
                 >
-        static type get_value(const CTYPE &c,MAP &,ITYPES ...indexes)
+        static type get_value(const ContainerT &c,MAP &,IndicesT ...indexes)
         {
-            using array_type = std::array<slice,sizeof...(ITYPES)>;
+            using array_type = std::array<slice,sizeof...(IndicesT)>;
 
             return type(c,array_selection::create(
                         array_type{{slice(indexes)...}}));
@@ -272,13 +272,13 @@ namespace pni{
 
     };
 
-template<typename ATYPE,
-         typename ...ITYPES
+template<typename ArrayT,
+         typename ...IndicesT
         >
-    using view_type_trait = array_view_trait<ATYPE,
-                                       is_view_index<ITYPES...>::value>;
+    using view_type_trait = array_view_trait<ArrayT,
+                                       is_view_index<IndicesT...>::value>;
 
-template<typename ...ITYPES>
-    using enable_valid_index = std::enable_if<is_index_types<ITYPES...>::value>;
+template<typename ...IndicesT>
+    using enable_valid_index = std::enable_if<is_index_types<IndicesT...>::value>;
 //end of namespace
 }

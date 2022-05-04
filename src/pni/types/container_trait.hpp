@@ -51,9 +51,9 @@ namespace pni{
     //! If a user provides a new container type an overload for this trait
     //! be provided along with the implementation.
     //! 
-    //! \tparam CTYPE container type 
+    //! \tparam ContainerT container type 
     //!
-    template<typename CTYPE> struct container_trait
+    template<typename ContainerT> struct container_trait
     {
         //! by default false
         static const bool is_random_access = false;
@@ -72,10 +72,10 @@ namespace pni{
     //! 
     //! Specialization of the container_trait for std::vector. 
     //!
-    //! \tparam ARGS all possible types passed to std::vector as template
+    //! \tparam ArrayArgsT all possible types passed to std::vector as template
     //! parameters
     //! 
-    template<typename ...ARGS> struct container_trait<std::vector<ARGS...>>
+    template<typename ...ArrayArgsT> struct container_trait<std::vector<ArrayArgsT...>>
     {
         //! std::vector provides random access
         static const bool is_random_access = true;
@@ -120,9 +120,9 @@ namespace pni{
     //! 
     //! Specialization of container_trait for std::list
     //! 
-    //! \tparam ARGS types passed as template parameters to std::list
+    //! \tparam ArrayArgsT types passed as template parameters to std::list
     //! 
-    template<typename ...ARGS> struct container_trait<std::list<ARGS...>>
+    template<typename ...ArrayArgsT> struct container_trait<std::list<ArrayArgsT...>>
     {
         //! std::list does not provide random access
         static const bool is_random_access = false;

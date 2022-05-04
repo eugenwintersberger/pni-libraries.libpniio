@@ -36,13 +36,13 @@ namespace pni{
     //! expression can be used, scalars are stored by value as they are often 
     //! passed as temporaries. 
     //!
-    //! \tparam OT operator type
+    //! \tparam OperatorT operator type
     //!
-    template<typename OT> 
+    template<typename OperatorT> 
     struct op_trait
     {
         //! reference type for the operand
-        typedef OT const& ref_type; 
+        typedef OperatorT const& ref_type; 
     };
 
     //-------------------------------------------------------------------------
@@ -72,19 +72,19 @@ namespace pni{
     //! This is the default template where we assume that both operands are 
     //! array types.
     //! 
-    //! \tparam OP1 LHS operand type
-    //! \tparam OP2 RHS operand type
+    //! \tparam Operand1T LHS operand type
+    //! \tparam Operand2T RHS operand type
     //! 
     template<
-             typename OP1,
-             typename OPT2
+             typename Operand1T,
+             typename Operand2T
             > 
     struct array_trait
     {
         //! index map type
-        typedef typename OP1::map_type map_type;
+        typedef typename Operand1T::map_type map_type;
         //! inplace arithmetic type
-        typedef typename OP1::inplace_arithmetic inplace_arithmetic;
+        typedef typename Operand1T::inplace_arithmetic inplace_arithmetic;
     };
 
     //-------------------------------------------------------------------------
@@ -97,19 +97,19 @@ namespace pni{
     //! This specialization assumes that the LHS is an array while the RHS 
     //! of the expression is a scalar.
     //! 
-    //! \tparam OP1 LHS operand type
-    //! \tparam T   data type of the RHS scalar operand
+    //! \tparam Operand1T LHS operand type
+    //! \tparam ScalarOperandT   data type of the RHS scalar operand
     //! 
     template<
-             typename OP1,
-             typename T
+             typename Operand1T,
+             typename ScalarOperandT
             >
-    struct array_trait<OP1,scalar<T>>
+    struct array_trait<Operand1T,scalar<ScalarOperandT>>
     {
         //! index map type
-        typedef typename OP1::map_type map_type;
+        typedef typename Operand1T::map_type map_type;
         //! inplace arithmetic type
-        typedef typename OP1::inplace_arithmetic inplace_arithmetic;
+        typedef typename Operand1T::inplace_arithmetic inplace_arithmetic;
     };
 
     //-------------------------------------------------------------------------
@@ -122,19 +122,19 @@ namespace pni{
     //! This specialization assumes that the LHS is a scalar while the RHS 
     //! of the expression is an array.
     //! 
-    //! \tparam T data type of the LHS scalar operand
-    //! \tparam OP1 RHS type
+    //! \tparam ScalarOperandT data type of the LHS scalar operand
+    //! \tparam Operand1T RHS type
     //! 
     template<
-             typename T,
-             typename OP1
+             typename ScalarOperandT,
+             typename Operand1T
             > 
-    struct array_trait<scalar<T>,OP1>
+    struct array_trait<scalar<ScalarOperandT>,Operand1T>
     {
         //! index map type
-        typedef typename OP1::map_type map_type;
+        typedef typename Operand1T::map_type map_type;
         //! inplace arithmetic type
-        typedef typename OP1::inplace_arithmetic inplace_arithmetic;
+        typedef typename Operand1T::inplace_arithmetic inplace_arithmetic;
     };
 
 //end of namespace

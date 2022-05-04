@@ -48,10 +48,10 @@ typedef  boost::mpl::joint_view<numeric_dynamic_arrays,
                                 > numeric_array_types;
 
 
-template<typename AT> struct fixture
+template<typename TestArrayT> struct fixture
 {
-    typedef AT array_type;
-    typedef typename AT::value_type value_type;
+    typedef TestArrayT array_type;
+    typedef typename TestArrayT::value_type value_type;
     typedef random_generator<value_type> generator_type; 
 
     shape_t shape; 
@@ -79,10 +79,10 @@ template<typename AT> struct fixture
 
 BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_add_scalar,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_add_scalar,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type; 
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type; 
+        typedef typename TestArrayT::value_type value_type;
 
         add_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -104,10 +104,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_add_array,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_add_array,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type;
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type;
+        typedef typename TestArrayT::value_type value_type;
 
         add_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -129,10 +129,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_sub_scalar,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_sub_scalar,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type; 
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type; 
+        typedef typename TestArrayT::value_type value_type;
 
         add_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -152,10 +152,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_sub_array,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_sub_array,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type; 
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type; 
+        typedef typename TestArrayT::value_type value_type;
         
         add_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -176,10 +176,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_scalar,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_scalar,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type;
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type;
+        typedef typename TestArrayT::value_type value_type;
         
         div_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -200,10 +200,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_array,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_array,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type;
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type;
+        typedef typename TestArrayT::value_type value_type;
         
         div_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -224,10 +224,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
     
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_scalar,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_scalar,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type;
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type;
+        typedef typename TestArrayT::value_type value_type;
         
         mult_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),
@@ -247,10 +247,10 @@ BOOST_AUTO_TEST_SUITE(array_view_unary_arithmetic_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_array,AT,numeric_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_array,TestArrayT,numeric_array_types)
     {
-        typedef fixture<AT> fixture_type;
-        typedef typename AT::value_type value_type;
+        typedef fixture<TestArrayT> fixture_type;
+        typedef typename TestArrayT::value_type value_type;
         
         mult_ranges<value_type> ranges;
         fixture_type fixture(ranges.rhs_min(),ranges.rhs_max(),

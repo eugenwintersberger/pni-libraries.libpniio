@@ -59,10 +59,10 @@ typedef inplace_arithmetics ip_type;
 
 BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(add_scalar_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(add_scalar_test,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((add_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((add_ranges<value_type>()));
     
         ip_type::add(f.lhs,f.rhs_scalar);
 
@@ -84,10 +84,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(add_array_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(add_array_test,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((add_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((add_ranges<value_type>()));
     
         ip_type::add(f.lhs,f.rhs);
 
@@ -110,10 +110,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(sub_scalar_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(sub_scalar_test,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((add_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((add_ranges<value_type>()));
     
         ip_type::sub(f.lhs,f.rhs_scalar);
 
@@ -135,10 +135,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(sub_array_test,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(sub_array_test,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((add_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((add_ranges<value_type>()));
     
         ip_type::sub(f.lhs,f.rhs);
 
@@ -160,10 +160,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_scalar,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_scalar,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((div_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((div_ranges<value_type>()));
 
         ip_type::div(f.lhs,f.rhs_scalar);
     
@@ -185,10 +185,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_array,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_div_array,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((div_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((div_ranges<value_type>()));
 
         ip_type::div(f.lhs,f.rhs);
 
@@ -210,10 +210,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_scalar,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_scalar,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((mult_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((mult_ranges<value_type>()));
 
         ip_type::mult(f.lhs,f.rhs_scalar);
         
@@ -235,10 +235,10 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_array,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_mult_array,TestArrayT,all_array_types)
     {
-        typedef typename AT::value_type value_type;
-        fixture<AT> f((mult_ranges<value_type>()));
+        typedef typename TestArrayT::value_type value_type;
+        fixture<TestArrayT> f((mult_ranges<value_type>()));
 
         ip_type::mult(f.lhs,f.rhs);
 

@@ -100,17 +100,17 @@ namespace pni{
     //! to their data elements extremely fast. 
     //! 
     //! \tparam T element data type
-    //! \tparam NDIMS number of elements along each dimension
+    //! \tparam NDimsT number of elements along each dimension
     //!
     template<
              typename  T,
-             size_t... NDIMS>
+             size_t... NDimsT>
     using static_array = mdarray<std::array<T,boost::mpl::times<
                                               boost::mpl::size_t<1>,
-                                              boost::mpl::size_t<NDIMS>...
+                                              boost::mpl::size_t<NDimsT>...
                                               >::value
                                            >,
-                                 static_cindex_map<NDIMS...>
+                                 static_cindex_map<NDimsT...>
                                 >;
    
 //end of namespace

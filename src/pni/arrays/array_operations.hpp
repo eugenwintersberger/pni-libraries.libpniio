@@ -41,9 +41,9 @@ namespace pni{
     \param a array type
     \return value of type T
     */
-    template<typename ARRAYT> typename ARRAYT::value_type min(const ARRAYT &a) 
+    template<typename ArrayT> typename ArrayT::value_type min(const ArrayT &a) 
     {
-        typedef typename ARRAYT::value_type RType;
+        typedef typename ArrayT::value_type RType;
         RType result(a[0]);
 
 #ifdef NOFOREACH
@@ -71,9 +71,9 @@ namespace pni{
     \param a array for which to determine the maximum
     \return value of type T
     */
-    template<typename ARRAYT> typename ARRAYT::value_type max(const ARRAYT &a)
+    template<typename ArrayT> typename ArrayT::value_type max(const ArrayT &a)
     {
-        typedef typename ARRAYT::value_type RType;
+        typedef typename ArrayT::value_type RType;
 
         RType result(a[0]);
 
@@ -103,12 +103,12 @@ namespace pni{
     \param min minimum value
     \param max maximum value
     */
-    template<typename ARRAYT> void min_max(const ARRAYT &a,
-                                           typename ARRAYT::value_type &min,
-                                           typename ARRAYT::value_type &max)
+    template<typename ArrayT> void min_max(const ArrayT &a,
+                                           typename ArrayT::value_type &min,
+                                           typename ArrayT::value_type &max)
     {
-        min=typename ARRAYT::value_type(a[0]);
-        max=typename ARRAYT::value_type(a[0]);
+        min=typename ArrayT::value_type(a[0]);
+        max=typename ArrayT::value_type(a[0]);
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
@@ -133,16 +133,16 @@ namespace pni{
     \param minth minimum threshold
     \param maxth maximum threshold
     */
-    template<typename ARRAYT> void clip(ARRAYT &a,
-                                        typename ARRAYT::value_type minth, 
-                                        typename ARRAYT::value_type maxth)
+    template<typename ArrayT> void clip(ArrayT &a,
+                                        typename ArrayT::value_type minth, 
+                                        typename ArrayT::value_type maxth)
     {
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
-            typename ARRAYT::value_type &v = *iter;
+            typename ArrayT::value_type &v = *iter;
 #else
-        for(typename ARRAYT::value_type &v: a)
+        for(typename ArrayT::value_type &v: a)
         {
 #endif
             if(v <= minth)
@@ -172,18 +172,18 @@ namespace pni{
     \param minval value to which values small minth will be set
     \param maxval value to which values larger maxth will be set
     */
-    template<typename ARRAYT> void clip(ARRAYT &a,
-                                        typename ARRAYT::value_type minth, 
-                                        typename ARRAYT::value_type maxth,
-                                        typename ARRAYT::value_type minval,
-                                        typename ARRAYT::value_type maxval)
+    template<typename ArrayT> void clip(ArrayT &a,
+                                        typename ArrayT::value_type minth, 
+                                        typename ArrayT::value_type maxth,
+                                        typename ArrayT::value_type minval,
+                                        typename ArrayT::value_type maxval)
     {
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
-            typename ARRAYT::value_type &v = *iter;
+            typename ArrayT::value_type &v = *iter;
 #else
-        for(typename ARRAYT::value_type &v: a)
+        for(typename ArrayT::value_type &v: a)
         {
 #endif
             if(v <= minth)
@@ -209,15 +209,15 @@ namespace pni{
     \param a array which to clip
     \param threshold threshold value
     */
-    template<typename ARRAYT>
-    void min_clip(ARRAYT &a,typename ARRAYT::value_type threshold)
+    template<typename ArrayT>
+    void min_clip(ArrayT &a,typename ArrayT::value_type threshold)
     {
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
-            typename ARRAYT::value_type &v = *iter;
+            typename ArrayT::value_type &v = *iter;
 #else
-        for(typename ARRAYT::value_type &v: a)
+        for(typename ArrayT::value_type &v: a)
         {
 #endif
             if(v<=threshold) v = threshold;
@@ -234,16 +234,16 @@ namespace pni{
     \param threshold threshold value
     \param value the value to which to set data
     */
-    template<typename ARRAYT>
-    void min_clip(ARRAYT &a,typename ARRAYT::value_type threshold,
-                            typename ARRAYT::value_type value)
+    template<typename ArrayT>
+    void min_clip(ArrayT &a,typename ArrayT::value_type threshold,
+                            typename ArrayT::value_type value)
     {
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
-            typename  ARRAYT::value_type &v = *iter;
+            typename  ArrayT::value_type &v = *iter;
 #else
-        for(typename ARRAYT::value_type &v: a)
+        for(typename ArrayT::value_type &v: a)
         {
 #endif
             if(v<=threshold) v = value;
@@ -258,15 +258,15 @@ namespace pni{
     \param a array to clip
     \param threshold threshold value
     */
-    template<typename ARRAYT> 
-    void max_clip(ARRAYT &a,typename ARRAYT::value_type threshold)
+    template<typename ArrayT> 
+    void max_clip(ArrayT &a,typename ArrayT::value_type threshold)
     {
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
-            typename  ARRAYT::value_type &v = *iter;
+            typename  ArrayT::value_type &v = *iter;
 #else
-        for(typename ARRAYT::value_type &v: a)
+        for(typename ArrayT::value_type &v: a)
         {
 #endif
             if(v>=threshold) v = threshold;
@@ -283,16 +283,16 @@ namespace pni{
     \param threshold threshold value
     \param value value to set 
     */
-    template<typename ARRAYT> 
-    void max_clip(ARRAYT &a,typename ARRAYT::value_type threshold,
-                            typename ARRAYT::value_type value)
+    template<typename ArrayT> 
+    void max_clip(ArrayT &a,typename ArrayT::value_type threshold,
+                            typename ArrayT::value_type value)
     {
 #ifdef NOFOREACH
         for(auto iter=a.begin();iter!=a.end();iter++)
         {
-            typename  ARRAYT::value_type &v = *iter;
+            typename  ArrayT::value_type &v = *iter;
 #else
-        for(typename ARRAYT::value_type &v: a)
+        for(typename ArrayT::value_type &v: a)
         {
 #endif
             if(v>=threshold) v = value;
@@ -307,9 +307,9 @@ namespace pni{
     \param a array object to search for
     \return linear offset of maximum value
     */
-    template<typename ARRAYT> size_t max_offset(const ARRAYT &a)
+    template<typename ArrayT> size_t max_offset(const ArrayT &a)
     {
-        typedef typename ARRAYT::value_type value_type;
+        typedef typename ArrayT::value_type value_type;
         size_t offset = 0;
         size_t index = 0;
         value_type max_value = value_type(a[0]);
@@ -342,10 +342,10 @@ namespace pni{
     \param a array where to search
     \return index in a container format requested by the user
     */
-    template<typename CONT,typename ARRAYT> CONT max_index(const ARRAYT &a)
+    template<typename ContainerT,typename ArrayT> ContainerT max_index(const ArrayT &a)
     {
         size_t offset = max_offset(a);
-        return a.map().template index<CONT>(offset);
+        return a.map().template index<ContainerT>(offset);
     }
 
     //--------------------------------------------------------------------------
@@ -357,10 +357,10 @@ namespace pni{
     \param a array object to search for
     \return linear offset of minimum value
     */
-    template<typename ARRAYT> size_t min_offset(const ARRAYT &a)
+    template<typename ArrayT> size_t min_offset(const ArrayT &a)
     {
         
-        typedef typename ARRAYT::value_type value_type;
+        typedef typename ArrayT::value_type value_type;
         size_t offset = 0;
         size_t index = 0;
         value_type min_value = value_type(a[0]);
@@ -393,10 +393,10 @@ namespace pni{
     \param a array where to search
     \return index in a container format requested by the user
     */
-    template<typename CONT,typename ARRAYT> CONT min_index(const ARRAYT &a)
+    template<typename ContainerT,typename ArrayT> ContainerT min_index(const ArrayT &a)
     {
         size_t offset = min_offset(a);
-        return a.map().template index<CONT>(offset);
+        return a.map().template index<ContainerT>(offset);
     }
 
 

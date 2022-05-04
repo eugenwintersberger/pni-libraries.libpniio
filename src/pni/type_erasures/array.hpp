@@ -253,13 +253,13 @@ namespace pni{
             auto s = array.shape<std::list<size_t> >();
             \endcode
             !*/
-            //! If the wrapped type is a scalar an empty instance of CTYPE is
+            //! If the wrapped type is a scalar an empty instance of ContainerT is
             //! returned.
             //!
-            //! \tparam CTYPE container type
-            //! \return instance of CTYPE
+            //! \tparam ContainerT container type
+            //! \return instance of ContainerT
             //!
-            template<typename CTYPE> CTYPE shape() const;
+            template<typename ContainerT> ContainerT shape() const;
 
             //-----------------------------------------------------------------
             //! 
@@ -376,10 +376,10 @@ namespace pni{
     };
 
     //======================implementation of template members=================
-    template<typename CTYPE> CTYPE array::shape() const
+    template<typename ContainerT> ContainerT array::shape() const
     {
         shape_t s = this->shape();
-        CTYPE c(s.size());
+        ContainerT c(s.size());
         std::copy(s.begin(),s.end(),c.begin());
         return c;
     }

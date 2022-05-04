@@ -63,10 +63,10 @@ namespace pni{
     //! Specialization of the formatter template for instances of the mdarray
     //! template.
     //!
-    //! \tparam OTYPES template parameters for mdarray
+    //! \tparam TemplateParametersT template parameters for mdarray
     //!
-    template<typename ...OTYPES>
-    pni::string format(const pni::mdarray<OTYPES...> &v,
+    template<typename ...TemplateParametersT>
+    pni::string format(const pni::mdarray<TemplateParametersT...> &v,
                              const container_io_config &config=container_io_config())
     {
         using namespace pni;

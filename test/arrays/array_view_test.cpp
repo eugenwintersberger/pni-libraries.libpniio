@@ -52,11 +52,11 @@ typedef  boost::mpl::joint_view<all_dynamic_arrays,
 #endif
                                 > all_array_types;
 
-template<typename AT> struct array_view_test_fixture
+template<typename TestArrayT> struct array_view_test_fixture
 {
-    typedef AT                            array_type;
-    typedef array_view<AT>                view_type;
-    typedef typename AT::value_type       value_type;
+    typedef TestArrayT                            array_type;
+    typedef array_view<TestArrayT>                view_type;
+    typedef typename TestArrayT::value_type       value_type;
     typedef random_generator<value_type>  generator_type;
     typedef std::vector<slice>            slice_vector;
     typedef typename array_type::map_type map_type;
@@ -76,13 +76,13 @@ template<typename AT> struct array_view_test_fixture
 };
 
 #define SETUP_VIEW_FIXTURE()\
-        typedef array_view_test_fixture<AT> fixture_type;  \
+        typedef array_view_test_fixture<TestArrayT> fixture_type;  \
         fixture_type fixture 
 
 BOOST_AUTO_TEST_SUITE(array_view_test)
 
-    template<typename VTYPE>
-    void check_view(const VTYPE &view,const shape_t &ref)
+    template<typename ViewT>
+    void check_view(const ViewT &view,const shape_t &ref)
     {
         size_t ref_size = std::accumulate(ref.begin(),ref.end(),1,
                 std::multiplies<size_t>());
@@ -98,10 +98,10 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
         
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
-        typedef typename AT::view_type view_type;
+        typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
         slice_vector slices{slice(0,3),slice(3,7)};
@@ -114,10 +114,10 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction_from_array,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction_from_array,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
-        typedef typename AT::view_type view_type;
+        typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
         slice_vector selection{slice(0,3),slice(3,7)};
@@ -127,13 +127,13 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
         check_view(v,view_shape);
         
         //check construction from a const array
-        const AT &carray = fixture.a;
+        const TestArrayT &carray = fixture.a;
         auto v2 = carray(selection);
         check_view(v2,view_shape);
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction_from_array_variadic,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction_from_array_variadic,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
 
@@ -141,16 +141,16 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
         shape_t view_shape{3,4};
         check_view(view,view_shape);
 
-        const AT &carray = fixture.a;
+        const TestArrayT &carray = fixture.a;
         auto view2 = carray(slice(0,3),slice(3,7));
         check_view(view2,view_shape);
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
-        typedef typename AT::view_type view_type;
+        typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
         //create a selection
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
             BOOST_CHECK_EQUAL(view[index],fixture.a(0,2+index));
 
         //-----------------check for front-----------------------------------------
-        typename AT::value_type v = fixture.a(0,2);
+        typename TestArrayT::value_type v = fixture.a(0,2);
         BOOST_CHECK_EQUAL(view.front(),v);
 
         //-----------------check for back------------------------------------------
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_pointer,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_pointer,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
 
@@ -200,11 +200,11 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_iterator_access,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_iterator_access,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
-        typedef typename AT::value_type value_type;        
-        typedef typename AT::view_type view_type;
+        typedef typename TestArrayT::value_type value_type;        
+        typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
         //create the view
@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
         check_view(v,shape_t{13,9});
 
         //create data for the selection
-        std::vector<typename AT::value_type> data(v.size());
+        std::vector<typename TestArrayT::value_type> data(v.size());
         std::generate(data.begin(),data.end(),fixture.generator);
 
         //---------------------check write access----------------------------------
@@ -243,11 +243,11 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assignment,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_assignment,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
-        typedef typename AT::value_type value_type;
-        typedef typename AT::view_type view_type;
+        typedef typename TestArrayT::value_type value_type;
+        typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
         //select roi
@@ -275,11 +275,11 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multiindex_access,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_multiindex_access,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
-        typedef typename AT::value_type value_type;
-        typedef typename AT::view_type view_type;
+        typedef typename TestArrayT::value_type value_type;
+        typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
      
         slice_vector slices{slice(10,40),slice(0,100)};
@@ -307,7 +307,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     }
 
     //========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_comparison,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_comparison,TestArrayT,all_array_types)
     {
         SETUP_VIEW_FIXTURE();
         auto a1 = fixture.a(0,slice(0,NY));

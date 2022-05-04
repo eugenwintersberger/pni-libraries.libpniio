@@ -51,14 +51,14 @@ namespace pni{
     //! However it can be converted to the native type used to hold the data. 
     //! Stream operators are provided for IO operations using binary data. 
     //! 
-    //! \tparam NTYPE native type used to store binary data
+    //! \tparam NativeT native type used to store binary data
     //!
-    template<typename NTYPE> class binary_t
+    template<typename NativeT> class binary_t
     {
         public:
             //=================public data types===============================
             //! native type that is used for binary data
-            typedef NTYPE storage_type;
+            typedef NativeT storage_type;
         private:
             //! data value
             storage_type _value; 
@@ -94,10 +94,10 @@ namespace pni{
             //-----------------------------------------------------------------
             //! conversion operator
             //! 
-            //! Allows a conversion from BinaryType<NTYPE> to the underlying 
-            //! NTYPE. 
+            //! Allows a conversion from BinaryType<NativeT> to the underlying 
+            //! NativeT. 
             //!
-            operator NTYPE() const
+            operator NativeT() const
             {
                 return _value;
             }
@@ -105,24 +105,24 @@ namespace pni{
     };
 
 
-    //! binary addition is deleted for BinaryType<NTYPE>
-    template<typename NTYPE> binary_t<NTYPE> 
-        operator+(const binary_t<NTYPE> &a,const binary_t<NTYPE> &b)
+    //! binary addition is deleted for BinaryType<NativeT>
+    template<typename NativeT> binary_t<NativeT> 
+        operator+(const binary_t<NativeT> &a,const binary_t<NativeT> &b)
         = delete;
 
-    //! binary subtraction is deleted for BinaryType<NTYPE>
-    template<typename NTYPE> binary_t<NTYPE>
-        operator-(const binary_t<NTYPE> &a,const binary_t<NTYPE> &b)
+    //! binary subtraction is deleted for BinaryType<NativeT>
+    template<typename NativeT> binary_t<NativeT>
+        operator-(const binary_t<NativeT> &a,const binary_t<NativeT> &b)
         =delete;
 
-    //! binary multiplication is deleted for binary_t<NTYPE>
-    template<typename NTYPE> binary_t<NTYPE>
-        operator*(const binary_t<NTYPE> &a,const binary_t<NTYPE> &b)
+    //! binary multiplication is deleted for binary_t<NativeT>
+    template<typename NativeT> binary_t<NativeT>
+        operator*(const binary_t<NativeT> &a,const binary_t<NativeT> &b)
         =delete;
 
-    //! binary division is deleted for binary_t<NTYPE>
-    template<typename NTYPE> binary_t<NTYPE>
-        operator/(const binary_t<NTYPE> &a,const binary_t<NTYPE> &b)
+    //! binary division is deleted for binary_t<NativeT>
+    template<typename NativeT> binary_t<NativeT>
+        operator/(const binary_t<NativeT> &a,const binary_t<NativeT> &b)
         =delete;
 
     
@@ -133,15 +133,15 @@ namespace pni{
     //! 
     //! This is the overloaded output stream operator for binary data. 
     //! 
-    //! \tparam NTYPE basic type for binary
+    //! \tparam NativeT basic type for binary
     //! \param os reference to the output stream
     //! \param o reference to the binary object
     //! \return reference to the modified output stream
     //!
-    template<typename NTYPE>
-    std::ostream &operator<<(std::ostream &os,const binary_t<NTYPE> &o)
+    template<typename NativeT>
+    std::ostream &operator<<(std::ostream &os,const binary_t<NativeT> &o)
     {
-        NTYPE b = o;
+        NativeT b = o;
         os<<b;
         return os;
     }
@@ -153,15 +153,15 @@ namespace pni{
     //! 
     //! This is the overloaded input stream operator for binary data. 
     //! 
-    //! \tparam NTYPE basic type for binary
+    //! \tparam NativeT basic type for binary
     //! \param is reference to the input  stream
     //! \param o reference to the binary object
     //! \return reference to the modified input stream
     //!
-    template<typename NTYPE>
-    std::istream &operator>>(std::istream &is,binary_t<NTYPE> &o)
+    template<typename NativeT>
+    std::istream &operator>>(std::istream &is,binary_t<NativeT> &o)
     {
-        NTYPE b;
+        NativeT b;
         is>>b;
         o = b;
         return is;

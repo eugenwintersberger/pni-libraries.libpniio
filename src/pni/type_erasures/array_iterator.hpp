@@ -111,7 +111,7 @@ namespace pni{
     //! This is a special iterator template for the array type erasure. The 
     //! template parameter decides whether or not the iterator is const. The 
     //! major difference between this template and the default 
-    //! array_iterator<ITERABLE,const_flag> template is the fact that it 
+    //! array_iterator<IterableT,const_flag> template is the fact that it 
     //! stores the actual value of the iterator as a member variable. This is 
     //! necessary as the array type erasure does not provide direct access to 
     //! the array type it hides but rather creates new objects providing 

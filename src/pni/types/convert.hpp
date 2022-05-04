@@ -51,12 +51,12 @@ namespace pni{
     //!
     //! Implements conversion between simple scalar numeric types.
     //!
-    //! \tparam TT target type
-    //! \tparam ST source type
+    //! \tparam TargetT target type
+    //! \tparam SourceT source type
     //!
     template<
-             typename TT,
-             typename ST
+             typename TargetT,
+             typename SourceT
             >
     struct converter
     {
@@ -66,9 +66,9 @@ namespace pni{
         //! \param value reference of instance of source type
         //! \return instance of target type with the converted value
         //!
-        static TT convert(const ST &value)
+        static TargetT convert(const SourceT &value)
         {
-            return boost::numeric_cast<TT>(value);
+            return boost::numeric_cast<TargetT>(value);
         }
     };
 
@@ -79,10 +79,10 @@ namespace pni{
     //! This is a specialization of the converter template for the case
     //! that the target and source type are equal.
     //!
-    //! \tparam TT target and source type
+    //! \tparam TargetT target and source type
     //!
-    template<typename TT>
-    struct converter<TT,TT>
+    template<typename TargetT>
+    struct converter<TargetT,TargetT>
     {
         //!
         //! \brief perform conversion
@@ -93,7 +93,7 @@ namespace pni{
         //! \param value original value
         //! \return the same as the original value
         //!
-        static TT convert(const TT &value)
+        static TargetT convert(const TargetT &value)
         {
             return value;
         }
@@ -106,14 +106,14 @@ namespace pni{
     //!
     //! Implements conversion from a simple scalar type to a complex type.
     //!
-    //! \tparam BT target base type
-    //! \tparam ST simple source type
+    //! \tparam BaseT target base type
+    //! \tparam SourceT simple source type
     //!
     template<
-             typename BT,
-             typename ST
+             typename BaseT,
+             typename SourceT
             >
-    struct converter<std::complex<BT>,ST>
+    struct converter<std::complex<BaseT>,SourceT>
     {
         //!
         //! \brief perform conversion
@@ -124,11 +124,11 @@ namespace pni{
         //! \param value the original simple scalar type
         //! \return complex type  with value as its real part
         //!
-        static std::complex<BT> convert(const ST &value)
+        static std::complex<BaseT> convert(const SourceT &value)
         {
-            BT real = boost::numeric_cast<BT>(value);
+            BaseT real = boost::numeric_cast<BaseT>(value);
 
-            return std::complex<BT>(real,0);
+            return std::complex<BaseT>(real,0);
         }
     };
 
@@ -139,14 +139,14 @@ namespace pni{
     //!
     //! Implements complex to complex conversion.
     //!
-    //! \tparam BTT target base type
-    //! \tparam BST source base type
+    //! \tparam TargetBaseT target base type
+    //! \tparam SourceBaseT source base type
     //!
     template<
-             typename BTT,
-             typename BST
+             typename TargetBaseT,
+             typename SourceBaseT
             >
-    struct converter<std::complex<BTT>,std::complex<BST>>
+    struct converter<std::complex<TargetBaseT>,std::complex<SourceBaseT>>
     {
         //!
         //! \brief perform conversion
@@ -156,12 +156,12 @@ namespace pni{
         //! \param value instance of the source complex type
         //! \return new instance of target type
         //!
-        static std::complex<BTT> convert(const std::complex<BST> &value)
+        static std::complex<TargetBaseT> convert(const std::complex<SourceBaseT> &value)
         {
-            BTT real = boost::numeric_cast<BTT>(value.real());
-            BTT imag = boost::numeric_cast<BTT>(value.imag());
+            TargetBaseT real = boost::numeric_cast<TargetBaseT>(value.real());
+            TargetBaseT imag = boost::numeric_cast<TargetBaseT>(value.imag());
 
-            return std::complex<BTT>(real,imag);
+            return std::complex<TargetBaseT>(real,imag);
         }
     };
 

@@ -35,7 +35,7 @@
 
 namespace pni {
 
-    //template<typename ATYPE> class array_view;
+    //template<typename ArrayT> class array_view;
 
     //! 
     //! \ingroup mdim_array_classes
@@ -219,12 +219,12 @@ namespace pni {
             //! Returns the reference to the data value no matter how many or 
             //! what indices are passed.
             //! 
-            //! \tparam ITYPES index types
+            //! \tparam IndicesT index types
             //! \param indices multidimensional index
             //! \return reference to data
             //!
-            template<typename ...ITYPES> 
-            T &operator()(ITYPES ... indices)
+            template<typename ...IndicesT> 
+            T &operator()(IndicesT ... indices)
             {
                 return this->_data[0];
             }
@@ -236,12 +236,12 @@ namespace pni {
             //! Return the value of the scalar. The number of indices or 
             //! their type do not matter.
             //! 
-            //! \tparam ITYPES index types
+            //! \tparam IndicesT index types
             //! \param indices multidimensional index
             //! \return data value
             //!
-            template<typename ...ITYPES> 
-            T operator()(ITYPES ... indices) const
+            template<typename ...IndicesT> 
+            T operator()(IndicesT ... indices) const
             {
                 return this->_data[0];
             }
@@ -254,15 +254,15 @@ namespace pni {
             //! passed by a container. The number of indices or their value 
             //! are ignored. 
             //!
-            //! \tparam CTYPE container template
-            //! \tparam OTS template arguments for the container template
+            //! \tparam ContainerT container template
+            //! \tparam ContainerTemplateArgumentsT template arguments for the container template
             //! \return reference to the data
             //!
             template<
-                     template<typename ...> class CTYPE,
-                     typename ...OTS
+                     template<typename ...> class ContainerT,
+                     typename ...ContainerTemplateArgumentsT
                     >
-            T &operator()(const CTYPE<OTS...> &)
+            T &operator()(const ContainerT<ContainerTemplateArgumentsT...> &)
             {
                 return this->_data[0];
             }
@@ -274,13 +274,13 @@ namespace pni {
             //! Return the data value. The multidimensional index is passed 
             //! by a container. The number of indices or their value are 
             //! ignored.
-            //! \tparam CTYPE container template
-            //! \tparam OTS template arguments of the container template
+            //! \tparam ContainerT container template
+            //! \tparam ContainerTemplateArgumentsT template arguments of the container template
             //!
             //! \return data value
             //!
-            template<template<typename ...> class CTYPE,typename ...OTS>
-            T operator()(const CTYPE<OTS...> &) const
+            template<template<typename ...> class ContainerT,typename ...ContainerTemplateArgumentsT>
+            T operator()(const ContainerT<ContainerTemplateArgumentsT...> &) const
             {
                 return this->_data[0];
             }
@@ -316,8 +316,8 @@ namespace pni {
             //! 
             //! \return container with 1
             //!
-            template<typename CTYPE> 
-            CTYPE shape() const { return CTYPE(); }
+            template<typename ContainerT> 
+            ContainerT shape() const { return ContainerT(); }
 
             //------------------------------------------------------------------
             //! get iterator to first element

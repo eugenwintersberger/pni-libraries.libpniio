@@ -30,28 +30,28 @@ namespace pni {
 namespace nexus {
 namespace xml {
 
-template<typename T,typename OBJ>
-void write_data(const std::string &data,const OBJ &object)
+template<typename T,typename ObjectT>
+void write_data(const std::string &data,const ObjectT &object)
 {
   pni::parser<std::vector<T>> parser;
   object.write(parser(data));
 }
 
-template<typename OBJ>
-void write_string_data(const std::string &data,const OBJ &object)
+template<typename ObjectT>
+void write_string_data(const std::string &data,const ObjectT &object)
 {
   object.write(data);
 }
 
-template<typename OBJ>
-void write_bool_data(const std::string &data,const OBJ &object)
+template<typename ObjectT>
+void write_bool_data(const std::string &data,const ObjectT &object)
 {
   pni::parser<std::vector<hdf5::datatype::EBool>> parser;
   object.write(parser(data));
 }
 
-template<typename OBJ>
-void extend_simple_scalar(const OBJ &){
+template<typename ObjectT>
+void extend_simple_scalar(const ObjectT &){
 }
 
 void extend_simple_scalar(const hdf5::node::Dataset &object){
@@ -64,8 +64,8 @@ void extend_simple_scalar(const hdf5::node::Dataset &object){
   }
 }
 
-template<typename OBJ>
-void write_data(const Node &node,const OBJ &object)
+template<typename ObjectT>
+void write_data(const Node &node,const ObjectT &object)
 {
   using namespace pni;
   type_id_t type_id = type_id_from_str(node.attribute("type").str_data());

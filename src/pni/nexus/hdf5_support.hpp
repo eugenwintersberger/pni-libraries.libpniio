@@ -55,14 +55,14 @@ template<> class TypeTrait<pni::array>
 };
 
 template<
-         typename STORAGE,
-         typename IMAP,
-         typename IPA
+         typename StorageT,
+         typename IndexMapT,
+         typename InplaceArithmeticT
         >
-class TypeTrait<pni::mdarray<STORAGE,IMAP,IPA>>
+class TypeTrait<pni::mdarray<StorageT,IndexMapT,InplaceArithmeticT>>
 {
   public:
-    using Type = pni::mdarray<STORAGE,IMAP,IPA>;
+    using Type = pni::mdarray<StorageT,IndexMapT,InplaceArithmeticT>;
     using TypeClass = typename TypeTrait<typename Type::value_type>::TypeClass;
 
     static TypeClass create(const  Type & = Type())
@@ -112,14 +112,14 @@ template<> class TypeTrait<pni::array>
 
 
 template<
-         typename STORAGE,
-         typename IMAP,
-         typename IPA
+         typename StorageT,
+         typename IndexMapT,
+         typename InplaceArithmeticT
         >
-class TypeTrait<pni::mdarray<STORAGE,IMAP,IPA>>
+class TypeTrait<pni::mdarray<StorageT,IndexMapT,InplaceArithmeticT>>
 {
   public:
-    using ArrayType = pni::mdarray<STORAGE,IMAP,IPA>;
+    using ArrayType = pni::mdarray<StorageT,IndexMapT,InplaceArithmeticT>;
     using DataspaceType = Simple;
 
     static DataspaceType create(const ArrayType &a)

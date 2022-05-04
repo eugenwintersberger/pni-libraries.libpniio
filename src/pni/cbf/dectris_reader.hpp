@@ -69,43 +69,43 @@ namespace cbf{
             //! Static method to read byte offset compressed data from 
             //! DECTRIS CBF files. 
             //!
-            //! \tparam CBFT type used for data in the file
-            //! \tparam CTYPE container type where to store the data
+            //! \tparam CBFBufferT type used for data in the file
+            //! \tparam ContainerT container type where to store the data
             //! \param is input stream
             //! \param info instance of ImageInfo for the image to read
             //! \param data container instance where to store the data
             //!
             template<
-                     typename CBFT,
-                     typename CTYPE
+                     typename CBFBufferT,
+                     typename ContainerT
                     >
             static void read_data_byte_offset(std::ifstream &is,
                                               const pni::image_info &info,
-                                              CTYPE &data);
+                                              ContainerT &data);
 
 
     };
 
     //-------------------------------------------------------------------------
     template<
-             typename CBFT,
-             typename CTYPE
+             typename CBFBufferT,
+             typename ContainerT
             >
     void dectris_reader::read_data_byte_offset(std::ifstream &is,
-                                 const pni::image_info &, CTYPE &data)
+                                 const pni::image_info &, ContainerT &data)
     {
         using namespace pni;
         //unsigned long i;
         //size_t ecnt = 0; // element counter
-        //?? CBFT buffer = 0; // single element buffer
+        //?? CBFBufferT buffer = 0; // single element buffer
         unsigned int  buffer = 0; // single element buffer
 
         //initializing the container with 0
         std::fill(data.begin(),data.end(),0);
-        // typename CTYPE::iterator iter = data.begin();
-        typename CTYPE::value_type v_old = 0;
+        // typename ContainerT::iterator iter = data.begin();
+        typename ContainerT::value_type v_old = 0;
 
-        for(typename CTYPE::value_type &v: data)
+        for(typename ContainerT::value_type &v: data)
         {
             v = v_old; //set the new value to the previous
 

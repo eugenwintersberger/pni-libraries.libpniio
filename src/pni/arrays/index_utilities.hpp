@@ -37,8 +37,8 @@
 
 namespace pni {
 
-#define IDX_ARRAY(IT,i)\
-    std::array<size_t,sizeof...(IT)>{{size_t(i)...}}
+#define IDX_ARRAY(IteratorT,i)\
+    std::array<size_t,sizeof...(IteratorT)>{{size_t(i)...}}
 
 //!
 //! \ingroup mdim_array_internal_classes
@@ -46,14 +46,14 @@ namespace pni {
 //!
 //! Index types are all integer types and slice.
 //!
-//! \tparam T type to check
+//! \tparam GeneralT type to check
 //!
-template<typename T>
+template<typename GeneralT>
 struct is_index_type
 {
-	//! true if T is integer or a slice type, false otherwise
-	static const bool value = std::is_integral<T>::value ||
-			                  std::is_same<T,slice>::value;
+	//! true if GeneralT is integer or a slice type, false otherwise
+	static const bool value = std::is_integral<GeneralT>::value ||
+			                  std::is_same<GeneralT,slice>::value;
 };
 
 
@@ -66,9 +66,9 @@ struct is_index_type
 //! types. If all of the types are index types the member value is true.
 //! Otherwise it is false.
 //!
-//! \tparam ITYPES variadic set of types to check
+//! \tparam IndicesT variadic set of types to check
 //!
-template<typename ...ITYPES>
+template<typename ...IndicesT>
 struct is_index_types
 {
     //!
@@ -77,19 +77,19 @@ struct is_index_types
     //! This internal type implements a predicate to be used in connection
     //! with count_if from MPL.
     //!
-    //! \tparam T input type
+    //! \tparam InputT input type
     //!
-    template<typename T>
+    template<typename InputT>
     struct is_index_type_pred
     {
         //! result type
-        typedef is_index_type<T> type;
+        typedef is_index_type<InputT> type;
     };
 
     //! load the _ placeholder from boost::mpl
     using _ = boost::mpl::placeholders::_;
     //! list of types passed by the user
-    typedef typename boost::mpl::vector<ITYPES...> types;
+    typedef typename boost::mpl::vector<IndicesT...> types;
 
     //! count all index types
     typedef boost::mpl::count_if<types,is_index_type_pred<_>> n_index_types;
@@ -116,17 +116,17 @@ struct is_index_types
 //! is_valid_index<slice,string>::value;         //definitely false
 //! \endcode
 //!
-//! \tparam ITYPES index types
+//! \tparam IndicesT index types
 //!
-template<typename ...ITYPES>
+template<typename ...IndicesT>
 struct is_valid_index
 {
 	//! result type of MPL exrepssion
 	typedef typename boost::mpl::contains<
-			typename boost::mpl::vector<ITYPES...>::type,slice>::type has_slice;
+			typename boost::mpl::vector<IndicesT...>::type,slice>::type has_slice;
 	//! result type of MPL expression
 	typedef typename boost::mpl::contains<
-			typename boost::mpl::vector<ITYPES...>::type,size_t>::type
+			typename boost::mpl::vector<IndicesT...>::type,size_t>::type
 			has_size_t;
 
 	//! true if the types are valid index types
@@ -149,18 +149,18 @@ struct is_valid_index
 //! is_view_index<size_t,size_t,slice>::value;  //this would be true
 //! \endcode
 //!
-//! \tparam ITYPES index types
+//! \tparam IndicesT index types
 //!
-template<typename ...ITYPES>
+template<typename ...IndicesT>
 struct is_view_index
 {
     //! result type of MPL expression
     typedef typename boost::mpl::contains<
-                               typename boost::mpl::vector<ITYPES...>::type,
+                               typename boost::mpl::vector<IndicesT...>::type,
                                slice
                               >::type type;
 
-    //! true if ITYPES represent a view
+    //! true if IndicesT represent a view
     static const bool value = type::value;
 };
 
@@ -172,9 +172,9 @@ struct is_view_index
 //! This template checks if a container identifies a view. This is the
 //! case if its value_type is slice.
 //!
-template<typename CTYPE> struct is_view_cont
+template<typename ContainerT> struct is_view_cont
 {
-    //! by default CTYPE is no view container
+    //! by default ContainerT is no view container
     static const bool value = false;
 };
 
@@ -185,12 +185,12 @@ template<typename CTYPE> struct is_view_cont
 //!
 //! Specialization of the is_view_cont template for std::vector.
 //!
-//! \tparam T element type of the vector
+//! \tparam ElementT element type of the vector
 //!
-template<typename T> struct is_view_cont<std::vector<T>>
+template<typename ElementT> struct is_view_cont<std::vector<ElementT>>
 {
-    //! true if T is a slice type, false otherwise
-    static const bool value = std::is_same<T,slice>::value;
+    //! true if ElementT is a slice type, false otherwise
+    static const bool value = std::is_same<ElementT,slice>::value;
 };
 
 //------------------------------------------------------------------------
@@ -200,28 +200,28 @@ template<typename T> struct is_view_cont<std::vector<T>>
 //!
 //! Sepcialization of the is_view_cont tempalte for std::array.
 //!
-//! \tparam T element type of the array
-//! \tparam N number of elements
+//! \tparam ElementT element type of the array
+//! \tparam NumberT number of elements
 //!
-template<typename T,size_t N> struct is_view_cont<std::array<T,N>>
+template<typename ElementT,size_t NumberT> struct is_view_cont<std::array<ElementT,NumberT>>
 {
-    //! true if T is a slice type, false otherwise
-    static const bool value = std::is_same<T,slice>::value;
+    //! true if ElementT is a slice type, false otherwise
+    static const bool value = std::is_same<ElementT,slice>::value;
 };
 
 //!
 //! \brief SFINA - use for element access
 //!
-template<typename CTYPE>
-    using enable_element_cont = std::enable_if<!is_index_type<CTYPE>::value &&
-                                               !is_view_cont<CTYPE>::value >;
+template<typename ContainerT>
+    using enable_element_cont = std::enable_if<!is_index_type<ContainerT>::value &&
+                                               !is_view_cont<ContainerT>::value >;
 
 //!
 //! \brief SFINA - use for view access
 //!
-template<typename CTYPE>
-    using enable_view_cont = std::enable_if<!is_index_type<CTYPE>::value &&
-                                            is_view_cont<CTYPE>::value >;
+template<typename ContainerT>
+    using enable_view_cont = std::enable_if<!is_index_type<ContainerT>::value &&
+                                            is_view_cont<ContainerT>::value >;
 
 
 } // namespace pni

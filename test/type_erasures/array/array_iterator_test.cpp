@@ -38,10 +38,10 @@ using namespace pni;
 
 BOOST_AUTO_TEST_SUITE(array_iterator_test)
 
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_iterator,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_iterator,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a1(f.mdarray_1);
         array a2(f.mdarray_2);
@@ -63,10 +63,10 @@ BOOST_AUTO_TEST_SUITE(array_iterator_test)
     }
 
     //=========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_const_iterator,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_const_iterator,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
         
         array a1(f.mdarray_1);
         const array &r = a1;
@@ -83,10 +83,10 @@ BOOST_AUTO_TEST_SUITE(array_iterator_test)
     }
 
     //=========================================================================
-    BOOST_AUTO_TEST_CASE_TEMPLATE(test_foreach,AT,all_array_types)
+    BOOST_AUTO_TEST_CASE_TEMPLATE(test_foreach,TestArrayT,all_array_types)
     {
-        typedef typename md_array_trait<AT>::value_type value_type;
-        fixture<AT> f;
+        typedef typename md_array_trait<TestArrayT>::value_type value_type;
+        fixture<TestArrayT> f;
 
         array a1(f.mdarray_1);
      

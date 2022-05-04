@@ -150,8 +150,8 @@ namespace pni{
             \param index index of the column in the file
             \param array instance of the Array template where to store the data
             */
-            template<typename CTYPE> 
-                void _read_column(size_t index,CTYPE &array) const;
+            template<typename ContainerT> 
+                void _read_column(size_t index,ContainerT &array) const;
 
         public:
             //==============constructor and destructor=========================
@@ -217,10 +217,10 @@ namespace pni{
             \throws key_error if column does not exist
             \throws file_error if EOF is reached before end of data
             \param n name of the column
-            \return instance of ATYPE holding the data.
+            \return instance of ArrayT holding the data.
             */
-            template<typename CTYPE> 
-            CTYPE column(const std::string &n) const;
+            template<typename ContainerT> 
+            ContainerT column(const std::string &n) const;
 
             //-----------------------------------------------------------------
             /*! 
@@ -231,12 +231,12 @@ namespace pni{
             size and shape. 
             \throws key_error if the requested column does not exist
             \throws file_error in any other case of error
-            \tparam CTYPE container type
+            \tparam ContainerT container type
             \param n name of the column
-            \param c instance of CTYPE that will in the end contain the data
+            \param c instance of ContainerT that will in the end contain the data
             */
-            template<typename CTYPE> 
-                void column(const std::string &n,CTYPE &c) const;
+            template<typename ContainerT> 
+                void column(const std::string &n,ContainerT &c) const;
 
     };
     
@@ -255,11 +255,11 @@ namespace pni{
     }
 
     //-------------------------------------------------------------------------
-    template<typename CTYPE> 
-        void fio_reader::column(const std::string &n,CTYPE &c) const
+    template<typename ContainerT> 
+        void fio_reader::column(const std::string &n,ContainerT &c) const
     {
         using namespace pni;
-        using value_type = typename CTYPE::value_type;
+        using value_type = typename ContainerT::value_type;
 
         try
         {
@@ -279,13 +279,13 @@ namespace pni{
 
 
     //-------------------------------------------------------------------------
-    template<typename CTYPE> 
-    CTYPE fio_reader::column(const std::string &n) const
+    template<typename ContainerT> 
+    ContainerT fio_reader::column(const std::string &n) const
     {
         //create the container 
         //allocate a new array
         std::vector<size_t> s{this->nrecords()};
-        CTYPE data(this->nrecords());
+        ContainerT data(this->nrecords());
 
         this->column(n,data);
 

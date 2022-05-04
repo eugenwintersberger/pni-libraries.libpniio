@@ -51,18 +51,18 @@ namespace pni{
             //! 
             //! Compute the offset for an index range and a given shape.
             //!
-            //! \tparam IITERT index iterator type
-            //! \tparam SITERT shape iterator type
+            //! \tparam IndexIteratorT index iterator type
+            //! \tparam ShapeIteratorT shape iterator type
             //! \param index_start start iterator for the index range
             //! \param index_stop   stop iterator for the index range
             //! \param shape_start start iterator for the shape range
             //! \return offset value
             //! 
-            template<typename IITERT,
-                     typename SITERT> 
-            static size_t offset(IITERT &&index_start,
-                                 IITERT &&index_stop, 
-                                 SITERT &&shape_start)
+            template<typename IndexIteratorT,
+                     typename ShapeIteratorT> 
+            static size_t offset(IndexIteratorT &&index_start,
+                                 IndexIteratorT &&index_stop, 
+                                 ShapeIteratorT &&shape_start)
             {
                 //initialize the offset and the stride variable
                 size_t offset = *index_start++,stride=1;
@@ -89,9 +89,9 @@ namespace pni{
             //! feature.  The index passed is the effective index of the 
             //! selection and must not have the same rank as the original array.
             //!
-            //! \tparam SELITER selection iterator
-            //! \tparam SITER   iterator type of the original shape
-            //! \tparam IITER   index container iterator
+            //! \tparam SelectionIteratorT selection iterator
+            //! \tparam ShapeIteratorT   iterator type of the original shape
+            //! \tparam IndexContainerIteratorT   index container iterator
             //! \param sel_shape_start begin of selection shape
             //! \param sel_shape_end   end of selection shape
             //! \param sel_offset begin of selection offset
@@ -101,16 +101,16 @@ namespace pni{
             //! \return linear offset
             //!
             template<
-                     typename SELITER,
-                     typename SITER,
-                     typename IITER
+                     typename SelectionIteratorT,
+                     typename ShapeIteratorT,
+                     typename IndexContainerIteratorT
                     > 
-            static size_t offset(SELITER &&sel_shape_start,
-                                 SELITER &&sel_shape_end,
-                                 SELITER &&sel_offset, 
-                                 SELITER &&sel_stride,
-                                 SITER   &&shape_start,
-                                 IITER   &&sel_index)
+            static size_t offset(SelectionIteratorT &&sel_shape_start,
+                                 SelectionIteratorT &&sel_shape_end,
+                                 SelectionIteratorT &&sel_offset, 
+                                 SelectionIteratorT &&sel_stride,
+                                 ShapeIteratorT   &&shape_start,
+                                 IndexContainerIteratorT   &&sel_index)
             {
                 size_t index = *sel_offset++;
 
@@ -148,20 +148,20 @@ namespace pni{
             //! Compute the index for a given linear offset according to 
             //! C-ordering rules. 
             //! 
-            //! \tparam IITERT index iterator type
-            //! \tparam SITERT shape iterator type
+            //! \tparam IndexIteratorT index iterator type
+            //! \tparam ShapeIteratorT shape iterator type
             //! \param shape_start iterator to first shape element
             //! \param shape_stop iterator to last shape element
             //! \param index_start iterator to first index
             //! \param offset the linear offset for which to compute the index
             //!
             template<
-                     typename IITERT,
-                     typename SITERT
+                     typename IndexIteratorT,
+                     typename ShapeIteratorT
                     >
-            static void index(SITERT &&shape_start,
-                              SITERT &&shape_stop,
-                              IITERT &&index_start,
+            static void index(ShapeIteratorT &&shape_start,
+                              ShapeIteratorT &&shape_stop,
+                              IndexIteratorT &&index_start,
                               size_t offset)
             {
                 size_t t;
@@ -191,17 +191,17 @@ namespace pni{
             //! of equal size.  However, this must be ensured by the calling 
             //! function.
             //!
-            //! \tparam CSHAPE container type for the shape data
-            //! \tparam CINDEX container type for the index data
-            //! \param shape instance of CSHAPE with shape data
-            //! \param index instance of CINDEX with index data
+            //! \tparam ContainerShapeT container type for the shape data
+            //! \tparam ContainerIndexT container type for the index data
+            //! \param shape instance of ContainerShapeT with shape data
+            //! \param index instance of ContainerIndexT with index data
             //! \return linear offset
             //!
             template<
-                     typename CSHAPE,
-                     typename CINDEX
+                     typename ContainerShapeT,
+                     typename ContainerIndexT
                     >
-            static size_t offset(const CSHAPE &shape,const CINDEX &index)
+            static size_t offset(const ContainerShapeT &shape,const ContainerIndexT &index)
             {
                 //use here reverse iterators as required by the c-ordering
                 return offset(index.rbegin(),index.rend(),shape.rbegin());
@@ -215,21 +215,21 @@ namespace pni{
             //! selection index is not required to have the same rank as the
             //! original array. 
             //! 
-            //! \tparam SELTYPE selection type
-            //! \tparam CSHAPE original shape of the array
-            //! \tparam SINDEX selection index type
+            //! \tparam SelectionT selection type
+            //! \tparam ContainerShapeT original shape of the array
+            //! \tparam SelectionIndexT selection index type
             //! \param sel reference to the selection
             //! \param shape the original shape
             //! \param index selection index
             //! \return linear offset
             //!
             template<
-                     typename SELTYPE,
-                     typename CSHAPE,
-                     typename SINDEX
+                     typename SelectionT,
+                     typename ContainerShapeT,
+                     typename SelectionIndexT
                     >
-            static size_t offset(const SELTYPE &sel,const CSHAPE &shape,
-                                 const SINDEX &index)
+            static size_t offset(const SelectionT &sel,const ContainerShapeT &shape,
+                                 const SelectionIndexT &index)
             {
                 return offset(sel.full_shape().rbegin(), //original selection shape
                               sel.full_shape().rend(),   //
@@ -248,17 +248,17 @@ namespace pni{
             //! size (the size of the shape container) which must be ensured 
             //! by the calling function.
             //! 
-            //! \tparam CINDEX container type for index values
-            //! \tparam CSHAPE container type for shape values
-            //! \param shape instance of CSHAPE with shape information
-            //! \param idx instance of CINDEX for index data
+            //! \tparam ContainerIndexT container type for index values
+            //! \tparam ContainerShapeT container type for shape values
+            //! \param shape instance of ContainerShapeT with shape information
+            //! \param idx instance of ContainerIndexT for index data
             //! \param offset linear offset 
             //!
             template<
-                     typename CINDEX,
-                     typename CSHAPE
+                     typename ContainerIndexT,
+                     typename ContainerShapeT
                     >
-            static void index(const CSHAPE &shape,CINDEX &idx,size_t offset)
+            static void index(const ContainerShapeT &shape,ContainerIndexT &idx,size_t offset)
             {
                 //for index computation we can use the forward iterators
                 index(shape.begin(),shape.end(),idx.begin(),offset); 

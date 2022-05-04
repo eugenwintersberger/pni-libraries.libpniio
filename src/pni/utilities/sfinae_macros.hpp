@@ -49,17 +49,17 @@ namespace pni{
     //! public value member. The result can be obtained from a new boolean 
     //! public member.
     //! 
-    //! \tparam T1 LHS of logical or
-    //! \tparam T2 RHS of logical or
+    //! \tparam Operand1T LHS of logical or
+    //! \tparam Operand2T RHS of logical or
     //!
     template<
-             typename T1,
-             typename T2
+             typename Operand1T,
+             typename Operand2T
             > 
     struct or_t
     {
         //! result of the operation
-        static const bool value = T1::value || T2::value;
+        static const bool value = Operand1T::value || Operand2T::value;
     };
 
     //------------------------------------------------------------------------
@@ -71,17 +71,17 @@ namespace pni{
     //! providing a publich value member. The result of the operation 
     //! can be obtained from a new public member.
     //! 
-    //! \tparam T1 LHS of logical and
-    //! \tparam T2 RHS of logical and
+    //! \tparam Operand1T LHS of logical and
+    //! \tparam Operand2T RHS of logical and
     //! 
     template<
-             typename T1,
-             typename T2
+             typename Operand1T,
+             typename Operand2T
             >
     struct and_t
     {
         //! result of the operation
-        static const bool value = T1::value && T2::value;
+        static const bool value = Operand1T::value && Operand2T::value;
     };
 
     //------------------------------------------------------------------------

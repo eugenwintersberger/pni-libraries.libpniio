@@ -52,15 +52,15 @@ namespace pni{
     //! function for the first two containers. A special overload exists 
     //! for std::array.
     //!
-    //! \tparam CTYPE target container type (typically a list or vector)
+    //! \tparam ContainerT target container type (typically a list or vector)
     //! 
-    template<typename CTYPE> 
+    template<typename ContainerT> 
     struct container_utils
     {
         //! type of the container 
-        typedef CTYPE container_type;
+        typedef ContainerT container_type;
         //! the element type of the container
-        typedef typename CTYPE::value_type value_type;
+        typedef typename ContainerT::value_type value_type;
 
         //---------------------------------------------------------------------
         //!
@@ -107,16 +107,16 @@ namespace pni{
         //!  
         //! The range can be passed either as a pair of iterators or pointers.
         //! 
-        //! \tparam ITERT iterator type
+        //! \tparam IteratorT iterator type
         //! \param begin iterator to the first element
         //! \param end iterator to the last element
         //! \return instance of container_type
         //!
         template<
-                 typename ITERT,
-                 typename = enable_if<or_t<not_t<is_pod<ITERT>>,is_ptr<ITERT>>>
+                 typename IteratorT,
+                 typename = enable_if<or_t<not_t<is_pod<IteratorT>>,is_ptr<IteratorT>>>
                 >
-        static container_type create(ITERT begin,ITERT end)
+        static container_type create(IteratorT begin,IteratorT end)
         {
             container_type c(std::distance(begin,end));
             std::copy(begin,end,c.begin());
@@ -139,15 +139,15 @@ namespace pni{
         auto l = container_utils<list_type>::create(c);
         \endcode
         !*/ 
-        //! \tparam OCTYPE type of the source container
+        //! \tparam OriginalContainerT type of the source container
         //! \param o reference to the original container
         //! \return instance of container_type with data from o
         //!
         template<
-                 typename OCTYPE,
-                 typename = enable_if<not_t<is_pod<OCTYPE>>>
+                 typename OriginalContainerT,
+                 typename = enable_if<not_t<is_pod<OriginalContainerT>>>
                 >
-        static container_type create(const OCTYPE &o)
+        static container_type create(const OriginalContainerT &o)
         {
             container_type c(o.size());
             std::copy(o.begin(),o.end(),c.begin());
@@ -265,18 +265,18 @@ namespace pni{
         !*/
         //! \throws size_mismatch_error if the number of elements spanned by 
         //! the iterator range does not match the size of the array
-        //! \tparam ITERT iterator type
+        //! \tparam IteratorT iterator type
         //! \param begin iterator to the first element
         //! \param end iterator to the last+1 element
         //! \return initialized instance of std::array
         //!
         template<
-                 typename ITERT,
+                 typename IteratorT,
                  typename = enable_if<or_t<
-                            not_t<is_pod<ITERT>>,is_ptr<ITERT> 
+                            not_t<is_pod<IteratorT>>,is_ptr<IteratorT> 
                             >>
                 >
-        static container_type create(ITERT begin,ITERT end)
+        static container_type create(IteratorT begin,IteratorT end)
         {
             if(N!=std::distance(begin,end))
             {
@@ -307,15 +307,15 @@ namespace pni{
         !*/
         //! \throws size_mismatch_error if the container size does not match 
         //! the array size
-        //! \tparam OCTYPE container type 
+        //! \tparam OriginalContainerT container type 
         //! \param o reference to the original container
-        //! \return initialized instance of OCTYPE
+        //! \return initialized instance of OriginalContainerT
         //!
         template<
-                 typename OCTYPE,
-                 typename = enable_if<not_t<is_pod<OCTYPE>>>
+                 typename OriginalContainerT,
+                 typename = enable_if<not_t<is_pod<OriginalContainerT>>>
                 >
-        static container_type create(const OCTYPE &o)
+        static container_type create(const OriginalContainerT &o)
         {
            if(o.size() != N)
            {
@@ -389,19 +389,19 @@ namespace pni{
     //=========================================================================
    
     //-------------------------------------------------------------------------
-    template<typename STYPE>
-    bool check_size(STYPE)
+    template<typename ShapeT>
+    bool check_size(ShapeT)
     {
         return true;
     }
 
     //-------------------------------------------------------------------------
     template<
-             typename    STYPE,
-             typename    CTYPE,
-             typename ...CTYPES
+             typename    ShapeT,
+             typename    ContainerT,
+             typename ...ContainersT
             >
-    bool check_size(STYPE s,const CTYPE &c,const CTYPES& ...cs)
+    bool check_size(ShapeT s,const ContainerT &c,const ContainersT& ...cs)
     {
         return s!=c.size()?false:check_size(c.size(),cs...);
     }
@@ -430,17 +430,17 @@ namespace pni{
     \endcode
     !*/
     //!
-    //! \tparam CTYPE container type of first argument
-    //! \tparam CTYPES residual arguments types
+    //! \tparam ContainerT container type of first argument
+    //! \tparam ContainersT residual arguments types
     //! \param c first container instance
     //! \param cs residual containers
     //! \return true if all of samme size, false otherwise
     //!
     template<
-             typename    CTYPE,
-             typename ...CTYPES
+             typename    ContainerT,
+             typename ...ContainersT
             >
-    bool check_equal_size(const CTYPE &c,const CTYPES& ...cs)
+    bool check_equal_size(const ContainerT &c,const ContainersT& ...cs)
     {
         return check_size(c.size(),cs...);
     }

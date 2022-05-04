@@ -82,10 +82,10 @@ namespace xml{
             //!                   not exist
             //! \throws object_error in case of any other error
             //! 
-            //! \tparam GTYPE group type
-            //! \tparam FTYPE field type
-            //! \tparam ATYPE attribute type
-            //! \tparam LTYPE link type
+            //! \tparam GroupT group type
+            //! \tparam FieldT field type
+            //! \tparam ArrayT attribute type
+            //! \tparam LinkT link type
             //!
             //! \param parent the parent below which the link should be 
             //!               established
@@ -93,24 +93,24 @@ namespace xml{
             //!                  link information
             //!
             template<
-                     typename GTYPE,
-                     typename FTYPE,
-                     typename ATYPE,
-                     typename LTYPE
+                     typename GroupT,
+                     typename FieldT,
+                     typename ArrayT,
+                     typename LinkT
                     >
-            static void object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
+            static void object_from_xml(const nxobject<GroupT,FieldT,ArrayT,LinkT> &parent,
                                         const node &link_node);
                       
     };
     
     //-------------------------------------------------------------------------
     template<
-             typename GTYPE,
-             typename FTYPE,
-             typename ATYPE,
-             typename LTYPE
+             typename GroupT,
+             typename FieldT,
+             typename ArrayT,
+             typename LinkT
             >
-    void link::object_from_xml(const nxobject<GTYPE,FTYPE,ATYPE,LTYPE> &parent,
+    void link::object_from_xml(const nxobject<GroupT,FieldT,ArrayT,LinkT> &parent,
                                const node &link_node)
     {
         //will throw key error if name attribute does not exist
@@ -119,7 +119,7 @@ namespace xml{
         pni::string link_target = get_link_target(link_node);
         
         //will throw type_error if the parent is not a group
-        GTYPE parent_group = as_group(parent);
+        GroupT parent_group = as_group(parent);
         
         pni::nx::link(link_target,parent_group,link_name);
     }            

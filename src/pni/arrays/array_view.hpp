@@ -60,17 +60,17 @@ namespace pni{
     //!                 darray<float32>::storage_type(view));
     //! \endcode
     //!
-    //! \tparam ATYPE array type for the view
+    //! \tparam ArrayT array type for the view
     //!
-    template<typename ATYPE> 
+    template<typename ArrayT> 
     class array_view
     {
         public:
             //====================public types=================================
             //! storage type
-            using storage_type =  ATYPE;
+            using storage_type =  ArrayT;
             //! type of the data values
-            using value_type = typename ATYPE::value_type;
+            using value_type = typename ArrayT::value_type;
             //! type of the view 
             using array_type =  array_view<storage_type>;
             //! shared pointer type
@@ -86,15 +86,15 @@ namespace pni{
             //! index type
             using index_type = std::vector<size_t>;
             //! inplace arithetic type
-            using inplace_arithmetic = typename ATYPE::inplace_arithmetic;
+            using inplace_arithmetic = typename ArrayT::inplace_arithmetic;
             //! map type
-            using map_type =  index_map<index_type,typename ATYPE::map_type::implementation_type>;
+            using map_type =  index_map<index_type,typename ArrayT::map_type::implementation_type>;
             //========================public members===========================
             //! type id of the value_type
-            static const type_id_t type_id = ATYPE::type_id;
+            static const type_id_t type_id = ArrayT::type_id;
         private:
             //! parent array from which to draw data
-            std::reference_wrapper<ATYPE> _parray; 
+            std::reference_wrapper<ArrayT> _parray; 
             //! selection object for index transformation 
             array_selection _selection;
             //! local index map - only used internally, this map describes the
@@ -178,8 +178,8 @@ namespace pni{
             //!
             //! \brief copy assignment operator
             //!
-            template<typename ETYPE>
-            array_type &operator=(const ETYPE &e)
+            template<typename ElementT>
+            array_type &operator=(const ElementT &e)
             {
                 if((void*)this == (void*)&e) return *this;
                
@@ -217,17 +217,17 @@ namespace pni{
             //! 
             //! \throws shape_mismatch_error if size of container does not 
             //! match view rank
-            //! \tparam CTYPE container type for index values
+            //! \tparam ContainerT container type for index values
             //! \param index container with multidimensional index
             //! \return reference to value at index
             //!
             template<
-                     typename CTYPE,
-                     typename = typename enable_element_cont<CTYPE>::type
+                     typename ContainerT,
+                     typename = typename enable_element_cont<ContainerT>::type
                     >
-            value_type &operator()(const CTYPE &index)
+            value_type &operator()(const ContainerT &index)
             {
-                typedef typename ATYPE::map_type omap_type;
+                typedef typename ArrayT::map_type omap_type;
                 auto &ref = _parray.get();
 
                 if(_is_contiguous)
@@ -249,17 +249,17 @@ namespace pni{
             //! 
             //! \throws shape_mismatch_error if size of container does not 
             //! match view rank
-            //! \tparam CTYPE container type for index values
+            //! \tparam ContainerT container type for index values
             //! \param index container with multidimensional index
             //! \return value at index
             //!
             template<
-                     typename CTYPE,
-                     typename = typename enable_element_cont<CTYPE>::type
+                     typename ContainerT,
+                     typename = typename enable_element_cont<ContainerT>::type
                     >
-            value_type operator()(const CTYPE &index) const
+            value_type operator()(const ContainerT &index) const
             {
-                typedef typename ATYPE::map_type omap_type;
+                typedef typename ArrayT::map_type omap_type;
                 auto &ref = _parray.get();
 
                 if(_is_contiguous)
@@ -294,7 +294,7 @@ namespace pni{
             template<typename ...ITypes> 
             value_type & operator()(ITypes ...indices)
             {
-                typedef typename ATYPE::map_type omap_type;
+                typedef typename ArrayT::map_type omap_type;
                 auto &ref = _parray.get();
 
                 if(_is_contiguous)
@@ -331,7 +331,7 @@ namespace pni{
             template<typename ...ITypes> 
             value_type operator()(ITypes ...indices) const
             {
-                typedef typename ATYPE::map_type omap_type;
+                typedef typename ArrayT::map_type omap_type;
                 auto &ref = _parray.get();
 
                 if(_is_contiguous)
@@ -355,9 +355,9 @@ namespace pni{
             //! 
             //! \return Shape object
             //!
-            template<typename CTYPE> CTYPE shape() const
+            template<typename ContainerT> ContainerT shape() const
             {
-                return _selection.template shape<CTYPE>();
+                return _selection.template shape<ContainerT>();
             }
 
             //-----------------------------------------------------------------
@@ -635,12 +635,12 @@ namespace pni{
             \endcode
             !*/
             //!
-            //! \tparam RTYPE type of the array to add
+            //! \tparam RightT type of the array to add
             //! \param v reference to the array to add 
             //! \return reference to the original view
             //!
-            template<typename RTYPE> 
-            array_type &operator+=(const RTYPE &v) 
+            template<typename RightT> 
+            array_type &operator+=(const RightT &v) 
             { 
                 storage_type::inplace_arithmetic::add(*this,v); 
                 return *this;
@@ -683,12 +683,12 @@ namespace pni{
             \endcode
             !*/
             //!
-            //! \tparam RTYPE type of the array to subtract
+            //! \tparam RightT type of the array to subtract
             //! \param v reference to the array to subtract 
             //! \return reference to the original view
             //!
-            template<typename RTYPE> 
-            array_type &operator-=(const RTYPE &v) 
+            template<typename RightT> 
+            array_type &operator-=(const RightT &v) 
             { 
                 storage_type::inplace_arithmetic::sub(*this,v); 
                 return *this;
@@ -730,12 +730,12 @@ namespace pni{
             \endcode
             !*/
             //!
-            //! \tparam RTYPE type of the array to multiply 
+            //! \tparam RightT type of the array to multiply 
             //! \param v reference to the array to multiply 
             //! \return reference to the original view
             //!
-            template<typename RTYPE>
-            array_type &operator*=(const RTYPE &v) 
+            template<typename RightT>
+            array_type &operator*=(const RightT &v) 
             { 
                 storage_type::inplace_arithmetic::mult(*this,v); 
                 return *this;
@@ -777,12 +777,12 @@ namespace pni{
             \endcode
             !*/
             //!
-            //! \tparam RTYPE type of the array to divide by  
+            //! \tparam RightT type of the array to divide by  
             //! \param v reference to the array to divide by 
             //! \return reference to the original view
             //!
-            template<typename RTYPE>
-            array_type &operator/=(const RTYPE &v) 
+            template<typename RightT>
+            array_type &operator/=(const RightT &v) 
             { 
                 storage_type::inplace_arithmetic::div(*this,v); 
                 return *this;
@@ -818,12 +818,12 @@ namespace pni{
     //! This function returns the type ID of the elements of the array 
     //! referenced by an array view instance.
     //! 
-    //! \tparam ATYPE array type
+    //! \tparam ArrayT array type
     //! \return type id of element type
-    template<typename ATYPE>
-    type_id_t type_id(const array_view<ATYPE> &)
+    template<typename ArrayT>
+    type_id_t type_id(const array_view<ArrayT> &)
     {
-        return type_id_map<typename ATYPE::value_type>::type_id;
+        return type_id_map<typename ArrayT::value_type>::type_id;
     }
 
     //------------------------------------------------------------------------
@@ -833,10 +833,10 @@ namespace pni{
     //!
     //! Specialization of the container_trait for instances of array_view. 
     //!
-    //! \param ATYPE array type of the view
+    //! \param ArrayT array type of the view
     //!
-    template<typename ATYPE> 
-    struct container_trait<array_view<ATYPE>>
+    template<typename ArrayT> 
+    struct container_trait<array_view<ArrayT>>
     {
         //! array_view is a random access container
         static const bool is_random_access = true;
@@ -856,13 +856,13 @@ namespace pni{
     //! Returns true if all elements of a an b are equal. The two views 
     //! must have equal size. Otherwise a size_mismatch_excpetion is thrown.
     //!
-    //! \tparam ATYPE array type for the view
+    //! \tparam ArrayT array type for the view
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if all elements are equal, flase otherwise
     //!
-    template<typename ATYPE>
-    bool operator==(const array_view<ATYPE> &a,const array_view<ATYPE> &b)
+    template<typename ArrayT>
+    bool operator==(const array_view<ArrayT> &a,const array_view<ArrayT> &b)
     {
         if(a.size()!=b.size())
             throw size_mismatch_error(EXCEPTION_RECORD,
@@ -879,13 +879,13 @@ namespace pni{
     //! Returns false if all elements in a an b are equal. a and b must have
     //! equal size, otherwise a size_mismatch_error exception is thrown. 
     //!
-    //! \tparam ATYPE array type for the view
+    //! \tparam ArrayT array type for the view
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return false if all values are equal, true otherwise
     //!
-    template<typename ATYPE>
-    bool operator!=(const array_view<ATYPE> &a,const array_view<ATYPE> &b)
+    template<typename ArrayT>
+    bool operator!=(const array_view<ArrayT> &a,const array_view<ArrayT> &b)
     {
         return !(a==b);
     }
@@ -897,13 +897,13 @@ namespace pni{
     //!
     //! Output a view instance to a stream. 
     //!
-    //! \tparam ATYPE array type of the view
+    //! \tparam ArrayT array type of the view
     //! \param stream reference to output stream
     //! \param v view instance
     //! \return reference to the modified stream
     //!
-    template<typename ATYPE>
-    std::ostream &operator<<(std::ostream &stream,const array_view<ATYPE> &v)
+    template<typename ArrayT>
+    std::ostream &operator<<(std::ostream &stream,const array_view<ArrayT> &v)
     {
         for(auto x: v) stream<<x<<" ";
 
@@ -917,13 +917,13 @@ namespace pni{
     //!
     //! Write data from a stream to a view.
     //!
-    //! \tparam ATYPE array type of the view
+    //! \tparam ArrayT array type of the view
     //! \param stream reference to the input stream
     //! \param v reference to the view
     //! \return reference to the modified input stream
     //!
-    template<typename ATYPE>
-    std::istream &operator>>(std::istream &stream,array_view<ATYPE> &v)
+    template<typename ArrayT>
+    std::istream &operator>>(std::istream &stream,array_view<ArrayT> &v)
     {
         for(auto &x: v) stream>>x;
 

@@ -35,19 +35,19 @@ namespace pni{
     //! Use this template to check whether two types are convertible or not. 
     //! The types can be either checked or unchecked convertible. 
     //!
-    //! \tparam ST source type
-    //! \tparam TT target type
+    //! \tparam SourceT source type
+    //! \tparam TargetT target type
     //!
     template< 
-             typename ST,
-             typename TT
+             typename SourceT,
+             typename TargetT
             >
     struct convertible
     {
         //! true if checked conversion is possible 
-        static const bool checked = checked_convertible<ST,TT>::value;
+        static const bool checked = checked_convertible<SourceT,TargetT>::value;
         //! true if unchecked conversion is possible 
-        static const bool unchecked = unchecked_convertible<ST,TT>::value;
+        static const bool unchecked = unchecked_convertible<SourceT,TargetT>::value;
         //! true if a conversion can be done at all
         static const bool value = checked || unchecked;
     };

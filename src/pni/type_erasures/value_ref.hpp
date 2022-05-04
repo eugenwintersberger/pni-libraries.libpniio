@@ -85,17 +85,17 @@ namespace pni{
             //! 
             //! \throws type_error if the conversion is not possible
             //! \throws range_error if the value 
-            //! \tparam T target type
-            //! \tparam S source type
+            //! \tparam TargetT target type
+            //! \tparam SourceT source type
             //! \return value as T
             //!
             template<
-                     typename T,
-                     typename S 
+                     typename TargetT,
+                     typename SourceT 
                     > 
-            T _get() const
+            TargetT _get() const
             {
-                return get_value<T,S>(get_holder_ptr<ref_type<S>>(_ptr));
+                return get_value<TargetT,SourceT>(get_holder_ptr<ref_type<SourceT>>(_ptr));
             }
 
             //----------------------------------------------------------------
@@ -107,17 +107,17 @@ namespace pni{
             //! \throws type_error if the conversion is not possible
             //! \throws range_error if the passed value does not fit in the
             //! target type
-            //! \tparam S type of the variable
-            //! \tparam T type of the value the user passed
+            //! \tparam VariableT type of the variable
+            //! \tparam UserValueT type of the value the user passed
             //! \param v value to set 
             //! 
             template<
-                     typename S,
-                     typename T
+                     typename VariableT,
+                     typename UserValueT
                     > 
-            void _set(const T& v) const
+            void _set(const UserValueT& v) const
             {
-                return set_value<S,T>(get_holder_ptr<ref_type<S>>(_ptr),v);
+                return set_value<VariableT,UserValueT>(get_holder_ptr<ref_type<VariableT>>(_ptr),v);
             }
 
             //! pointer holding the value stored
@@ -139,19 +139,19 @@ namespace pni{
             //! 
             //! \brief template constructor from value
             //!
-            //! Constructs a reference to a variable of type T. 
+            //! Constructs a reference to a variable of type ValueT. 
             /*!
             \code
             float32 x = 100.;
             value_ref v(std::ref(x));
             \endcode
             !*/
-            //! \tparam T type of the value to which the reference shall be created
+            //! \tparam ValueT type of the value to which the reference shall be created
             //! \param v reference to the value
             //!
-            template<typename T>
-            explicit value_ref(std::reference_wrapper<T> v):
-                _ptr(new value_holder<std::reference_wrapper<T> >(v))
+            template<typename ValueT>
+            explicit value_ref(std::reference_wrapper<ValueT> v):
+                _ptr(new value_holder<std::reference_wrapper<ValueT> >(v))
             {}
 
             //-----------------------------------------------------------------
@@ -164,8 +164,8 @@ namespace pni{
             //! 
             //! \brief assign value to the variable
             //!
-            //! Assign a value of type T to the target of the reference. 
-            //! If T differs from the original type of the target the data will 
+            //! Assign a value of type ValueT to the target of the reference. 
+            //! If ValueT differs from the original type of the target the data will 
             //! be converted. 
             //! 
             //! \throws memory_not_allocated_error if the reference is not 
@@ -177,7 +177,7 @@ namespace pni{
             //! \param v reference to the new value
             //! \return instance of value
             //!
-            template<typename T> value_ref &operator=(const T &v);
+            template<typename ValueT> value_ref &operator=(const ValueT &v);
 
             //----------------------------------------------------------------
             //!
@@ -221,17 +221,17 @@ namespace pni{
             //!
             //! Returns the value of the variable the value_ref instance 
             //! points to. If the type requested by the user via the template
-            //! parameter T is different from the type of the variable value_ref
+            //! parameter ReturnT is different from the type of the variable value_ref
             //! points to the data will be converted if possible. 
             //! If the conversion fails or is not possible an exception will 
             //! be thrown. 
             //! 
             //! \throws memory_not_allocated_error if value is uninitialized
-            //! \throws type_error if data cannot be converted to T
-            //! \throws range_error if data does not fit into the range of T 
-            //! \return value of type T 
+            //! \throws type_error if data cannot be converted to ReturnT
+            //! \throws range_error if data does not fit into the range of ReturnT 
+            //! \return value of type ReturnT 
             //!
-            template<typename T> T as() const;
+            template<typename ReturnT> ReturnT as() const;
 
             //-----------------------------------------------------------------
             //!
@@ -247,7 +247,7 @@ namespace pni{
     };
 
     //======================implementation of template members=================
-    template<typename T> T value_ref::as() const
+    template<typename ReturnT> ReturnT value_ref::as() const
     {
         //check if the reference points to something
         _check_pointer(EXCEPTION_RECORD);
@@ -255,24 +255,24 @@ namespace pni{
         type_id_t tid = type_id();
         switch(tid)
         {
-            case type_id_t::UInt8:      return _get<T,uint8>();
-            case type_id_t::Int8:       return _get<T,int8>();
-            case type_id_t::UInt16:     return _get<T,uint16>();
-            case type_id_t::Int16:      return _get<T,int16>();
-            case type_id_t::UInt32:     return _get<T,uint32>();
-            case type_id_t::Int32:      return _get<T,int32>();
-            case type_id_t::UInt64:     return _get<T,uint64>();
-            case type_id_t::Int64:      return _get<T,int64>();
-            case type_id_t::Float32:    return _get<T,float32>();
-            case type_id_t::Float64:    return _get<T,float64>();
-            case type_id_t::Float128:   return _get<T,float128>();
-            case type_id_t::Complex32:  return _get<T,complex32>();
-            case type_id_t::Complex64:  return _get<T,complex64>();
-            case type_id_t::Complex128: return _get<T,complex128>();
-            case type_id_t::Binary:     return _get<T,binary>();
-            case type_id_t::String:     return _get<T,string>();
-            case type_id_t::Bool:       return _get<T,bool_t>();
-            case type_id_t::EBool:       return _get<T,hdf5::datatype::EBool>();
+            case type_id_t::UInt8:      return _get<ReturnT,uint8>();
+            case type_id_t::Int8:       return _get<ReturnT,int8>();
+            case type_id_t::UInt16:     return _get<ReturnT,uint16>();
+            case type_id_t::Int16:      return _get<ReturnT,int16>();
+            case type_id_t::UInt32:     return _get<ReturnT,uint32>();
+            case type_id_t::Int32:      return _get<ReturnT,int32>();
+            case type_id_t::UInt64:     return _get<ReturnT,uint64>();
+            case type_id_t::Int64:      return _get<ReturnT,int64>();
+            case type_id_t::Float32:    return _get<ReturnT,float32>();
+            case type_id_t::Float64:    return _get<ReturnT,float64>();
+            case type_id_t::Float128:   return _get<ReturnT,float128>();
+            case type_id_t::Complex32:  return _get<ReturnT,complex32>();
+            case type_id_t::Complex64:  return _get<ReturnT,complex64>();
+            case type_id_t::Complex128: return _get<ReturnT,complex128>();
+            case type_id_t::Binary:     return _get<ReturnT,binary>();
+            case type_id_t::String:     return _get<ReturnT,string>();
+            case type_id_t::Bool:       return _get<ReturnT,bool_t>();
+            case type_id_t::EBool:       return _get<ReturnT,hdf5::datatype::EBool>();
             default:
                 throw type_error(EXCEPTION_RECORD,
                         "The reference points to an object of unkown type!");
@@ -281,7 +281,7 @@ namespace pni{
     }
            
     //-------------------------------------------------------------------------
-    template<typename T> value_ref &value_ref::operator=(const T &v)
+    template<typename ReturnT> value_ref &value_ref::operator=(const ReturnT &v)
     {
         _check_pointer(EXCEPTION_RECORD);
         

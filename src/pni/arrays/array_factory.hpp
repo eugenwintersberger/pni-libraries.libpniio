@@ -39,12 +39,12 @@ namespace pni{
     //! fully dynamic arrays and arrays of fixed dimension. A special overload 
     //! exists for static arrays.
     //! 
-    //! \tparam ATYPE array type
+    //! \tparam ArrayT array type
     //!
-    template<typename ATYPE> struct array_factory
+    template<typename ArrayT> struct array_factory
     {
         //! shortcut for the array type
-        using array_type =  ATYPE;
+        using array_type =  ArrayT;
         //! value type of the array
         using value_type = typename array_type::value_type;
         //! map type of the array
@@ -73,13 +73,13 @@ namespace pni{
         \endcode
         */
         //! 
-        //! \tparam STYPE container type for shape information
+        //! \tparam ShapeT container type for shape information
         //! \param s shape of the array
         //! \param def_val default value for data
         //! \return instance of array_type
         //!
-        template<typename STYPE> 
-        static array_type create(const STYPE &s,
+        template<typename ShapeT> 
+        static array_type create(const ShapeT &s,
                                  value_type def_val = value_type())
         {
             //create the index map
@@ -114,16 +114,16 @@ namespace pni{
         //!
         //! \throws size_mismatch_error if data and shape size do not match
         //! 
-        //! \tparam STYPE container type for shape
-        //! \tparam DTYPE container type for data
+        //! \tparam ShapeT container type for shape
+        //! \tparam DataT container type for data
         //! \param s reference to shape container
         //! \param data reference to data container
-        //! \return instance of ATYPE
+        //! \return instance of ArrayT
         //!
-        template<typename STYPE,
-                 typename DTYPE
+        template<typename ShapeT,
+                 typename DataT
                 >
-        static array_type create(const STYPE &s,const DTYPE &data)
+        static array_type create(const ShapeT &s,const DataT &data)
         {
             auto map = map_utils<map_type>::create(s);
             if(map.max_elements() != data.size())
@@ -158,18 +158,18 @@ namespace pni{
         \endcode
         */
         //!
-        //! \tparam IT shape value type
-        //! \tparam DT data value type
+        //! \tparam ShapeT shape value type
+        //! \tparam DataT data value type
         //! \param shape initializer list with shape data
         //! \param data initializer list with array data
-        //! \return instance of ATYPE
+        //! \return instance of ArrayT
         //!
         template<
-                 typename IT,
-                 typename DT
+                 typename ShapeT,
+                 typename DataT
                 >
-        static array_type create(std::initializer_list<IT> shape,
-                                 std::initializer_list<DT> data)
+        static array_type create(std::initializer_list<ShapeT> shape,
+                                 std::initializer_list<DataT> data)
         {
             auto map = map_utils<map_type>::create(shape);
             if(map.max_elements() != data.size())
