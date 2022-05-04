@@ -43,11 +43,11 @@ namespace pni{
     //! min and max functions for integer types. A specialized version for 
     //! floating point types exists too.
     //! 
-    //! \tparam T data type
+    //! \tparam DataT data type
     //! \tparam is_float true if the type is a float type
     //!
     template<
-             typename T,
+             typename DataT,
              bool is_float=false
             >
     struct min_max
@@ -56,13 +56,13 @@ namespace pni{
         //! \brief return minimum
         //!
         //! Return the minimum possible value for an integer type.
-        //! This function returns std::numeric_limits<T>::min().
+        //! This function returns std::numeric_limits<IntegerT>::min().
         //!
         //! \return minimum value of a type
         //!
-        static constexpr T min()
+        static constexpr IntegerT min()
         {
-            return std::numeric_limits<T>::min();
+            return std::numeric_limits<IntegerT>::min();
         }
 
         //--------------------------------------------------------------------
@@ -70,13 +70,13 @@ namespace pni{
         //! \brief return maximum
         //!
         //! Return the maximum value of an integer point type. This function
-        //! returns std::numeric_limits<T>::max().
+        //! returns std::numeric_limits<IntegerT>::max().
         //!
         //! \return maximum value of a type
         //!
-        static constexpr T max()
+        static constexpr IntegerT max()
         {
-            return std::numeric_limits<T>::max();
+            return std::numeric_limits<IntegerT>::max();
         }
     };
 
@@ -88,22 +88,22 @@ namespace pni{
     //! Specialized version of the min_max template for determining the 
     //! minimum and maximum value of a floating point type.
     //! 
-    //! \tparam T data type
+    //! \tparam FloatT data type
     //!
-    template<typename T> struct min_max<T,true>
+    template<typename FloatT> struct min_max<FloatT,true>
     {
         //! 
         //! \brief get minimum
         //! 
         //! For floating point numbers this function returns -max() which is 
-        //! different from the std::numerics_<T> template implemented in the
+        //! different from the std::numerics_<FloatT> template implemented in the
         //! STL.
         //! 
         //! \return minimum value of a float type
         //!
-        static constexpr T min()
+        static constexpr FloatT min()
         {
-            return -std::numeric_limits<T>::max(); 
+            return -std::numeric_limits<FloatT>::max(); 
         }
 
         //--------------------------------------------------------------------
@@ -111,13 +111,13 @@ namespace pni{
         //! \brief get maximum
         //! 
         //! Returns the maximum value for a floating point type. This function
-        //! simply returns std::numeric_limits<T>::max().
+        //! simply returns std::numeric_limits<FloatT>::max().
         //!
         //! \return maximum value of a float type
         //!
-        static constexpr T max()
+        static constexpr FloatT max()
         {
-            return std::numeric_limits<T>::max();
+            return std::numeric_limits<FloatT>::max();
         }
     };
 
@@ -131,27 +131,27 @@ namespace pni{
     //! classes like arrays and scalars. Special overloads for complex and bool 
     //! types exist.
     //! 
-    //! \tparam T data type for which information is required
+    //! \tparam GeneralT data type for which information is required
     //!
-    template<typename T> 
+    template<typename GeneralT> 
     struct type_info
     {
         //==================public types=======================================
-        //! the type of T
-        typedef T type;        
+        //! the type of GeneralT
+        typedef GeneralT type;        
        
         //! the base type (only interesting for complex types)
-        typedef T base_type;    
+        typedef GeneralT base_type;    
         
         //=================static members======================================
         //! size of the type in bytes
-        static const size_t size = sizeof(T); 
+        static const size_t size = sizeof(GeneralT); 
 
         //! true if the type is an integer, false otherwise
-        static const bool is_integer = std::numeric_limits<T>::is_integer; 
+        static const bool is_integer = std::numeric_limits<GeneralT>::is_integer; 
 
         //! true if the type is signed, false otherwise
-        static const bool is_signed = std::numeric_limits<T>::is_signed; 
+        static const bool is_signed = std::numeric_limits<GeneralT>::is_signed; 
         
         //! true if the type represents a complex number, false otherwise
         static const bool is_complex = false; 
@@ -168,7 +168,7 @@ namespace pni{
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wtype-limits"
 #endif 
-        static bool is_negative(T value) { return value<0; }
+        static bool is_negative(GeneralT value) { return value<0; }
 #ifdef __GNUG__
 #pragma GCC diagnostic pop
 #endif
@@ -177,40 +177,40 @@ namespace pni{
         //! 
         //! \brief minimum limit
         //!
-        //! returns the smallest value that can be represented by type T.
-        //! \return lower limit of T
+        //! returns the smallest value that can be represented by type GeneralT.
+        //! \return lower limit of GeneralT
         //!
-        static constexpr T min()
+        static constexpr GeneralT min()
         {
-            return min_max<T,std::is_floating_point<T>::value>::min();
+            return min_max<GeneralT,std::is_floating_point<GeneralT>::value>::min();
         }
 
         //-----------------------------------------------------------------
         //! 
         //! \brief maximum limit
         //!
-        //! Returns the largest value that can be represented by T.
+        //! Returns the largest value that can be represented by GeneralT.
         //!
-        //! \return upper limit of T
+        //! \return upper limit of GeneralT
         //!
-        static constexpr T max() 
+        static constexpr GeneralT max() 
         { 
-            return min_max<T,std::is_floating_point<T>::value>::max();
+            return min_max<GeneralT,std::is_floating_point<GeneralT>::value>::max();
         }
 
     };
 
 
     //! \cond NO_API_DOC
-    template<typename T> 
-    struct type_info<std::complex<T>>
+    template<typename GeneralT> 
+    struct type_info<std::complex<GeneralT>>
     {
-        typedef std::complex<T> type;
-        typedef T base_type;
+        typedef std::complex<GeneralT> type;
+        typedef GeneralT base_type;
 
-        static const size_t size = sizeof(std::complex<T>);
-        static const bool is_integer = type_info<T>::is_integer;
-        static const bool is_signed = type_info<T>::is_signed;
+        static const size_t size = sizeof(std::complex<GeneralT>);
+        static const bool is_integer = type_info<GeneralT>::is_integer;
+        static const bool is_signed = type_info<GeneralT>::is_signed;
         static const bool is_complex = true;
 
         //---------------------------------------------------------------------
@@ -218,11 +218,11 @@ namespace pni{
 
         //---------------------------------------------------------------------
         //! return the minimum value of the Complex32 type
-        static constexpr T min() { return type_info<T>::min(); }
+        static constexpr GeneralT min() { return type_info<GeneralT>::min(); }
 
         //---------------------------------------------------------------------
         //! return the maximum value of the Complex32 type
-        static constexpr T max() { return type_info<T>::max(); }
+        static constexpr GeneralT max() { return type_info<GeneralT>::max(); }
 
     };
 

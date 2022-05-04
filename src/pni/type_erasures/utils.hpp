@@ -136,9 +136,9 @@ namespace pni{
     //! A simple alias for the std::reference_wrapper template to reduce
     //! typing work. 
     //!
-    //! \tparam T type of the reference
+    //! \tparam GeneralT type of the reference
     //!
-    template<typename T> using ref_type = std::reference_wrapper<T>;
+    template<typename GeneralT> using ref_type = std::reference_wrapper<GeneralT>;
 
     //------------------------------------------------------------------------
     //!

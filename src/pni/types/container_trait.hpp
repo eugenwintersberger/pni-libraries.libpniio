@@ -94,14 +94,14 @@ namespace pni{
     //! 
     //! Specialization of container_trait for std::array
     //! 
-    //! \tparam T data type of std::array
+    //! \tparam DataT data type of std::array
     //! \tparam N number of elements
     //! 
     template<
-             typename T,
-             size_t N
+             typename DataT,
+             size_t TDimN
             >
-    struct container_trait<std::array<T,N>>
+    struct container_trait<std::array<DataT,TDimN>>
     {
         //! std::array provides random access
         static const bool is_random_access = true;

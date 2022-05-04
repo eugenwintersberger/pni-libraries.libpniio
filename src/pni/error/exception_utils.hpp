@@ -376,8 +376,8 @@ namespace pni{
     //! \param ptr pointer to check
     //! \param i exception_record for the location where to perform the check
     //!
-    template<typename T> 
-    void check_ptr_state(const T *ptr,const exception_record &i)
+    template<typename GeneralT> 
+    void check_ptr_state(const GeneralT *ptr,const exception_record &i)
     {
         if(!ptr)
         {

@@ -74,10 +74,10 @@ BOOST_AUTO_TEST_SUITE(test_mdarray)
         index = ContainerT{indexes...};
     }
 
-    template<typename T,size_t NumberT,typename ...IndicesT>
-    static void create_index(std::array<T,NumberT> &c,IndicesT ...indexes)
+    template<typename T,size_t TDimN,typename ...IndicesT>
+    static void create_index(std::array<T,TDimN> &c,IndicesT ...indexes)
     {
-        c = std::array<T,NumberT>{{indexes...}};
+        c = std::array<T,TDimN>{{indexes...}};
     }
 
     template<

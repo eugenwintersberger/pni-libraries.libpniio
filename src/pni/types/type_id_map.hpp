@@ -49,10 +49,10 @@ namespace pni{
     //! 
     //! This template implements a map from a concrete type to its type_id
     //!
-    template<typename T> 
+    template<typename ElementT> 
     struct type_id_map
     {
-        //! id value for type T
+        //! id value for type ElementT
         static constexpr type_id_t type_id = type_id_t::None; 
     };
 

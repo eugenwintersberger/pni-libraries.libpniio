@@ -170,12 +170,12 @@ namespace pni{
         auto l = container_utils<list_type>::create({1,2,3,4});
         \endcode
         !*/ 
-        //! \tparam T element type of the initializer list
+        //! \tparam ElementT element type of the initializer list
         //! \param list initializer list instance
         //! \return container with data from initializer list
         //!
-        template<typename T>
-        static container_type create(const std::initializer_list<T> &list)
+        template<typename ElementT>
+        static container_type create(const std::initializer_list<ElementT> &list)
         {
             container_type c(list.size());
             std::copy(list.begin(),list.end(),c.begin());
@@ -194,19 +194,19 @@ namespace pni{
     //! construction. This specialization of the container_utils template takes 
     //! care about all the peculiarities of std::array.
     //! 
-    //! \tparam T data type for std::array
-    //! \tparam N number of elements for std::array
+    //! \tparam ElementT data type for std::array
+    //! \tparam TDimN number of elements for std::array
     //!
     template<
-             typename T,
-             size_t   N
+             typename ElementT,
+             size_t   TDimN
             > 
-    struct container_utils<std::array<T,N>>
+    struct container_utils<std::array<ElementT,TDimN>>
     {
         //! type of the container
-        typedef std::array<T,N> container_type;
+        typedef std::array<ElementT,TDimN> container_type;
         //! value type of the container
-        typedef T value_type;
+        typedef ElementT value_type;
 
         //---------------------------------------------------------------------
         //!
@@ -233,11 +233,11 @@ namespace pni{
         static container_type create(size_t n,
                                      value_type default_value=value_type())
         {
-            if(n!=N)
+            if(n!=TDimN)
             {
                 std::stringstream message;
                 message<<"Number of elements ("<<n<<") not supported by ";
-                message<<"array type which has ("<<N<<")!";
+                message<<"array type which has ("<<TDimN<<")!";
                 throw size_mismatch_error(EXCEPTION_RECORD,message.str());
             }
 
@@ -278,11 +278,11 @@ namespace pni{
                 >
         static container_type create(IteratorT begin,IteratorT end)
         {
-            if(N!=std::distance(begin,end))
+            if(TDimN!=std::distance(begin,end))
             {
                 std::stringstream message;
                 message<<"Iterators span ("<<std::distance(begin,end)<<")";
-                message<<" only ("<<N<<") supported by the array type!";
+                message<<" only ("<<TDimN<<") supported by the array type!";
                 throw size_mismatch_error(EXCEPTION_RECORD,message.str());
             }
 
@@ -317,11 +317,11 @@ namespace pni{
                 >
         static container_type create(const OriginalContainerT &o)
         {
-           if(o.size() != N)
+           if(o.size() != TDimN)
            {
                std::stringstream message;
                message<<"Original container has ("<<o.size()<<") elements, ";
-               message<<"array supports only ("<<N<<")!";
+               message<<"array supports only ("<<TDimN<<")!";
                throw size_mismatch_error(EXCEPTION_RECORD,message.str());
            }
 
@@ -339,7 +339,7 @@ namespace pni{
         //! 
         //! \param c reference to the original array
         //! \return new instance of the array
-        static container_type create(const std::array<T,N> &c)
+        static container_type create(const std::array<ElementT,TDimN> &c)
         {
             return c;
         }
@@ -362,18 +362,18 @@ namespace pni{
         !*/ 
         //! \throws size_mismatch_error if the size of std::array and the
         //! initializer list do not match
-        //! \tparam ET element type of the initializer list
+        //! \tparam ElementT element type of the initializer list
         //! \param list initializer list
         //! \return initialized instance of std::array
         //!
-        template<typename ET>
-        static container_type create(const std::initializer_list<ET> &list)
+        template<typename ElementT>
+        static container_type create(const std::initializer_list<ElementT> &list)
         {
-            if(list.size()!=N)
+            if(list.size()!=TDimN)
             {
                 std::stringstream message;
                 message<<"Initializer list has ("<<list.size()<<") elements, ";
-                message<<"array supports only ("<<N<<")!";
+                message<<"array supports only ("<<TDimN<<")!";
                 throw size_mismatch_error(EXCEPTION_RECORD,message.str());
             }
 

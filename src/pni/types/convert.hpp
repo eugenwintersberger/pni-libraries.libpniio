@@ -172,13 +172,13 @@ namespace pni{
     //!
     //! This strategy implements a simple unchecked type conversion.
     //!
-    //! \tparam T target type
-    //! \tparam S source type
+    //! \tparam TargetT target type
+    //! \tparam SourceT source type
     //! \tparam unchecked_convertible a flag if true use this strategy
     //!
     template<
-             typename T,
-             typename S,
+             typename TargetT,
+             typename SourceT,
              bool unchecked_convertible=true
             >
     struct conversion_strategy
@@ -190,12 +190,12 @@ namespace pni{
         //!
         //! \param value reference to the original value
         //! \return converted value
-        static T convert(const S &value)
+        static TargetT convert(const SourceT &value)
         {
 #ifdef _MSC_VER
 #pragma warning(disable: 4244)
 #endif
-            return T(value);
+            return TargetT(value);
 #ifdef _MSC_VER
 #pragma warning(default: 4244)
 #endif
@@ -240,14 +240,14 @@ namespace pni{
     //! This strategy uses the numeric_cast function to implement the
     //! conversion.
     //!
-    //! \tparam T target type
-    //! \tparam S source type
+    //! \tparam TargetT target type
+    //! \tparam SourceT source type
     //!
     template<
-             typename T,
-             typename S
+             typename TargetT,
+             typename SourceT
             >
-    struct conversion_strategy<T,S,false>
+    struct conversion_strategy<TargetT,SourceT,false>
     {
         //!
         //! \brief perform conversion
@@ -255,14 +255,14 @@ namespace pni{
         //! Use one of the converters to perform the conversion between
         //! the source and the target type.
         //!
-        //! \param value original value of type S
-        //! \return converted value of type T
+        //! \param value original value of type SourceT
+        //! \return converted value of type TargetT
         //!
-        static T convert(const S &value)
+        static TargetT convert(const SourceT &value)
         {
             try
             {
-                return converter<T,S>::convert(value);
+                return converter<TargetT,SourceT>::convert(value);
             }
             catch(const boost::numeric::positive_overflow &)
             {
@@ -297,22 +297,22 @@ namespace pni{
     //! \throws range_error if u does not fit in the range covered by T
     //! \throws type_error in case of all other errors
     //!
-    //! \tparam T target type
+    //! \tparam TargetT target type
     //! \tparam S source type
     //!
     //! \param source value of type S
-    //! \return value of u converted to T
+    //! \return value of u converted to TargetT
     //!
     template<
-             typename T,
-             typename S
+             typename TargetT,
+             typename SourceT
             >
-    T convert(const S &source)
+    TargetT convert(const SourceT &source)
     {
-        static_assert(convertible<S,T>::value,
+        static_assert(convertible<SourceT,TargetT>::value,
                       "Types are in no way convertible!");
 
-        typedef conversion_strategy<T,S,unchecked_convertible<S,T>::value> strategy;
+        typedef conversion_strategy<TargetT,SourceT,unchecked_convertible<SourceT,TargetT>::value> strategy;
         return strategy::convert(source);
 
     }

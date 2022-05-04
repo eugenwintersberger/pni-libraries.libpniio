@@ -30,10 +30,10 @@ namespace pni {
 namespace nexus {
 namespace xml {
 
-template<typename T,typename ObjectT>
+template<typename ElementT,typename ObjectT>
 void write_data(const std::string &data,const ObjectT &object)
 {
-  pni::parser<std::vector<T>> parser;
+  pni::parser<std::vector<ElementT>> parser;
   object.write(parser(data));
 }
 

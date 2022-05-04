@@ -61,8 +61,8 @@ FieldBuilder::FieldBuilder(const Node &xml_node):
     writer_(xml_node)
 {}
 
-template<typename T>
-std::vector<T> read_data(const Node &xml_node)
+template<typename ElementT>
+std::vector<ElementT> read_data(const Node &xml_node)
 {
 
 }

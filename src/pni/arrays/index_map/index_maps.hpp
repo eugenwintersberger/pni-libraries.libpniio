@@ -44,10 +44,10 @@ namespace pni{
     //! static_cindex_map<3,3> matrix_map; 
     //! \endcode
     //! 
-    //! \tparam DimsT number of elements along each dimension
+    //! \tparam TDimsN number of elements along each dimension
     //! 
-    template<size_t... DimsT> 
-    using static_cindex_map = static_index_map<c_index_map_imp,DimsT...>;
+    template<size_t... TDimsN> 
+    using static_cindex_map = static_index_map<c_index_map_imp,TDimsN...>;
 
     //-------------------------------------------------------------------------
     //!
@@ -75,9 +75,9 @@ namespace pni{
     //! typedef fixed_dim_cindex_map<2> image_map; 
     //! \endcode
     //!
-    //! \tparam NDimsT number of dimensions
-    template<size_t NDimsT> 
-    using fixed_dim_cindex_map = index_map<std::array<size_t,NDimsT>,c_index_map_imp>;
+    //! \tparam TDimN number of dimensions
+    template<size_t TDimN> 
+    using fixed_dim_cindex_map = index_map<std::array<size_t,TDimN>,c_index_map_imp>;
 
     //=================define some convienance function========================
 
@@ -187,13 +187,13 @@ namespace pni{
     
     
     \tparam PolicyT policy type
-    \tparam DimsT number of elements along each dimension
+    \tparam TDimsN number of elements along each dimension
     */
-    template<typename PolicyT,size_t...DimsT>
-    struct map_utils<static_index_map<PolicyT,DimsT...> >
+    template<typename PolicyT,size_t...TDimsN>
+    struct map_utils<static_index_map<PolicyT,TDimsN...> >
     {
         //! index map type
-        typedef static_index_map<PolicyT,DimsT...> map_type;
+        typedef static_index_map<PolicyT,TDimsN...> map_type;
 
         //!
         //! \brief creat map from container

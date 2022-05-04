@@ -36,9 +36,9 @@ namespace pni{
     //!
     //! Metafunction to retrieve the result type of another metafunction. 
     //!
-    //! \tparam T metafunction type
+    //! \tparam MetafunctionT metafunction type
     //! 
-    template<typename T> using invoke = typename T::type;
+    template<typename MetafunctionT> using invoke = typename MetafunctionT::type;
 
     //------------------------------------------------------------------------
     //!
@@ -91,12 +91,12 @@ namespace pni{
     //!
     //! Applies a logical not to the result of a metafunction.
     //! 
-    //! \tparam T function type
+    //! \tparam FunctionT function type
     //!
-    template<typename T> struct not_t
+    template<typename FunctionT> struct not_t
     {
         //! result of the operation
-        static const bool value = !T::value;
+        static const bool value = !FunctionT::value;
     };
 
     //------------------------------------------------------------------------
@@ -105,9 +105,9 @@ namespace pni{
     //! \brief shortcut for std::enable_if
     //! 
 #ifdef _MSC_VER
-    template<typename C> using enable_if = std::enable_if_t<C::value>;
+    template<typename GeneralT> using enable_if = std::enable_if_t<GeneralT::value>;
 #else
-	template<typename C> using enable_if = invoke<std::enable_if<C::value>>;
+	template<typename GeneralT> using enable_if = invoke<std::enable_if<GeneralT::value>>;
 #endif
     
     //------------------------------------------------------------------------
@@ -115,21 +115,21 @@ namespace pni{
     //! \ingroup utility_classes
     //! \brief shortcut for std::is_pod
     //! 
-    template<typename T> using is_pod = std::is_pod<T>;
+    template<typename GeneralT> using is_pod = std::is_pod<GeneralT>;
 
     //------------------------------------------------------------------------
     //!
     //! \ingroup utility_classes
     //! \brief shortcut for std::is_pointer
     //!
-    template<typename T> using is_ptr = std::is_pointer<T>;
+    template<typename GeneralT> using is_ptr = std::is_pointer<GeneralT>;
 
     //------------------------------------------------------------------------
     //!
     //! \ingroup utiltiy_classes
     //! \brief shortcut for is_complex
     //!
-    template<typename T> using is_cmplx = is_complex_type<T>;
+    template<typename GeneralT> using is_cmplx = is_complex_type<GeneralT>;
 
 //end of namespace
 }

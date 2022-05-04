@@ -138,7 +138,7 @@ namespace pni{
         //! This overload works with indexes passed as variadic arguments.
         //!
         //! \tparam ContainerT container type 
-        //! \tparam MAP index map type
+        //! \tparam IndexMapT index map type
         //! \tparam IndicesT indices of the element
         //! \param c reference to the data container 
         //! \param map reference to the index map
@@ -147,10 +147,10 @@ namespace pni{
         //!
         template<
                  typename ContainerT,
-                 typename MAP,
+                 typename IndexMapT,
                  typename... IndicesT
                 > 
-        static ref_type get_reference(ContainerT &c,MAP &map,IndicesT ...indexes)
+        static ref_type get_reference(ContainerT &c,IndexMapT &map,IndicesT ...indexes)
         {
             using array_type = std::array<size_t,sizeof...(IndicesT)>;
 #ifdef DEBUG
@@ -171,7 +171,7 @@ namespace pni{
         //! arguments.
         //!
         //! \tparam ContainerT data container type
-        //! \tparam MAP index map type
+        //! \tparam IndexMapT index map type
         //! \tparam IndicesT index types
         //! \param c reference to the data container
         //! \param map reference to the index map
@@ -180,10 +180,10 @@ namespace pni{
         //!
         template<
                  typename ContainerT,
-                 typename MAP,
+                 typename IndexMapT,
                  typename ...IndicesT
                 >
-        static type get_value(const ContainerT &c,MAP &map,IndicesT ...indexes)
+        static type get_value(const ContainerT &c,IndexMapT &map,IndicesT ...indexes)
         {
             using array_type = std::array<size_t,sizeof...(IndicesT)>;
 #ifdef DEBUG
@@ -223,7 +223,7 @@ namespace pni{
         //! determining the view are passed as variadic arguments. 
         //!
         //! \tparam ContainerT array type
-        //! \tparam MAP index map type
+        //! \tparam IndexMapT index map type
         //! \tparam IndicesT index types
         //! \param c reference to the data container
         //! \param indexes variadic argument list
@@ -231,10 +231,10 @@ namespace pni{
         //!
         template<
                  typename ContainerT,
-                 typename MAP,
+                 typename IndexMapT,
                  typename... IndicesT
                 > 
-        static ref_type get_reference(ContainerT &c,MAP &,IndicesT ...indexes)
+        static ref_type get_reference(ContainerT &c,IndexMapT &,IndicesT ...indexes)
         {
             using array_type = std::array<slice,sizeof...(IndicesT)>;
 
@@ -251,7 +251,7 @@ namespace pni{
         //! slices are passed as variaidc templates to the function.
         //!
         //! \tparam ContainerT array type
-        //! \tparam MAP index map type
+        //! \tparam IndexMapT index map type
         //! \tparam IndicesT index and slice types
         //! \param c reference to the data container
         //! \param indexes variadic argument list
@@ -259,10 +259,10 @@ namespace pni{
         //! 
         template<
                  typename ContainerT,
-                 typename MAP,
+                 typename IndexMapT,
                  typename ...IndicesT
                 >
-        static type get_value(const ContainerT &c,MAP &,IndicesT ...indexes)
+        static type get_value(const ContainerT &c,IndexMapT &,IndicesT ...indexes)
         {
             using array_type = std::array<slice,sizeof...(IndicesT)>;
 

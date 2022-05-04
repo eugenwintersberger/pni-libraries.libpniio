@@ -32,16 +32,16 @@ namespace pni{
 //!
 //! This parser reads complex numbers from a string.
 //!
-//! @tparam T base type for the complex number
+//! @tparam BaseT base type for the complex number
 //!
-template<typename T>
-class parser<std::complex<T>>
+template<typename BaseT>
+class parser<std::complex<BaseT>>
 {
   private:
-    using base_type = T;
+    using base_type = BaseT;
     parser<base_type> _base_parser;
   public:
-    using result_type = std::complex<T>;
+    using result_type = std::complex<BaseT>;
 
     result_type operator()(const pni::string &input) const
     {

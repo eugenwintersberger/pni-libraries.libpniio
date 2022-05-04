@@ -53,13 +53,13 @@ namespace pni{
     //! This is a specialization of the operator trait for a scalar value. 
     //! For scalars the value instead of a reference will be stored. 
     //! 
-    //! \tparam T data type of the scalar
+    //! \tparam GeneralT data type of the scalar
     //!
-    template<typename T> 
-    struct op_trait<scalar<T> >
+    template<typename GeneralT> 
+    struct op_trait<scalar<GeneralT> >
     {
         //! reference type for a scalar operand
-        typedef scalar<T> ref_type;
+        typedef scalar<GeneralT> ref_type;
     };
    
     //-------------------------------------------------------------------------

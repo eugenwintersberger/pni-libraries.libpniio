@@ -40,9 +40,9 @@ namespace pni{
             ContainerT _container;
         public:
 
-            template<typename T> void operator()(T)
+            template<typename ElementT> void operator()(ElementT)
             {
-                type_id_t tid = type_id_map<T>::type_id;
+                type_id_t tid = type_id_map<ElementT>::type_id;
                 _container.push_back(tid);
             }
 
@@ -56,13 +56,13 @@ namespace pni{
     //------------------------------------------------------------------------
     template<
              typename ContainerT,
-             typename TS
+             typename SourceT
             >
     ContainerT build_type_id_container()
     {
         type_id_container_builder<ContainerT> builder;
             
-        boost::mpl::for_each<TS>(std::ref(builder));
+        boost::mpl::for_each<SourceT>(std::ref(builder));
 
         return builder.get();
     }
@@ -73,18 +73,18 @@ namespace pni{
     //!
     //! \brief generate type map pairs
     //!
-    //! \tparam T key type
+    //! \tparam KeyT key type
     //! \tparam MapT MPL map type
     //! 
     template<
-             typename T,
+             typename KeyT,
              typename MapT
             >
     std::pair<type_id_t,type_id_vector> generate_map_element()
     {
-        typedef typename boost::mpl::at<MapT,T>::type vector_t;
+        typedef typename boost::mpl::at<MapT,KeyT>::type vector_t;
         
-        return {type_id_t(type_id_map<T>::type_id),
+        return {type_id_t(type_id_map<KeyT>::type_id),
                 build_type_id_container<type_id_vector,vector_t>()};
 
     }

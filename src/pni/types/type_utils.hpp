@@ -43,13 +43,13 @@ namespace pni{
     //! 
     //! Overloaded version of get_type_id for complex numbers.
     //!
-    //! \tparam T base type for std::complex
+    //! \tparam GeneralT base type for std::complex
     //! \return type ID of the complex type
     //!
-    template<typename T> 
-    type_id_t get_type_id(const std::complex<T> &)
+    template<typename GeneralT> 
+    type_id_t get_type_id(const std::complex<GeneralT> &)
     {
-        return type_id_map<std::complex<T> >::type_id;
+        return type_id_map<std::complex<GeneralT> >::type_id;
     }
 
     //------------------------------------------------------------------------
@@ -105,17 +105,17 @@ namespace pni{
     //! 
     //! This version of get_type_id is used for POD (Plain Old Data). 
     //! 
-    //! \tparam T data type
-    //! \return type ID of T
+    //! \tparam GeneralT data type
+    //! \return type ID of GeneralT
     //!
-    template<typename T > 
-    type_id_t get_type_id(const T &,enable_if<is_pod<T>>* = 0)
+    template<typename GeneralT > 
+    type_id_t get_type_id(const GeneralT &,enable_if<is_pod<GeneralT>>* = 0)
     {
-        return type_id_map<T>::type_id;
+        return type_id_map<GeneralT>::type_id;
     }
 
     //-------------------------------------------------------------------------
-    // if T is a container type use this function
+    // if GeneralT is a container type use this function
     //! 
     //! \ingroup type_classes_internal
     //! \brief get_type_id for containers
@@ -123,13 +123,13 @@ namespace pni{
     //! In the case of continaer types get_type_id returns the type ID of 
     //! of the value_type. 
     //! 
-    //! \tparam T container type
-    //! \return type ID of T::value_type
+    //! \tparam GeneralT container type
+    //! \return type ID of GeneralT::value_type
     //!
-    template<typename T> 
-    type_id_t get_type_id(const T &,enable_if<not_t<is_pod<T>>>* = 0)
+    template<typename GeneralT> 
+    type_id_t get_type_id(const GeneralT &,enable_if<not_t<is_pod<GeneralT>>>* = 0)
     {
-        return type_id_map<typename T::value_type>::type_id;
+        return type_id_map<typename GeneralT::value_type>::type_id;
     }
     
     //-------------------------------------------------------------------------
@@ -142,14 +142,14 @@ namespace pni{
     //! argument passed is a container the type id of the element type 
     //! is returned.
     //!
-    //! \tparam T type if the object
+    //! \tparam GeneralT type if the object
     //! \return type ID 
     //!
-    template<typename T> 
-    type_id_t type_id(const T &)
+    template<typename GeneralT> 
+    type_id_t type_id(const GeneralT &)
     {
         typedef typename std::remove_const<
-            typename std::remove_pointer<T>::type
+            typename std::remove_pointer<GeneralT>::type
             >::type  type;
         return get_type_id(type());
     }

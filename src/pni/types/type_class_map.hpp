@@ -47,12 +47,12 @@ namespace pni{
     //! \brief type to class mapping
     //!  
     //! Template mapping a particular data type to its type class.
-    //! \tparam T data type
+    //! \tparam ElementT data type
     //!
-    template<typename T> 
+    template<typename ElementT> 
     struct type_class_map
     {
-        //! class of type T
+        //! class of type ElementT
         static const type_class_t type_class = type_class_t::None;
     };
 

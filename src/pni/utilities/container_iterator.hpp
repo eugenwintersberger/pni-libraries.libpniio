@@ -39,13 +39,13 @@ namespace pni{
     //! interface
     /*!
     \code
-    template<typename T> class Iterable<T>
+    template<typename GeneralT> class Iterable<GeneralT>
     {
         public:
-            typedef T value_type;
+            typedef GeneralT value_type;
             size_t size() const;
-            T &operator[](size_t i);
-            T operator[](size_t i) const;
+            GeneralT &operator[](size_t i);
+            GeneralT operator[](size_t i) const;
     };
     \endcode
     !*/ 

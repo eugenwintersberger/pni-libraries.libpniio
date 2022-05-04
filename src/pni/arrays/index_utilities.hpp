@@ -201,9 +201,9 @@ template<typename ElementT> struct is_view_cont<std::vector<ElementT>>
 //! Sepcialization of the is_view_cont tempalte for std::array.
 //!
 //! \tparam ElementT element type of the array
-//! \tparam NumberT number of elements
+//! \tparam TDimN number of elements
 //!
-template<typename ElementT,size_t NumberT> struct is_view_cont<std::array<ElementT,NumberT>>
+template<typename ElementT,size_t TDimN> struct is_view_cont<std::array<ElementT,TDimN>>
 {
     //! true if ElementT is a slice type, false otherwise
     static const bool value = std::is_same<ElementT,slice>::value;

@@ -114,24 +114,24 @@ namespace pni{
 	};
 	
 
-	template<size_t N,size_t... DimsT>	class win_storage
+	template<size_t TDimN,size_t... TDimsN>	class win_storage
 	{
 		public:
 			typedef size_t value_type; 
 			typedef const size_t *const_iterator;
-			typedef win_storage<N, DimsT...> container_type;
+			typedef win_storage<TDimN, TDimsN...> container_type;
 			typedef reverse_iterator<container_type> const_reverse_iterator;
 		private:
-			constexpr static value_type _data[N] = { DimsT... };
+			constexpr static value_type _data[TDimN] = { TDimsN... };
 		public:
 			
-			constexpr size_t size() const {	return N; }
+			constexpr size_t size() const {	return TDimN; }
 
 			const_iterator begin() const { return _data; }
 
 			size_t operator[](size_t index) const {	return _data[index]; }
 
-			const_iterator end() const { return &_data[N]; }
+			const_iterator end() const { return &_data[TDimN]; }
 
 			const_reverse_iterator rbegin() const
 			{
@@ -169,11 +169,11 @@ namespace pni{
     //! once declared).
     //! 
     //! \tparam MapImpT policy to compute the index and offset data
-    //! \tparam DimsT number of elements along each dimension
+    //! \tparam TDimsN number of elements along each dimension
     //!
     template<
              typename MapImpT,
-             size_t... DimsT
+             size_t... TDimsN
             > 
     class static_index_map
     {
@@ -181,9 +181,9 @@ namespace pni{
             //=================public types====================================
             //! storage type
 #ifdef _MSC_VER
-			typedef win_storage<sizeof...(DimsT),DimsT...> storage_type;
+			typedef win_storage<sizeof...(TDimsN),TDimsN...> storage_type;
 #else
-            typedef std::array<size_t,sizeof...(DimsT)> storage_type;
+            typedef std::array<size_t,sizeof...(TDimsN)> storage_type;
 #endif
             //! policy type
             typedef MapImpT     implementation_type;
@@ -196,7 +196,7 @@ namespace pni{
 #ifdef _MSC_VER
 			static storage_type _shape;
 #else
-            constexpr static storage_type _shape = {{DimsT...}};
+            constexpr static storage_type _shape = {{TDimsN...}};
 #endif
         public:
 
@@ -225,7 +225,7 @@ namespace pni{
             //! 
             //! \return number of dimensions
             //!
-            constexpr size_t rank() const { return sizeof...(DimsT); }
+            constexpr size_t rank() const { return sizeof...(TDimsN); }
 
             //-----------------------------------------------------------------
             //!
@@ -342,13 +342,13 @@ namespace pni{
     };
     
 #ifdef _MSC_VER
-	template<typename MapImpT, size_t... DimsT>
-	typename static_index_map<MapImpT, DimsT...>::storage_type
-		static_index_map<MapImpT, DimsT...>::_shape;
+	template<typename MapImpT, size_t... TDimsN>
+	typename static_index_map<MapImpT, TDimsN...>::storage_type
+		static_index_map<MapImpT, TDimsN...>::_shape;
 #else
-template<typename MapImpT,size_t... DimsT> 
-    constexpr typename static_index_map<MapImpT,DimsT...>::storage_type 
-    static_index_map<MapImpT,DimsT...>::_shape;
+template<typename MapImpT,size_t... TDimsN> 
+    constexpr typename static_index_map<MapImpT,TDimsN...>::storage_type 
+    static_index_map<MapImpT,TDimsN...>::_shape;
 
 #endif
 //end of namespace

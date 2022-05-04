@@ -33,8 +33,8 @@
 
 namespace pni{
 
-    template<typename T>
-    pni::string format(const std::vector<T> &v,
+    template<typename ElementT>
+    pni::string format(const std::vector<ElementT> &v,
                              const container_io_config &config=container_io_config())
     {
         using namespace pni;

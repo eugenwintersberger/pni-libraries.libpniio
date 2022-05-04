@@ -78,12 +78,12 @@ namespace pni{
         //!
         template<
                  typename LeftT,
-                 typename T,
+                 typename ScalarT,
                  typename = enable_if<or_t<
-                           is_pod<T>,is_cmplx<T>
+                           is_pod<ScalarT>,is_cmplx<ScalarT>
                            >>
                 > 
-        static void add(LeftT &a,T b)
+        static void add(LeftT &a,ScalarT b)
         {
             CHECK_ARITHMETIC_SINGLE(LeftT);
 
@@ -145,12 +145,12 @@ namespace pni{
         //!
         template<
                  typename LeftT,
-                 typename T,
+                 typename ScalarT,
                  typename = enable_if<or_t< 
-                            is_pod<T>,is_cmplx<T> 
+                            is_pod<ScalarT>,is_cmplx<ScalarT> 
                             >>
                 >
-        static void sub(LeftT &a,T b)
+        static void sub(LeftT &a,ScalarT b)
         {
             CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n = a.size();
@@ -211,12 +211,12 @@ namespace pni{
         //!
         template<
                  typename LeftT,
-                 typename T,
+                 typename ScalarT,
                  typename = enable_if<or_t< 
-                            is_pod<T>,is_cmplx<T> 
+                            is_pod<ScalarT>,is_cmplx<ScalarT> 
                             >>
                 >
-        static void mult(LeftT &a,T b)
+        static void mult(LeftT &a,ScalarT b)
         {
             CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n=a.size();
@@ -276,12 +276,12 @@ namespace pni{
         //!
         template<
                  typename LeftT,
-                 typename T,
+                 typename ScalarT,
                  typename = enable_if<or_t< 
-                            is_pod<T>,is_cmplx<T> 
+                            is_pod<ScalarT>,is_cmplx<ScalarT> 
                             >>
                 >
-        static void div(LeftT &a,T b)
+        static void div(LeftT &a,ScalarT b)
         {
             CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n = a.size();

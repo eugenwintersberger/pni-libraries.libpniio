@@ -128,9 +128,9 @@ class PNINEXUS_EXPORT Node : public boost::property_tree::ptree
 
     //Node get_child_by_name(const std::string &name) const;
 
-    template<typename T> T data() const
+    template<typename DataT> DataT data() const
     {
-      pni::parser<T> p;
+      pni::parser<DataT> p;
 
       return p(str_data());
     }

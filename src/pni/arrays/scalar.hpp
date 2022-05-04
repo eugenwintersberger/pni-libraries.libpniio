@@ -44,22 +44,22 @@ namespace pni {
     //! This template is used in expression tempaltes. Its purpose is to give 
     //! scalar values an array like interface.
     //!
-    //! \tparam T scalar type of the data stored.
+    //! \tparam ElementT scalar type of the data stored.
     //!
-    template<typename T> 
+    template<typename ElementT> 
     class scalar
     {
         private:
             //! static buffer holding the data value
-            std::array<T,1> _data; 
+            std::array<ElementT,1> _data; 
         public:
             //================public data types================================
             //! native data type of the scalar
-            typedef T value_type;
+            typedef ElementT value_type;
             //! type of the scalar itself
-            typedef scalar<T> array_type;
+            typedef scalar<ElementT> array_type;
             //! storage type
-            typedef std::array<T,1> storage_type;
+            typedef std::array<ElementT,1> storage_type;
             //! iterator
             typedef scalar_iterator<array_type> iterator;
             //! const iterator
@@ -69,7 +69,7 @@ namespace pni {
             
             //===============public members====================================
             //! type ID of the data type held by the scalar
-            static const type_id_t type_id = type_id_map<T>::type_id;
+            static const type_id_t type_id = type_id_map<ElementT>::type_id;
 
             //====================constructors and destructor==================
             //! default constructor
@@ -91,9 +91,9 @@ namespace pni {
 
             //=================assignment operators============================
             //! 
-            //! \brief assignment from T value
+            //! \brief assignment from ElementT value
             //!
-            //! Assigns a value of type T to the scalar.
+            //! Assigns a value of type ElementT to the scalar.
             //! \param v value to assign
             //! \return reference to array_type
             //!
@@ -105,11 +105,11 @@ namespace pni {
 
             //-----------------------------------------------------------------
             //! 
-            //! \brief assignment from Scalar<T>
+            //! \brief assignment from Scalar<ElementT>
             //!
-            //! This is the most trivial case. An object of type Scalar<T> is 
-            //! assigned to an other object of type Scalar<T>.
-            //! \param v value of scalar<T> to assign
+            //! This is the most trivial case. An object of type Scalar<ElementT> is 
+            //! assigned to an other object of type Scalar<ElementT>.
+            //! \param v value of scalar<ElementT> to assign
             //! \return reference to array_type
             //!
             array_type &operator=(const array_type &v)
@@ -123,12 +123,12 @@ namespace pni {
             //!
             //! \brief conversion operator
             //!
-            //! Allows conversion from an instance of scalar<T> to a variable 
-            //! of type T.
+            //! Allows conversion from an instance of scalar<ElementT> to a variable 
+            //! of type ElementT.
             //! 
-            //! \return value of type T
+            //! \return value of type ElementT
             //!
-            operator T() const { return this->_data[0]; }
+            operator ElementT() const { return this->_data[0]; }
 
             //===================linear access operators========================
             //!
@@ -140,7 +140,7 @@ namespace pni {
             //! \param i linear index of the value
             //! \return value of the scalar
             //!
-            T operator[](size_t i) const {
+            ElementT operator[](size_t i) const {
 	      (void)i;  // UNUSED
 	      return this->_data[0];
 	    }
@@ -156,7 +156,7 @@ namespace pni {
             //! \param i index
             //! \return reference to the scalar data
             //!
-            T &operator[](size_t i) {
+            ElementT &operator[](size_t i) {
 	      (void)i;  // UNUSED
 	      return this->_data[0];
 	    }
@@ -171,7 +171,7 @@ namespace pni {
             //! \param i index
             //! \return data value
             //!
-            T at(size_t i) const {
+            ElementT at(size_t i) const {
 	      (void)i;  // UNUSED
 	      return this->_data[0];
 	    }
@@ -186,7 +186,7 @@ namespace pni {
             //! \param i index
             //! \return reference to data
             //!
-            T &at(size_t i) {
+            ElementT &at(size_t i) {
 	      (void)i;  // UNUSED
 	      return this->_data[0];
 	    }
@@ -199,7 +199,7 @@ namespace pni {
             //! \param i index
             //! \param v value
             //!
-            void insert(size_t i,const T &v) { this->_data[0] = v; }
+            void insert(size_t i,const ElementT &v) { this->_data[0] = v; }
             
             //-----------------------------------------------------------------
             //! 
@@ -224,7 +224,7 @@ namespace pni {
             //! \return reference to data
             //!
             template<typename ...IndicesT> 
-            T &operator()(IndicesT ... indices)
+            ElementT &operator()(IndicesT ... indices)
             {
                 return this->_data[0];
             }
@@ -241,7 +241,7 @@ namespace pni {
             //! \return data value
             //!
             template<typename ...IndicesT> 
-            T operator()(IndicesT ... indices) const
+            ElementT operator()(IndicesT ... indices) const
             {
                 return this->_data[0];
             }
@@ -280,7 +280,7 @@ namespace pni {
             //! \return data value
             //!
             template<template<typename ...> class ContainerT,typename ...ContainerTemplateArgumentsT>
-            T operator()(const ContainerT<ContainerTemplateArgumentsT...> &) const
+            ElementT operator()(const ContainerT<ContainerTemplateArgumentsT...> &) const
             {
                 return this->_data[0];
             }
@@ -291,7 +291,7 @@ namespace pni {
             //!
             //! For a scalar object this method always returns 1. This is due 
             //! to the fact that one needs to allocate only one block of 
-            //! memory of sizeof(T) bytes to hold the scalar data.
+            //! memory of sizeof(ElementT) bytes to hold the scalar data.
             //! 
             //! \return 1
             //!
@@ -343,15 +343,15 @@ namespace pni {
     //!
     //! Returns true if the two value of a and b are equal. 
     //!
-    //! \tparam T data type for the scalar instance
+    //! \tparam ElementT data type for the scalar instance
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return true if both are equal, false otherwise
     //! 
-    template<typename T>
-    bool operator==(const scalar<T> &a,const scalar<T> &b)
+    template<typename ElementT>
+    bool operator==(const scalar<ElementT> &a,const scalar<ElementT> &b)
     {
-        return T(a)==T(b);
+        return ElementT(a)==ElementT(b);
     }
 
     //-------------------------------------------------------------------------
@@ -361,13 +361,13 @@ namespace pni {
     //!
     //! Returns true if the two value of a and b are not equal. 
     //!
-    //! \tparam T data type for the scalar instance
+    //! \tparam ElementT data type for the scalar instance
     //! \param a lhs value of the operator
     //! \param b rhs value of the operator
     //! \return false if both are equal, true otherwise
     //! 
-    template<typename T>
-    bool operator!=(const scalar<T> &a,const scalar<T> &b)
+    template<typename ElementT>
+    bool operator!=(const scalar<ElementT> &a,const scalar<ElementT> &b)
     {
         return !(a==b);
     }
@@ -382,10 +382,10 @@ namespace pni {
     //! \param s scalar value
     //! \return reference to output stream
     //!
-    template<typename T>
-    std::ostream &operator<<(std::ostream &os,const scalar<T> &s)
+    template<typename ElementT>
+    std::ostream &operator<<(std::ostream &os,const scalar<ElementT> &s)
     {
-        T value = s[0]; 
+        ElementT value = s[0]; 
         os<<value;
         return os;
     }
@@ -400,10 +400,10 @@ namespace pni {
     //! \param s scalar 
     //! \return reference to input stream
     //!
-    template<typename T>
-    std::istream &operator>>(std::istream &is,scalar<T> &s)
+    template<typename ElementT>
+    std::istream &operator>>(std::istream &is,scalar<ElementT> &s)
     {
-        T value;
+        ElementT value;
         is>>value;
         s = value;
         return is;

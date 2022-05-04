@@ -121,12 +121,12 @@ namespace pni{
             \brief read parameter data
 
             This template is used internally to extract parameter data from the
-            input stream and store the result in a variable of type T. 
+            input stream and store the result in a variable of type ElementT. 
             \param stream input stream
             \param value where to store data
             */
-            template<typename T>
-                void _get_parameter_data(std::ifstream &stream,T &value) const;
+            template<typename ElementT>
+                void _get_parameter_data(std::ifstream &stream,ElementT &value) const;
 
             //------------------------------------------------------------------
             /*! 
@@ -203,10 +203,10 @@ namespace pni{
             Return the value of a parameter stored in the FIO file by name. 
             \throws key_errror if parameter name does not exist
             \param name parameter name
-            \return parameter value as type T
+            \return parameter value as type ElementT
             */
-            template<typename T> 
-            T parameter(const std::string &name) const;
+            template<typename ElementT> 
+            ElementT parameter(const std::string &name) const;
            
             //-----------------------------------------------------------------
             /*! 
@@ -241,17 +241,17 @@ namespace pni{
     };
     
     //==========implementation of private template methods=====================
-    template<typename T> 
-        void fio_reader::_get_parameter_data(std::ifstream &stream,T &value) const
+    template<typename ElementT> 
+        void fio_reader::_get_parameter_data(std::ifstream &stream,ElementT &value) const
     {
         stream>>value;
     }
 
     //======================template implementation============================
-    template<typename T> 
-    T fio_reader::parameter(const std::string &name) const
+    template<typename ElementT> 
+    ElementT fio_reader::parameter(const std::string &name) const
     {
-        return boost::lexical_cast<T>(_param_map.at(name));
+        return boost::lexical_cast<ElementT>(_param_map.at(name));
     }
 
     //-------------------------------------------------------------------------
