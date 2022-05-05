@@ -70,7 +70,7 @@ namespace pni{
         //reset stream position
         stream.seekg(orig_pos,std::ios::beg);
         if(magic!=42)
-            throw file_error(EXCEPTION_RECORD,"Not a TIFF file!");
+            throw file_error(PNINEXUS_EXCEPTION_RECORD,"Not a TIFF file!");
         
     }
     
@@ -113,7 +113,7 @@ namespace pni{
         //no we need to read the IFD entries read the first IFD offset
         uint32 ifd_offset = _read_ifd_offset(stream);
         if(ifd_offset == 0)
-            throw file_error(EXCEPTION_RECORD,"File "+filename()+" does not "
+            throw file_error(PNINEXUS_EXCEPTION_RECORD,"File "+filename()+" does not "
                     "contain an IDF entry!");
 
         //read IFDs from the file
@@ -192,7 +192,7 @@ namespace pni{
                             error_stream<<"Invalid unsigned integer type - ";
                             error_stream<<"Bits per sample = "<<bps<<" ";
                             error_stream<<"Sign flag = "<<sf;
-                         throw type_error(EXCEPTION_RECORD,error_stream.str());
+                         throw type_error(PNINEXUS_EXCEPTION_RECORD,error_stream.str());
                 }
                 break;
             case 2:
@@ -207,7 +207,7 @@ namespace pni{
                              error_stream<<"Invalid signed integer type - ";
                              error_stream<<"Bits per sample = "<<bps<<" ";
                              error_stream<<"Sign flag = "<<sf;
-                        throw type_error(EXCEPTION_RECORD,error_stream.str());
+                        throw type_error(PNINEXUS_EXCEPTION_RECORD,error_stream.str());
                 }
                 break;
             case 3: 
@@ -220,13 +220,13 @@ namespace pni{
                              error_stream<<"Invalid floating point type - ";
                              error_stream<<"Bits per sample = "<<bps<<" ";
                              error_stream<<"Sign flag = "<<sf;
-                        throw type_error(EXCEPTION_RECORD,error_stream.str());
+                        throw type_error(PNINEXUS_EXCEPTION_RECORD,error_stream.str());
                 }
                 break;
 
             default:
                 //throw an exception here
-                throw type_error(EXCEPTION_RECORD,"Cannot derive type id!");
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,"Cannot derive type id!");
 
         }
 	return type_id_t::UInt8;

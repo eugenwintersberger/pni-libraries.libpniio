@@ -33,12 +33,12 @@
 
 namespace pni{
 
-#define CHECK_ARITHMETIC_SINGLE(type)\
+#define PNINEXUS_CHECK_ARITHMETIC_SINGLE(type)\
     static_assert(std::is_arithmetic<typename type::value_type>::value || \
                   is_complex_type<typename type::value_type>::value,\
             "Arithemtic operations can only be used with arithmetic types!")
 
-#define CHECK_ARITHMETIC_DOUBLE(type1,type2)\
+#define PNINEXUS_CHECK_ARITHMETIC_DOUBLE(type1,type2)\
     static_assert(\
             (std::is_arithmetic<typename type1::value_type>::value || \
              is_complex_type<typename type1::value_type>::value) && \
@@ -85,7 +85,7 @@ namespace pni{
                 > 
         static void add(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LeftT);
+            PNINEXUS_CHECK_ARITHMETIC_SINGLE(LeftT);
 
             size_t n = a.size();
             for(size_t i = 0;i<n;++i) a[i] += b;
@@ -120,7 +120,7 @@ namespace pni{
                 >
         static void add(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
+            PNINEXUS_CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] += b[i];
         }
@@ -152,7 +152,7 @@ namespace pni{
                 >
         static void sub(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LeftT);
+            PNINEXUS_CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] -= b;
         }
@@ -185,7 +185,7 @@ namespace pni{
                 >
         static void sub(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
+            PNINEXUS_CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] -= b[i];
         }
@@ -218,7 +218,7 @@ namespace pni{
                 >
         static void mult(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LeftT);
+            PNINEXUS_CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n=a.size();
             for(size_t i=0;i<n;++i) a[i] *= b;
         }
@@ -251,7 +251,7 @@ namespace pni{
                 >
         static void mult(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
+            PNINEXUS_CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n=a.size();
             for(size_t i=0;i<n;++i) a[i] *= b[i];
         }
@@ -283,7 +283,7 @@ namespace pni{
                 >
         static void div(LeftT &a,ScalarT b)
         {
-            CHECK_ARITHMETIC_SINGLE(LeftT);
+            PNINEXUS_CHECK_ARITHMETIC_SINGLE(LeftT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] /= b;
         }
@@ -316,7 +316,7 @@ namespace pni{
                 >
         static void div(LeftT &a,const RightT &b)
         {
-            CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
+            PNINEXUS_CHECK_ARITHMETIC_DOUBLE(LeftT,RightT);
             size_t n = a.size();
             for(size_t i=0;i<n;++i) a[i] /= b[i];
         }

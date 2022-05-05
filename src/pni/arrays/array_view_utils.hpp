@@ -155,7 +155,7 @@ namespace pni{
             using array_type = std::array<size_t,sizeof...(IndicesT)>;
 #ifdef DEBUG
             array_type buffer{{size_t(indexes)...}};
-            check_indexes(buffer,map,EXCEPTION_RECORD);
+            check_indexes(buffer,map,PNINEXUS_EXCEPTION_RECORD);
 #endif
 
             size_t offset = map.offset(array_type{{size_t(indexes)...}});
@@ -188,7 +188,7 @@ namespace pni{
             using array_type = std::array<size_t,sizeof...(IndicesT)>;
 #ifdef DEBUG
             array_type buffer{{size_t(indexes)...}};
-            check_indexes(buffer,map,EXCEPTION_RECORD);
+            check_indexes(buffer,map,PNINEXUS_EXCEPTION_RECORD);
 #endif
 
             size_t offset = map.offset(array_type{{size_t(indexes)...}});

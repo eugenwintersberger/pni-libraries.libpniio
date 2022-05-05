@@ -209,7 +209,7 @@ namespace tiff{
         if(this->_tid == ifd_entry_type_id::ASCII)
             ifd_entry_reader<string,string>::read(r,stream);
         else
-            throw type_error(EXCEPTION_RECORD,
+            throw type_error(PNINEXUS_EXCEPTION_RECORD,
             "IFD entry is of unknown or incompatible type!");
        
     }

@@ -36,7 +36,7 @@ namespace pni{
 //!
 //! This macro is used to create a specialization of the type_id_map type map.
 //!
-#define CREATE_TYPE_ID_MAP(type,tid)\
+#define PNINEXUS_CREATE_TYPE_ID_MAP(type,tid)\
     template<> struct type_id_map<type>\
     {\
         static constexpr type_id_t type_id = tid;\
@@ -57,26 +57,26 @@ namespace pni{
     };
 
     //! \cond NO_API_DOC
-    CREATE_TYPE_ID_MAP(uint8,type_id_t::UInt8);
-    CREATE_TYPE_ID_MAP(int8,type_id_t::Int8);
-    CREATE_TYPE_ID_MAP(uint16,type_id_t::UInt16);
-    CREATE_TYPE_ID_MAP(int16,type_id_t::Int16);
-    CREATE_TYPE_ID_MAP(uint32,type_id_t::UInt32);
-    CREATE_TYPE_ID_MAP(int32,type_id_t::Int32);
-    CREATE_TYPE_ID_MAP(uint64,type_id_t::UInt64);
-    CREATE_TYPE_ID_MAP(int64,type_id_t::Int64);
-    CREATE_TYPE_ID_MAP(float32,type_id_t::Float32);
-    CREATE_TYPE_ID_MAP(float64,type_id_t::Float64);
-    CREATE_TYPE_ID_MAP(float128,type_id_t::Float128);
-    CREATE_TYPE_ID_MAP(complex32,type_id_t::Complex32);
-    CREATE_TYPE_ID_MAP(complex64,type_id_t::Complex64);
-    CREATE_TYPE_ID_MAP(complex128,type_id_t::Complex128);
-    CREATE_TYPE_ID_MAP(string,type_id_t::String);
-    CREATE_TYPE_ID_MAP(binary,type_id_t::Binary);
-    CREATE_TYPE_ID_MAP(bool_t,type_id_t::Bool);
-    CREATE_TYPE_ID_MAP(bool,type_id_t::Bool);
-    CREATE_TYPE_ID_MAP(hdf5::datatype::EBool,type_id_t::EBool);
-    CREATE_TYPE_ID_MAP(none,type_id_t::None);
+    PNINEXUS_CREATE_TYPE_ID_MAP(uint8,type_id_t::UInt8);
+    PNINEXUS_CREATE_TYPE_ID_MAP(int8,type_id_t::Int8);
+    PNINEXUS_CREATE_TYPE_ID_MAP(uint16,type_id_t::UInt16);
+    PNINEXUS_CREATE_TYPE_ID_MAP(int16,type_id_t::Int16);
+    PNINEXUS_CREATE_TYPE_ID_MAP(uint32,type_id_t::UInt32);
+    PNINEXUS_CREATE_TYPE_ID_MAP(int32,type_id_t::Int32);
+    PNINEXUS_CREATE_TYPE_ID_MAP(uint64,type_id_t::UInt64);
+    PNINEXUS_CREATE_TYPE_ID_MAP(int64,type_id_t::Int64);
+    PNINEXUS_CREATE_TYPE_ID_MAP(float32,type_id_t::Float32);
+    PNINEXUS_CREATE_TYPE_ID_MAP(float64,type_id_t::Float64);
+    PNINEXUS_CREATE_TYPE_ID_MAP(float128,type_id_t::Float128);
+    PNINEXUS_CREATE_TYPE_ID_MAP(complex32,type_id_t::Complex32);
+    PNINEXUS_CREATE_TYPE_ID_MAP(complex64,type_id_t::Complex64);
+    PNINEXUS_CREATE_TYPE_ID_MAP(complex128,type_id_t::Complex128);
+    PNINEXUS_CREATE_TYPE_ID_MAP(string,type_id_t::String);
+    PNINEXUS_CREATE_TYPE_ID_MAP(binary,type_id_t::Binary);
+    PNINEXUS_CREATE_TYPE_ID_MAP(bool_t,type_id_t::Bool);
+    PNINEXUS_CREATE_TYPE_ID_MAP(bool,type_id_t::Bool);
+    PNINEXUS_CREATE_TYPE_ID_MAP(hdf5::datatype::EBool,type_id_t::EBool);
+    PNINEXUS_CREATE_TYPE_ID_MAP(none,type_id_t::None);
     //! \endcond NO_API_DOC
 
 //end of namespace

@@ -62,91 +62,91 @@ namespace pni{
     //-------------------------------------------------------------------------
     type_id_t array::type_id() const
     { 
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->type_id(); 
     }
 
     //-------------------------------------------------------------------------
     size_t array::rank() const 
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->rank(); 
     }
         
     //-------------------------------------------------------------------------
     shape_t array::shape() const 
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->shape(); 
     }
 
     //-------------------------------------------------------------------------
     size_t array::size() const 
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->size(); 
     }
 
     //-------------------------------------------------------------------------
     value array::operator[](size_t i) const
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return ((const array_holder_interface&)(*_ptr))[i];
     }
 
     //-------------------------------------------------------------------------
     value array::at(size_t i) const
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return value(_ptr->at(i));
     }
 
     //-------------------------------------------------------------------------
     value_ref array::operator[](size_t i) 
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return (*_ptr)[i];
     }
 
     //-------------------------------------------------------------------------
     value_ref array::at(size_t i)
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->at(i);
     }
 
     //-------------------------------------------------------------------------
     value_ref array::operator()(const element_index &index)
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return (*_ptr)(index);
     }
 
     //-------------------------------------------------------------------------
     value array::operator()(const element_index &index) const
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return const_cast<const array_holder_interface &>((*_ptr))(index);
     }
 
     //-------------------------------------------------------------------------
     string array::type_name() const
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->type_name();
     }
 
     //-------------------------------------------------------------------------
     const void *array::data() const
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return _ptr->ptr();
     }
     
     //-------------------------------------------------------------------------
     void *array::data() 
     {
-        _check_pointer(_ptr,EXCEPTION_RECORD);
+        _check_pointer(_ptr,PNINEXUS_EXCEPTION_RECORD);
         return const_cast<void*>(_ptr->ptr());
     }
    

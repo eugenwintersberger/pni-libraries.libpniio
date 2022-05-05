@@ -46,7 +46,7 @@ namespace pni{
 //! \ingroup error_classes
 //! \brief macro creating an instance of ExceptionRecord
 //!
-#define EXCEPTION_RECORD\
+#define PNINEXUS_EXCEPTION_RECORD\
     pni::exception_record(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)
 
 //! 
@@ -59,16 +59,16 @@ namespace pni{
 //! following examples
 /*!\code
 try { value = buffer.at(index); }
-EXCEPTION_FORWARD(IndexError)
-EXCEPTION_FORWARD(MemoryNotAllocatedError)
+PNINEXUS_EXCEPTION_FORWARD(IndexError)
+PNINEXUS_EXCEPTION_FORWARD(MemoryNotAllocatedError)
 \endcode
 */
 //! Please note that the MUST NOT BE a semicolon at the end of this macro.
 //!
-#define EXCEPTION_FORWARD(ExceptionT)\
+#define PNINEXUS_EXCEPTION_FORWARD(ExceptionT)\
     catch(ExceptionT &error)\
     {\
-        error.append(EXCEPTION_RECORD);\
+        error.append(PNINEXUS_EXCEPTION_RECORD);\
         throw error;\
     }
 
@@ -232,7 +232,7 @@ EXCEPTION_FORWARD(MemoryNotAllocatedError)
             ...
             catch(exception &error)
             {
-                error.append(EXCEPTION_RECORD);
+                error.append(PNINEXUS_EXCEPTION_RECORD);
                 throw error;
             }
             \endcode

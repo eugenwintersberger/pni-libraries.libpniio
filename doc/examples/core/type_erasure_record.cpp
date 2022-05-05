@@ -154,7 +154,7 @@ void write_value(std::ostream &stream,const value &v)
         case type_id_t::Complex64: stream<<v.as<complex64>(); break;
         case type_id_t::Int32:     stream<<v.as<int32>(); break;
         default:
-            type_error(EXCEPTION_RECORD,
+            type_error(PNINEXUS_EXCEPTION_RECORD,
                     "Value holds unkown data type!");
     }
 }

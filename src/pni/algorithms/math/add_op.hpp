@@ -115,7 +115,7 @@ namespace pni{
             value_type at(size_t i) const
             {
                 if(i>=size())
-                    throw index_error(EXCEPTION_RECORD,"array index exceeded!");
+                    throw index_error(PNINEXUS_EXCEPTION_RECORD,"array index exceeded!");
 
                 return (*this)[i];
             }

@@ -108,7 +108,7 @@ namespace pni{
         else if(tid == type_id_t::String)
             return make_array<string>(shape);
         else 
-            throw type_error(EXCEPTION_RECORD,"Type ID cannot be processed!");
+            throw type_error(PNINEXUS_EXCEPTION_RECORD,"Type ID cannot be processed!");
 
         
     }

@@ -263,7 +263,7 @@ namespace pni{
                 try { data = ContainerT(info.npixels()); }
                 catch(...)
                 {
-                    throw memory_allocation_error(EXCEPTION_RECORD,
+                    throw memory_allocation_error(PNINEXUS_EXCEPTION_RECORD,
                             "Allocation of image data container failed!");
                 }
 
@@ -300,7 +300,7 @@ namespace pni{
                     std::stringstream ss;
                     ss<<"Container size ("<<data.size()<<") does not match";
                     ss<<"number of pixels ("<<info.npixels()<<")!";
-                    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
+                    throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
                 }
 
                 //read data

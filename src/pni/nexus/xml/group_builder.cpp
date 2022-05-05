@@ -43,7 +43,7 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
     std::string name = group_node.name();
     if(name.empty())
     {
-      throw value_error(EXCEPTION_RECORD,
+      throw value_error(PNINEXUS_EXCEPTION_RECORD,
               "XML group does not provide a name!");
     }
 

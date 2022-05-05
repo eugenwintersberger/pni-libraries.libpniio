@@ -75,7 +75,7 @@ namespace pni{
         //! 
         static target_type convert(const source_type &)
         {
-            throw type_error(EXCEPTION_RECORD,"Conversion not possible!");
+            throw type_error(PNINEXUS_EXCEPTION_RECORD,"Conversion not possible!");
             return target_type();
         }
     };

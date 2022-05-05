@@ -52,12 +52,12 @@ BOOST_AUTO_TEST_CASE(test_no_throw)
 //-----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_throw)
 {
-    BOOST_CHECK_NO_THROW(check_index_in_dim(0,100,EXCEPTION_RECORD));
-    BOOST_CHECK_NO_THROW(check_index_in_dim(10,100,EXCEPTION_RECORD));
-    BOOST_CHECK_NO_THROW(check_index_in_dim(99,100,EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_index_in_dim(100,100,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_index_in_dim(0,100,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_NO_THROW(check_index_in_dim(10,100,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_NO_THROW(check_index_in_dim(99,100,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_index_in_dim(100,100,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
-    BOOST_CHECK_THROW(check_index_in_dim(101,100,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_index_in_dim(101,100,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
 }
 

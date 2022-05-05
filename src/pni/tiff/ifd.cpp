@@ -96,7 +96,7 @@ namespace tiff{
             if(entry.name() == n) return entry;
         }
 
-        throw key_error(EXCEPTION_RECORD,"IFD entry key ["+n+"] not found in IFD!");
+        throw key_error(PNINEXUS_EXCEPTION_RECORD,"IFD entry key ["+n+"] not found in IFD!");
     }
 
     //==================implementation of friend operators=====================

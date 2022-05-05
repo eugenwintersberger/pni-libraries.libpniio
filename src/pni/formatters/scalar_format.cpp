@@ -31,7 +31,7 @@
 namespace pni{
     using namespace pni;
 
-#define SCALAR_FORMAT_FUNCTION(type) \
+#define PNINEXUS_SCALAR_FORMAT_FUNCTION(type) \
     string format(type v)\
     {\
         return ""; \

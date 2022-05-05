@@ -177,7 +177,7 @@ namespace tiff {
                 else if(this->_channel_types[c] == type_id_t::Float64)
                     this->_read_interlace<float64>(c,stream,data);
                 else
-                    throw type_error(EXCEPTION_RECORD,
+                    throw type_error(PNINEXUS_EXCEPTION_RECORD,
                           "StripReader cannot handle channel type!");
             }
 

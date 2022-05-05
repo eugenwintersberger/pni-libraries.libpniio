@@ -266,17 +266,17 @@ namespace pni{
             }
             catch(const boost::numeric::positive_overflow &)
             {
-                throw range_error(EXCEPTION_RECORD,
+                throw range_error(PNINEXUS_EXCEPTION_RECORD,
                         "Source value exceeded range of target type!");
             }
             catch(const boost::numeric::negative_overflow &)
             {
-                throw range_error(EXCEPTION_RECORD,
+                throw range_error(PNINEXUS_EXCEPTION_RECORD,
                         "Source value exceeded range of target type!");
             }
             catch(...)
             {
-                throw type_error(EXCEPTION_RECORD,
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,
                         "Unknown error during type conversion!");
             }
         }

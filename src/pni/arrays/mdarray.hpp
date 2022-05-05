@@ -262,7 +262,7 @@ namespace pni {
             array_type &operator=(const std::initializer_list<value_type> &l)
             {
                 if(l.size() != this->size())
-                    throw size_mismatch_error(EXCEPTION_RECORD,
+                    throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                             "Size of array and initializer list do not match");
 
                 std::copy(l.begin(),l.end(),this->begin());
@@ -380,7 +380,7 @@ namespace pni {
                 {
                     std::stringstream ss;
                     ss<<"Index "<<i<<" is out of range ("<<size()<<")!";
-                    throw index_error(EXCEPTION_RECORD,ss.str());
+                    throw index_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
                 }
             
             } 
@@ -405,7 +405,7 @@ namespace pni {
                 {
                     std::stringstream ss;
                     ss<<"Index "<<i<<" is out of range ("<<size()<<")!";
-                    throw index_error(EXCEPTION_RECORD,ss.str());
+                    throw index_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
                 }
             
             } 

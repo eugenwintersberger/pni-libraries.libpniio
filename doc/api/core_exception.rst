@@ -57,9 +57,9 @@ denote different failure situations.
 Macros
 ======
 
-.. doxygendefine:: EXCEPTION_RECORD
+.. doxygendefine:: PNINEXUS_EXCEPTION_RECORD
 
-.. doxygendefine:: EXCEPTION_FORWARD
+.. doxygendefine:: PNINEXUS_EXCEPTION_FORWARD
 
 
 Utility functions

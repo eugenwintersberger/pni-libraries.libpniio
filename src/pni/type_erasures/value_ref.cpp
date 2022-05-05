@@ -75,7 +75,7 @@ namespace pni{
     //-------------------------------------------------------------------------
     value_ref &value_ref::operator=(const value &v)
     {
-        _check_pointer(EXCEPTION_RECORD);
+        _check_pointer(PNINEXUS_EXCEPTION_RECORD);
 
         type_id_t tid = type_id(); //obtain the type id of the value_ref
 
@@ -100,7 +100,7 @@ namespace pni{
             case type_id_t::EBool:       *this = v.as<hdf5::datatype::EBool>();     break;
             case type_id_t::Binary:     *this = v.as<binary>();     break;
             default:
-                throw type_error(EXCEPTION_RECORD, "Unkown type!");
+                throw type_error(PNINEXUS_EXCEPTION_RECORD, "Unkown type!");
         }
 
         return *this;
@@ -117,7 +117,7 @@ namespace pni{
     //-------------------------------------------------------------------------
     type_id_t value_ref::type_id() const
     {
-        _check_pointer(EXCEPTION_RECORD);
+        _check_pointer(PNINEXUS_EXCEPTION_RECORD);
         return _ptr->type_id();
 
     }
@@ -147,7 +147,7 @@ namespace pni{
             case type_id_t::Bool:       return value(v.as<bool_t>());
             case type_id_t::EBool:       return value(v.as<hdf5::datatype::EBool>());
             default: 
-                throw type_error(EXCEPTION_RECORD,
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,
                                  "Value is of unkown type!");
         }
 

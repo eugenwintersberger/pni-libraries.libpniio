@@ -36,7 +36,7 @@ namespace pni{
 //! 
 //! This macro creates a type to type class map specialization. 
 //!
-#define CREATE_TYPE_CLASS_MAP(type,tclass)\
+#define PNINEXUS_CREATE_TYPE_CLASS_MAP(type,tclass)\
     template<> struct type_class_map<type>\
     {\
         static const type_class_t type_class = tclass;\
@@ -57,29 +57,29 @@ namespace pni{
     };
 
     //! \cond NO_API_DOC
-    CREATE_TYPE_CLASS_MAP(uint8,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(int8,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(uint16,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(int16,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(uint32,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(int32,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(uint64,type_class_t::Integer);
-    CREATE_TYPE_CLASS_MAP(int64,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(uint8,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(int8,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(uint16,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(int16,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(uint32,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(int32,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(uint64,type_class_t::Integer);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(int64,type_class_t::Integer);
     
-    CREATE_TYPE_CLASS_MAP(float32,type_class_t::Float);
-    CREATE_TYPE_CLASS_MAP(float64,type_class_t::Float);
-    CREATE_TYPE_CLASS_MAP(float128,type_class_t::Float);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(float32,type_class_t::Float);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(float64,type_class_t::Float);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(float128,type_class_t::Float);
 
-    CREATE_TYPE_CLASS_MAP(complex32,type_class_t::Complex);
-    CREATE_TYPE_CLASS_MAP(complex64,type_class_t::Complex);
-    CREATE_TYPE_CLASS_MAP(complex128,type_class_t::Complex);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(complex32,type_class_t::Complex);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(complex64,type_class_t::Complex);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(complex128,type_class_t::Complex);
 
-    CREATE_TYPE_CLASS_MAP(hdf5::datatype::EBool,type_class_t::Bool);
-    CREATE_TYPE_CLASS_MAP(bool_t,type_class_t::Bool);
-    CREATE_TYPE_CLASS_MAP(binary,type_class_t::Binary);
-    CREATE_TYPE_CLASS_MAP(string,type_class_t::String);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(hdf5::datatype::EBool,type_class_t::Bool);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(bool_t,type_class_t::Bool);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(binary,type_class_t::Binary);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(string,type_class_t::String);
 
-    CREATE_TYPE_CLASS_MAP(none,type_class_t::None);
+    PNINEXUS_CREATE_TYPE_CLASS_MAP(none,type_class_t::None);
 
     //! \endcond NO_API_DOC
 

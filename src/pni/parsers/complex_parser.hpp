@@ -75,7 +75,7 @@ class parser<std::complex<BaseT>>
       {
         std::stringstream ss;
         ss<<"Cannot convert ["<<input<<"] to "<<type_id(value)<<"!";
-        throw parser_error(EXCEPTION_RECORD,ss.str());
+        throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
       }
     }
 };

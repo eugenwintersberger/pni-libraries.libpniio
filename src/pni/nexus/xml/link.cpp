@@ -31,7 +31,7 @@ namespace xml{
     {
         using namespace pni;
         if(!has_attribute(link_node,"name"))
-            throw key_error(EXCEPTION_RECORD,
+            throw key_error(PNINEXUS_EXCEPTION_RECORD,
             "'link' node does not provide a 'name' attribute!");
             
         return data_node::read(get_attribute(link_node,"name"));
@@ -42,7 +42,7 @@ namespace xml{
     {       
         using namespace pni; 
         if(!has_attribute(link_node,"target"))
-            throw key_error(EXCEPTION_RECORD,
+            throw key_error(PNINEXUS_EXCEPTION_RECORD,
             "'link' node does not provide a 'target' attribute!");
             
         return data_node::read(get_attribute(link_node,"target"));

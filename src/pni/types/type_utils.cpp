@@ -123,7 +123,7 @@ namespace pni{
         catch(std::out_of_range &)
         {
             string msg = "String ["+s+"] does not represent a type!";
-            throw key_error(EXCEPTION_RECORD,s);
+            throw key_error(PNINEXUS_EXCEPTION_RECORD,s);
         }
     }
 
@@ -138,7 +138,7 @@ namespace pni{
         {
             std::stringstream ss;
             ss<<"Type id ["<<id<<"] does not have a string representation!";
-            throw key_error(EXCEPTION_RECORD,ss.str());
+            throw key_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
         }
     }
 
