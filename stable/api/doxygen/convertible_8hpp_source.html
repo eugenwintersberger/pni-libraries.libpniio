@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: convertible.hpp Source File</title>
+<title>PNI NeXus Library: convertible.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -95,26 +96,26 @@ $(document).ready(function(){initNavTree('convertible_8hpp_source.html',''); ini
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">template</span>&lt; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;             <span class="keyword">typename</span> ST,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;             <span class="keyword">typename</span> TT</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;             <span class="keyword">typename</span> SourceT,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;             <span class="keyword">typename</span> TargetT</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            &gt;</div>
 <div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html">   45</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structpni_1_1convertible.html">convertible</a></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html#a348de45a4cd8e3339c62063be0567346">   48</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structpni_1_1convertible.html#a348de45a4cd8e3339c62063be0567346">checked</a> = <a class="code" href="structpni_1_1checked__convertible.html">checked_convertible&lt;ST,TT&gt;::value</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html#abf3d660d0ce1fcf60ebf1ccef34a06d3">   50</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structpni_1_1convertible.html#abf3d660d0ce1fcf60ebf1ccef34a06d3">unchecked</a> = <a class="code" href="structpni_1_1unchecked__convertible.html">unchecked_convertible&lt;ST,TT&gt;::value</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html#a8c2ef633229dd0874e09a9b274f6fb09">   52</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = <a class="code" href="structpni_1_1convertible.html#a348de45a4cd8e3339c62063be0567346">checked</a> || <a class="code" href="structpni_1_1convertible.html#abf3d660d0ce1fcf60ebf1ccef34a06d3">unchecked</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html#a14649c6cb92c709d9d9b070668ac1cb7">   48</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structpni_1_1convertible.html#a14649c6cb92c709d9d9b070668ac1cb7">checked</a> = <a class="code" href="structpni_1_1checked__convertible.html">checked_convertible&lt;SourceT,TargetT&gt;::value</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html#a83c6422a12c86fb22d32e3a3de56170a">   50</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="structpni_1_1convertible.html#a83c6422a12c86fb22d32e3a3de56170a">unchecked</a> = <a class="code" href="structpni_1_1unchecked__convertible.html">unchecked_convertible&lt;SourceT,TargetT&gt;::value</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structpni_1_1convertible.html#a09570027160d2493620182a3f0d5376e">   52</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = <a class="code" href="structpni_1_1convertible.html#a14649c6cb92c709d9d9b070668ac1cb7">checked</a> || <a class="code" href="structpni_1_1convertible.html#a83c6422a12c86fb22d32e3a3de56170a">unchecked</a>;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    };</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">//end of namespace</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
 <div class="ttc" id="achecked__convertible_8hpp_html"><div class="ttname"><a href="checked__convertible_8hpp.html">checked_convertible.hpp</a></div></div>
-<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:49</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="astructpni_1_1checked__convertible_html"><div class="ttname"><a href="structpni_1_1checked__convertible.html">pni::checked_convertible</a></div><div class="ttdoc">check if a type is unchecked convertible</div><div class="ttdef"><b>Definition:</b> checked_convertible.hpp:131</div></div>
+<div class="ttc" id="astructpni_1_1checked__convertible_html"><div class="ttname"><a href="structpni_1_1checked__convertible.html">pni::checked_convertible</a></div><div class="ttdoc">check if a type is unchecked convertible</div><div class="ttdef"><b>Definition:</b> checked_convertible.hpp:135</div></div>
 <div class="ttc" id="astructpni_1_1convertible_html"><div class="ttname"><a href="structpni_1_1convertible.html">pni::convertible</a></div><div class="ttdoc">check if two types are convertible</div><div class="ttdef"><b>Definition:</b> convertible.hpp:46</div></div>
-<div class="ttc" id="astructpni_1_1convertible_html_a348de45a4cd8e3339c62063be0567346"><div class="ttname"><a href="structpni_1_1convertible.html#a348de45a4cd8e3339c62063be0567346">pni::convertible::checked</a></div><div class="ttdeci">static const bool checked</div><div class="ttdoc">true if checked conversion is possible</div><div class="ttdef"><b>Definition:</b> convertible.hpp:48</div></div>
-<div class="ttc" id="astructpni_1_1convertible_html_abf3d660d0ce1fcf60ebf1ccef34a06d3"><div class="ttname"><a href="structpni_1_1convertible.html#abf3d660d0ce1fcf60ebf1ccef34a06d3">pni::convertible::unchecked</a></div><div class="ttdeci">static const bool unchecked</div><div class="ttdoc">true if unchecked conversion is possible</div><div class="ttdef"><b>Definition:</b> convertible.hpp:50</div></div>
-<div class="ttc" id="astructpni_1_1unchecked__convertible_html"><div class="ttname"><a href="structpni_1_1unchecked__convertible.html">pni::unchecked_convertible</a></div><div class="ttdoc">check if a type is unchecked convertible</div><div class="ttdef"><b>Definition:</b> unchecked_convertible.hpp:164</div></div>
+<div class="ttc" id="astructpni_1_1convertible_html_a14649c6cb92c709d9d9b070668ac1cb7"><div class="ttname"><a href="structpni_1_1convertible.html#a14649c6cb92c709d9d9b070668ac1cb7">pni::convertible::checked</a></div><div class="ttdeci">static const bool checked</div><div class="ttdoc">true if checked conversion is possible</div><div class="ttdef"><b>Definition:</b> convertible.hpp:48</div></div>
+<div class="ttc" id="astructpni_1_1convertible_html_a83c6422a12c86fb22d32e3a3de56170a"><div class="ttname"><a href="structpni_1_1convertible.html#a83c6422a12c86fb22d32e3a3de56170a">pni::convertible::unchecked</a></div><div class="ttdeci">static const bool unchecked</div><div class="ttdoc">true if unchecked conversion is possible</div><div class="ttdef"><b>Definition:</b> convertible.hpp:50</div></div>
+<div class="ttc" id="astructpni_1_1unchecked__convertible_html"><div class="ttname"><a href="structpni_1_1unchecked__convertible.html">pni::unchecked_convertible</a></div><div class="ttdoc">check if a type is unchecked convertible</div><div class="ttdef"><b>Definition:</b> unchecked_convertible.hpp:168</div></div>
 <div class="ttc" id="aunchecked__convertible_8hpp_html"><div class="ttname"><a href="unchecked__convertible_8hpp.html">unchecked_convertible.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -122,7 +123,7 @@ $(document).ready(function(){initNavTree('convertible_8hpp_source.html',''); ini
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_0ebfec922f8118e34738e031f02bbcb3.html">types</a></li><li class="navelem"><a class="el" href="convertible_8hpp.html">convertible.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -1,11 +1,11 @@
 var classpni_1_1nexus_1_1PathObject =
 [
     [ "Type", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2a", [
-      [ "NONE", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aab50339a10e1de285ac99d4c3990b8693", null ],
-      [ "ATTRIBUTE", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa6461230ce7343a1f1091515aa3071f31", null ],
-      [ "GROUP", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa720909a4b948fc9e33633b61960d6b3c", null ],
-      [ "DATASET", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa1688c5f13ed0cc68689219cac28e9ca6", null ],
-      [ "LINK", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa58c0a0e97e6d2f615bc264c2775fda44", null ]
+      [ "None", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa6adf97f83acf6453d4a6a4b1070f3754", null ],
+      [ "Attribute", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aaf2bbdf9f72c085adc4d0404e370f0f4c", null ],
+      [ "Group", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa03937134cedab9078be39a77ee3a48a0", null ],
+      [ "Dataset", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa239658e016e3d5d06ae719d280a79fec", null ],
+      [ "Link", "classpni_1_1nexus_1_1PathObject.html#a27b5bc29557ed3a2fc2cc4603a0d2d2aa97e7c9a7d06eac006a28bf05467fcc8b", null ]
     ] ],
     [ "PathObject", "classpni_1_1nexus_1_1PathObject.html#ac57b7bf04ed6b4c998050ef07337743e", null ],
     [ "PathObject", "classpni_1_1nexus_1_1PathObject.html#a1a78fc9b26f1b863dbd412aba007cbcf", null ],

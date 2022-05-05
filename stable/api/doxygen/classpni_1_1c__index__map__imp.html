@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: pni::c_index_map_imp Class Reference</title>
+<title>PNI NeXus Library: pni::c_index_map_imp Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -75,44 +76,44 @@ $(document).ready(function(){initNavTree('classpni_1_1c__index__map__imp.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a6cfb8d2c450d94690a5fe012a2b26366"><td class="memTemplParams" colspan="2">template&lt;typename CSHAPE , typename CINDEX &gt; </td></tr>
-<tr class="memitem:a6cfb8d2c450d94690a5fe012a2b26366"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#a6cfb8d2c450d94690a5fe012a2b26366">offset</a> (const CSHAPE &amp;shape, const CINDEX &amp;<a class="el" href="classpni_1_1c__index__map__imp.html#affdce244db57368784a298901dab8148">index</a>)</td></tr>
-<tr class="memdesc:a6cfb8d2c450d94690a5fe012a2b26366"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the offset  <a href="classpni_1_1c__index__map__imp.html#a6cfb8d2c450d94690a5fe012a2b26366">More...</a><br /></td></tr>
-<tr class="separator:a6cfb8d2c450d94690a5fe012a2b26366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dc58de9e1161aefdeeffad05bcd7ccb"><td class="memTemplParams" colspan="2">template&lt;typename SELTYPE , typename CSHAPE , typename SINDEX &gt; </td></tr>
-<tr class="memitem:a8dc58de9e1161aefdeeffad05bcd7ccb"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#a8dc58de9e1161aefdeeffad05bcd7ccb">offset</a> (const SELTYPE &amp;sel, const CSHAPE &amp;shape, const SINDEX &amp;<a class="el" href="classpni_1_1c__index__map__imp.html#affdce244db57368784a298901dab8148">index</a>)</td></tr>
-<tr class="memdesc:a8dc58de9e1161aefdeeffad05bcd7ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute offset for selection  <a href="classpni_1_1c__index__map__imp.html#a8dc58de9e1161aefdeeffad05bcd7ccb">More...</a><br /></td></tr>
-<tr class="separator:a8dc58de9e1161aefdeeffad05bcd7ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac69d7a119328b022ede9bea722f4ad14"><td class="memTemplParams" colspan="2">template&lt;typename CINDEX , typename CSHAPE &gt; </td></tr>
-<tr class="memitem:ac69d7a119328b022ede9bea722f4ad14"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#ac69d7a119328b022ede9bea722f4ad14">index</a> (const CSHAPE &amp;shape, CINDEX &amp;idx, size_t <a class="el" href="classpni_1_1c__index__map__imp.html#ada50227199d43ce7f6f38c5275ca1323">offset</a>)</td></tr>
-<tr class="memdesc:ac69d7a119328b022ede9bea722f4ad14"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute index  <a href="classpni_1_1c__index__map__imp.html#ac69d7a119328b022ede9bea722f4ad14">More...</a><br /></td></tr>
-<tr class="separator:ac69d7a119328b022ede9bea722f4ad14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99f6d0749ab238b035a80ff49b3efd8d"><td class="memTemplParams" colspan="2">template&lt;typename ContainerShapeT , typename ContainerIndexT &gt; </td></tr>
+<tr class="memitem:a99f6d0749ab238b035a80ff49b3efd8d"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#a99f6d0749ab238b035a80ff49b3efd8d">offset</a> (const ContainerShapeT &amp;shape, const ContainerIndexT &amp;<a class="el" href="classpni_1_1c__index__map__imp.html#aa79d05a622a25809bdb35243139e7642">index</a>)</td></tr>
+<tr class="memdesc:a99f6d0749ab238b035a80ff49b3efd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the offset  <a href="classpni_1_1c__index__map__imp.html#a99f6d0749ab238b035a80ff49b3efd8d">More...</a><br /></td></tr>
+<tr class="separator:a99f6d0749ab238b035a80ff49b3efd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a637b19018cb338e533b46fac80b41aa8"><td class="memTemplParams" colspan="2">template&lt;typename SelectionT , typename ContainerShapeT , typename SelectionIndexT &gt; </td></tr>
+<tr class="memitem:a637b19018cb338e533b46fac80b41aa8"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#a637b19018cb338e533b46fac80b41aa8">offset</a> (const SelectionT &amp;sel, const ContainerShapeT &amp;shape, const SelectionIndexT &amp;<a class="el" href="classpni_1_1c__index__map__imp.html#aa79d05a622a25809bdb35243139e7642">index</a>)</td></tr>
+<tr class="memdesc:a637b19018cb338e533b46fac80b41aa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute offset for selection  <a href="classpni_1_1c__index__map__imp.html#a637b19018cb338e533b46fac80b41aa8">More...</a><br /></td></tr>
+<tr class="separator:a637b19018cb338e533b46fac80b41aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbf766ea4b41297f9849e0ed425ef41c"><td class="memTemplParams" colspan="2">template&lt;typename ContainerIndexT , typename ContainerShapeT &gt; </td></tr>
+<tr class="memitem:afbf766ea4b41297f9849e0ed425ef41c"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#afbf766ea4b41297f9849e0ed425ef41c">index</a> (const ContainerShapeT &amp;shape, ContainerIndexT &amp;idx, size_t <a class="el" href="classpni_1_1c__index__map__imp.html#aec5d4e83357f736d6eb9f13858c3f3e0">offset</a>)</td></tr>
+<tr class="memdesc:afbf766ea4b41297f9849e0ed425ef41c"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute index  <a href="classpni_1_1c__index__map__imp.html#afbf766ea4b41297f9849e0ed425ef41c">More...</a><br /></td></tr>
+<tr class="separator:afbf766ea4b41297f9849e0ed425ef41c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
-<tr class="memitem:ada50227199d43ce7f6f38c5275ca1323"><td class="memTemplParams" colspan="2">template&lt;typename IITERT , typename SITERT &gt; </td></tr>
-<tr class="memitem:ada50227199d43ce7f6f38c5275ca1323"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#ada50227199d43ce7f6f38c5275ca1323">offset</a> (IITERT &amp;&amp;index_start, IITERT &amp;&amp;index_stop, SITERT &amp;&amp;shape_start)</td></tr>
-<tr class="memdesc:ada50227199d43ce7f6f38c5275ca1323"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the offset  <a href="classpni_1_1c__index__map__imp.html#ada50227199d43ce7f6f38c5275ca1323">More...</a><br /></td></tr>
-<tr class="separator:ada50227199d43ce7f6f38c5275ca1323"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32476fc993c1e0ba1d8a5ea4ed8dc902"><td class="memTemplParams" colspan="2">template&lt;typename SELITER , typename SITER , typename IITER &gt; </td></tr>
-<tr class="memitem:a32476fc993c1e0ba1d8a5ea4ed8dc902"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#a32476fc993c1e0ba1d8a5ea4ed8dc902">offset</a> (SELITER &amp;&amp;sel_shape_start, SELITER &amp;&amp;sel_shape_end, SELITER &amp;&amp;sel_offset, SELITER &amp;&amp;sel_stride, SITER &amp;&amp;shape_start, IITER &amp;&amp;sel_index)</td></tr>
-<tr class="memdesc:a32476fc993c1e0ba1d8a5ea4ed8dc902"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute selection offset  <a href="classpni_1_1c__index__map__imp.html#a32476fc993c1e0ba1d8a5ea4ed8dc902">More...</a><br /></td></tr>
-<tr class="separator:a32476fc993c1e0ba1d8a5ea4ed8dc902"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affdce244db57368784a298901dab8148"><td class="memTemplParams" colspan="2">template&lt;typename IITERT , typename SITERT &gt; </td></tr>
-<tr class="memitem:affdce244db57368784a298901dab8148"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#affdce244db57368784a298901dab8148">index</a> (SITERT &amp;&amp;shape_start, SITERT &amp;&amp;shape_stop, IITERT &amp;&amp;index_start, size_t <a class="el" href="classpni_1_1c__index__map__imp.html#ada50227199d43ce7f6f38c5275ca1323">offset</a>)</td></tr>
-<tr class="memdesc:affdce244db57368784a298901dab8148"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the index  <a href="classpni_1_1c__index__map__imp.html#affdce244db57368784a298901dab8148">More...</a><br /></td></tr>
-<tr class="separator:affdce244db57368784a298901dab8148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec5d4e83357f736d6eb9f13858c3f3e0"><td class="memTemplParams" colspan="2">template&lt;typename IndexIteratorT , typename ShapeIteratorT &gt; </td></tr>
+<tr class="memitem:aec5d4e83357f736d6eb9f13858c3f3e0"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#aec5d4e83357f736d6eb9f13858c3f3e0">offset</a> (IndexIteratorT &amp;&amp;index_start, IndexIteratorT &amp;&amp;index_stop, ShapeIteratorT &amp;&amp;shape_start)</td></tr>
+<tr class="memdesc:aec5d4e83357f736d6eb9f13858c3f3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the offset  <a href="classpni_1_1c__index__map__imp.html#aec5d4e83357f736d6eb9f13858c3f3e0">More...</a><br /></td></tr>
+<tr class="separator:aec5d4e83357f736d6eb9f13858c3f3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa55aeaee3021e9df755dd46e61872660"><td class="memTemplParams" colspan="2">template&lt;typename SelectionIteratorT , typename ShapeIteratorT , typename IndexContainerIteratorT &gt; </td></tr>
+<tr class="memitem:aa55aeaee3021e9df755dd46e61872660"><td class="memTemplItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#aa55aeaee3021e9df755dd46e61872660">offset</a> (SelectionIteratorT &amp;&amp;sel_shape_start, SelectionIteratorT &amp;&amp;sel_shape_end, SelectionIteratorT &amp;&amp;sel_offset, SelectionIteratorT &amp;&amp;sel_stride, ShapeIteratorT &amp;&amp;shape_start, IndexContainerIteratorT &amp;&amp;sel_index)</td></tr>
+<tr class="memdesc:aa55aeaee3021e9df755dd46e61872660"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute selection offset  <a href="classpni_1_1c__index__map__imp.html#aa55aeaee3021e9df755dd46e61872660">More...</a><br /></td></tr>
+<tr class="separator:aa55aeaee3021e9df755dd46e61872660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa79d05a622a25809bdb35243139e7642"><td class="memTemplParams" colspan="2">template&lt;typename IndexIteratorT , typename ShapeIteratorT &gt; </td></tr>
+<tr class="memitem:aa79d05a622a25809bdb35243139e7642"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1c__index__map__imp.html#aa79d05a622a25809bdb35243139e7642">index</a> (ShapeIteratorT &amp;&amp;shape_start, ShapeIteratorT &amp;&amp;shape_stop, IndexIteratorT &amp;&amp;index_start, size_t <a class="el" href="classpni_1_1c__index__map__imp.html#aec5d4e83357f736d6eb9f13858c3f3e0">offset</a>)</td></tr>
+<tr class="memdesc:aa79d05a622a25809bdb35243139e7642"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the index  <a href="classpni_1_1c__index__map__imp.html#aa79d05a622a25809bdb35243139e7642">More...</a><br /></td></tr>
+<tr class="separator:aa79d05a622a25809bdb35243139e7642"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements common functions for C index maps. Indices are mapped to a linear offset with the last index varying fastest. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac69d7a119328b022ede9bea722f4ad14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac69d7a119328b022ede9bea722f4ad14">&#9670;&nbsp;</a></span>index() <span class="overload">[1/2]</span></h2>
+<a id="afbf766ea4b41297f9849e0ed425ef41c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbf766ea4b41297f9849e0ed425ef41c">&#9670;&nbsp;</a></span>index() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename CINDEX , typename CSHAPE &gt; </div>
+template&lt;typename ContainerIndexT , typename ContainerShapeT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -120,13 +121,13 @@ template&lt;typename CINDEX , typename CSHAPE &gt; </div>
         <tr>
           <td class="memname">static void pni::c_index_map_imp::index </td>
           <td>(</td>
-          <td class="paramtype">const CSHAPE &amp;&#160;</td>
+          <td class="paramtype">const ContainerShapeT &amp;&#160;</td>
           <td class="paramname"><em>shape</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CINDEX &amp;&#160;</td>
+          <td class="paramtype">ContainerIndexT &amp;&#160;</td>
           <td class="paramname"><em>idx</em>, </td>
         </tr>
         <tr>
@@ -150,15 +151,15 @@ template&lt;typename CINDEX , typename CSHAPE &gt; </div>
 <p>Compute the multidimensional index for a given shape and offset. The function assumes that the index container is of appropriate size (the size of the shape container) which must be ensured by the calling function.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CINDEX</td><td>container type for index values </td></tr>
-    <tr><td class="paramname">CSHAPE</td><td>container type for shape values </td></tr>
+    <tr><td class="paramname">ContainerIndexT</td><td>container type for index values </td></tr>
+    <tr><td class="paramname">ContainerShapeT</td><td>container type for shape values </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">shape</td><td>instance of CSHAPE with shape information </td></tr>
-    <tr><td class="paramname">idx</td><td>instance of CINDEX for index data </td></tr>
+    <tr><td class="paramname">shape</td><td>instance of ContainerShapeT with shape information </td></tr>
+    <tr><td class="paramname">idx</td><td>instance of ContainerIndexT for index data </td></tr>
     <tr><td class="paramname">offset</td><td>linear offset </td></tr>
   </table>
   </dd>
@@ -166,13 +167,13 @@ template&lt;typename CINDEX , typename CSHAPE &gt; </div>
 
 </div>
 </div>
-<a id="affdce244db57368784a298901dab8148"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affdce244db57368784a298901dab8148">&#9670;&nbsp;</a></span>index() <span class="overload">[2/2]</span></h2>
+<a id="aa79d05a622a25809bdb35243139e7642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa79d05a622a25809bdb35243139e7642">&#9670;&nbsp;</a></span>index() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IITERT , typename SITERT &gt; </div>
+template&lt;typename IndexIteratorT , typename ShapeIteratorT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -180,19 +181,19 @@ template&lt;typename IITERT , typename SITERT &gt; </div>
         <tr>
           <td class="memname">static void pni::c_index_map_imp::index </td>
           <td>(</td>
-          <td class="paramtype">SITERT &amp;&amp;&#160;</td>
+          <td class="paramtype">ShapeIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>shape_start</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SITERT &amp;&amp;&#160;</td>
+          <td class="paramtype">ShapeIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>shape_stop</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IITERT &amp;&amp;&#160;</td>
+          <td class="paramtype">IndexIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>index_start</em>, </td>
         </tr>
         <tr>
@@ -216,8 +217,8 @@ template&lt;typename IITERT , typename SITERT &gt; </div>
 <p>Compute the index for a given linear offset according to C-ordering rules.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">IITERT</td><td>index iterator type </td></tr>
-    <tr><td class="paramname">SITERT</td><td>shape iterator type </td></tr>
+    <tr><td class="paramname">IndexIteratorT</td><td>index iterator type </td></tr>
+    <tr><td class="paramname">ShapeIteratorT</td><td>shape iterator type </td></tr>
   </table>
   </dd>
 </dl>
@@ -233,13 +234,13 @@ template&lt;typename IITERT , typename SITERT &gt; </div>
 
 </div>
 </div>
-<a id="a6cfb8d2c450d94690a5fe012a2b26366"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cfb8d2c450d94690a5fe012a2b26366">&#9670;&nbsp;</a></span>offset() <span class="overload">[1/4]</span></h2>
+<a id="a99f6d0749ab238b035a80ff49b3efd8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99f6d0749ab238b035a80ff49b3efd8d">&#9670;&nbsp;</a></span>offset() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename CSHAPE , typename CINDEX &gt; </div>
+template&lt;typename ContainerShapeT , typename ContainerIndexT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -247,13 +248,13 @@ template&lt;typename CSHAPE , typename CINDEX &gt; </div>
         <tr>
           <td class="memname">static size_t pni::c_index_map_imp::offset </td>
           <td>(</td>
-          <td class="paramtype">const CSHAPE &amp;&#160;</td>
+          <td class="paramtype">const ContainerShapeT &amp;&#160;</td>
           <td class="paramname"><em>shape</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const CINDEX &amp;&#160;</td>
+          <td class="paramtype">const ContainerIndexT &amp;&#160;</td>
           <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
@@ -271,15 +272,15 @@ template&lt;typename CSHAPE , typename CINDEX &gt; </div>
 <p>Compute the linear offset for a given shape and index. The functions assumes that the index and the shape container are of equal size. However, this must be ensured by the calling function.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CSHAPE</td><td>container type for the shape data </td></tr>
-    <tr><td class="paramname">CINDEX</td><td>container type for the index data </td></tr>
+    <tr><td class="paramname">ContainerShapeT</td><td>container type for the shape data </td></tr>
+    <tr><td class="paramname">ContainerIndexT</td><td>container type for the index data </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">shape</td><td>instance of CSHAPE with shape data </td></tr>
-    <tr><td class="paramname">index</td><td>instance of CINDEX with index data </td></tr>
+    <tr><td class="paramname">shape</td><td>instance of ContainerShapeT with shape data </td></tr>
+    <tr><td class="paramname">index</td><td>instance of ContainerIndexT with index data </td></tr>
   </table>
   </dd>
 </dl>
@@ -287,13 +288,13 @@ template&lt;typename CSHAPE , typename CINDEX &gt; </div>
 
 </div>
 </div>
-<a id="a8dc58de9e1161aefdeeffad05bcd7ccb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dc58de9e1161aefdeeffad05bcd7ccb">&#9670;&nbsp;</a></span>offset() <span class="overload">[2/4]</span></h2>
+<a id="a637b19018cb338e533b46fac80b41aa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a637b19018cb338e533b46fac80b41aa8">&#9670;&nbsp;</a></span>offset() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SELTYPE , typename CSHAPE , typename SINDEX &gt; </div>
+template&lt;typename SelectionT , typename ContainerShapeT , typename SelectionIndexT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -301,19 +302,19 @@ template&lt;typename SELTYPE , typename CSHAPE , typename SINDEX &gt; </div>
         <tr>
           <td class="memname">static size_t pni::c_index_map_imp::offset </td>
           <td>(</td>
-          <td class="paramtype">const SELTYPE &amp;&#160;</td>
+          <td class="paramtype">const SelectionT &amp;&#160;</td>
           <td class="paramname"><em>sel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const CSHAPE &amp;&#160;</td>
+          <td class="paramtype">const ContainerShapeT &amp;&#160;</td>
           <td class="paramname"><em>shape</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const SINDEX &amp;&#160;</td>
+          <td class="paramtype">const SelectionIndexT &amp;&#160;</td>
           <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
@@ -331,9 +332,9 @@ template&lt;typename SELTYPE , typename CSHAPE , typename SINDEX &gt; </div>
 <p>Computes the linear offset for a given selection index. The selection index is not required to have the same rank as the original array.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">SELTYPE</td><td>selection type </td></tr>
-    <tr><td class="paramname">CSHAPE</td><td>original shape of the array </td></tr>
-    <tr><td class="paramname">SINDEX</td><td>selection index type </td></tr>
+    <tr><td class="paramname">SelectionT</td><td>selection type </td></tr>
+    <tr><td class="paramname">ContainerShapeT</td><td>original shape of the array </td></tr>
+    <tr><td class="paramname">SelectionIndexT</td><td>selection index type </td></tr>
   </table>
   </dd>
 </dl>
@@ -349,13 +350,13 @@ template&lt;typename SELTYPE , typename CSHAPE , typename SINDEX &gt; </div>
 
 </div>
 </div>
-<a id="ada50227199d43ce7f6f38c5275ca1323"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada50227199d43ce7f6f38c5275ca1323">&#9670;&nbsp;</a></span>offset() <span class="overload">[3/4]</span></h2>
+<a id="aec5d4e83357f736d6eb9f13858c3f3e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec5d4e83357f736d6eb9f13858c3f3e0">&#9670;&nbsp;</a></span>offset() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IITERT , typename SITERT &gt; </div>
+template&lt;typename IndexIteratorT , typename ShapeIteratorT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -363,19 +364,19 @@ template&lt;typename IITERT , typename SITERT &gt; </div>
         <tr>
           <td class="memname">static size_t pni::c_index_map_imp::offset </td>
           <td>(</td>
-          <td class="paramtype">IITERT &amp;&amp;&#160;</td>
+          <td class="paramtype">IndexIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>index_start</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IITERT &amp;&amp;&#160;</td>
+          <td class="paramtype">IndexIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>index_stop</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SITERT &amp;&amp;&#160;</td>
+          <td class="paramtype">ShapeIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>shape_start</em>&#160;</td>
         </tr>
         <tr>
@@ -393,8 +394,8 @@ template&lt;typename IITERT , typename SITERT &gt; </div>
 <p>Compute the offset for an index range and a given shape.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">IITERT</td><td>index iterator type </td></tr>
-    <tr><td class="paramname">SITERT</td><td>shape iterator type </td></tr>
+    <tr><td class="paramname">IndexIteratorT</td><td>index iterator type </td></tr>
+    <tr><td class="paramname">ShapeIteratorT</td><td>shape iterator type </td></tr>
   </table>
   </dd>
 </dl>
@@ -410,13 +411,13 @@ template&lt;typename IITERT , typename SITERT &gt; </div>
 
 </div>
 </div>
-<a id="a32476fc993c1e0ba1d8a5ea4ed8dc902"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32476fc993c1e0ba1d8a5ea4ed8dc902">&#9670;&nbsp;</a></span>offset() <span class="overload">[4/4]</span></h2>
+<a id="aa55aeaee3021e9df755dd46e61872660"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa55aeaee3021e9df755dd46e61872660">&#9670;&nbsp;</a></span>offset() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SELITER , typename SITER , typename IITER &gt; </div>
+template&lt;typename SelectionIteratorT , typename ShapeIteratorT , typename IndexContainerIteratorT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -424,37 +425,37 @@ template&lt;typename SELITER , typename SITER , typename IITER &gt; </div>
         <tr>
           <td class="memname">static size_t pni::c_index_map_imp::offset </td>
           <td>(</td>
-          <td class="paramtype">SELITER &amp;&amp;&#160;</td>
+          <td class="paramtype">SelectionIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>sel_shape_start</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SELITER &amp;&amp;&#160;</td>
+          <td class="paramtype">SelectionIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>sel_shape_end</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SELITER &amp;&amp;&#160;</td>
+          <td class="paramtype">SelectionIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>sel_offset</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SELITER &amp;&amp;&#160;</td>
+          <td class="paramtype">SelectionIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>sel_stride</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">SITER &amp;&amp;&#160;</td>
+          <td class="paramtype">ShapeIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>shape_start</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IITER &amp;&amp;&#160;</td>
+          <td class="paramtype">IndexContainerIteratorT &amp;&amp;&#160;</td>
           <td class="paramname"><em>sel_index</em>&#160;</td>
         </tr>
         <tr>
@@ -472,9 +473,9 @@ template&lt;typename SELITER , typename SITER , typename IITER &gt; </div>
 <p>Compute the linear offset for an index range and a particular selection. This private member function actually implements this feature. The index passed is the effective index of the selection and must not have the same rank as the original array.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">SELITER</td><td>selection iterator </td></tr>
-    <tr><td class="paramname">SITER</td><td>iterator type of the original shape </td></tr>
-    <tr><td class="paramname">IITER</td><td>index container iterator </td></tr>
+    <tr><td class="paramname">SelectionIteratorT</td><td>selection iterator </td></tr>
+    <tr><td class="paramname">ShapeIteratorT</td><td>iterator type of the original shape </td></tr>
+    <tr><td class="paramname">IndexContainerIteratorT</td><td>index container iterator </td></tr>
   </table>
   </dd>
 </dl>
@@ -502,7 +503,7 @@ template&lt;typename SELITER , typename SITER , typename IITER &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="classpni_1_1c__index__map__imp.html">c_index_map_imp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

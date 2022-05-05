@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: pni::checked_convertible&lt; ST, TT &gt; Struct Template Reference</title>
+<title>PNI NeXus Library: pni::checked_convertible&lt; SourceT, TargetT &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -64,7 +65,7 @@ $(document).ready(function(){initNavTree('structpni_1_1checked__convertible.html
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">pni::checked_convertible&lt; ST, TT &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__type__classes.html">Type_classes</a></div></div>  </div>
+<div class="title">pni::checked_convertible&lt; SourceT, TargetT &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__type__classes.html">Type_classes</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -75,58 +76,58 @@ $(document).ready(function(){initNavTree('structpni_1_1checked__convertible.html
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a6ac1a2d9ed76cf69299ee96f55d60fea"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::at&lt; <a class="el" href="namespacepni.html#aa26646e6f55f0249f7f20edb9e255baf">checked_type_vectors</a>, ST &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1checked__convertible.html#a6ac1a2d9ed76cf69299ee96f55d60fea">map_element</a></td></tr>
-<tr class="memdesc:a6ac1a2d9ed76cf69299ee96f55d60fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">select the type vector  <a href="structpni_1_1checked__convertible.html#a6ac1a2d9ed76cf69299ee96f55d60fea">More...</a><br /></td></tr>
-<tr class="separator:a6ac1a2d9ed76cf69299ee96f55d60fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb3f50bd62a8e5996b43f2f8bc2475a5"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::contains&lt; <a class="el" href="structpni_1_1checked__convertible.html#a6ac1a2d9ed76cf69299ee96f55d60fea">map_element</a>, TT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1checked__convertible.html#aeb3f50bd62a8e5996b43f2f8bc2475a5">c</a></td></tr>
-<tr class="memdesc:aeb3f50bd62a8e5996b43f2f8bc2475a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">type to check if TT is in the map  <a href="structpni_1_1checked__convertible.html#aeb3f50bd62a8e5996b43f2f8bc2475a5">More...</a><br /></td></tr>
-<tr class="separator:aeb3f50bd62a8e5996b43f2f8bc2475a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b582e20d994448c12cf1afc035f7b8"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::at&lt; <a class="el" href="namespacepni.html#a471ed8f87fcfdf66db099a21b5e6d7cc">checked_type_vectors</a>, SourceT &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1checked__convertible.html#a55b582e20d994448c12cf1afc035f7b8">map_element</a></td></tr>
+<tr class="memdesc:a55b582e20d994448c12cf1afc035f7b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">select the type vector  <a href="structpni_1_1checked__convertible.html#a55b582e20d994448c12cf1afc035f7b8">More...</a><br /></td></tr>
+<tr class="separator:a55b582e20d994448c12cf1afc035f7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ac059b7b631faf4079f58df3d4c9af"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::contains&lt; <a class="el" href="structpni_1_1checked__convertible.html#a55b582e20d994448c12cf1afc035f7b8">map_element</a>, TargetT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1checked__convertible.html#a43ac059b7b631faf4079f58df3d4c9af">c</a></td></tr>
+<tr class="memdesc:a43ac059b7b631faf4079f58df3d4c9af"><td class="mdescLeft">&#160;</td><td class="mdescRight">type to check if TargetT is in the map  <a href="structpni_1_1checked__convertible.html#a43ac059b7b631faf4079f58df3d4c9af">More...</a><br /></td></tr>
+<tr class="separator:a43ac059b7b631faf4079f58df3d4c9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:af4919e0de2e7aa0e13451c77fcd0dd09"><td class="memItemLeft" align="right" valign="top">static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1checked__convertible.html#af4919e0de2e7aa0e13451c77fcd0dd09">value</a> = c::value</td></tr>
-<tr class="memdesc:af4919e0de2e7aa0e13451c77fcd0dd09"><td class="mdescLeft">&#160;</td><td class="mdescRight">result of the search  <a href="structpni_1_1checked__convertible.html#af4919e0de2e7aa0e13451c77fcd0dd09">More...</a><br /></td></tr>
-<tr class="separator:af4919e0de2e7aa0e13451c77fcd0dd09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add603ddc6cc74b88a02417354894414a"><td class="memItemLeft" align="right" valign="top">static const bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1checked__convertible.html#add603ddc6cc74b88a02417354894414a">value</a> = c::value</td></tr>
+<tr class="memdesc:add603ddc6cc74b88a02417354894414a"><td class="mdescLeft">&#160;</td><td class="mdescRight">result of the search  <a href="structpni_1_1checked__convertible.html#add603ddc6cc74b88a02417354894414a">More...</a><br /></td></tr>
+<tr class="separator:add603ddc6cc74b88a02417354894414a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ST, typename TT&gt;<br />
-struct pni::checked_convertible&lt; ST, TT &gt;</h3>
+<div class="textblock"><h3>template&lt;typename SourceT, typename TargetT&gt;<br />
+struct pni::checked_convertible&lt; SourceT, TargetT &gt;</h3>
 
 <p>This template provides information about if a type can be converted to another without having the range checked.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">ST</td><td>source type </td></tr>
-    <tr><td class="paramname">TT</td><td>target type </td></tr>
+    <tr><td class="paramname">SourceT</td><td>source type </td></tr>
+    <tr><td class="paramname">TargetT</td><td>target type </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="aeb3f50bd62a8e5996b43f2f8bc2475a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb3f50bd62a8e5996b43f2f8bc2475a5">&#9670;&nbsp;</a></span>c</h2>
+<a id="a43ac059b7b631faf4079f58df3d4c9af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ac059b7b631faf4079f58df3d4c9af">&#9670;&nbsp;</a></span>c</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ST , typename TT &gt; </div>
+template&lt;typename SourceT , typename TargetT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef boost::mpl::contains&lt;<a class="el" href="structpni_1_1checked__convertible.html#a6ac1a2d9ed76cf69299ee96f55d60fea">map_element</a>,TT&gt; <a class="el" href="structpni_1_1checked__convertible.html">pni::checked_convertible</a>&lt; ST, TT &gt;::<a class="el" href="structpni_1_1checked__convertible.html#aeb3f50bd62a8e5996b43f2f8bc2475a5">c</a></td>
+          <td class="memname">typedef boost::mpl::contains&lt;<a class="el" href="structpni_1_1checked__convertible.html#a55b582e20d994448c12cf1afc035f7b8">map_element</a>,TargetT&gt; <a class="el" href="structpni_1_1checked__convertible.html">pni::checked_convertible</a>&lt; SourceT, TargetT &gt;::<a class="el" href="structpni_1_1checked__convertible.html#a43ac059b7b631faf4079f58df3d4c9af">c</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a6ac1a2d9ed76cf69299ee96f55d60fea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ac1a2d9ed76cf69299ee96f55d60fea">&#9670;&nbsp;</a></span>map_element</h2>
+<a id="a55b582e20d994448c12cf1afc035f7b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55b582e20d994448c12cf1afc035f7b8">&#9670;&nbsp;</a></span>map_element</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ST , typename TT &gt; </div>
+template&lt;typename SourceT , typename TargetT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef boost::mpl::at&lt;<a class="el" href="namespacepni.html#aa26646e6f55f0249f7f20edb9e255baf">checked_type_vectors</a>,ST&gt;::type <a class="el" href="structpni_1_1checked__convertible.html">pni::checked_convertible</a>&lt; ST, TT &gt;::<a class="el" href="structpni_1_1checked__convertible.html#a6ac1a2d9ed76cf69299ee96f55d60fea">map_element</a></td>
+          <td class="memname">typedef boost::mpl::at&lt;<a class="el" href="namespacepni.html#a471ed8f87fcfdf66db099a21b5e6d7cc">checked_type_vectors</a>,SourceT&gt;::type <a class="el" href="structpni_1_1checked__convertible.html">pni::checked_convertible</a>&lt; SourceT, TargetT &gt;::<a class="el" href="structpni_1_1checked__convertible.html#a55b582e20d994448c12cf1afc035f7b8">map_element</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -134,19 +135,19 @@ template&lt;typename ST , typename TT &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="af4919e0de2e7aa0e13451c77fcd0dd09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4919e0de2e7aa0e13451c77fcd0dd09">&#9670;&nbsp;</a></span>value</h2>
+<a id="add603ddc6cc74b88a02417354894414a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add603ddc6cc74b88a02417354894414a">&#9670;&nbsp;</a></span>value</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ST , typename TT &gt; </div>
+template&lt;typename SourceT , typename TargetT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const bool <a class="el" href="structpni_1_1checked__convertible.html">pni::checked_convertible</a>&lt; ST, TT &gt;::<a class="el" href="classpni_1_1value.html">value</a> = c::value</td>
+          <td class="memname">const bool <a class="el" href="structpni_1_1checked__convertible.html">pni::checked_convertible</a>&lt; SourceT, TargetT &gt;::<a class="el" href="classpni_1_1value.html">value</a> = c::value</td>
         </tr>
       </table>
   </td>
@@ -167,7 +168,7 @@ template&lt;typename ST , typename TT &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="structpni_1_1checked__convertible.html">checked_convertible</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

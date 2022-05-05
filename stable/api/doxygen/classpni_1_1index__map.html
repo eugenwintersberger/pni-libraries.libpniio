@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt; Class Template Reference</title>
+<title>PNI NeXus Library: pni::index_map&lt; ShapeStoreT, MapImpT &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -65,7 +66,7 @@ $(document).ready(function(){initNavTree('classpni_1_1index__map.html',''); init
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt; Class Template Reference</div>  </div>
+<div class="title">pni::index_map&lt; ShapeStoreT, MapImpT &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -76,91 +77,91 @@ $(document).ready(function(){initNavTree('classpni_1_1index__map.html',''); init
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aa65964c230592fab0cdb4830c47a4f77"><td class="memItemLeft" align="right" valign="top">typedef SHAPE_STORE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a></td></tr>
-<tr class="memdesc:aa65964c230592fab0cdb4830c47a4f77"><td class="mdescLeft">&#160;</td><td class="mdescRight">storage type  <a href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">More...</a><br /></td></tr>
-<tr class="separator:aa65964c230592fab0cdb4830c47a4f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed0191cb706f8254d4a9e539cfbf2f78"><td class="memItemLeft" align="right" valign="top">typedef storage_type::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#aed0191cb706f8254d4a9e539cfbf2f78">value_type</a></td></tr>
-<tr class="memdesc:aed0191cb706f8254d4a9e539cfbf2f78"><td class="mdescLeft">&#160;</td><td class="mdescRight">index type  <a href="classpni_1_1index__map.html#aed0191cb706f8254d4a9e539cfbf2f78">More...</a><br /></td></tr>
-<tr class="separator:aed0191cb706f8254d4a9e539cfbf2f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31f7f8266c5850edbe6887cb8e746a12"><td class="memItemLeft" align="right" valign="top">typedef MAP_IMP&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a31f7f8266c5850edbe6887cb8e746a12">implementation_type</a></td></tr>
-<tr class="memdesc:a31f7f8266c5850edbe6887cb8e746a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">policy type  <a href="classpni_1_1index__map.html#a31f7f8266c5850edbe6887cb8e746a12">More...</a><br /></td></tr>
-<tr class="separator:a31f7f8266c5850edbe6887cb8e746a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a168f9da27358eb4c758714cbc7df7693"><td class="memItemLeft" align="right" valign="top">typedef storage_type::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">iterator</a></td></tr>
-<tr class="memdesc:a168f9da27358eb4c758714cbc7df7693"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write iterator  <a href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">More...</a><br /></td></tr>
-<tr class="separator:a168f9da27358eb4c758714cbc7df7693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cdac5cc3e3da06948fb1e8d1c15cc85"><td class="memItemLeft" align="right" valign="top">typedef storage_type::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">const_iterator</a></td></tr>
-<tr class="memdesc:a0cdac5cc3e3da06948fb1e8d1c15cc85"><td class="mdescLeft">&#160;</td><td class="mdescRight">constant iterator over the map  <a href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">More...</a><br /></td></tr>
-<tr class="separator:a0cdac5cc3e3da06948fb1e8d1c15cc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af45bd261f313f17daeac10833bf67b1f"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classpni_1_1index__map.html">index_map</a>&lt; <a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a>, <a class="el" href="classpni_1_1index__map.html#a31f7f8266c5850edbe6887cb8e746a12">implementation_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a></td></tr>
-<tr class="memdesc:af45bd261f313f17daeac10833bf67b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">map type  <a href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">More...</a><br /></td></tr>
-<tr class="separator:af45bd261f313f17daeac10833bf67b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2393d713b9eb613812c39d37040f59f8"><td class="memItemLeft" align="right" valign="top">typedef ShapeStoreT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a></td></tr>
+<tr class="memdesc:a2393d713b9eb613812c39d37040f59f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">storage type  <a href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">More...</a><br /></td></tr>
+<tr class="separator:a2393d713b9eb613812c39d37040f59f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212ba47982d92a46dd7fa5f2a80fda4d"><td class="memItemLeft" align="right" valign="top">typedef storage_type::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a212ba47982d92a46dd7fa5f2a80fda4d">value_type</a></td></tr>
+<tr class="memdesc:a212ba47982d92a46dd7fa5f2a80fda4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">index type  <a href="classpni_1_1index__map.html#a212ba47982d92a46dd7fa5f2a80fda4d">More...</a><br /></td></tr>
+<tr class="separator:a212ba47982d92a46dd7fa5f2a80fda4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77edbf8e30c80d31020d51a0d6f19f9d"><td class="memItemLeft" align="right" valign="top">typedef MapImpT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a77edbf8e30c80d31020d51a0d6f19f9d">implementation_type</a></td></tr>
+<tr class="memdesc:a77edbf8e30c80d31020d51a0d6f19f9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">policy type  <a href="classpni_1_1index__map.html#a77edbf8e30c80d31020d51a0d6f19f9d">More...</a><br /></td></tr>
+<tr class="separator:a77edbf8e30c80d31020d51a0d6f19f9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5da28a9de1d29d2bad97e9828c691a7a"><td class="memItemLeft" align="right" valign="top">typedef storage_type::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">iterator</a></td></tr>
+<tr class="memdesc:a5da28a9de1d29d2bad97e9828c691a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write iterator  <a href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">More...</a><br /></td></tr>
+<tr class="separator:a5da28a9de1d29d2bad97e9828c691a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abac99c185b97925778a4dd72ec32bf3b"><td class="memItemLeft" align="right" valign="top">typedef storage_type::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">const_iterator</a></td></tr>
+<tr class="memdesc:abac99c185b97925778a4dd72ec32bf3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">constant iterator over the map  <a href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">More...</a><br /></td></tr>
+<tr class="separator:abac99c185b97925778a4dd72ec32bf3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07705899f78954aa0913a9b06c923ca2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classpni_1_1index__map.html">index_map</a>&lt; <a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a>, <a class="el" href="classpni_1_1index__map.html#a77edbf8e30c80d31020d51a0d6f19f9d">implementation_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a></td></tr>
+<tr class="memdesc:a07705899f78954aa0913a9b06c923ca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">map type  <a href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">More...</a><br /></td></tr>
+<tr class="separator:a07705899f78954aa0913a9b06c923ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a15e8a699bed6413a010a74b1d2479d41"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a> ()</td></tr>
-<tr class="memdesc:a15e8a699bed6413a010a74b1d2479d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">default constructor  <a href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">More...</a><br /></td></tr>
-<tr class="separator:a15e8a699bed6413a010a74b1d2479d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3643b787cd1cf75cfb68b9b9811aca8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ae3643b787cd1cf75cfb68b9b9811aca8">index_map</a> (const <a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;m)</td></tr>
-<tr class="memdesc:ae3643b787cd1cf75cfb68b9b9811aca8"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy constructor  <a href="classpni_1_1index__map.html#ae3643b787cd1cf75cfb68b9b9811aca8">More...</a><br /></td></tr>
-<tr class="separator:ae3643b787cd1cf75cfb68b9b9811aca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bed8ed6c1e66c4d6ad77230e1729ddf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a2bed8ed6c1e66c4d6ad77230e1729ddf">index_map</a> (<a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&amp;m)</td></tr>
-<tr class="memdesc:a2bed8ed6c1e66c4d6ad77230e1729ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">move constructor  <a href="classpni_1_1index__map.html#a2bed8ed6c1e66c4d6ad77230e1729ddf">More...</a><br /></td></tr>
-<tr class="separator:a2bed8ed6c1e66c4d6ad77230e1729ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab051f1d1eb122d8e6cf9a360c59f0733"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ab051f1d1eb122d8e6cf9a360c59f0733">index_map</a> (const <a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a> &amp;s)</td></tr>
-<tr class="memdesc:ab051f1d1eb122d8e6cf9a360c59f0733"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="classpni_1_1index__map.html#ab051f1d1eb122d8e6cf9a360c59f0733">More...</a><br /></td></tr>
-<tr class="separator:ab051f1d1eb122d8e6cf9a360c59f0733"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3481a6be7769b319f6aa67914db4b29e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a3481a6be7769b319f6aa67914db4b29e">index_map</a> (<a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a> &amp;&amp;s)</td></tr>
-<tr class="memdesc:a3481a6be7769b319f6aa67914db4b29e"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="classpni_1_1index__map.html#a3481a6be7769b319f6aa67914db4b29e">More...</a><br /></td></tr>
-<tr class="separator:a3481a6be7769b319f6aa67914db4b29e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcafe0a9d85f53d033675e9a13312876"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#afcafe0a9d85f53d033675e9a13312876">operator=</a> (const <a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;m)</td></tr>
-<tr class="memdesc:afcafe0a9d85f53d033675e9a13312876"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy assignment operator  <a href="classpni_1_1index__map.html#afcafe0a9d85f53d033675e9a13312876">More...</a><br /></td></tr>
-<tr class="separator:afcafe0a9d85f53d033675e9a13312876"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9726c949af32756ea827faec11b6c807"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a9726c949af32756ea827faec11b6c807">operator=</a> (<a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&amp;m)</td></tr>
-<tr class="memdesc:a9726c949af32756ea827faec11b6c807"><td class="mdescLeft">&#160;</td><td class="mdescRight">move assignment operator  <a href="classpni_1_1index__map.html#a9726c949af32756ea827faec11b6c807">More...</a><br /></td></tr>
-<tr class="separator:a9726c949af32756ea827faec11b6c807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23c416562b336eb3ca853a8b7024bf2f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a23c416562b336eb3ca853a8b7024bf2f">max_elements</a> () const</td></tr>
-<tr class="memdesc:a23c416562b336eb3ca853a8b7024bf2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">get number of elements  <a href="classpni_1_1index__map.html#a23c416562b336eb3ca853a8b7024bf2f">More...</a><br /></td></tr>
-<tr class="separator:a23c416562b336eb3ca853a8b7024bf2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a527261464ffda1b3bf323f0379885625"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a527261464ffda1b3bf323f0379885625">rank</a> () const</td></tr>
-<tr class="memdesc:a527261464ffda1b3bf323f0379885625"><td class="mdescLeft">&#160;</td><td class="mdescRight">get number of dimensions  <a href="classpni_1_1index__map.html#a527261464ffda1b3bf323f0379885625">More...</a><br /></td></tr>
-<tr class="separator:a527261464ffda1b3bf323f0379885625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d8b916161343cc986f8d269f29aa2d9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a2d8b916161343cc986f8d269f29aa2d9">size</a> () const</td></tr>
-<tr class="memdesc:a2d8b916161343cc986f8d269f29aa2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get number of dimensions  <a href="classpni_1_1index__map.html#a2d8b916161343cc986f8d269f29aa2d9">More...</a><br /></td></tr>
-<tr class="separator:a2d8b916161343cc986f8d269f29aa2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d6b3bbd27809a4ab7a83ee9d45da8a"><td class="memTemplParams" colspan="2">template&lt;typename CTYPE , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;CTYPE&gt;::type                     &gt;::value                     &gt;::type&gt; </td></tr>
-<tr class="memitem:a29d6b3bbd27809a4ab7a83ee9d45da8a"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">offset</a> (const CTYPE &amp;<a class="el" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a>) const</td></tr>
-<tr class="memdesc:a29d6b3bbd27809a4ab7a83ee9d45da8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the offset  <a href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">More...</a><br /></td></tr>
-<tr class="separator:a29d6b3bbd27809a4ab7a83ee9d45da8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedc9a3d92e12bb2cd5ff0c82a67c8423"><td class="memTemplParams" colspan="2">template&lt;typename CTYPE , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;CTYPE&gt;::type                     &gt;::value                     &gt;::type&gt; </td></tr>
-<tr class="memitem:aedc9a3d92e12bb2cd5ff0c82a67c8423"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#aedc9a3d92e12bb2cd5ff0c82a67c8423">offset</a> (const <a class="el" href="classpni_1_1array__selection.html">array_selection</a> &amp;s, const CTYPE &amp;<a class="el" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a>) const</td></tr>
-<tr class="memdesc:aedc9a3d92e12bb2cd5ff0c82a67c8423"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute offset with selection  <a href="classpni_1_1index__map.html#aedc9a3d92e12bb2cd5ff0c82a67c8423">More...</a><br /></td></tr>
-<tr class="separator:aedc9a3d92e12bb2cd5ff0c82a67c8423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbd176e4b0850e215eaa62a82c1e7190"><td class="memTemplParams" colspan="2">template&lt;typename CTYPE &gt; </td></tr>
-<tr class="memitem:acbd176e4b0850e215eaa62a82c1e7190"><td class="memTemplItemLeft" align="right" valign="top">CTYPE&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a> (size_t <a class="el" href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">offset</a>) const</td></tr>
-<tr class="memdesc:acbd176e4b0850e215eaa62a82c1e7190"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute index  <a href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">More...</a><br /></td></tr>
-<tr class="separator:acbd176e4b0850e215eaa62a82c1e7190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a749b2791ee27ca4afa95acbeab11b6de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a749b2791ee27ca4afa95acbeab11b6de">begin</a> ()</td></tr>
-<tr class="memdesc:a749b2791ee27ca4afa95acbeab11b6de"><td class="mdescLeft">&#160;</td><td class="mdescRight">return iterator to first element  <a href="classpni_1_1index__map.html#a749b2791ee27ca4afa95acbeab11b6de">More...</a><br /></td></tr>
-<tr class="separator:a749b2791ee27ca4afa95acbeab11b6de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d68e5fafbaff6579d806e5386803042"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a9d68e5fafbaff6579d806e5386803042">end</a> ()</td></tr>
-<tr class="memdesc:a9d68e5fafbaff6579d806e5386803042"><td class="mdescLeft">&#160;</td><td class="mdescRight">return iterator to last+1 element  <a href="classpni_1_1index__map.html#a9d68e5fafbaff6579d806e5386803042">More...</a><br /></td></tr>
-<tr class="separator:a9d68e5fafbaff6579d806e5386803042"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11731b648c2c1f69cf6cc25c33590e46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a11731b648c2c1f69cf6cc25c33590e46">begin</a> () const</td></tr>
-<tr class="memdesc:a11731b648c2c1f69cf6cc25c33590e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">return const iterator to first element  <a href="classpni_1_1index__map.html#a11731b648c2c1f69cf6cc25c33590e46">More...</a><br /></td></tr>
-<tr class="separator:a11731b648c2c1f69cf6cc25c33590e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcb3d90e7768ad1a57fff48d8b44d7d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#abcb3d90e7768ad1a57fff48d8b44d7d2">end</a> () const</td></tr>
-<tr class="memdesc:abcb3d90e7768ad1a57fff48d8b44d7d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">return const iterator to last+1 element  <a href="classpni_1_1index__map.html#abcb3d90e7768ad1a57fff48d8b44d7d2">More...</a><br /></td></tr>
-<tr class="separator:abcb3d90e7768ad1a57fff48d8b44d7d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5e5b37286c803965b604bff1a034591"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a> ()</td></tr>
+<tr class="memdesc:ab5e5b37286c803965b604bff1a034591"><td class="mdescLeft">&#160;</td><td class="mdescRight">default constructor  <a href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">More...</a><br /></td></tr>
+<tr class="separator:ab5e5b37286c803965b604bff1a034591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ce126522e34620e97d6b9abb5c766a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a7ce126522e34620e97d6b9abb5c766a3">index_map</a> (const <a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;m)</td></tr>
+<tr class="memdesc:a7ce126522e34620e97d6b9abb5c766a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy constructor  <a href="classpni_1_1index__map.html#a7ce126522e34620e97d6b9abb5c766a3">More...</a><br /></td></tr>
+<tr class="separator:a7ce126522e34620e97d6b9abb5c766a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28faae00ce5cd4cf0a401e2efcfd9b3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a28faae00ce5cd4cf0a401e2efcfd9b3f">index_map</a> (<a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&amp;m)</td></tr>
+<tr class="memdesc:a28faae00ce5cd4cf0a401e2efcfd9b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">move constructor  <a href="classpni_1_1index__map.html#a28faae00ce5cd4cf0a401e2efcfd9b3f">More...</a><br /></td></tr>
+<tr class="separator:a28faae00ce5cd4cf0a401e2efcfd9b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7e2da9a9d8cd076c7e8e30f78a7bb78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#af7e2da9a9d8cd076c7e8e30f78a7bb78">index_map</a> (const <a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a> &amp;s)</td></tr>
+<tr class="memdesc:af7e2da9a9d8cd076c7e8e30f78a7bb78"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="classpni_1_1index__map.html#af7e2da9a9d8cd076c7e8e30f78a7bb78">More...</a><br /></td></tr>
+<tr class="separator:af7e2da9a9d8cd076c7e8e30f78a7bb78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d96587c997568c809ed1f3e1aed298"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a70d96587c997568c809ed1f3e1aed298">index_map</a> (<a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a> &amp;&amp;s)</td></tr>
+<tr class="memdesc:a70d96587c997568c809ed1f3e1aed298"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="classpni_1_1index__map.html#a70d96587c997568c809ed1f3e1aed298">More...</a><br /></td></tr>
+<tr class="separator:a70d96587c997568c809ed1f3e1aed298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f7de6c94e65c388caf5c451a82f046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a44f7de6c94e65c388caf5c451a82f046">operator=</a> (const <a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;m)</td></tr>
+<tr class="memdesc:a44f7de6c94e65c388caf5c451a82f046"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy assignment operator  <a href="classpni_1_1index__map.html#a44f7de6c94e65c388caf5c451a82f046">More...</a><br /></td></tr>
+<tr class="separator:a44f7de6c94e65c388caf5c451a82f046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f79ac20af545fc9e4b64a99d2af0355"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a8f79ac20af545fc9e4b64a99d2af0355">operator=</a> (<a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&amp;m)</td></tr>
+<tr class="memdesc:a8f79ac20af545fc9e4b64a99d2af0355"><td class="mdescLeft">&#160;</td><td class="mdescRight">move assignment operator  <a href="classpni_1_1index__map.html#a8f79ac20af545fc9e4b64a99d2af0355">More...</a><br /></td></tr>
+<tr class="separator:a8f79ac20af545fc9e4b64a99d2af0355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefc6c5eab2ed30f1a217ee7c1eadbb74"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#aefc6c5eab2ed30f1a217ee7c1eadbb74">max_elements</a> () const</td></tr>
+<tr class="memdesc:aefc6c5eab2ed30f1a217ee7c1eadbb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">get number of elements  <a href="classpni_1_1index__map.html#aefc6c5eab2ed30f1a217ee7c1eadbb74">More...</a><br /></td></tr>
+<tr class="separator:aefc6c5eab2ed30f1a217ee7c1eadbb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae05109fdce1bef5e4352a74bea059e6a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ae05109fdce1bef5e4352a74bea059e6a">rank</a> () const</td></tr>
+<tr class="memdesc:ae05109fdce1bef5e4352a74bea059e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">get number of dimensions  <a href="classpni_1_1index__map.html#ae05109fdce1bef5e4352a74bea059e6a">More...</a><br /></td></tr>
+<tr class="separator:ae05109fdce1bef5e4352a74bea059e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc7442c17e56458464e1761acb9d4ecc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#acc7442c17e56458464e1761acb9d4ecc">size</a> () const</td></tr>
+<tr class="memdesc:acc7442c17e56458464e1761acb9d4ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">get number of dimensions  <a href="classpni_1_1index__map.html#acc7442c17e56458464e1761acb9d4ecc">More...</a><br /></td></tr>
+<tr class="separator:acc7442c17e56458464e1761acb9d4ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af76ea569de21c4bc4611bdf8597174f0"><td class="memTemplParams" colspan="2">template&lt;typename ContainerT , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;ContainerT&gt;::type                     &gt;::value                     &gt;::type&gt; </td></tr>
+<tr class="memitem:af76ea569de21c4bc4611bdf8597174f0"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">offset</a> (const ContainerT &amp;<a class="el" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a>) const</td></tr>
+<tr class="memdesc:af76ea569de21c4bc4611bdf8597174f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute the offset  <a href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">More...</a><br /></td></tr>
+<tr class="separator:af76ea569de21c4bc4611bdf8597174f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0b3d6aae142d00ee16c06b01672fd35"><td class="memTemplParams" colspan="2">template&lt;typename ContainerT , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;ContainerT&gt;::type                     &gt;::value                     &gt;::type&gt; </td></tr>
+<tr class="memitem:aa0b3d6aae142d00ee16c06b01672fd35"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#aa0b3d6aae142d00ee16c06b01672fd35">offset</a> (const <a class="el" href="classpni_1_1array__selection.html">array_selection</a> &amp;s, const ContainerT &amp;<a class="el" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a>) const</td></tr>
+<tr class="memdesc:aa0b3d6aae142d00ee16c06b01672fd35"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute offset with selection  <a href="classpni_1_1index__map.html#aa0b3d6aae142d00ee16c06b01672fd35">More...</a><br /></td></tr>
+<tr class="separator:aa0b3d6aae142d00ee16c06b01672fd35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8206183be94ff5a8cb2e01d924e9dcdb"><td class="memTemplParams" colspan="2">template&lt;typename ContainerT &gt; </td></tr>
+<tr class="memitem:a8206183be94ff5a8cb2e01d924e9dcdb"><td class="memTemplItemLeft" align="right" valign="top">ContainerT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a> (size_t <a class="el" href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">offset</a>) const</td></tr>
+<tr class="memdesc:a8206183be94ff5a8cb2e01d924e9dcdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute index  <a href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">More...</a><br /></td></tr>
+<tr class="separator:a8206183be94ff5a8cb2e01d924e9dcdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab33813819b5b1e95d3283705a75f5b12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ab33813819b5b1e95d3283705a75f5b12">begin</a> ()</td></tr>
+<tr class="memdesc:ab33813819b5b1e95d3283705a75f5b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">return iterator to first element  <a href="classpni_1_1index__map.html#ab33813819b5b1e95d3283705a75f5b12">More...</a><br /></td></tr>
+<tr class="separator:ab33813819b5b1e95d3283705a75f5b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae63b06ecd8ac8e1e7d48d42db4f5111d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ae63b06ecd8ac8e1e7d48d42db4f5111d">end</a> ()</td></tr>
+<tr class="memdesc:ae63b06ecd8ac8e1e7d48d42db4f5111d"><td class="mdescLeft">&#160;</td><td class="mdescRight">return iterator to last+1 element  <a href="classpni_1_1index__map.html#ae63b06ecd8ac8e1e7d48d42db4f5111d">More...</a><br /></td></tr>
+<tr class="separator:ae63b06ecd8ac8e1e7d48d42db4f5111d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add97c1a154ceb30753c554cae28812bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#add97c1a154ceb30753c554cae28812bc">begin</a> () const</td></tr>
+<tr class="memdesc:add97c1a154ceb30753c554cae28812bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">return const iterator to first element  <a href="classpni_1_1index__map.html#add97c1a154ceb30753c554cae28812bc">More...</a><br /></td></tr>
+<tr class="separator:add97c1a154ceb30753c554cae28812bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae731a2e21ae0a66bd5b4d72cf756d797"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#ae731a2e21ae0a66bd5b4d72cf756d797">end</a> () const</td></tr>
+<tr class="memdesc:ae731a2e21ae0a66bd5b4d72cf756d797"><td class="mdescLeft">&#160;</td><td class="mdescRight">return const iterator to last+1 element  <a href="classpni_1_1index__map.html#ae731a2e21ae0a66bd5b4d72cf756d797">More...</a><br /></td></tr>
+<tr class="separator:ae731a2e21ae0a66bd5b4d72cf756d797"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a5ac81a9e963fc96fccb6d309ed4562e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#a5ac81a9e963fc96fccb6d309ed4562e7">_shape</a></td></tr>
-<tr class="memdesc:a5ac81a9e963fc96fccb6d309ed4562e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">storage for shape information  <a href="classpni_1_1index__map.html#a5ac81a9e963fc96fccb6d309ed4562e7">More...</a><br /></td></tr>
-<tr class="separator:a5ac81a9e963fc96fccb6d309ed4562e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef938358c982bec7c1c862d75570d99a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1index__map.html#aef938358c982bec7c1c862d75570d99a">_shape</a></td></tr>
+<tr class="memdesc:aef938358c982bec7c1c862d75570d99a"><td class="mdescLeft">&#160;</td><td class="mdescRight">storage for shape information  <a href="classpni_1_1index__map.html#aef938358c982bec7c1c862d75570d99a">More...</a><br /></td></tr>
+<tr class="separator:aef938358c982bec7c1c862d75570d99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename SHAPE_STORE, typename MAP_IMP&gt;<br />
-class pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt;</h3>
+<div class="textblock"><h3>template&lt;typename ShapeStoreT, typename MapImpT&gt;<br />
+class pni::index_map&lt; ShapeStoreT, MapImpT &gt;</h3>
 
 <p>Index maps provide all the data and functionality to vector of multidimensional indexes onto a linear memory offset and vica verse. <br  />
  The index map behaves like an STL container whose elements are the number of elements along a particular dimension of a multidimensional array. This shape information is stored in an internal linear storage. An index map type requires two template parameters</p>
@@ -180,8 +181,8 @@ class pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt;</h3>
 </div><!-- fragment --><p> ! This index map template should be used for index maps who are either entirely dynamic or which have a fixed number of dimensions but the number of elements can be changed at runtime. There is a special type for index map which are entirly static (fixed number of dimensions, fixed number of elements along each dimensions): <a class="el" href="classpni_1_1static__index__map.html" title="the static general index map template">static_index_map</a>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">SHAPE_STORE</td><td>type storing the shape information </td></tr>
-    <tr><td class="paramname">MAP_IMP</td><td>map implementation type </td></tr>
+    <tr><td class="paramname">ShapeStoreT</td><td>type storing the shape information </td></tr>
+    <tr><td class="paramname">MapImpT</td><td>map implementation type </td></tr>
   </table>
   </dd>
 </dl>
@@ -189,96 +190,96 @@ class pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt;</h3>
 <dd>
 <a class="el" href="classpni_1_1c__index__map__imp.html" title="C index map implementation.">c_index_map_imp</a> </dd></dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a0cdac5cc3e3da06948fb1e8d1c15cc85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cdac5cc3e3da06948fb1e8d1c15cc85">&#9670;&nbsp;</a></span>const_iterator</h2>
+<a id="abac99c185b97925778a4dd72ec32bf3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abac99c185b97925778a4dd72ec32bf3b">&#9670;&nbsp;</a></span>const_iterator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef storage_type::const_iterator <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">const_iterator</a></td>
+          <td class="memname">typedef storage_type::const_iterator <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">const_iterator</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a31f7f8266c5850edbe6887cb8e746a12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31f7f8266c5850edbe6887cb8e746a12">&#9670;&nbsp;</a></span>implementation_type</h2>
+<a id="a77edbf8e30c80d31020d51a0d6f19f9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77edbf8e30c80d31020d51a0d6f19f9d">&#9670;&nbsp;</a></span>implementation_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef MAP_IMP <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html#a31f7f8266c5850edbe6887cb8e746a12">implementation_type</a></td>
+          <td class="memname">typedef MapImpT <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html#a77edbf8e30c80d31020d51a0d6f19f9d">implementation_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a168f9da27358eb4c758714cbc7df7693"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a168f9da27358eb4c758714cbc7df7693">&#9670;&nbsp;</a></span>iterator</h2>
+<a id="a5da28a9de1d29d2bad97e9828c691a7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5da28a9de1d29d2bad97e9828c691a7a">&#9670;&nbsp;</a></span>iterator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef storage_type::iterator <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">iterator</a></td>
+          <td class="memname">typedef storage_type::iterator <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">iterator</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af45bd261f313f17daeac10833bf67b1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af45bd261f313f17daeac10833bf67b1f">&#9670;&nbsp;</a></span>map_type</h2>
+<a id="a07705899f78954aa0913a9b06c923ca2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07705899f78954aa0913a9b06c923ca2">&#9670;&nbsp;</a></span>map_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classpni_1_1index__map.html">index_map</a>&lt;<a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a>,<a class="el" href="classpni_1_1index__map.html#a31f7f8266c5850edbe6887cb8e746a12">implementation_type</a>&gt; <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a></td>
+          <td class="memname">typedef <a class="el" href="classpni_1_1index__map.html">index_map</a>&lt;<a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a>,<a class="el" href="classpni_1_1index__map.html#a77edbf8e30c80d31020d51a0d6f19f9d">implementation_type</a>&gt; <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa65964c230592fab0cdb4830c47a4f77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa65964c230592fab0cdb4830c47a4f77">&#9670;&nbsp;</a></span>storage_type</h2>
+<a id="a2393d713b9eb613812c39d37040f59f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2393d713b9eb613812c39d37040f59f8">&#9670;&nbsp;</a></span>storage_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef SHAPE_STORE <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a></td>
+          <td class="memname">typedef ShapeStoreT <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aed0191cb706f8254d4a9e539cfbf2f78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed0191cb706f8254d4a9e539cfbf2f78">&#9670;&nbsp;</a></span>value_type</h2>
+<a id="a212ba47982d92a46dd7fa5f2a80fda4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a212ba47982d92a46dd7fa5f2a80fda4d">&#9670;&nbsp;</a></span>value_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef storage_type::value_type <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html#aed0191cb706f8254d4a9e539cfbf2f78">value_type</a></td>
+          <td class="memname">typedef storage_type::value_type <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html#a212ba47982d92a46dd7fa5f2a80fda4d">value_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -286,19 +287,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a15e8a699bed6413a010a74b1d2479d41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15e8a699bed6413a010a74b1d2479d41">&#9670;&nbsp;</a></span>index_map() <span class="overload">[1/5]</span></h2>
+<a id="ab5e5b37286c803965b604bff1a034591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5e5b37286c803965b604bff1a034591">&#9670;&nbsp;</a></span>index_map() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -313,21 +314,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="ae3643b787cd1cf75cfb68b9b9811aca8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3643b787cd1cf75cfb68b9b9811aca8">&#9670;&nbsp;</a></span>index_map() <span class="overload">[2/5]</span></h2>
+<a id="a7ce126522e34620e97d6b9abb5c766a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ce126522e34620e97d6b9abb5c766a3">&#9670;&nbsp;</a></span>index_map() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&#160;</td>
           <td class="paramname"><em>m</em></td><td>)</td>
           <td></td>
         </tr>
@@ -347,21 +348,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a2bed8ed6c1e66c4d6ad77230e1729ddf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bed8ed6c1e66c4d6ad77230e1729ddf">&#9670;&nbsp;</a></span>index_map() <span class="overload">[3/5]</span></h2>
+<a id="a28faae00ce5cd4cf0a401e2efcfd9b3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28faae00ce5cd4cf0a401e2efcfd9b3f">&#9670;&nbsp;</a></span>index_map() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>m</em></td><td>)</td>
           <td></td>
         </tr>
@@ -381,21 +382,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="ab051f1d1eb122d8e6cf9a360c59f0733"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab051f1d1eb122d8e6cf9a360c59f0733">&#9670;&nbsp;</a></span>index_map() <span class="overload">[4/5]</span></h2>
+<a id="af7e2da9a9d8cd076c7e8e30f78a7bb78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7e2da9a9d8cd076c7e8e30f78a7bb78">&#9670;&nbsp;</a></span>index_map() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a> &amp;&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
@@ -407,13 +408,13 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>This constructor does copy construction from a storage type instance. This constructor would be called in the following situation</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> std::vector&lt;size_t&gt; <a class="code" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a>;</div>
-<div class="line"><span class="keyword">typedef</span> index_map&lt;storage_type,c_index_map_imp&gt; <a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> std::vector&lt;size_t&gt; <a class="code" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a>;</div>
+<div class="line"><span class="keyword">typedef</span> index_map&lt;storage_type,c_index_map_imp&gt; <a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a>;</div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a> shape{3,3,2};</div>
-<div class="line"><a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a> map(shape);</div>
-<div class="ttc" id="aclasspni_1_1index__map_html_a15e8a699bed6413a010a74b1d2479d41"><div class="ttname"><a href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">pni::index_map::index_map</a></div><div class="ttdeci">index_map()</div><div class="ttdoc">default constructor</div><div class="ttdef"><b>Definition:</b> index_map.hpp:103</div></div>
-<div class="ttc" id="aclasspni_1_1index__map_html_aa65964c230592fab0cdb4830c47a4f77"><div class="ttname"><a href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">pni::index_map::storage_type</a></div><div class="ttdeci">SHAPE_STORE storage_type</div><div class="ttdoc">storage type</div><div class="ttdef"><b>Definition:</b> index_map.hpp:84</div></div>
+<div class="line"><a class="code" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a> shape{3,3,2};</div>
+<div class="line"><a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a> map(shape);</div>
+<div class="ttc" id="aclasspni_1_1index__map_html_a2393d713b9eb613812c39d37040f59f8"><div class="ttname"><a href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">pni::index_map::storage_type</a></div><div class="ttdeci">ShapeStoreT storage_type</div><div class="ttdoc">storage type</div><div class="ttdef"><b>Definition:</b> index_map.hpp:84</div></div>
+<div class="ttc" id="aclasspni_1_1index__map_html_ab5e5b37286c803965b604bff1a034591"><div class="ttname"><a href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">pni::index_map::index_map</a></div><div class="ttdeci">index_map()</div><div class="ttdoc">default constructor</div><div class="ttdef"><b>Definition:</b> index_map.hpp:103</div></div>
 </div><!-- fragment --><p> ! </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>instance of storage_type </td></tr>
@@ -423,21 +424,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a3481a6be7769b319f6aa67914db4b29e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3481a6be7769b319f6aa67914db4b29e">&#9670;&nbsp;</a></span>index_map() <span class="overload">[5/5]</span></h2>
+<a id="a70d96587c997568c809ed1f3e1aed298"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d96587c997568c809ed1f3e1aed298">&#9670;&nbsp;</a></span>index_map() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::<a class="el" href="classpni_1_1index__map.html">index_map</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a> &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
           <td></td>
         </tr>
@@ -449,10 +450,10 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Performs move construction from an rvalue reference to an instance of storage_type. A typical application would be like this</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> std::vector&lt;size_t&gt; <a class="code" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a>;</div>
-<div class="line"><span class="keyword">typedef</span> index_map&lt;storage_type,c_index_map_imp&gt; <a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> std::vector&lt;size_t&gt; <a class="code" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a>;</div>
+<div class="line"><span class="keyword">typedef</span> index_map&lt;storage_type,c_index_map_imp&gt; <a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a>;</div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a> map(<a class="code" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a>{3,3,2});</div>
+<div class="line"><a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a> map(<a class="code" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a>{3,3,2});</div>
 </div><!-- fragment --><p> ! </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>rvalue reference to storage_type </td></tr>
@@ -463,19 +464,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a749b2791ee27ca4afa95acbeab11b6de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a749b2791ee27ca4afa95acbeab11b6de">&#9670;&nbsp;</a></span>begin() <span class="overload">[1/2]</span></h2>
+<a id="ab33813819b5b1e95d3283705a75f5b12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab33813819b5b1e95d3283705a75f5b12">&#9670;&nbsp;</a></span>begin() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::begin </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -490,19 +491,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a11731b648c2c1f69cf6cc25c33590e46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11731b648c2c1f69cf6cc25c33590e46">&#9670;&nbsp;</a></span>begin() <span class="overload">[2/2]</span></h2>
+<a id="add97c1a154ceb30753c554cae28812bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add97c1a154ceb30753c554cae28812bc">&#9670;&nbsp;</a></span>begin() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">const_iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::begin </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">const_iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -517,19 +518,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a9d68e5fafbaff6579d806e5386803042"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d68e5fafbaff6579d806e5386803042">&#9670;&nbsp;</a></span>end() <span class="overload">[1/2]</span></h2>
+<a id="ae63b06ecd8ac8e1e7d48d42db4f5111d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae63b06ecd8ac8e1e7d48d42db4f5111d">&#9670;&nbsp;</a></span>end() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a168f9da27358eb4c758714cbc7df7693">iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::end </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a5da28a9de1d29d2bad97e9828c691a7a">iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -544,19 +545,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="abcb3d90e7768ad1a57fff48d8b44d7d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcb3d90e7768ad1a57fff48d8b44d7d2">&#9670;&nbsp;</a></span>end() <span class="overload">[2/2]</span></h2>
+<a id="ae731a2e21ae0a66bd5b4d72cf756d797"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae731a2e21ae0a66bd5b4d72cf756d797">&#9670;&nbsp;</a></span>end() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a0cdac5cc3e3da06948fb1e8d1c15cc85">const_iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::end </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#abac99c185b97925778a4dd72ec32bf3b">const_iterator</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -571,21 +572,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="acbd176e4b0850e215eaa62a82c1e7190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbd176e4b0850e215eaa62a82c1e7190">&#9670;&nbsp;</a></span>index()</h2>
+<a id="a8206183be94ff5a8cb2e01d924e9dcdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8206183be94ff5a8cb2e01d924e9dcdb">&#9670;&nbsp;</a></span>index()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <div class="memtemplate">
-template&lt;typename CTYPE &gt; </div>
+template&lt;typename ContainerT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">CTYPE <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::index </td>
+          <td class="memname">ContainerT <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::index </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>offset</em></td><td>)</td>
@@ -599,14 +600,14 @@ template&lt;typename CTYPE &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Return the index stored in a container determined by the user as a template parameter.</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a>&lt;...&gt; map_t;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a>&lt;...&gt; map_t;</div>
 <div class="line">map_t map(...)</div>
-<div class="line">auto <a class="code" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a> = map.<a class="code" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a>&lt;<a class="code" href="namespacepni.html#a5b5c35e86d7bd211daf1b949d3e3fc8e">shape_t</a>&gt;(3);</div>
-<div class="ttc" id="aclasspni_1_1index__map_html_acbd176e4b0850e215eaa62a82c1e7190"><div class="ttname"><a href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">pni::index_map::index</a></div><div class="ttdeci">CTYPE index(size_t offset) const</div><div class="ttdoc">compute index</div><div class="ttdef"><b>Definition:</b> index_map.hpp:313</div></div>
-<div class="ttc" id="anamespacepni_html_a5b5c35e86d7bd211daf1b949d3e3fc8e"><div class="ttname"><a href="namespacepni.html#a5b5c35e86d7bd211daf1b949d3e3fc8e">pni::shape_t</a></div><div class="ttdeci">std::vector&lt; size_t &gt; shape_t</div><div class="ttdoc">standard type for array shapes</div><div class="ttdef"><b>Definition:</b> types/types.hpp:294</div></div>
+<div class="line">auto <a class="code" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a> = map.<a class="code" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a>&lt;<a class="code" href="namespacepni.html#a5b5c35e86d7bd211daf1b949d3e3fc8e">shape_t</a>&gt;(3);</div>
+<div class="ttc" id="aclasspni_1_1index__map_html_a8206183be94ff5a8cb2e01d924e9dcdb"><div class="ttname"><a href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">pni::index_map::index</a></div><div class="ttdeci">ContainerT index(size_t offset) const</div><div class="ttdoc">compute index</div><div class="ttdef"><b>Definition:</b> index_map.hpp:313</div></div>
+<div class="ttc" id="anamespacepni_html_a5b5c35e86d7bd211daf1b949d3e3fc8e"><div class="ttname"><a href="namespacepni.html#a5b5c35e86d7bd211daf1b949d3e3fc8e">pni::shape_t</a></div><div class="ttdeci">std::vector&lt; size_t &gt; shape_t</div><div class="ttdoc">standard type for array shapes</div><div class="ttdef"><b>Definition:</b> types/types.hpp:298</div></div>
 </div><!-- fragment --><p> ! </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CTYPE</td><td>container type for the index </td></tr>
+    <tr><td class="paramname">ContainerT</td><td>container type for the index </td></tr>
   </table>
   </dd>
 </dl>
@@ -616,23 +617,23 @@ template&lt;typename CTYPE &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>instance of CTYPE with index values </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>instance of ContainerT with index values </dd></dl>
 
 </div>
 </div>
-<a id="a23c416562b336eb3ca853a8b7024bf2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23c416562b336eb3ca853a8b7024bf2f">&#9670;&nbsp;</a></span>max_elements()</h2>
+<a id="aefc6c5eab2ed30f1a217ee7c1eadbb74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefc6c5eab2ed30f1a217ee7c1eadbb74">&#9670;&nbsp;</a></span>max_elements()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::max_elements </td>
+          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::max_elements </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -649,21 +650,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="aedc9a3d92e12bb2cd5ff0c82a67c8423"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedc9a3d92e12bb2cd5ff0c82a67c8423">&#9670;&nbsp;</a></span>offset() <span class="overload">[1/2]</span></h2>
+<a id="aa0b3d6aae142d00ee16c06b01672fd35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0b3d6aae142d00ee16c06b01672fd35">&#9670;&nbsp;</a></span>offset() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <div class="memtemplate">
-template&lt;typename CTYPE , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;CTYPE&gt;::type                     &gt;::value                     &gt;::type&gt; </div>
+template&lt;typename ContainerT , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;ContainerT&gt;::type                     &gt;::value                     &gt;::type&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::offset </td>
+          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::offset </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classpni_1_1array__selection.html">array_selection</a> &amp;&#160;</td>
           <td class="paramname"><em>s</em>, </td>
@@ -671,7 +672,7 @@ template&lt;typename CTYPE , typename  = typename std::enable_if&lt;            
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const CTYPE &amp;&#160;</td>
+          <td class="paramtype">const ContainerT &amp;&#160;</td>
           <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
@@ -687,18 +688,18 @@ template&lt;typename CTYPE , typename  = typename std::enable_if&lt;            
 </table>
 </div><div class="memdoc">
 <p>Compute the offset in the case of a selection.</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a>&lt;....&gt; <a class="code" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a>&lt;....&gt; <a class="code" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a>;</div>
 <div class="line"><span class="keyword">typedef</span> ....            index_type;</div>
 <div class="line">  </div>
 <div class="line">array_selection s(....);</div>
-<div class="line">index_type <a class="code" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a>{...};</div>
-<div class="line"><span class="keywordtype">size_t</span> <a class="code" href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">offset</a> = map.offset(s,<a class="code" href="classpni_1_1index__map.html#acbd176e4b0850e215eaa62a82c1e7190">index</a>);</div>
-<div class="ttc" id="aclasspni_1_1index__map_html_a29d6b3bbd27809a4ab7a83ee9d45da8a"><div class="ttname"><a href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">pni::index_map::offset</a></div><div class="ttdeci">size_t offset(const CTYPE &amp;index) const</div><div class="ttdoc">compute the offset</div><div class="ttdef"><b>Definition:</b> index_map.hpp:258</div></div>
-<div class="ttc" id="aclasspni_1_1index__map_html_af45bd261f313f17daeac10833bf67b1f"><div class="ttname"><a href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">pni::index_map::map_type</a></div><div class="ttdeci">index_map&lt; storage_type, implementation_type &gt; map_type</div><div class="ttdoc">map type</div><div class="ttdef"><b>Definition:</b> index_map.hpp:94</div></div>
+<div class="line">index_type <a class="code" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a>{...};</div>
+<div class="line"><span class="keywordtype">size_t</span> <a class="code" href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">offset</a> = map.offset(s,<a class="code" href="classpni_1_1index__map.html#a8206183be94ff5a8cb2e01d924e9dcdb">index</a>);</div>
+<div class="ttc" id="aclasspni_1_1index__map_html_a07705899f78954aa0913a9b06c923ca2"><div class="ttname"><a href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">pni::index_map::map_type</a></div><div class="ttdeci">index_map&lt; storage_type, implementation_type &gt; map_type</div><div class="ttdoc">map type</div><div class="ttdef"><b>Definition:</b> index_map.hpp:94</div></div>
+<div class="ttc" id="aclasspni_1_1index__map_html_af76ea569de21c4bc4611bdf8597174f0"><div class="ttname"><a href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">pni::index_map::offset</a></div><div class="ttdeci">size_t offset(const ContainerT &amp;index) const</div><div class="ttdoc">compute the offset</div><div class="ttdef"><b>Definition:</b> index_map.hpp:258</div></div>
 </div><!-- fragment --><p><br  />
  ! </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CTYPE</td><td>container type for the index </td></tr>
+    <tr><td class="paramname">ContainerT</td><td>container type for the index </td></tr>
   </table>
   </dd>
 </dl>
@@ -713,23 +714,23 @@ template&lt;typename CTYPE , typename  = typename std::enable_if&lt;            
 
 </div>
 </div>
-<a id="a29d6b3bbd27809a4ab7a83ee9d45da8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29d6b3bbd27809a4ab7a83ee9d45da8a">&#9670;&nbsp;</a></span>offset() <span class="overload">[2/2]</span></h2>
+<a id="af76ea569de21c4bc4611bdf8597174f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af76ea569de21c4bc4611bdf8597174f0">&#9670;&nbsp;</a></span>offset() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <div class="memtemplate">
-template&lt;typename CTYPE , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;CTYPE&gt;::type                     &gt;::value                     &gt;::type&gt; </div>
+template&lt;typename ContainerT , typename  = typename std::enable_if&lt;                     std::is_compound&lt;                     typename std::remove_reference&lt;ContainerT&gt;::type                     &gt;::value                     &gt;::type&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::offset </td>
+          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::offset </td>
           <td>(</td>
-          <td class="paramtype">const CTYPE &amp;&#160;</td>
+          <td class="paramtype">const ContainerT &amp;&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -742,17 +743,17 @@ template&lt;typename CTYPE , typename  = typename std::enable_if&lt;            
 </div><div class="memdoc">
 <p>This method is used in the case where the index is passed as an lvalue reference. <br  />
 </p>
-<div class="fragment"><div class="line"><a class="code" href="classpni_1_1index__map.html#a15e8a699bed6413a010a74b1d2479d41">index_map</a> map(...);</div>
-<div class="line"><span class="keywordtype">size_t</span> <a class="code" href="classpni_1_1index__map.html#a29d6b3bbd27809a4ab7a83ee9d45da8a">offset</a> = map.offset(std::list&lt;size_t&gt;{3,2,1});</div>
+<div class="fragment"><div class="line"><a class="code" href="classpni_1_1index__map.html#ab5e5b37286c803965b604bff1a034591">index_map</a> map(...);</div>
+<div class="line"><span class="keywordtype">size_t</span> <a class="code" href="classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0">offset</a> = map.offset(std::list&lt;size_t&gt;{3,2,1});</div>
 </div><!-- fragment --><p> ! </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CTYPE</td><td>container type for index data </td></tr>
+    <tr><td class="paramname">ContainerT</td><td>container type for index data </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>instance of CTYPE with container data </td></tr>
+    <tr><td class="paramname">index</td><td>instance of ContainerT with container data </td></tr>
   </table>
   </dd>
 </dl>
@@ -760,21 +761,21 @@ template&lt;typename CTYPE , typename  = typename std::enable_if&lt;            
 
 </div>
 </div>
-<a id="afcafe0a9d85f53d033675e9a13312876"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcafe0a9d85f53d033675e9a13312876">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<a id="a44f7de6c94e65c388caf5c451a82f046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f7de6c94e65c388caf5c451a82f046">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a>&amp; <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::operator= </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a>&amp; <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&#160;</td>
           <td class="paramname"><em>m</em></td><td>)</td>
           <td></td>
         </tr>
@@ -795,21 +796,21 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a9726c949af32756ea827faec11b6c807"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9726c949af32756ea827faec11b6c807">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<a id="a8f79ac20af545fc9e4b64a99d2af0355"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f79ac20af545fc9e4b64a99d2af0355">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a>&amp; <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::operator= </td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a>&amp; <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classpni_1_1index__map.html#af45bd261f313f17daeac10833bf67b1f">map_type</a> &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classpni_1_1index__map.html#a07705899f78954aa0913a9b06c923ca2">map_type</a> &amp;&amp;&#160;</td>
           <td class="paramname"><em>m</em></td><td>)</td>
           <td></td>
         </tr>
@@ -830,19 +831,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a527261464ffda1b3bf323f0379885625"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a527261464ffda1b3bf323f0379885625">&#9670;&nbsp;</a></span>rank()</h2>
+<a id="ae05109fdce1bef5e4352a74bea059e6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae05109fdce1bef5e4352a74bea059e6a">&#9670;&nbsp;</a></span>rank()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::rank </td>
+          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::rank </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -859,19 +860,19 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 
 </div>
 </div>
-<a id="a2d8b916161343cc986f8d269f29aa2d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d8b916161343cc986f8d269f29aa2d9">&#9670;&nbsp;</a></span>size()</h2>
+<a id="acc7442c17e56458464e1761acb9d4ecc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc7442c17e56458464e1761acb9d4ecc">&#9670;&nbsp;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::size </td>
+          <td class="memname">size_t <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -883,25 +884,25 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function is a synonym for <a class="el" href="classpni_1_1index__map.html#a527261464ffda1b3bf323f0379885625" title="get number of dimensions">rank()</a> and returns the total number of dimensions.</p>
+<p>This function is a synonym for <a class="el" href="classpni_1_1index__map.html#ae05109fdce1bef5e4352a74bea059e6a" title="get number of dimensions">rank()</a> and returns the total number of dimensions.</p>
 <dl class="section return"><dt>Returns</dt><dd>number of dimensions </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a5ac81a9e963fc96fccb6d309ed4562e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ac81a9e963fc96fccb6d309ed4562e7">&#9670;&nbsp;</a></span>_shape</h2>
+<a id="aef938358c982bec7c1c862d75570d99a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef938358c982bec7c1c862d75570d99a">&#9670;&nbsp;</a></span>_shape</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
+template&lt;typename ShapeStoreT , typename MapImpT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1index__map.html#aa65964c230592fab0cdb4830c47a4f77">storage_type</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; SHAPE_STORE, MAP_IMP &gt;::_shape</td>
+          <td class="memname"><a class="el" href="classpni_1_1index__map.html#a2393d713b9eb613812c39d37040f59f8">storage_type</a> <a class="el" href="classpni_1_1index__map.html">pni::index_map</a>&lt; ShapeStoreT, MapImpT &gt;::_shape</td>
         </tr>
       </table>
   </td>
@@ -922,7 +923,7 @@ template&lt;typename SHAPE_STORE , typename MAP_IMP &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="classpni_1_1index__map.html">index_map</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

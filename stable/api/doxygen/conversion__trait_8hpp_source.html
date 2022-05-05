@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: conversion_trait.hpp Source File</title>
+<title>PNI NeXus Library: conversion_trait.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -96,19 +97,19 @@ $(document).ready(function(){initNavTree('conversion__trait_8hpp_source.html',''
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> GeneralT&gt;</div>
 <div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html">   45</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structpni_1_1conversion__trait.html">conversion_trait</a></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#a3ca31c061f45afd52097cef3c58393d0">   48</a></span>&#160;        <span class="keyword">typedef</span> T <a class="code" href="structpni_1_1conversion__trait.html#a3ca31c061f45afd52097cef3c58393d0">result_type</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#ab90dbf1b53628fc6969847e83b0ed985">   50</a></span>&#160;        <span class="keyword">typedef</span> T <a class="code" href="structpni_1_1conversion__trait.html#ab90dbf1b53628fc6969847e83b0ed985">read_type</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#a1f8451e26eaa4b88a0fac79af65bd9e6">   48</a></span>&#160;        <span class="keyword">typedef</span> GeneralT <a class="code" href="structpni_1_1conversion__trait.html#a1f8451e26eaa4b88a0fac79af65bd9e6">result_type</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#af2b147d56cf178f3199b7ff2e2912c6b">   50</a></span>&#160;        <span class="keyword">typedef</span> GeneralT <a class="code" href="structpni_1_1conversion__trait.html#af2b147d56cf178f3199b7ff2e2912c6b">read_type</a>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#ad339dbcc732885d4581f6690e8c111a7">   60</a></span>&#160;        <span class="keyword">static</span> <a class="code" href="structpni_1_1conversion__trait.html#a3ca31c061f45afd52097cef3c58393d0">result_type</a> <a class="code" href="structpni_1_1conversion__trait.html#ad339dbcc732885d4581f6690e8c111a7">convert</a>(<a class="code" href="structpni_1_1conversion__trait.html#ab90dbf1b53628fc6969847e83b0ed985">read_type</a> &amp;&amp;v)</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#a6f3d346d10718e7497d5c7368b85bda3">   60</a></span>&#160;        <span class="keyword">static</span> <a class="code" href="structpni_1_1conversion__trait.html#a1f8451e26eaa4b88a0fac79af65bd9e6">result_type</a> <a class="code" href="structpni_1_1conversion__trait.html#a6f3d346d10718e7497d5c7368b85bda3">convert</a>(<a class="code" href="structpni_1_1conversion__trait.html#af2b147d56cf178f3199b7ff2e2912c6b">read_type</a> &amp;&amp;v)</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordflow">return</span> v;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="comment">//--------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#aed925d446bc9f80398b71d1fb610298b">   75</a></span>&#160;<span class="comment"></span>        <span class="keyword">static</span> <a class="code" href="structpni_1_1conversion__trait.html#a3ca31c061f45afd52097cef3c58393d0">result_type</a> <a class="code" href="structpni_1_1conversion__trait.html#aed925d446bc9f80398b71d1fb610298b">convert</a>(<span class="keyword">const</span> <a class="code" href="structpni_1_1conversion__trait.html#ab90dbf1b53628fc6969847e83b0ed985">read_type</a> &amp;v)</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structpni_1_1conversion__trait.html#a293651ae4d482055fe32fec28a7f4531">   75</a></span>&#160;<span class="comment"></span>        <span class="keyword">static</span> <a class="code" href="structpni_1_1conversion__trait.html#a1f8451e26eaa4b88a0fac79af65bd9e6">result_type</a> <a class="code" href="structpni_1_1conversion__trait.html#a293651ae4d482055fe32fec28a7f4531">convert</a>(<span class="keyword">const</span> <a class="code" href="structpni_1_1conversion__trait.html#af2b147d56cf178f3199b7ff2e2912c6b">read_type</a> &amp;v)</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">return</span> v;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
@@ -156,10 +157,10 @@ $(document).ready(function(){initNavTree('conversion__trait_8hpp_source.html',''
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">//end of namespace</span></div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;}</div>
-<div class="ttc" id="agroup__type__classes_html_gaa09dcc7c9c6d956f63dc58e69b63beef"><div class="ttname"><a href="group__type__classes.html#gaa09dcc7c9c6d956f63dc58e69b63beef">pni::uint8</a></div><div class="ttdeci">uint8_t uint8</div><div class="ttdoc">8Bit unsigned integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:51</div></div>
-<div class="ttc" id="agroup__type__classes_html_gad97af124f0e4bca840c4b81c7c6f2bf9"><div class="ttname"><a href="group__type__classes.html#gad97af124f0e4bca840c4b81c7c6f2bf9">pni::int16</a></div><div class="ttdeci">int16_t int16</div><div class="ttdoc">16Bit signed integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:52</div></div>
-<div class="ttc" id="agroup__type__classes_html_gadc41483281916729dac71199de27a884"><div class="ttname"><a href="group__type__classes.html#gadc41483281916729dac71199de27a884">pni::int8</a></div><div class="ttdeci">int8_t int8</div><div class="ttdoc">8Bit signed integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:50</div></div>
-<div class="ttc" id="agroup__type__classes_html_gaf02f3cfedbee1cd96303e05dfbd05071"><div class="ttname"><a href="group__type__classes.html#gaf02f3cfedbee1cd96303e05dfbd05071">pni::uint16</a></div><div class="ttdeci">uint16_t uint16</div><div class="ttdoc">16Bit unsigned integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:53</div></div>
+<div class="ttc" id="agroup__type__classes_html_gaa09dcc7c9c6d956f63dc58e69b63beef"><div class="ttname"><a href="group__type__classes.html#gaa09dcc7c9c6d956f63dc58e69b63beef">pni::uint8</a></div><div class="ttdeci">uint8_t uint8</div><div class="ttdoc">8Bit unsigned integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:54</div></div>
+<div class="ttc" id="agroup__type__classes_html_gad97af124f0e4bca840c4b81c7c6f2bf9"><div class="ttname"><a href="group__type__classes.html#gad97af124f0e4bca840c4b81c7c6f2bf9">pni::int16</a></div><div class="ttdeci">int16_t int16</div><div class="ttdoc">16Bit signed integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:55</div></div>
+<div class="ttc" id="agroup__type__classes_html_gadc41483281916729dac71199de27a884"><div class="ttname"><a href="group__type__classes.html#gadc41483281916729dac71199de27a884">pni::int8</a></div><div class="ttdeci">int8_t int8</div><div class="ttdoc">8Bit signed integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:53</div></div>
+<div class="ttc" id="agroup__type__classes_html_gaf02f3cfedbee1cd96303e05dfbd05071"><div class="ttname"><a href="group__type__classes.html#gaf02f3cfedbee1cd96303e05dfbd05071">pni::uint16</a></div><div class="ttdeci">uint16_t uint16</div><div class="ttdoc">16Bit unsigned integer type</div><div class="ttdef"><b>Definition:</b> types/types.hpp:56</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
 <div class="ttc" id="astructpni_1_1conversion__trait_3_01pni_1_1int8_01_4_html_a2ce6206e126c0b10fadf591e67e267c4"><div class="ttname"><a href="structpni_1_1conversion__trait_3_01pni_1_1int8_01_4.html#a2ce6206e126c0b10fadf591e67e267c4">pni::conversion_trait&lt; pni::int8 &gt;::convert</a></div><div class="ttdeci">static result_type convert(const read_type &amp;v)</div><div class="ttdoc">convert int16 to int8</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:181</div></div>
 <div class="ttc" id="astructpni_1_1conversion__trait_3_01pni_1_1int8_01_4_html_a5535667133ba1de4f19f0ca75aaae18d"><div class="ttname"><a href="structpni_1_1conversion__trait_3_01pni_1_1int8_01_4.html#a5535667133ba1de4f19f0ca75aaae18d">pni::conversion_trait&lt; pni::int8 &gt;::result_type</a></div><div class="ttdeci">pni::int8 result_type</div><div class="ttdoc">the type requested by the user</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:146</div></div>
@@ -170,10 +171,10 @@ $(document).ready(function(){initNavTree('conversion__trait_8hpp_source.html',''
 <div class="ttc" id="astructpni_1_1conversion__trait_3_01pni_1_1uint8_01_4_html_abf76529b6225ccd3f51430e560b8de33"><div class="ttname"><a href="structpni_1_1conversion__trait_3_01pni_1_1uint8_01_4.html#abf76529b6225ccd3f51430e560b8de33">pni::conversion_trait&lt; pni::uint8 &gt;::convert</a></div><div class="ttdeci">static result_type convert(read_type &amp;&amp;v)</div><div class="ttdoc">convert uint16 to uint8</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:110</div></div>
 <div class="ttc" id="astructpni_1_1conversion__trait_3_01pni_1_1uint8_01_4_html_af9fa7dbc5ed89a7be69766fea8c145cd"><div class="ttname"><a href="structpni_1_1conversion__trait_3_01pni_1_1uint8_01_4.html#af9fa7dbc5ed89a7be69766fea8c145cd">pni::conversion_trait&lt; pni::uint8 &gt;::convert</a></div><div class="ttdeci">static result_type convert(const read_type &amp;v)</div><div class="ttdoc">convert uint16 to uint8</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:128</div></div>
 <div class="ttc" id="astructpni_1_1conversion__trait_html"><div class="ttname"><a href="structpni_1_1conversion__trait.html">pni::conversion_trait</a></div><div class="ttdoc">default conversion trait</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:46</div></div>
-<div class="ttc" id="astructpni_1_1conversion__trait_html_a3ca31c061f45afd52097cef3c58393d0"><div class="ttname"><a href="structpni_1_1conversion__trait.html#a3ca31c061f45afd52097cef3c58393d0">pni::conversion_trait::result_type</a></div><div class="ttdeci">T result_type</div><div class="ttdoc">the type requested by the user</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:48</div></div>
-<div class="ttc" id="astructpni_1_1conversion__trait_html_ab90dbf1b53628fc6969847e83b0ed985"><div class="ttname"><a href="structpni_1_1conversion__trait.html#ab90dbf1b53628fc6969847e83b0ed985">pni::conversion_trait::read_type</a></div><div class="ttdeci">T read_type</div><div class="ttdoc">the type to read</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:50</div></div>
-<div class="ttc" id="astructpni_1_1conversion__trait_html_ad339dbcc732885d4581f6690e8c111a7"><div class="ttname"><a href="structpni_1_1conversion__trait.html#ad339dbcc732885d4581f6690e8c111a7">pni::conversion_trait::convert</a></div><div class="ttdeci">static result_type convert(read_type &amp;&amp;v)</div><div class="ttdoc">conversion function</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:60</div></div>
-<div class="ttc" id="astructpni_1_1conversion__trait_html_aed925d446bc9f80398b71d1fb610298b"><div class="ttname"><a href="structpni_1_1conversion__trait.html#aed925d446bc9f80398b71d1fb610298b">pni::conversion_trait::convert</a></div><div class="ttdeci">static result_type convert(const read_type &amp;v)</div><div class="ttdoc">conversion function</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:75</div></div>
+<div class="ttc" id="astructpni_1_1conversion__trait_html_a1f8451e26eaa4b88a0fac79af65bd9e6"><div class="ttname"><a href="structpni_1_1conversion__trait.html#a1f8451e26eaa4b88a0fac79af65bd9e6">pni::conversion_trait::result_type</a></div><div class="ttdeci">GeneralT result_type</div><div class="ttdoc">the type requested by the user</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:48</div></div>
+<div class="ttc" id="astructpni_1_1conversion__trait_html_a293651ae4d482055fe32fec28a7f4531"><div class="ttname"><a href="structpni_1_1conversion__trait.html#a293651ae4d482055fe32fec28a7f4531">pni::conversion_trait::convert</a></div><div class="ttdeci">static result_type convert(const read_type &amp;v)</div><div class="ttdoc">conversion function</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:75</div></div>
+<div class="ttc" id="astructpni_1_1conversion__trait_html_a6f3d346d10718e7497d5c7368b85bda3"><div class="ttname"><a href="structpni_1_1conversion__trait.html#a6f3d346d10718e7497d5c7368b85bda3">pni::conversion_trait::convert</a></div><div class="ttdeci">static result_type convert(read_type &amp;&amp;v)</div><div class="ttdoc">conversion function</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:60</div></div>
+<div class="ttc" id="astructpni_1_1conversion__trait_html_af2b147d56cf178f3199b7ff2e2912c6b"><div class="ttname"><a href="structpni_1_1conversion__trait.html#af2b147d56cf178f3199b7ff2e2912c6b">pni::conversion_trait::read_type</a></div><div class="ttdeci">GeneralT read_type</div><div class="ttdoc">the type to read</div><div class="ttdef"><b>Definition:</b> conversion_trait.hpp:50</div></div>
 <div class="ttc" id="atypes_8hpp_html"><div class="ttname"><a href="types_8hpp.html">types.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -181,7 +182,7 @@ $(document).ready(function(){initNavTree('conversion__trait_8hpp_source.html',''
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_26da42604563804b6a08a5e543cb7dd5.html">parsers</a></li><li class="navelem"><a class="el" href="conversion__trait_8hpp.html">conversion_trait.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

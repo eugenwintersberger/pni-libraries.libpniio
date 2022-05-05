@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: pni::tiff::strip_reader Class Reference</title>
+<title>PNI NeXus Library: pni::tiff::strip_reader Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -109,10 +110,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2fd648939aaab5e2be70d71c0c80dadb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html">strip_reader</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html#a2fd648939aaab5e2be70d71c0c80dadb">operator=</a> (<a class="el" href="classpni_1_1tiff_1_1strip__reader.html">strip_reader</a> &amp;&amp;r)</td></tr>
 <tr class="memdesc:a2fd648939aaab5e2be70d71c0c80dadb"><td class="mdescLeft">&#160;</td><td class="mdescRight">move assignment operator  <a href="classpni_1_1tiff_1_1strip__reader.html#a2fd648939aaab5e2be70d71c0c80dadb">More...</a><br /></td></tr>
 <tr class="separator:a2fd648939aaab5e2be70d71c0c80dadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12011de94cde69f579405f8ecbda3a6f"><td class="memTemplParams" colspan="2">template&lt;typename CTYPE &gt; </td></tr>
-<tr class="memitem:a12011de94cde69f579405f8ecbda3a6f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html#a12011de94cde69f579405f8ecbda3a6f">read</a> (size_t c, std::ifstream &amp;stream, CTYPE &amp;data)</td></tr>
-<tr class="memdesc:a12011de94cde69f579405f8ecbda3a6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">template to read image data of various type  <a href="classpni_1_1tiff_1_1strip__reader.html#a12011de94cde69f579405f8ecbda3a6f">More...</a><br /></td></tr>
-<tr class="separator:a12011de94cde69f579405f8ecbda3a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abae9187f9d6f1b0d354126ebcadb92ec"><td class="memTemplParams" colspan="2">template&lt;typename ContainerT &gt; </td></tr>
+<tr class="memitem:abae9187f9d6f1b0d354126ebcadb92ec"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html#abae9187f9d6f1b0d354126ebcadb92ec">read</a> (size_t c, std::ifstream &amp;stream, ContainerT &amp;data)</td></tr>
+<tr class="memdesc:abae9187f9d6f1b0d354126ebcadb92ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">template to read image data of various type  <a href="classpni_1_1tiff_1_1strip__reader.html#abae9187f9d6f1b0d354126ebcadb92ec">More...</a><br /></td></tr>
+<tr class="separator:abae9187f9d6f1b0d354126ebcadb92ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -122,10 +123,10 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a735852bfeea5d4bf53dd3e80d336209d"><td class="memTemplParams" colspan="2">template&lt;typename IT , typename CTYPE &gt; </td></tr>
-<tr class="memitem:a735852bfeea5d4bf53dd3e80d336209d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html#a735852bfeea5d4bf53dd3e80d336209d">_read_interlace</a> (size_t c, std::ifstream &amp;stream, CTYPE &amp;data) const</td></tr>
-<tr class="memdesc:a735852bfeea5d4bf53dd3e80d336209d"><td class="mdescLeft">&#160;</td><td class="mdescRight">template to read interlace data  <a href="classpni_1_1tiff_1_1strip__reader.html#a735852bfeea5d4bf53dd3e80d336209d">More...</a><br /></td></tr>
-<tr class="separator:a735852bfeea5d4bf53dd3e80d336209d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a497f5e7fcd65ec909fe5f0c49784018f"><td class="memTemplParams" colspan="2">template&lt;typename BufferT , typename ContainerT &gt; </td></tr>
+<tr class="memitem:a497f5e7fcd65ec909fe5f0c49784018f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html#a497f5e7fcd65ec909fe5f0c49784018f">_read_interlace</a> (size_t c, std::ifstream &amp;stream, ContainerT &amp;data) const</td></tr>
+<tr class="memdesc:a497f5e7fcd65ec909fe5f0c49784018f"><td class="mdescLeft">&#160;</td><td class="mdescRight">template to read interlace data  <a href="classpni_1_1tiff_1_1strip__reader.html#a497f5e7fcd65ec909fe5f0c49784018f">More...</a><br /></td></tr>
+<tr class="separator:a497f5e7fcd65ec909fe5f0c49784018f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -270,13 +271,13 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a735852bfeea5d4bf53dd3e80d336209d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a735852bfeea5d4bf53dd3e80d336209d">&#9670;&nbsp;</a></span>_read_interlace()</h2>
+<a id="a497f5e7fcd65ec909fe5f0c49784018f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a497f5e7fcd65ec909fe5f0c49784018f">&#9670;&nbsp;</a></span>_read_interlace()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename IT , typename CTYPE &gt; </div>
+template&lt;typename BufferT , typename ContainerT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -296,7 +297,7 @@ template&lt;typename IT , typename CTYPE &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CTYPE &amp;&#160;</td>
+          <td class="paramtype">ContainerT &amp;&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -315,7 +316,7 @@ template&lt;typename IT , typename CTYPE &gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">IT</td><td>data type used in the image file </td></tr>
-    <tr><td class="paramname">CTYPE</td><td>container type where the data shoule be stored </td></tr>
+    <tr><td class="paramname">ContainerT</td><td>container type where the data shoule be stored </td></tr>
   </table>
   </dd>
 </dl>
@@ -418,13 +419,13 @@ template&lt;typename IT , typename CTYPE &gt; </div>
 
 </div>
 </div>
-<a id="a12011de94cde69f579405f8ecbda3a6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12011de94cde69f579405f8ecbda3a6f">&#9670;&nbsp;</a></span>read()</h2>
+<a id="abae9187f9d6f1b0d354126ebcadb92ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abae9187f9d6f1b0d354126ebcadb92ec">&#9670;&nbsp;</a></span>read()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename CTYPE &gt; </div>
+template&lt;typename ContainerT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -444,7 +445,7 @@ template&lt;typename CTYPE &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CTYPE &amp;&#160;</td>
+          <td class="paramtype">ContainerT &amp;&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -612,7 +613,7 @@ template&lt;typename CTYPE &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="namespacepni_1_1tiff.html">tiff</a></li><li class="navelem"><a class="el" href="classpni_1_1tiff_1_1strip__reader.html">strip_reader</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

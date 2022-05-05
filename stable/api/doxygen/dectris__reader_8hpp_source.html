@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: dectris_reader.hpp Source File</title>
+<title>PNI NeXus Library: dectris_reader.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -111,36 +112,36 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="comment">//-----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"></span>            <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                     <span class="keyword">typename</span> CBFT,</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                     <span class="keyword">typename</span> CTYPE</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                     <span class="keyword">typename</span> CBFBufferT,</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                     <span class="keyword">typename</span> ContainerT</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    &gt;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> read_data_byte_offset(std::ifstream &amp;is,</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                              <span class="keyword">const</span> <a class="code" href="classpni_1_1image__info.html">pni::image_info</a> &amp;info,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                              CTYPE &amp;data);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                              ContainerT &amp;data);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;             <span class="keyword">typename</span> CBFT,</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;             <span class="keyword">typename</span> CTYPE</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;             <span class="keyword">typename</span> CBFBufferT,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;             <span class="keyword">typename</span> ContainerT</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            &gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">   94</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">dectris_reader::read_data_byte_offset</a>(std::ifstream &amp;is,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                 <span class="keyword">const</span> <a class="code" href="classpni_1_1image__info.html">pni::image_info</a> &amp;, CTYPE &amp;data)</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">   94</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">dectris_reader::read_data_byte_offset</a>(std::ifstream &amp;is,</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                                 <span class="keyword">const</span> <a class="code" href="classpni_1_1image__info.html">pni::image_info</a> &amp;, ContainerT &amp;data)</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">using namespace </span><a class="code" href="namespacepni.html">pni</a>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="comment">//unsigned long i;</span></div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">//size_t ecnt = 0; // element counter</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="comment">//?? CBFT buffer = 0; // single element buffer</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="comment">//?? CBFBufferT buffer = 0; // single element buffer</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>  buffer = 0; <span class="comment">// single element buffer</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="comment">//initializing the container with 0</span></div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        std::fill(data.begin(),data.end(),0);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="comment">// typename CTYPE::iterator iter = data.begin();</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">typename</span> CTYPE::value_type v_old = 0;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="comment">// typename ContainerT::iterator iter = data.begin();</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">typename</span> ContainerT::value_type v_old = 0;</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">typename</span> CTYPE::value_type &amp;v: data)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">typename</span> ContainerT::value_type &amp;v: data)</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        {</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            v = v_old; <span class="comment">//set the new value to the previous</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
@@ -150,7 +151,7 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordflow">try</span> { is.read((<span class="keywordtype">char</span> *)(&amp;buffer),1); }</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keywordflow">catch</span>(...)</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1file__error.html">file_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1file__error.html">file_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                        <span class="stringliteral">&quot;Error reading 1Byte from the CBF stream!&quot;</span>);</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            }</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
@@ -166,7 +167,7 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <span class="keywordflow">try</span> { is.read((<span class="keywordtype">char</span> *) (&amp;buffer), 2); }</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="keywordflow">catch</span>(...)</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1file__error.html">file_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1file__error.html">file_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                        <span class="stringliteral">&quot;Error reading 2Byte from the CBF stream!&quot;</span>);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            }</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
@@ -182,7 +183,7 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keywordflow">try</span> { is.read((<span class="keywordtype">char</span>*) (&amp;buffer), 4); }</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <span class="keywordflow">catch</span>(...)</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            {</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1file__error.html">file_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1file__error.html">file_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                        <span class="stringliteral">&quot;Error reading 4byte from the CBF stream!&quot;</span>);</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            }</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
@@ -202,11 +203,11 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
 <div class="ttc" id="acbf_2types_8hpp_html"><div class="ttname"><a href="cbf_2types_8hpp.html">types.hpp</a></div></div>
 <div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html">pni::cbf::dectris_reader</a></div><div class="ttdoc">reader for DECTRIS detector data</div><div class="ttdef"><b>Definition:</b> dectris_reader.hpp:47</div></div>
-<div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html_a496d9c51ab8ca3bd6fe7558691997d00"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html#a496d9c51ab8ca3bd6fe7558691997d00">pni::cbf::dectris_reader::read_data_byte_offset</a></div><div class="ttdeci">static void read_data_byte_offset(std::ifstream &amp;is, const pni::image_info &amp;info, CTYPE &amp;data)</div><div class="ttdoc">read data</div><div class="ttdef"><b>Definition:</b> dectris_reader.hpp:94</div></div>
+<div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html_a46ebc5b447c4d60404ce0c0d6515699a"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html#a46ebc5b447c4d60404ce0c0d6515699a">pni::cbf::dectris_reader::read_data_byte_offset</a></div><div class="ttdeci">static void read_data_byte_offset(std::ifstream &amp;is, const pni::image_info &amp;info, ContainerT &amp;data)</div><div class="ttdoc">read data</div><div class="ttdef"><b>Definition:</b> dectris_reader.hpp:94</div></div>
 <div class="ttc" id="aclasspni_1_1cbf_1_1dectris__reader_html_a6a544ad872b410589f6ecc33deef28be"><div class="ttname"><a href="classpni_1_1cbf_1_1dectris__reader.html#a6a544ad872b410589f6ecc33deef28be">pni::cbf::dectris_reader::read_header</a></div><div class="ttdeci">static std::streampos read_header(std::ifstream &amp;is, std::vector&lt; pni::image_info &gt; &amp;info, compression_id &amp;ct)</div><div class="ttdoc">read header information</div></div>
 <div class="ttc" id="aclasspni_1_1file__error_html"><div class="ttname"><a href="classpni_1_1file__error.html">pni::file_error</a></div><div class="ttdoc">file IO fails</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:538</div></div>
 <div class="ttc" id="aclasspni_1_1image__info_html"><div class="ttname"><a href="classpni_1_1image__info.html">pni::image_info</a></div><div class="ttdoc">image information type</div><div class="ttdef"><b>Definition:</b> image_info.hpp:43</div></div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_a51dfad546cd33bda661305be8590d6fb"><div class="ttname"><a href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a></div><div class="ttdeci">#define EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_af42ca9eab4d41a452a46ff61e10e7be5"><div class="ttname"><a href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
 <div class="ttc" id="aimage__info_8hpp_html"><div class="ttname"><a href="image__info_8hpp.html">image_info.hpp</a></div></div>
 <div class="ttc" id="anamespacepni_1_1cbf_html_a5832842900f247913a2ff8a134042222"><div class="ttname"><a href="namespacepni_1_1cbf.html#a5832842900f247913a2ff8a134042222">pni::cbf::compression_id</a></div><div class="ttdeci">compression_id</div><div class="ttdoc">CBF compression id.</div><div class="ttdef"><b>Definition:</b> cbf/types.hpp:32</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
@@ -218,7 +219,7 @@ $(document).ready(function(){initNavTree('dectris__reader_8hpp_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_5adda928dbc4372bbe0f178f6f220a1e.html">cbf</a></li><li class="navelem"><a class="el" href="dectris__reader_8hpp.html">dectris_reader.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

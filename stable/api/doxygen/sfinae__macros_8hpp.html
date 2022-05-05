@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: sfinae_macros.hpp File Reference</title>
+<title>PNI NeXus Library: sfinae_macros.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -76,13 +77,13 @@ $(document).ready(function(){initNavTree('sfinae__macros_8hpp.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1or__t.html">pni::or_t&lt; T1, T2 &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1or__t.html">pni::or_t&lt; Operand1T, Operand2T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">or type  <a href="structpni_1_1or__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1and__t.html">pni::and_t&lt; T1, T2 &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1and__t.html">pni::and_t&lt; Operand1T, Operand2T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">and type  <a href="structpni_1_1and__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1not__t.html">pni::not_t&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1not__t.html">pni::not_t&lt; FunctionT &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">logical not  <a href="structpni_1_1not__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -93,26 +94,26 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ab82344a050f112714a4af8c1a655d23e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab82344a050f112714a4af8c1a655d23e"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ab82344a050f112714a4af8c1a655d23e">pni::invoke</a> = typename T::type</td></tr>
-<tr class="memdesc:ab82344a050f112714a4af8c1a655d23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">alias to invoke a metafunction  <a href="namespacepni.html#ab82344a050f112714a4af8c1a655d23e">More...</a><br /></td></tr>
-<tr class="separator:ab82344a050f112714a4af8c1a655d23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10d336addcb471d1a0f727cf9f91fd3f"><td class="memTemplParams" colspan="2">template&lt;typename C &gt; </td></tr>
-<tr class="memitem:a10d336addcb471d1a0f727cf9f91fd3f"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a10d336addcb471d1a0f727cf9f91fd3f">pni::enable_if</a> = invoke&lt; std::enable_if&lt; C::value &gt; &gt;</td></tr>
-<tr class="memdesc:a10d336addcb471d1a0f727cf9f91fd3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for std::enable_if  <a href="namespacepni.html#a10d336addcb471d1a0f727cf9f91fd3f">More...</a><br /></td></tr>
-<tr class="separator:a10d336addcb471d1a0f727cf9f91fd3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd02f1d6aa93285015b8478da46b0683"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:afd02f1d6aa93285015b8478da46b0683"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#afd02f1d6aa93285015b8478da46b0683">pni::is_pod</a> = std::is_pod&lt; T &gt;</td></tr>
-<tr class="memdesc:afd02f1d6aa93285015b8478da46b0683"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for std::is_pod  <a href="namespacepni.html#afd02f1d6aa93285015b8478da46b0683">More...</a><br /></td></tr>
-<tr class="separator:afd02f1d6aa93285015b8478da46b0683"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab58cc2c5d240c9aa108f7d175ad5e76f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab58cc2c5d240c9aa108f7d175ad5e76f"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ab58cc2c5d240c9aa108f7d175ad5e76f">pni::is_ptr</a> = std::is_pointer&lt; T &gt;</td></tr>
-<tr class="memdesc:ab58cc2c5d240c9aa108f7d175ad5e76f"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for std::is_pointer  <a href="namespacepni.html#ab58cc2c5d240c9aa108f7d175ad5e76f">More...</a><br /></td></tr>
-<tr class="separator:ab58cc2c5d240c9aa108f7d175ad5e76f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fd790bdb0be8efda5453adfb6b76d7d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9fd790bdb0be8efda5453adfb6b76d7d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a9fd790bdb0be8efda5453adfb6b76d7d">pni::is_cmplx</a> = is_complex_type&lt; T &gt;</td></tr>
-<tr class="memdesc:a9fd790bdb0be8efda5453adfb6b76d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for is_complex  <a href="namespacepni.html#a9fd790bdb0be8efda5453adfb6b76d7d">More...</a><br /></td></tr>
-<tr class="separator:a9fd790bdb0be8efda5453adfb6b76d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf5ed7f9b2316a8c64ff063f59271574"><td class="memTemplParams" colspan="2">template&lt;typename MetafunctionT &gt; </td></tr>
+<tr class="memitem:aaf5ed7f9b2316a8c64ff063f59271574"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aaf5ed7f9b2316a8c64ff063f59271574">pni::invoke</a> = typename MetafunctionT::type</td></tr>
+<tr class="memdesc:aaf5ed7f9b2316a8c64ff063f59271574"><td class="mdescLeft">&#160;</td><td class="mdescRight">alias to invoke a metafunction  <a href="namespacepni.html#aaf5ed7f9b2316a8c64ff063f59271574">More...</a><br /></td></tr>
+<tr class="separator:aaf5ed7f9b2316a8c64ff063f59271574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec9ea31f62e69214bab4247566bc40b3"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:aec9ea31f62e69214bab4247566bc40b3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aec9ea31f62e69214bab4247566bc40b3">pni::enable_if</a> = invoke&lt; std::enable_if&lt; GeneralT::value &gt; &gt;</td></tr>
+<tr class="memdesc:aec9ea31f62e69214bab4247566bc40b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for std::enable_if  <a href="namespacepni.html#aec9ea31f62e69214bab4247566bc40b3">More...</a><br /></td></tr>
+<tr class="separator:aec9ea31f62e69214bab4247566bc40b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2fe59951e962490d8ba70db87bccb4"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:aeb2fe59951e962490d8ba70db87bccb4"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aeb2fe59951e962490d8ba70db87bccb4">pni::is_pod</a> = std::is_pod&lt; GeneralT &gt;</td></tr>
+<tr class="memdesc:aeb2fe59951e962490d8ba70db87bccb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for std::is_pod  <a href="namespacepni.html#aeb2fe59951e962490d8ba70db87bccb4">More...</a><br /></td></tr>
+<tr class="separator:aeb2fe59951e962490d8ba70db87bccb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d78931b0153c505233cf06f62a77958"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:a3d78931b0153c505233cf06f62a77958"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a3d78931b0153c505233cf06f62a77958">pni::is_ptr</a> = std::is_pointer&lt; GeneralT &gt;</td></tr>
+<tr class="memdesc:a3d78931b0153c505233cf06f62a77958"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for std::is_pointer  <a href="namespacepni.html#a3d78931b0153c505233cf06f62a77958">More...</a><br /></td></tr>
+<tr class="separator:a3d78931b0153c505233cf06f62a77958"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b31ab9efef75d51b135757e7f80f74"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:a55b31ab9efef75d51b135757e7f80f74"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a55b31ab9efef75d51b135757e7f80f74">pni::is_cmplx</a> = is_complex_type&lt; GeneralT &gt;</td></tr>
+<tr class="memdesc:a55b31ab9efef75d51b135757e7f80f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">shortcut for is_complex  <a href="namespacepni.html#a55b31ab9efef75d51b135757e7f80f74">More...</a><br /></td></tr>
+<tr class="separator:a55b31ab9efef75d51b135757e7f80f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -120,7 +121,7 @@ Typedefs</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_1c4471ea08b1bbc2d063021f2f59ddc1.html">utilities</a></li><li class="navelem"><a class="el" href="sfinae__macros_8hpp.html">sfinae_macros.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

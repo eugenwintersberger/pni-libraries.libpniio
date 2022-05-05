@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: Data Fields - Variables</title>
+<title>PNI NeXus Library: Data Fields - Variables</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1nexus_1_1Path.html#a0fcfed0287c0fb5d9ff1da7739263d5b">pni::nexus::Path</a>
 </li>
 <li>_base_parser
-: <a class="el" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a46d7434ed7472e2d9b6cd6a36f629920">pni::parser&lt; std::complex&lt; T &gt; &gt;</a>
+: <a class="el" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1908e89da9b62ecbcd685f336a2f68d3">pni::parser&lt; std::complex&lt; BaseT &gt; &gt;</a>
 </li>
 <li>_bits
 : <a class="el" href="classpni_1_1image__channel__info.html#a59b6897a64f2793226799bb2933c5023">pni::image_channel_info</a>
@@ -100,24 +101,24 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1cbf__reader.html#a6bb7f0f71cbcede7783c5e5bc76ed348">pni::cbf_reader</a>
 </li>
 <li>_config
-: <a class="el" href="classpni_1_1parser_3_01std_1_1vector_3_01T_01_4_01_4.html#a57382efaafce6028764ad9cfbbe4e196">pni::parser&lt; std::vector&lt; T &gt; &gt;</a>
+: <a class="el" href="classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4.html#a6240efc9bf7ce60f88bf56db62657f37">pni::parser&lt; std::vector&lt; ElementT &gt; &gt;</a>
 </li>
 <li>_container
 : <a class="el" href="classpni_1_1array__iterator.html#a3e20effdc1cefae35fb157db145e39a1">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#aaf42df5ba28a27a7a9043d7fae83c259">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a5788040f612bed6434d4362c0131bdb0">pni::scalar_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1type__id__container__builder.html#a914111afaa468c8a8ce7d467767f6f1c">pni::type_id_container_builder&lt; CTYPE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a176b273bc0a3d6689a474c02a8ffbd81">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a51be1d3e2c6dbb1504d6f09e7d259d28">pni::scalar_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1type__id__container__builder.html#a4276f5d3b85cea95bcd6a29118daf1a1">pni::type_id_container_builder&lt; ContainerT &gt;</a>
 </li>
 <li>_data
-: <a class="el" href="classpni_1_1mdarray.html#aa7c30876e41a11fa7d58dd7575c0f418">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
-, <a class="el" href="classpni_1_1scalar.html#a82acd6f435c17539ba5d7038dedc8a55">pni::scalar&lt; T &gt;</a>
+: <a class="el" href="classpni_1_1mdarray.html#a4599bc937e6f06303697d544a2bf4f72">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
+, <a class="el" href="classpni_1_1scalar.html#ae6cbf01f7c0fe46bbb057c5fccf26815">pni::scalar&lt; ElementT &gt;</a>
 , <a class="el" href="classpni_1_1tiff_1_1ifd__entry.html#a99f512fad2142f0b2ca1173bfc30faab">pni::tiff::ifd_entry</a>
 </li>
 <li>_data_offset
 : <a class="el" href="classpni_1_1cbf__reader.html#a9e21401013bab1d249fa18ad68042749">pni::cbf_reader</a>
 </li>
 <li>_denominator
-: <a class="el" href="classpni_1_1tiff_1_1rational.html#af826a2580b448501848d7655734fc351">pni::tiff::rational&lt; T &gt;</a>
+: <a class="el" href="classpni_1_1tiff_1_1rational.html#a188f46a2c7649b76028903a7543e437e">pni::tiff::rational&lt; IntegerT &gt;</a>
 </li>
 <li>_description
 : <a class="el" href="classpni_1_1exception.html#ae0ceacb775eb671f4735c3cf0177ec92">pni::exception</a>
@@ -132,7 +133,8 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1tiff_1_1ifd.html#ac2fd7c5b51d392772a59a91195b4fb16">pni::tiff::ifd</a>
 </li>
 <li>_false_regex
-: <a class="el" href="classpni_1_1parser_3_01pni_1_1bool__t_01_4.html#ade6d8e185863c96289d9e37c08e07523">pni::parser&lt; pni::bool_t &gt;</a>
+: <a class="el" href="classpni_1_1parser_3_01hdf5_1_1datatype_1_1EBool_01_4.html#a54ac0adcdc8d89b090b675e4f35acf49">pni::parser&lt; hdf5::datatype::EBool &gt;</a>
+, <a class="el" href="classpni_1_1parser_3_01pni_1_1bool__t_01_4.html#ade6d8e185863c96289d9e37c08e07523">pni::parser&lt; pni::bool_t &gt;</a>
 </li>
 <li>_file
 : <a class="el" href="classpni_1_1exception__record.html#ab6350207611552ab18d253784421fac8">pni::exception_record</a>
@@ -159,15 +161,15 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1cbf__reader.html#aa1c15d92477f2253cc60be247044873f">pni::cbf_reader</a>
 </li>
 <li>_imap
-: <a class="el" href="classpni_1_1array__view.html#a7cb76a0a31334e4818d40250f0e32417">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#a990177989f24001e1c7fcc67ab664999">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#ac798b6af723434fa940ca5240df12c15">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#a9b4a01d7fb1d96d3deda4a327feb5a25">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
 </li>
 <li>_index
-: <a class="el" href="classpni_1_1array__view.html#a2711dc86f5b8fa18421cd9ce59d004b0">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#a09344fcbeb6f945dc2a9132c45aa5f83">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#aa48b7fd708da4aaadd0bd93f22396809">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#ac7ebf377ebbaf39a6a2dedb7099f035c">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
 </li>
 <li>_index_map
-: <a class="el" href="classpni_1_1index__iterator.html#a5fdc349a47517650f7689d19143e425a">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
+: <a class="el" href="classpni_1_1index__iterator.html#a4679d63ca93443aea9762637d4b2803d">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
 </li>
 <li>_int_parser
 : <a class="el" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#ac9c4984ab2d42d9c272121f80fdd9d50">pni::parser&lt; pni::value &gt;</a>
@@ -176,7 +178,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1data__reader.html#a22965f3c95b4a0b7ed770e01214bd5b0">pni::data_reader</a>
 </li>
 <li>_is_contiguous
-: <a class="el" href="classpni_1_1array__view.html#af6e1b212d7429689e712f17b4df524f8">pni::array_view&lt; ATYPE &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#a50b8e62b4fb485c827e593fddb300700">pni::array_view&lt; ArrayT &gt;</a>
 </li>
 <li>_istream
 : <a class="el" href="classpni_1_1data__reader.html#a3b4c02c0d225e7215ca9bbe327abe8f0">pni::data_reader</a>
@@ -191,7 +193,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1tiff__reader.html#ab6df980f4cd7c692832bcbf8fca85050">pni::tiff_reader</a>
 </li>
 <li>_maxsize
-: <a class="el" href="classpni_1_1container__iterator.html#aa9518629a75b8776c9add3ca23080c21">pni::container_iterator&lt; ITERABLE &gt;</a>
+: <a class="el" href="classpni_1_1container__iterator.html#a716820ea37b7339adee99384b3d96913">pni::container_iterator&lt; IterableT &gt;</a>
 </li>
 <li>_minimum_width
 : <a class="el" href="classpni_1_1format__config.html#a5bd55086c4f1fe7c4ce39f6d9c3e7816">pni::format_config</a>
@@ -204,7 +206,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1spreadsheet__reader.html#a29e9632f07f90cb573a6c219d8d55cb0">pni::spreadsheet_reader</a>
 </li>
 <li>_numerator
-: <a class="el" href="classpni_1_1tiff_1_1rational.html#a0777fc0f2896fad5d3f0ababeb2361fb">pni::tiff::rational&lt; T &gt;</a>
+: <a class="el" href="classpni_1_1tiff_1_1rational.html#a407d2c11cc78fab6724f653869d06741">pni::tiff::rational&lt; IntegerT &gt;</a>
 </li>
 <li>_nx
 : <a class="el" href="classpni_1_1image__info.html#a0b151fa9df33b6d9c4d3d3bacc073db0">pni::image_info</a>
@@ -213,7 +215,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1image__info.html#abbb40ec20351470a722d3135427c5250">pni::image_info</a>
 </li>
 <li>_object
-: <a class="el" href="classpni_1_1array__holder.html#a03ed62ab1cc36ae06d717e1c0840a789">pni::array_holder&lt; OT &gt;</a>
+: <a class="el" href="classpni_1_1array__holder.html#a9e88b30f8b5c5bccff1b088a04911908">pni::array_holder&lt; ObjectT &gt;</a>
 </li>
 <li>_offset
 : <a class="el" href="classpni_1_1array__selection.html#a40a71beee273cc44e6036b64a501ec14">pni::array_selection</a>
@@ -222,16 +224,16 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1tiff_1_1strip__reader.html#a095f2a45021211fbcb261fdbae6c8f9f">pni::tiff::strip_reader</a>
 </li>
 <li>_op1
-: <a class="el" href="classpni_1_1add__op.html#ab237e57853c807c59ae3e50dd1211573">pni::add_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1div__op.html#a13315bf7b09cccc391c3ee9d9dea8c3b">pni::div_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1mult__op.html#af3ec32dd96b899314d3c38f265c7bfbf">pni::mult_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1sub__op.html#aeccdc779592dd0e81303c00e88954426">pni::sub_op&lt; OP1T, OP2T &gt;</a>
+: <a class="el" href="classpni_1_1add__op.html#a735d0a4bea9e20731852eb1015d65543">pni::add_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1div__op.html#a7711a178e15f00930ae305cdab50fc58">pni::div_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1mult__op.html#a674018e0046c8736533f9907580cba37">pni::mult_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1sub__op.html#ab114a6a286ba896ec610d9b9561e1b6f">pni::sub_op&lt; Operand1T, Operand2T &gt;</a>
 </li>
 <li>_op2
-: <a class="el" href="classpni_1_1add__op.html#ab192e90ca3ed5fa961dc9cc836f46d5c">pni::add_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1div__op.html#a322472e93bf16549439f83bc0394f9af">pni::div_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1mult__op.html#ab947c724d5af0863cff03644f30ed26a">pni::mult_op&lt; OP1T, OP2T &gt;</a>
-, <a class="el" href="classpni_1_1sub__op.html#a6c568bdf55aad18c2dfae8bf13dd0a70">pni::sub_op&lt; OP1T, OP2T &gt;</a>
+: <a class="el" href="classpni_1_1add__op.html#a33ac36e3362fc1a6f115f5f7a9fe811e">pni::add_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1div__op.html#a690acbbceecca8f4163d8ce32e939548">pni::div_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1mult__op.html#aba9f0e9d9a4543ba06242796967d8ed8">pni::mult_op&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="classpni_1_1sub__op.html#ae45e0ecdaaa9a2c691b37c6871782b57">pni::sub_op&lt; Operand1T, Operand2T &gt;</a>
 </li>
 <li>_oshape
 : <a class="el" href="classpni_1_1array__selection.html#aaaa7db4f381f45d201f09aec335a514f">pni::array_selection</a>
@@ -240,7 +242,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1fio__reader.html#a003786d79aee6bbb26498f108bed4c9b">pni::fio_reader</a>
 </li>
 <li>_parray
-: <a class="el" href="classpni_1_1array__view.html#a92f25039220c9c429d3d53cf237de2e1">pni::array_view&lt; ATYPE &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#aa9dd24230094a608e7dba23e552f76ba">pni::array_view&lt; ArrayT &gt;</a>
 </li>
 <li>_precission
 : <a class="el" href="classpni_1_1format__config.html#ae6d98bf6ce1919da93a130863f7b9d71">pni::format_config</a>
@@ -257,15 +259,15 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">pni::parser&lt; pni::slice &gt;</a>
 </li>
 <li>_selection
-: <a class="el" href="classpni_1_1array__view.html#a4bf16e2853a4db94d021759697610f75">pni::array_view&lt; ATYPE &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#a59f5874bacc81a101ba9503b00308ef4">pni::array_view&lt; ArrayT &gt;</a>
 </li>
 <li>_sep
 : <a class="el" href="classpni_1_1container__io__config.html#ab68dac8661ac324aabd9507e2ad2ae57">pni::container_io_config</a>
 </li>
 <li>_shape
 : <a class="el" href="classpni_1_1column__info.html#aa7aef85d70399675bf570fb1ad95b057">pni::column_info</a>
-, <a class="el" href="classpni_1_1index__map.html#a5ac81a9e963fc96fccb6d309ed4562e7">pni::index_map&lt; SHAPE_STORE, MAP_IMP &gt;</a>
-, <a class="el" href="classpni_1_1static__index__map.html#ac19be740b7cd62144ed8e2d3792d62ca">pni::static_index_map&lt; MAP_IMP, DIMS &gt;</a>
+, <a class="el" href="classpni_1_1index__map.html#aef938358c982bec7c1c862d75570d99a">pni::index_map&lt; ShapeStoreT, MapImpT &gt;</a>
+, <a class="el" href="classpni_1_1static__index__map.html#a463193d2c28ac64826942cdd4d244ef3">pni::static_index_map&lt; MapImpT, TDimsN &gt;</a>
 </li>
 <li>_size
 : <a class="el" href="classpni_1_1tiff_1_1ifd__entry.html#a7721c0742016b1ab50841448ec1041bf">pni::tiff::ifd_entry</a>
@@ -274,13 +276,13 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1container__io__config.html#a56222530e1a873570c007210d8780190">pni::container_io_config</a>
 </li>
 <li>_start_offset
-: <a class="el" href="classpni_1_1array__view.html#a8b03c698d68279930e41a83b6314d42f">pni::array_view&lt; ATYPE &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#a3a833e9ea322367edb12facfa709df73">pni::array_view&lt; ArrayT &gt;</a>
 </li>
 <li>_state
 : <a class="el" href="classpni_1_1array__iterator.html#aa40b167321af988175fb7c0591e9b693">pni::array_iterator&lt; const_flag &gt;</a>
-, <a class="el" href="classpni_1_1container__iterator.html#a6bea7a3885a38ae6a87cc05caada598c">pni::container_iterator&lt; ITERABLE &gt;</a>
-, <a class="el" href="classpni_1_1index__iterator.html#aff795423876b95110989f1d1eb17cb36">pni::index_iterator&lt; INDEXT, IMT &gt;</a>
-, <a class="el" href="classpni_1_1scalar__iterator.html#a7cdcf1bdc22fc5c0ce3cfb90998e0c02">pni::scalar_iterator&lt; ITERABLE &gt;</a>
+, <a class="el" href="classpni_1_1container__iterator.html#a3ac1b26253187e163564da6ed435be58">pni::container_iterator&lt; IterableT &gt;</a>
+, <a class="el" href="classpni_1_1index__iterator.html#a2d5313e3b9b04674bf67f0004b542c21">pni::index_iterator&lt; IndexT, IndexMapT &gt;</a>
+, <a class="el" href="classpni_1_1scalar__iterator.html#a38803ce256c69eedb8525040f385e508">pni::scalar_iterator&lt; IterableT &gt;</a>
 </li>
 <li>_stop
 : <a class="el" href="classpni_1_1container__io__config.html#ae2480b64a49320d4c80ed29abf575aba">pni::container_io_config</a>
@@ -298,15 +300,16 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 , <a class="el" href="classpni_1_1tiff_1_1ifd__entry.html#a07711a81fdef814b40a10e16deb1bf00">pni::tiff::ifd_entry</a>
 </li>
 <li>_true_regex
-: <a class="el" href="classpni_1_1parser_3_01pni_1_1bool__t_01_4.html#a6f57ff34e12bf52e91e9c2c579038847">pni::parser&lt; pni::bool_t &gt;</a>
+: <a class="el" href="classpni_1_1parser_3_01hdf5_1_1datatype_1_1EBool_01_4.html#a73d27f1d97087cd0c50a337889f494c7">pni::parser&lt; hdf5::datatype::EBool &gt;</a>
+, <a class="el" href="classpni_1_1parser_3_01pni_1_1bool__t_01_4.html#a6f57ff34e12bf52e91e9c2c579038847">pni::parser&lt; pni::bool_t &gt;</a>
 </li>
 <li>_value
-: <a class="el" href="classpni_1_1binary__t.html#a95d05347c4ad20c0979f63a627e48509">pni::binary_t&lt; NTYPE &gt;</a>
+: <a class="el" href="classpni_1_1binary__t.html#ab13b05fd837c841e7759306c0cdecee4">pni::binary_t&lt; NativeT &gt;</a>
 , <a class="el" href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">pni::bool_t</a>
-, <a class="el" href="classpni_1_1value__holder.html#ae9193ea51bea6d8507fc1d4cdba6982e">pni::value_holder&lt; T &gt;</a>
+, <a class="el" href="classpni_1_1value__holder.html#a3b11a165f7db419c178449997597321c">pni::value_holder&lt; GeneralT &gt;</a>
 </li>
 <li>_value_parser
-: <a class="el" href="classpni_1_1parser_3_01std_1_1vector_3_01T_01_4_01_4.html#ad6e41c617d51ecd03122ff59a4e08363">pni::parser&lt; std::vector&lt; T &gt; &gt;</a>
+: <a class="el" href="classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4.html#a59f75af19c87748b7a703ffd5c541083">pni::parser&lt; std::vector&lt; ElementT &gt; &gt;</a>
 </li>
 </ul>
 
@@ -320,7 +323,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 <h3><a id="index_c"></a>- c -</h3><ul>
 <li>checked
-: <a class="el" href="structpni_1_1convertible.html#a348de45a4cd8e3339c62063be0567346">pni::convertible&lt; ST, TT &gt;</a>
+: <a class="el" href="structpni_1_1convertible.html#a14649c6cb92c709d9d9b070668ac1cb7">pni::convertible&lt; SourceT, TargetT &gt;</a>
 </li>
 <li>class_name_
 : <a class="el" href="classpni_1_1nexus_1_1IsBaseClass.html#ada8a3dd5cd40d805a49adc8ea2e69b02">pni::nexus::IsBaseClass</a>
@@ -356,45 +359,45 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 <h3><a id="index_i"></a>- i -</h3><ul>
 <li>is_complex
-: <a class="el" href="structpni_1_1type__info.html#a0295826ab7e58e4bb7ea2c92a0f45397">pni::type_info&lt; T &gt;</a>
+: <a class="el" href="structpni_1_1type__info.html#ad4fe667b528fbb63399ced759928ef00">pni::type_info&lt; GeneralT &gt;</a>
 </li>
 <li>is_contiguous
-: <a class="el" href="structpni_1_1container__trait.html#aeec77117f2da5723f22ea601d3969f7b">pni::container_trait&lt; CTYPE &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ATYPE_01_4_01_4.html#a8b314f47d88172509290b1fb8c9818d2">pni::container_trait&lt; array_view&lt; ATYPE &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html#abad3632040335200e7d4b9908eb48492">pni::container_trait&lt; mdarray&lt; STORAGE, IMAP, IPA &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01T_00_01N_01_4_01_4.html#a10db14a32a0827dcda336ef55777ed0b">pni::container_trait&lt; std::array&lt; T, N &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ARGS_8_8_8_01_4_01_4.html#a6984f26b5642398e1603fc3f210c9015">pni::container_trait&lt; std::list&lt; ARGS... &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ARGS_8_8_8_01_4_01_4.html#af66d289dcfbd558bae205c08371fed1a">pni::container_trait&lt; std::vector&lt; ARGS... &gt; &gt;</a>
+: <a class="el" href="structpni_1_1container__trait.html#a142bef98914099ae0089a299bdf2ee8a">pni::container_trait&lt; ContainerT &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ArrayT_01_4_01_4.html#a8c5773004523ef0bd5cdc12d6b0a060f">pni::container_trait&lt; array_view&lt; ArrayT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html#a2873ceec847d20e34423f5415006ba7b">pni::container_trait&lt; mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01DataT_00_01TDimN_01_4_01_4.html#a94c2f1255eddd56affa12c0f1e341225">pni::container_trait&lt; std::array&lt; DataT, TDimN &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ArrayArgsT_8_8_8_01_4_01_4.html#abb64b831158301580e4206123fd7e62f">pni::container_trait&lt; std::list&lt; ArrayArgsT... &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ArrayArgsT_8_8_8_01_4_01_4.html#a01141cd944bb8e8260d3c275dacdd024">pni::container_trait&lt; std::vector&lt; ArrayArgsT... &gt; &gt;</a>
 </li>
 <li>is_integer
-: <a class="el" href="structpni_1_1type__info.html#adcdd80e4c6bdde8f81222a3415880c2d">pni::type_info&lt; T &gt;</a>
+: <a class="el" href="structpni_1_1type__info.html#ab1cb60261ceaa6a7a272b98faf1dcd53">pni::type_info&lt; GeneralT &gt;</a>
 </li>
 <li>is_iterable
-: <a class="el" href="structpni_1_1container__trait.html#a2b3605383175210ca7529571504af00e">pni::container_trait&lt; CTYPE &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ATYPE_01_4_01_4.html#a0c76707f50a473acce761501f956eca8">pni::container_trait&lt; array_view&lt; ATYPE &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html#a5ddf6e4db0079113e2b06272ee0b8098">pni::container_trait&lt; mdarray&lt; STORAGE, IMAP, IPA &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01T_00_01N_01_4_01_4.html#a2c6b7a357bfa7c0b2e9c805bf11801ff">pni::container_trait&lt; std::array&lt; T, N &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ARGS_8_8_8_01_4_01_4.html#a2d2759c89f088c0b43d745ecf68fe5e0">pni::container_trait&lt; std::list&lt; ARGS... &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ARGS_8_8_8_01_4_01_4.html#abf7db7d83e20c7e825fed841f0aff7f1">pni::container_trait&lt; std::vector&lt; ARGS... &gt; &gt;</a>
+: <a class="el" href="structpni_1_1container__trait.html#a5973547cccc32111748b3efe9bd3b6d0">pni::container_trait&lt; ContainerT &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ArrayT_01_4_01_4.html#ad749f88825a603247696721c97f6b67c">pni::container_trait&lt; array_view&lt; ArrayT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html#aa3fe67501967ab3e1f6e725bca1f88e2">pni::container_trait&lt; mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01DataT_00_01TDimN_01_4_01_4.html#abd446a16a480cdb16a0acbea7d83b122">pni::container_trait&lt; std::array&lt; DataT, TDimN &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ArrayArgsT_8_8_8_01_4_01_4.html#aff609b7c6a1f28483184987033fa358b">pni::container_trait&lt; std::list&lt; ArrayArgsT... &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ArrayArgsT_8_8_8_01_4_01_4.html#ac83c3afef2546abab97ebf549701637f">pni::container_trait&lt; std::vector&lt; ArrayArgsT... &gt; &gt;</a>
 </li>
 <li>is_multidim
-: <a class="el" href="structpni_1_1container__trait.html#a9094e406cdba000544b3a15f0c64136c">pni::container_trait&lt; CTYPE &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ATYPE_01_4_01_4.html#a6d79eb5a2b1ca16e3e387442dfa4f28a">pni::container_trait&lt; array_view&lt; ATYPE &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html#a2241d6e96ef3aa10fedd8f40925e8ef6">pni::container_trait&lt; mdarray&lt; STORAGE, IMAP, IPA &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01T_00_01N_01_4_01_4.html#a95bc4cb88964851f8f2322e6a7d072ff">pni::container_trait&lt; std::array&lt; T, N &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ARGS_8_8_8_01_4_01_4.html#a3cb4215b96cd2e87dfab6354191d0022">pni::container_trait&lt; std::list&lt; ARGS... &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ARGS_8_8_8_01_4_01_4.html#a014a66cfcda71386a00d9060340f8e44">pni::container_trait&lt; std::vector&lt; ARGS... &gt; &gt;</a>
+: <a class="el" href="structpni_1_1container__trait.html#a3a4096a21bb2a31458f6d0aa04a15323">pni::container_trait&lt; ContainerT &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ArrayT_01_4_01_4.html#ab82ebd0a8f3047760d073e71e1e069c2">pni::container_trait&lt; array_view&lt; ArrayT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html#a9942aa3565b166b71d72a99341b2e12e">pni::container_trait&lt; mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01DataT_00_01TDimN_01_4_01_4.html#ac6a0bf58d22ffbb3d177d67e3dacf287">pni::container_trait&lt; std::array&lt; DataT, TDimN &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ArrayArgsT_8_8_8_01_4_01_4.html#a58cbb41bdbece90ca9a0b8941eeb1051">pni::container_trait&lt; std::list&lt; ArrayArgsT... &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ArrayArgsT_8_8_8_01_4_01_4.html#ab6e8f3e7cedb65dd8d042df4e1ba5b6b">pni::container_trait&lt; std::vector&lt; ArrayArgsT... &gt; &gt;</a>
 </li>
 <li>is_random_access
-: <a class="el" href="structpni_1_1container__trait.html#a213d73b9a8b10d28535dc425ad1e4b1f">pni::container_trait&lt; CTYPE &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ATYPE_01_4_01_4.html#a3fdae34d7458dfa65b9d73d5930ff2bd">pni::container_trait&lt; array_view&lt; ATYPE &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html#a7eeffc7194a65cbac4bcfc2c9f9d0f53">pni::container_trait&lt; mdarray&lt; STORAGE, IMAP, IPA &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01T_00_01N_01_4_01_4.html#a67c8f7a8e0e3a6070754fc3aa5792599">pni::container_trait&lt; std::array&lt; T, N &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ARGS_8_8_8_01_4_01_4.html#a3631bb6e36fc87fd7c0ec1b11e6666fd">pni::container_trait&lt; std::list&lt; ARGS... &gt; &gt;</a>
-, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ARGS_8_8_8_01_4_01_4.html#a1133167b56b8bf4f13f743bba5ac16dc">pni::container_trait&lt; std::vector&lt; ARGS... &gt; &gt;</a>
+: <a class="el" href="structpni_1_1container__trait.html#a6e52220832e4741e1b29d7555ab32099">pni::container_trait&lt; ContainerT &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01array__view_3_01ArrayT_01_4_01_4.html#a667c6309e18d57e68f96620ad45f91ad">pni::container_trait&lt; array_view&lt; ArrayT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html#a9450be48201d675e5bb67611e7edeeb2">pni::container_trait&lt; mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1array_3_01DataT_00_01TDimN_01_4_01_4.html#a50ed7a262504a5db1d7d01bb0d2724df">pni::container_trait&lt; std::array&lt; DataT, TDimN &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1list_3_01ArrayArgsT_8_8_8_01_4_01_4.html#a649173f25dec3af7cddd2427e89ed803">pni::container_trait&lt; std::list&lt; ArrayArgsT... &gt; &gt;</a>
+, <a class="el" href="structpni_1_1container__trait_3_01std_1_1vector_3_01ArrayArgsT_8_8_8_01_4_01_4.html#a5161ec7f874270c8064d8af978d16e81">pni::container_trait&lt; std::vector&lt; ArrayArgsT... &gt; &gt;</a>
 </li>
 <li>is_signed
-: <a class="el" href="structpni_1_1type__info.html#a6878c0d4a33854e9e4a0e5bd2350bba9">pni::type_info&lt; T &gt;</a>
+: <a class="el" href="structpni_1_1type__info.html#aa003a83e66f485f494f90bed98daa392">pni::type_info&lt; GeneralT &gt;</a>
 </li>
 </ul>
 
@@ -438,7 +441,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 <h3><a id="index_s"></a>- s -</h3><ul>
 <li>size
-: <a class="el" href="structpni_1_1type__info.html#aa753dab53db65d88af2f8700e181c4fb">pni::type_info&lt; T &gt;</a>
+: <a class="el" href="structpni_1_1type__info.html#af19e110f09d2d7f99ddb6ccd1c7a7529">pni::type_info&lt; GeneralT &gt;</a>
 </li>
 </ul>
 
@@ -448,48 +451,48 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 : <a class="el" href="classpni_1_1nexus_1_1PathObject.html#a9c3804524884274b7415b6be29ded02b">pni::nexus::PathObject</a>
 </li>
 <li>type_class
-: <a class="el" href="structpni_1_1type__class__map.html#ada18c5b821bad98e52a364dc0aa5948c">pni::type_class_map&lt; T &gt;</a>
+: <a class="el" href="structpni_1_1type__class__map.html#a0e49fa56714c4b8aa1a96a1da30538dc">pni::type_class_map&lt; ElementT &gt;</a>
 </li>
 <li>type_id
-: <a class="el" href="classpni_1_1array__view.html#abfc26049af97ccaeea0a44789b34235d">pni::array_view&lt; ATYPE &gt;</a>
-, <a class="el" href="classpni_1_1mdarray.html#ab2ff9ffae59516036d4f3e3fe6d72bb8">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a>
-, <a class="el" href="classpni_1_1scalar.html#a66442d0eca64506b73feac8bd027922e">pni::scalar&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1type__id__map.html#a18a355761e639d531054c311e33ba108">pni::type_id_map&lt; T &gt;</a>
+: <a class="el" href="classpni_1_1array__view.html#af46e41b592fe4465874e2d4504e1fab3">pni::array_view&lt; ArrayT &gt;</a>
+, <a class="el" href="classpni_1_1mdarray.html#ae214e54b31cdebefd65af6f02505c894">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a>
+, <a class="el" href="classpni_1_1scalar.html#a26460996eb7851ca79321fcb5609fe0e">pni::scalar&lt; ElementT &gt;</a>
+, <a class="el" href="structpni_1_1type__id__map.html#a2ec2be1a8f7a0633629fc808fad02b41">pni::type_id_map&lt; ElementT &gt;</a>
 </li>
 </ul>
 
 
 <h3><a id="index_u"></a>- u -</h3><ul>
 <li>unchecked
-: <a class="el" href="structpni_1_1convertible.html#abf3d660d0ce1fcf60ebf1ccef34a06d3">pni::convertible&lt; ST, TT &gt;</a>
+: <a class="el" href="structpni_1_1convertible.html#a83c6422a12c86fb22d32e3a3de56170a">pni::convertible&lt; SourceT, TargetT &gt;</a>
 </li>
 </ul>
 
 
 <h3><a id="index_v"></a>- v -</h3><ul>
 <li>value
-: <a class="el" href="structpni_1_1and__t.html#a2fb84ca31a9798a40fac689528cd6ff1">pni::and_t&lt; T1, T2 &gt;</a>
-, <a class="el" href="structpni_1_1checked__convertible.html#af4919e0de2e7aa0e13451c77fcd0dd09">pni::checked_convertible&lt; ST, TT &gt;</a>
-, <a class="el" href="structpni_1_1convertible.html#a8c2ef633229dd0874e09a9b274f6fb09">pni::convertible&lt; ST, TT &gt;</a>
-, <a class="el" href="structpni_1_1is__array.html#a2f342ddf282d74008a6f505fda2044a0">pni::is_array&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__complex__type.html#a58c35eb7d4d7a94528676648c516a097">pni::is_complex_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__float__type.html#a9f16ac1b027ed7fec9a299e2be241800">pni::is_float_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__index__type.html#aa8ec0a132a1a5cab0e894c4c02d0b262">pni::is_index_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__index__types.html#a7f477040e564920417d97cda23e3f7c5">pni::is_index_types&lt; ITYPES &gt;</a>
-, <a class="el" href="structpni_1_1is__integer__type.html#a7a3a0f6ae00c7a07e67d0162977e32a6">pni::is_integer_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__non__numeric__type.html#aad380ae6579b9f77ebc31fb971f0865a">pni::is_non_numeric_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__numeric__type.html#a9d99982a1bf2f89609fde1f13b4a4324">pni::is_numeric_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__primitive__type.html#a36590c99ac3acabb9dc1f454a2ddc1b5">pni::is_primitive_type&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__reference__holder.html#a30c4e217064971f810f495ba5ea7eea3">pni::is_reference_holder&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1is__reference__holder_3_01std_1_1reference__wrapper_3_01T_01_4_01_4.html#aed589f92901e06b1a89851b14e3671de">pni::is_reference_holder&lt; std::reference_wrapper&lt; T &gt; &gt;</a>
-, <a class="el" href="structpni_1_1is__valid__index.html#a71e395407c1e5f07b5b7733e471cea0d">pni::is_valid_index&lt; ITYPES &gt;</a>
-, <a class="el" href="structpni_1_1is__view__cont.html#a7a61b4809c4170f3690e61500a0917a8">pni::is_view_cont&lt; CTYPE &gt;</a>
-, <a class="el" href="structpni_1_1is__view__cont_3_01std_1_1array_3_01T_00_01N_01_4_01_4.html#aef3c6e89afcfb5c2a689fe811fb583be">pni::is_view_cont&lt; std::array&lt; T, N &gt; &gt;</a>
-, <a class="el" href="structpni_1_1is__view__cont_3_01std_1_1vector_3_01T_01_4_01_4.html#a8cc28ccda396d82c3db62b5083d7b242">pni::is_view_cont&lt; std::vector&lt; T &gt; &gt;</a>
-, <a class="el" href="structpni_1_1is__view__index.html#aea45e3c56d0f8120b824b8e513ce0a53">pni::is_view_index&lt; ITYPES &gt;</a>
-, <a class="el" href="structpni_1_1not__t.html#a2b9556ff3f580ca5d0ed33c402ee2d86">pni::not_t&lt; T &gt;</a>
-, <a class="el" href="structpni_1_1or__t.html#a1ed4e4ab6bb3302ed3a4250a73c565cf">pni::or_t&lt; T1, T2 &gt;</a>
-, <a class="el" href="structpni_1_1unchecked__convertible.html#af84c24ad371312ec9bfc09a385855c92">pni::unchecked_convertible&lt; ST, TT &gt;</a>
+: <a class="el" href="structpni_1_1and__t.html#aacf0f82f31982f17f4b9738d77a72442">pni::and_t&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="structpni_1_1checked__convertible.html#add603ddc6cc74b88a02417354894414a">pni::checked_convertible&lt; SourceT, TargetT &gt;</a>
+, <a class="el" href="structpni_1_1convertible.html#a09570027160d2493620182a3f0d5376e">pni::convertible&lt; SourceT, TargetT &gt;</a>
+, <a class="el" href="structpni_1_1is__array.html#afa4757923849de1ba63a8f3be09597f5">pni::is_array&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__complex__type.html#a87ac2fd282e498a5d17f8c626ed8a6d2">pni::is_complex_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__float__type.html#aba3f4194720a6b356e4317b311ff77ce">pni::is_float_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__index__type.html#a4f6c7cb4b39b81ce6ea5a4e3a3d33388">pni::is_index_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__index__types.html#a56cb1a214417b35cb743c1b5aaf63060">pni::is_index_types&lt; IndicesT &gt;</a>
+, <a class="el" href="structpni_1_1is__integer__type.html#ae76da89e564b291bcf8f18ff2a306852">pni::is_integer_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__non__numeric__type.html#a4eb0f9a079e2211e150180d921ba41f3">pni::is_non_numeric_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__numeric__type.html#a5aa37d848dae353361b99628a50d079a">pni::is_numeric_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__primitive__type.html#a4192a3e72477980b2f2475c3db7e548d">pni::is_primitive_type&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__reference__holder.html#a411b4fce5fc4fd2dda16a7b60533b73b">pni::is_reference_holder&lt; GeneralT &gt;</a>
+, <a class="el" href="structpni_1_1is__reference__holder_3_01std_1_1reference__wrapper_3_01GeneralT_01_4_01_4.html#a3e005d8509640aa4d5ea763c9ca82dd7">pni::is_reference_holder&lt; std::reference_wrapper&lt; GeneralT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1is__valid__index.html#a5e88fd736967ee10b5ac2c87ce3b1f83">pni::is_valid_index&lt; IndicesT &gt;</a>
+, <a class="el" href="structpni_1_1is__view__cont.html#a9368b3ef710aa737f0afc2d595712c89">pni::is_view_cont&lt; ContainerT &gt;</a>
+, <a class="el" href="structpni_1_1is__view__cont_3_01std_1_1array_3_01ElementT_00_01TDimN_01_4_01_4.html#ab1443377b491920e39ff84fe6e767079">pni::is_view_cont&lt; std::array&lt; ElementT, TDimN &gt; &gt;</a>
+, <a class="el" href="structpni_1_1is__view__cont_3_01std_1_1vector_3_01ElementT_01_4_01_4.html#a7e0878a585e07fb719b6960dcd9d5015">pni::is_view_cont&lt; std::vector&lt; ElementT &gt; &gt;</a>
+, <a class="el" href="structpni_1_1is__view__index.html#ac7180f9ce34b9902993dc63b51bddad9">pni::is_view_index&lt; IndicesT &gt;</a>
+, <a class="el" href="structpni_1_1not__t.html#a3f06818eb7b150e32e906e16d691cfe5">pni::not_t&lt; FunctionT &gt;</a>
+, <a class="el" href="structpni_1_1or__t.html#a9094f39bb2ba6aecc09d155c8cbf4fa2">pni::or_t&lt; Operand1T, Operand2T &gt;</a>
+, <a class="el" href="structpni_1_1unchecked__convertible.html#af452426e2c006a250e80baf413eb112d">pni::unchecked_convertible&lt; SourceT, TargetT &gt;</a>
 </li>
 </ul>
 
@@ -512,7 +515,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

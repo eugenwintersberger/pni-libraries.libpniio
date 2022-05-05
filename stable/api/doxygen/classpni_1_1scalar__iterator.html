@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: pni::scalar_iterator&lt; ITERABLE &gt; Class Template Reference</title>
+<title>PNI NeXus Library: pni::scalar_iterator&lt; IterableT &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -66,7 +67,7 @@ $(document).ready(function(){initNavTree('classpni_1_1scalar__iterator.html','')
 <a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
-<div class="title">pni::scalar_iterator&lt; ITERABLE &gt; Class Template Reference</div>  </div>
+<div class="title">pni::scalar_iterator&lt; IterableT &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -77,100 +78,100 @@ $(document).ready(function(){initNavTree('classpni_1_1scalar__iterator.html','')
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a30c0cb7c254d1c732f49ad5ede1497e9"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a>&lt; ITERABLE &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a></td></tr>
-<tr class="memdesc:a30c0cb7c254d1c732f49ad5ede1497e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">type of the iterator  <a href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">More...</a><br /></td></tr>
-<tr class="separator:a30c0cb7c254d1c732f49ad5ede1497e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacec10059e7dfd50c3f689300e3ae47c"><td class="memItemLeft" align="right" valign="top">typedef container_type::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a></td></tr>
-<tr class="memdesc:aacec10059e7dfd50c3f689300e3ae47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">value type of the container  <a href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">More...</a><br /></td></tr>
-<tr class="separator:aacec10059e7dfd50c3f689300e3ae47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af56c78d4fb1cf4c3687334dab68913bc"><td class="memItemLeft" align="right" valign="top">typedef std::conditional&lt; std::is_const&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a> *, <a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a> * &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#af56c78d4fb1cf4c3687334dab68913bc">pointer</a></td></tr>
-<tr class="memdesc:af56c78d4fb1cf4c3687334dab68913bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer type the iterator provides  <a href="classpni_1_1scalar__iterator.html#af56c78d4fb1cf4c3687334dab68913bc">More...</a><br /></td></tr>
-<tr class="separator:af56c78d4fb1cf4c3687334dab68913bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d9c88b9bcd5dcb619483cb964f80b54"><td class="memItemLeft" align="right" valign="top">typedef std::conditional&lt; std::is_const&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a> &amp;, <a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a> &amp; &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a9d9c88b9bcd5dcb619483cb964f80b54">reference</a></td></tr>
-<tr class="memdesc:a9d9c88b9bcd5dcb619483cb964f80b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">reference type the iterator provides  <a href="classpni_1_1scalar__iterator.html#a9d9c88b9bcd5dcb619483cb964f80b54">More...</a><br /></td></tr>
-<tr class="separator:a9d9c88b9bcd5dcb619483cb964f80b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaed2c9fe51c4c9faa1c8593fb212f41e"><td class="memItemLeft" align="right" valign="top">typedef ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#aaed2c9fe51c4c9faa1c8593fb212f41e">difference_type</a></td></tr>
-<tr class="memdesc:aaed2c9fe51c4c9faa1c8593fb212f41e"><td class="mdescLeft">&#160;</td><td class="mdescRight">difference type of the iterator  <a href="classpni_1_1scalar__iterator.html#aaed2c9fe51c4c9faa1c8593fb212f41e">More...</a><br /></td></tr>
-<tr class="separator:aaed2c9fe51c4c9faa1c8593fb212f41e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea56505c424f3297e8787b263ea51ee7"><td class="memItemLeft" align="right" valign="top">typedef std::random_access_iterator_tag&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#aea56505c424f3297e8787b263ea51ee7">iterator_category</a></td></tr>
-<tr class="memdesc:aea56505c424f3297e8787b263ea51ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">type of iterator  <a href="classpni_1_1scalar__iterator.html#aea56505c424f3297e8787b263ea51ee7">More...</a><br /></td></tr>
-<tr class="separator:aea56505c424f3297e8787b263ea51ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b48c6a8c6eb95907b9df64938bb0104"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a>&lt; IterableT &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a></td></tr>
+<tr class="memdesc:a6b48c6a8c6eb95907b9df64938bb0104"><td class="mdescLeft">&#160;</td><td class="mdescRight">type of the iterator  <a href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">More...</a><br /></td></tr>
+<tr class="separator:a6b48c6a8c6eb95907b9df64938bb0104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3328b51f2609de94e79fa20559175ff1"><td class="memItemLeft" align="right" valign="top">typedef container_type::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a></td></tr>
+<tr class="memdesc:a3328b51f2609de94e79fa20559175ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">value type of the container  <a href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">More...</a><br /></td></tr>
+<tr class="separator:a3328b51f2609de94e79fa20559175ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe5621fb8322a5b93bf3a3efb2233d1f"><td class="memItemLeft" align="right" valign="top">typedef std::conditional&lt; std::is_const&lt; IterableT &gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a> *, <a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a> * &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#afe5621fb8322a5b93bf3a3efb2233d1f">pointer</a></td></tr>
+<tr class="memdesc:afe5621fb8322a5b93bf3a3efb2233d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer type the iterator provides  <a href="classpni_1_1scalar__iterator.html#afe5621fb8322a5b93bf3a3efb2233d1f">More...</a><br /></td></tr>
+<tr class="separator:afe5621fb8322a5b93bf3a3efb2233d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a495627b391a341c81b95d7ab597839b9"><td class="memItemLeft" align="right" valign="top">typedef std::conditional&lt; std::is_const&lt; IterableT &gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a> &amp;, <a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a> &amp; &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a495627b391a341c81b95d7ab597839b9">reference</a></td></tr>
+<tr class="memdesc:a495627b391a341c81b95d7ab597839b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">reference type the iterator provides  <a href="classpni_1_1scalar__iterator.html#a495627b391a341c81b95d7ab597839b9">More...</a><br /></td></tr>
+<tr class="separator:a495627b391a341c81b95d7ab597839b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47757f6261fd1cdf1e8dcdb86d37e879"><td class="memItemLeft" align="right" valign="top">typedef ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a47757f6261fd1cdf1e8dcdb86d37e879">difference_type</a></td></tr>
+<tr class="memdesc:a47757f6261fd1cdf1e8dcdb86d37e879"><td class="mdescLeft">&#160;</td><td class="mdescRight">difference type of the iterator  <a href="classpni_1_1scalar__iterator.html#a47757f6261fd1cdf1e8dcdb86d37e879">More...</a><br /></td></tr>
+<tr class="separator:a47757f6261fd1cdf1e8dcdb86d37e879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada3ea9fcb3eec750c6a91a0ffeec3ea6"><td class="memItemLeft" align="right" valign="top">typedef std::random_access_iterator_tag&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#ada3ea9fcb3eec750c6a91a0ffeec3ea6">iterator_category</a></td></tr>
+<tr class="memdesc:ada3ea9fcb3eec750c6a91a0ffeec3ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">type of iterator  <a href="classpni_1_1scalar__iterator.html#ada3ea9fcb3eec750c6a91a0ffeec3ea6">More...</a><br /></td></tr>
+<tr class="separator:ada3ea9fcb3eec750c6a91a0ffeec3ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a53f0599cf1d2639c4197c720fcf5acd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a53f0599cf1d2639c4197c720fcf5acd6">scalar_iterator</a> (ITERABLE *container, size_t <a class="el" href="classpni_1_1scalar__iterator.html#acb50b402645933c04ddeaccfee7ead74">state</a>=0)</td></tr>
-<tr class="memdesc:a53f0599cf1d2639c4197c720fcf5acd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">standard constructor  <a href="classpni_1_1scalar__iterator.html#a53f0599cf1d2639c4197c720fcf5acd6">More...</a><br /></td></tr>
-<tr class="separator:a53f0599cf1d2639c4197c720fcf5acd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99855785276a79a0ccec4d9d9b5b5601"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a99855785276a79a0ccec4d9d9b5b5601">scalar_iterator</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;i)</td></tr>
-<tr class="memdesc:a99855785276a79a0ccec4d9d9b5b5601"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy constructor  <a href="classpni_1_1scalar__iterator.html#a99855785276a79a0ccec4d9d9b5b5601">More...</a><br /></td></tr>
-<tr class="separator:a99855785276a79a0ccec4d9d9b5b5601"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d253b4819407a7023734f3b01f04310"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a1d253b4819407a7023734f3b01f04310">operator bool</a> () const</td></tr>
-<tr class="memdesc:a1d253b4819407a7023734f3b01f04310"><td class="mdescLeft">&#160;</td><td class="mdescRight">conversion operator  <a href="classpni_1_1scalar__iterator.html#a1d253b4819407a7023734f3b01f04310">More...</a><br /></td></tr>
-<tr class="separator:a1d253b4819407a7023734f3b01f04310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64f60ee9afa2963c535abf3d1cdbf568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a9d9c88b9bcd5dcb619483cb964f80b54">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a64f60ee9afa2963c535abf3d1cdbf568">operator*</a> ()</td></tr>
-<tr class="memdesc:a64f60ee9afa2963c535abf3d1cdbf568"><td class="mdescLeft">&#160;</td><td class="mdescRight">dereferencing operator  <a href="classpni_1_1scalar__iterator.html#a64f60ee9afa2963c535abf3d1cdbf568">More...</a><br /></td></tr>
-<tr class="separator:a64f60ee9afa2963c535abf3d1cdbf568"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35c7d8d6691d8b4761920ec5ae4f5748"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#af56c78d4fb1cf4c3687334dab68913bc">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a35c7d8d6691d8b4761920ec5ae4f5748">operator-&gt;</a> ()</td></tr>
-<tr class="memdesc:a35c7d8d6691d8b4761920ec5ae4f5748"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer access operator  <a href="classpni_1_1scalar__iterator.html#a35c7d8d6691d8b4761920ec5ae4f5748">More...</a><br /></td></tr>
-<tr class="separator:a35c7d8d6691d8b4761920ec5ae4f5748"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c6fe127c0770ca466bd29b0b7e1d752"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a3c6fe127c0770ca466bd29b0b7e1d752">operator++</a> ()</td></tr>
-<tr class="memdesc:a3c6fe127c0770ca466bd29b0b7e1d752"><td class="mdescLeft">&#160;</td><td class="mdescRight">increment iterator position  <a href="classpni_1_1scalar__iterator.html#a3c6fe127c0770ca466bd29b0b7e1d752">More...</a><br /></td></tr>
-<tr class="separator:a3c6fe127c0770ca466bd29b0b7e1d752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb87e13a76dccd3622ec952f4f4a84f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#afb87e13a76dccd3622ec952f4f4a84f6">operator++</a> (int)</td></tr>
-<tr class="memdesc:afb87e13a76dccd3622ec952f4f4a84f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">increment iterator position  <a href="classpni_1_1scalar__iterator.html#afb87e13a76dccd3622ec952f4f4a84f6">More...</a><br /></td></tr>
-<tr class="separator:afb87e13a76dccd3622ec952f4f4a84f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6950cb4323f347e5b31fde4c5b9e1e06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a6950cb4323f347e5b31fde4c5b9e1e06">operator--</a> ()</td></tr>
-<tr class="memdesc:a6950cb4323f347e5b31fde4c5b9e1e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrement operators  <a href="classpni_1_1scalar__iterator.html#a6950cb4323f347e5b31fde4c5b9e1e06">More...</a><br /></td></tr>
-<tr class="separator:a6950cb4323f347e5b31fde4c5b9e1e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03b08d2b8139f6d2c1cc2dc60ba90f86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a03b08d2b8139f6d2c1cc2dc60ba90f86">operator--</a> (int)</td></tr>
-<tr class="memdesc:a03b08d2b8139f6d2c1cc2dc60ba90f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrement operators  <a href="classpni_1_1scalar__iterator.html#a03b08d2b8139f6d2c1cc2dc60ba90f86">More...</a><br /></td></tr>
-<tr class="separator:a03b08d2b8139f6d2c1cc2dc60ba90f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9662c854d6da9771e32bae667e6a3c82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a9662c854d6da9771e32bae667e6a3c82">operator+=</a> (ssize_t i)</td></tr>
-<tr class="memdesc:a9662c854d6da9771e32bae667e6a3c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">compound assignment with +=  <a href="classpni_1_1scalar__iterator.html#a9662c854d6da9771e32bae667e6a3c82">More...</a><br /></td></tr>
-<tr class="separator:a9662c854d6da9771e32bae667e6a3c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85701e2b3160e8e99d7d56563b122fc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a85701e2b3160e8e99d7d56563b122fc4">operator-=</a> (ssize_t i)</td></tr>
-<tr class="memdesc:a85701e2b3160e8e99d7d56563b122fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">compound assignment with -=  <a href="classpni_1_1scalar__iterator.html#a85701e2b3160e8e99d7d56563b122fc4">More...</a><br /></td></tr>
-<tr class="separator:a85701e2b3160e8e99d7d56563b122fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8eae18883b398135abb7e8940f10087b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a8eae18883b398135abb7e8940f10087b">operator==</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;a)</td></tr>
-<tr class="memdesc:a8eae18883b398135abb7e8940f10087b"><td class="mdescLeft">&#160;</td><td class="mdescRight">comparsion operator - equality  <a href="classpni_1_1scalar__iterator.html#a8eae18883b398135abb7e8940f10087b">More...</a><br /></td></tr>
-<tr class="separator:a8eae18883b398135abb7e8940f10087b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93793e935756ca7055ef4d62531fb409"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a93793e935756ca7055ef4d62531fb409">operator!=</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;a)</td></tr>
-<tr class="memdesc:a93793e935756ca7055ef4d62531fb409"><td class="mdescLeft">&#160;</td><td class="mdescRight">comparison operator - inequality  <a href="classpni_1_1scalar__iterator.html#a93793e935756ca7055ef4d62531fb409">More...</a><br /></td></tr>
-<tr class="separator:a93793e935756ca7055ef4d62531fb409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a114d241a66de24fbfcab9fa75413f041"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a114d241a66de24fbfcab9fa75413f041">operator&lt;</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;b)</td></tr>
-<tr class="memdesc:a114d241a66de24fbfcab9fa75413f041"><td class="mdescLeft">&#160;</td><td class="mdescRight">lesser than operator  <a href="classpni_1_1scalar__iterator.html#a114d241a66de24fbfcab9fa75413f041">More...</a><br /></td></tr>
-<tr class="separator:a114d241a66de24fbfcab9fa75413f041"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67d60d27f0e218443d97a896e4c936ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a67d60d27f0e218443d97a896e4c936ca">operator&lt;=</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;b)</td></tr>
-<tr class="memdesc:a67d60d27f0e218443d97a896e4c936ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">lesser than equal operator  <a href="classpni_1_1scalar__iterator.html#a67d60d27f0e218443d97a896e4c936ca">More...</a><br /></td></tr>
-<tr class="separator:a67d60d27f0e218443d97a896e4c936ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cae2619bf3f4dde392c4d8a82c43a18"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a6cae2619bf3f4dde392c4d8a82c43a18">operator&gt;</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;b)</td></tr>
-<tr class="memdesc:a6cae2619bf3f4dde392c4d8a82c43a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">greater than operator  <a href="classpni_1_1scalar__iterator.html#a6cae2619bf3f4dde392c4d8a82c43a18">More...</a><br /></td></tr>
-<tr class="separator:a6cae2619bf3f4dde392c4d8a82c43a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e3c80551b1be67478c928a3e811f8b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a1e3c80551b1be67478c928a3e811f8b3">operator&gt;=</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;b)</td></tr>
-<tr class="memdesc:a1e3c80551b1be67478c928a3e811f8b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">greater equal than operator  <a href="classpni_1_1scalar__iterator.html#a1e3c80551b1be67478c928a3e811f8b3">More...</a><br /></td></tr>
-<tr class="separator:a1e3c80551b1be67478c928a3e811f8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb50b402645933c04ddeaccfee7ead74"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#acb50b402645933c04ddeaccfee7ead74">state</a> () const</td></tr>
-<tr class="memdesc:acb50b402645933c04ddeaccfee7ead74"><td class="mdescLeft">&#160;</td><td class="mdescRight">get state of the iterator  <a href="classpni_1_1scalar__iterator.html#acb50b402645933c04ddeaccfee7ead74">More...</a><br /></td></tr>
-<tr class="separator:acb50b402645933c04ddeaccfee7ead74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc89e3df126fb1c67dbaf6b9fa99b8cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#afc89e3df126fb1c67dbaf6b9fa99b8cc">scalar_iterator</a> (IterableT *container, size_t <a class="el" href="classpni_1_1scalar__iterator.html#a409e8f7cb34034688cf84e5dcd26d483">state</a>=0)</td></tr>
+<tr class="memdesc:afc89e3df126fb1c67dbaf6b9fa99b8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">standard constructor  <a href="classpni_1_1scalar__iterator.html#afc89e3df126fb1c67dbaf6b9fa99b8cc">More...</a><br /></td></tr>
+<tr class="separator:afc89e3df126fb1c67dbaf6b9fa99b8cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82994e89f0eeef63b18243b8e71a0835"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a82994e89f0eeef63b18243b8e71a0835">scalar_iterator</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;i)</td></tr>
+<tr class="memdesc:a82994e89f0eeef63b18243b8e71a0835"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy constructor  <a href="classpni_1_1scalar__iterator.html#a82994e89f0eeef63b18243b8e71a0835">More...</a><br /></td></tr>
+<tr class="separator:a82994e89f0eeef63b18243b8e71a0835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7186ee6fd00c2b3d2d7ce2faf486677f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a7186ee6fd00c2b3d2d7ce2faf486677f">operator bool</a> () const</td></tr>
+<tr class="memdesc:a7186ee6fd00c2b3d2d7ce2faf486677f"><td class="mdescLeft">&#160;</td><td class="mdescRight">conversion operator  <a href="classpni_1_1scalar__iterator.html#a7186ee6fd00c2b3d2d7ce2faf486677f">More...</a><br /></td></tr>
+<tr class="separator:a7186ee6fd00c2b3d2d7ce2faf486677f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab59f08990d4dfb5a4a367f213414b2d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a495627b391a341c81b95d7ab597839b9">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#ab59f08990d4dfb5a4a367f213414b2d9">operator*</a> ()</td></tr>
+<tr class="memdesc:ab59f08990d4dfb5a4a367f213414b2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">dereferencing operator  <a href="classpni_1_1scalar__iterator.html#ab59f08990d4dfb5a4a367f213414b2d9">More...</a><br /></td></tr>
+<tr class="separator:ab59f08990d4dfb5a4a367f213414b2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61bb754eb440e78cf5b349d428164438"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#afe5621fb8322a5b93bf3a3efb2233d1f">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a61bb754eb440e78cf5b349d428164438">operator-&gt;</a> ()</td></tr>
+<tr class="memdesc:a61bb754eb440e78cf5b349d428164438"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer access operator  <a href="classpni_1_1scalar__iterator.html#a61bb754eb440e78cf5b349d428164438">More...</a><br /></td></tr>
+<tr class="separator:a61bb754eb440e78cf5b349d428164438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a7c3adc02ed3228d4d522dd547f1664"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a2a7c3adc02ed3228d4d522dd547f1664">operator++</a> ()</td></tr>
+<tr class="memdesc:a2a7c3adc02ed3228d4d522dd547f1664"><td class="mdescLeft">&#160;</td><td class="mdescRight">increment iterator position  <a href="classpni_1_1scalar__iterator.html#a2a7c3adc02ed3228d4d522dd547f1664">More...</a><br /></td></tr>
+<tr class="separator:a2a7c3adc02ed3228d4d522dd547f1664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dc5d84c314fe8a68fae99ccfe69063c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a2dc5d84c314fe8a68fae99ccfe69063c">operator++</a> (int)</td></tr>
+<tr class="memdesc:a2dc5d84c314fe8a68fae99ccfe69063c"><td class="mdescLeft">&#160;</td><td class="mdescRight">increment iterator position  <a href="classpni_1_1scalar__iterator.html#a2dc5d84c314fe8a68fae99ccfe69063c">More...</a><br /></td></tr>
+<tr class="separator:a2dc5d84c314fe8a68fae99ccfe69063c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a248bdf9a7821f58f231e969e292047e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a248bdf9a7821f58f231e969e292047e5">operator--</a> ()</td></tr>
+<tr class="memdesc:a248bdf9a7821f58f231e969e292047e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrement operators  <a href="classpni_1_1scalar__iterator.html#a248bdf9a7821f58f231e969e292047e5">More...</a><br /></td></tr>
+<tr class="separator:a248bdf9a7821f58f231e969e292047e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3579d447ab444ddd877e8ca0245189ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a3579d447ab444ddd877e8ca0245189ed">operator--</a> (int)</td></tr>
+<tr class="memdesc:a3579d447ab444ddd877e8ca0245189ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrement operators  <a href="classpni_1_1scalar__iterator.html#a3579d447ab444ddd877e8ca0245189ed">More...</a><br /></td></tr>
+<tr class="separator:a3579d447ab444ddd877e8ca0245189ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c202f8877e67d57c835ff664809b724"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a5c202f8877e67d57c835ff664809b724">operator+=</a> (ssize_t i)</td></tr>
+<tr class="memdesc:a5c202f8877e67d57c835ff664809b724"><td class="mdescLeft">&#160;</td><td class="mdescRight">compound assignment with +=  <a href="classpni_1_1scalar__iterator.html#a5c202f8877e67d57c835ff664809b724">More...</a><br /></td></tr>
+<tr class="separator:a5c202f8877e67d57c835ff664809b724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e0c7f4fb32d9e0027ebea1aaf9db866"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a0e0c7f4fb32d9e0027ebea1aaf9db866">operator-=</a> (ssize_t i)</td></tr>
+<tr class="memdesc:a0e0c7f4fb32d9e0027ebea1aaf9db866"><td class="mdescLeft">&#160;</td><td class="mdescRight">compound assignment with -=  <a href="classpni_1_1scalar__iterator.html#a0e0c7f4fb32d9e0027ebea1aaf9db866">More...</a><br /></td></tr>
+<tr class="separator:a0e0c7f4fb32d9e0027ebea1aaf9db866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f27b95d85e95ed03f013d26e356cdc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#af5f27b95d85e95ed03f013d26e356cdc">operator==</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;a)</td></tr>
+<tr class="memdesc:af5f27b95d85e95ed03f013d26e356cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">comparsion operator - equality  <a href="classpni_1_1scalar__iterator.html#af5f27b95d85e95ed03f013d26e356cdc">More...</a><br /></td></tr>
+<tr class="separator:af5f27b95d85e95ed03f013d26e356cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c56f9ae588918bc12c6e01bdcc2d2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#ad7c56f9ae588918bc12c6e01bdcc2d2f">operator!=</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;a)</td></tr>
+<tr class="memdesc:ad7c56f9ae588918bc12c6e01bdcc2d2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">comparison operator - inequality  <a href="classpni_1_1scalar__iterator.html#ad7c56f9ae588918bc12c6e01bdcc2d2f">More...</a><br /></td></tr>
+<tr class="separator:ad7c56f9ae588918bc12c6e01bdcc2d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a5aedb1ad1097f1581316b35135d97"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a53a5aedb1ad1097f1581316b35135d97">operator&lt;</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;b)</td></tr>
+<tr class="memdesc:a53a5aedb1ad1097f1581316b35135d97"><td class="mdescLeft">&#160;</td><td class="mdescRight">lesser than operator  <a href="classpni_1_1scalar__iterator.html#a53a5aedb1ad1097f1581316b35135d97">More...</a><br /></td></tr>
+<tr class="separator:a53a5aedb1ad1097f1581316b35135d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59d9534196d5b075260b0fe34b4c6b75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a59d9534196d5b075260b0fe34b4c6b75">operator&lt;=</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;b)</td></tr>
+<tr class="memdesc:a59d9534196d5b075260b0fe34b4c6b75"><td class="mdescLeft">&#160;</td><td class="mdescRight">lesser than equal operator  <a href="classpni_1_1scalar__iterator.html#a59d9534196d5b075260b0fe34b4c6b75">More...</a><br /></td></tr>
+<tr class="separator:a59d9534196d5b075260b0fe34b4c6b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd64dfd160bd66ee8738d21af5f64733"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#afd64dfd160bd66ee8738d21af5f64733">operator&gt;</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;b)</td></tr>
+<tr class="memdesc:afd64dfd160bd66ee8738d21af5f64733"><td class="mdescLeft">&#160;</td><td class="mdescRight">greater than operator  <a href="classpni_1_1scalar__iterator.html#afd64dfd160bd66ee8738d21af5f64733">More...</a><br /></td></tr>
+<tr class="separator:afd64dfd160bd66ee8738d21af5f64733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17781ad60aedb4a1c4a17c5ced35c96b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a17781ad60aedb4a1c4a17c5ced35c96b">operator&gt;=</a> (const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;b)</td></tr>
+<tr class="memdesc:a17781ad60aedb4a1c4a17c5ced35c96b"><td class="mdescLeft">&#160;</td><td class="mdescRight">greater equal than operator  <a href="classpni_1_1scalar__iterator.html#a17781ad60aedb4a1c4a17c5ced35c96b">More...</a><br /></td></tr>
+<tr class="separator:a17781ad60aedb4a1c4a17c5ced35c96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a409e8f7cb34034688cf84e5dcd26d483"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a409e8f7cb34034688cf84e5dcd26d483">state</a> () const</td></tr>
+<tr class="memdesc:a409e8f7cb34034688cf84e5dcd26d483"><td class="mdescLeft">&#160;</td><td class="mdescRight">get state of the iterator  <a href="classpni_1_1scalar__iterator.html#a409e8f7cb34034688cf84e5dcd26d483">More...</a><br /></td></tr>
+<tr class="separator:a409e8f7cb34034688cf84e5dcd26d483"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:a8577fee6f4013377463c077a3167d67c"><td class="memItemLeft" align="right" valign="top">typedef std::remove_const&lt; ITERABLE &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a8577fee6f4013377463c077a3167d67c">container_type</a></td></tr>
-<tr class="memdesc:a8577fee6f4013377463c077a3167d67c"><td class="mdescLeft">&#160;</td><td class="mdescRight">extract the container type from the template argument (by  <a href="classpni_1_1scalar__iterator.html#a8577fee6f4013377463c077a3167d67c">More...</a><br /></td></tr>
-<tr class="separator:a8577fee6f4013377463c077a3167d67c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf56a8d6fd830a1ef55c8fc24d75db8b"><td class="memItemLeft" align="right" valign="top">typedef std::remove_const&lt; IterableT &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#aaf56a8d6fd830a1ef55c8fc24d75db8b">container_type</a></td></tr>
+<tr class="memdesc:aaf56a8d6fd830a1ef55c8fc24d75db8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">extract the container type from the template argument (by  <a href="classpni_1_1scalar__iterator.html#aaf56a8d6fd830a1ef55c8fc24d75db8b">More...</a><br /></td></tr>
+<tr class="separator:aaf56a8d6fd830a1ef55c8fc24d75db8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a5788040f612bed6434d4362c0131bdb0"><td class="memItemLeft" align="right" valign="top">ITERABLE *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a5788040f612bed6434d4362c0131bdb0">_container</a></td></tr>
-<tr class="memdesc:a5788040f612bed6434d4362c0131bdb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to the container object  <a href="classpni_1_1scalar__iterator.html#a5788040f612bed6434d4362c0131bdb0">More...</a><br /></td></tr>
-<tr class="separator:a5788040f612bed6434d4362c0131bdb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cdcf1bdc22fc5c0ce3cfb90998e0c02"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a7cdcf1bdc22fc5c0ce3cfb90998e0c02">_state</a></td></tr>
-<tr class="memdesc:a7cdcf1bdc22fc5c0ce3cfb90998e0c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">the internal state of the iterator  <a href="classpni_1_1scalar__iterator.html#a7cdcf1bdc22fc5c0ce3cfb90998e0c02">More...</a><br /></td></tr>
-<tr class="separator:a7cdcf1bdc22fc5c0ce3cfb90998e0c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51be1d3e2c6dbb1504d6f09e7d259d28"><td class="memItemLeft" align="right" valign="top">IterableT *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a51be1d3e2c6dbb1504d6f09e7d259d28">_container</a></td></tr>
+<tr class="memdesc:a51be1d3e2c6dbb1504d6f09e7d259d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">pointer to the container object  <a href="classpni_1_1scalar__iterator.html#a51be1d3e2c6dbb1504d6f09e7d259d28">More...</a><br /></td></tr>
+<tr class="separator:a51be1d3e2c6dbb1504d6f09e7d259d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38803ce256c69eedb8525040f385e508"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar__iterator.html#a38803ce256c69eedb8525040f385e508">_state</a></td></tr>
+<tr class="memdesc:a38803ce256c69eedb8525040f385e508"><td class="mdescLeft">&#160;</td><td class="mdescRight">the internal state of the iterator  <a href="classpni_1_1scalar__iterator.html#a38803ce256c69eedb8525040f385e508">More...</a><br /></td></tr>
+<tr class="separator:a38803ce256c69eedb8525040f385e508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ITERABLE&gt;<br />
-class pni::scalar_iterator&lt; ITERABLE &gt;</h3>
+<div class="textblock"><h3>template&lt;typename IterableT&gt;<br />
+class pni::scalar_iterator&lt; IterableT &gt;</h3>
 
 <p>&lt;&gt;</p>
 <p>This iterator is specifically designed to loop infinitely over a scalar value. As there is no end of sequence and thus no 'end' iterator one cannot use this to loop over a range like this</p>
@@ -184,24 +185,24 @@ class pni::scalar_iterator&lt; ITERABLE &gt;</h3>
 </div><!-- fragment --><p> ! Although the iterator implements the interface of a bidirectional iterator (including all operators) it always refers to the same scalar value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">ITERABLE</td><td>the container to iterate over </td></tr>
+    <tr><td class="paramname">IterableT</td><td>the container to iterate over </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a8577fee6f4013377463c077a3167d67c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8577fee6f4013377463c077a3167d67c">&#9670;&nbsp;</a></span>container_type</h2>
+<a id="aaf56a8d6fd830a1ef55c8fc24d75db8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf56a8d6fd830a1ef55c8fc24d75db8b">&#9670;&nbsp;</a></span>container_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::remove_const&lt;ITERABLE&gt;::type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a8577fee6f4013377463c077a3167d67c">container_type</a></td>
+          <td class="memname">typedef std::remove_const&lt;IterableT&gt;::type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#aaf56a8d6fd830a1ef55c8fc24d75db8b">container_type</a></td>
         </tr>
       </table>
   </td>
@@ -213,96 +214,96 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="aaed2c9fe51c4c9faa1c8593fb212f41e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaed2c9fe51c4c9faa1c8593fb212f41e">&#9670;&nbsp;</a></span>difference_type</h2>
+<a id="a47757f6261fd1cdf1e8dcdb86d37e879"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47757f6261fd1cdf1e8dcdb86d37e879">&#9670;&nbsp;</a></span>difference_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef ssize_t <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#aaed2c9fe51c4c9faa1c8593fb212f41e">difference_type</a></td>
+          <td class="memname">typedef ssize_t <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a47757f6261fd1cdf1e8dcdb86d37e879">difference_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aea56505c424f3297e8787b263ea51ee7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea56505c424f3297e8787b263ea51ee7">&#9670;&nbsp;</a></span>iterator_category</h2>
+<a id="ada3ea9fcb3eec750c6a91a0ffeec3ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada3ea9fcb3eec750c6a91a0ffeec3ea6">&#9670;&nbsp;</a></span>iterator_category</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::random_access_iterator_tag <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#aea56505c424f3297e8787b263ea51ee7">iterator_category</a></td>
+          <td class="memname">typedef std::random_access_iterator_tag <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#ada3ea9fcb3eec750c6a91a0ffeec3ea6">iterator_category</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a30c0cb7c254d1c732f49ad5ede1497e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30c0cb7c254d1c732f49ad5ede1497e9">&#9670;&nbsp;</a></span>iterator_type</h2>
+<a id="a6b48c6a8c6eb95907b9df64938bb0104"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b48c6a8c6eb95907b9df64938bb0104">&#9670;&nbsp;</a></span>iterator_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a>&lt;ITERABLE&gt; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a></td>
+          <td class="memname">typedef <a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a>&lt;IterableT&gt; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af56c78d4fb1cf4c3687334dab68913bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af56c78d4fb1cf4c3687334dab68913bc">&#9670;&nbsp;</a></span>pointer</h2>
+<a id="afe5621fb8322a5b93bf3a3efb2233d1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe5621fb8322a5b93bf3a3efb2233d1f">&#9670;&nbsp;</a></span>pointer</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::conditional&lt;std::is_const&lt;ITERABLE&gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a>*,<a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a> *&gt;::type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#af56c78d4fb1cf4c3687334dab68913bc">pointer</a></td>
+          <td class="memname">typedef std::conditional&lt;std::is_const&lt;IterableT&gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a>*,<a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a> *&gt;::type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#afe5621fb8322a5b93bf3a3efb2233d1f">pointer</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9d9c88b9bcd5dcb619483cb964f80b54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d9c88b9bcd5dcb619483cb964f80b54">&#9670;&nbsp;</a></span>reference</h2>
+<a id="a495627b391a341c81b95d7ab597839b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a495627b391a341c81b95d7ab597839b9">&#9670;&nbsp;</a></span>reference</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::conditional&lt;std::is_const&lt;ITERABLE&gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a>&amp;,<a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a>&amp;&gt;::type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a9d9c88b9bcd5dcb619483cb964f80b54">reference</a></td>
+          <td class="memname">typedef std::conditional&lt;std::is_const&lt;IterableT&gt;::<a class="el" href="classpni_1_1value.html">value</a>, const <a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a>&amp;,<a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a>&amp;&gt;::type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a495627b391a341c81b95d7ab597839b9">reference</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aacec10059e7dfd50c3f689300e3ae47c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacec10059e7dfd50c3f689300e3ae47c">&#9670;&nbsp;</a></span>value_type</h2>
+<a id="a3328b51f2609de94e79fa20559175ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3328b51f2609de94e79fa20559175ff1">&#9670;&nbsp;</a></span>value_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef container_type::value_type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#aacec10059e7dfd50c3f689300e3ae47c">value_type</a></td>
+          <td class="memname">typedef container_type::value_type <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html#a3328b51f2609de94e79fa20559175ff1">value_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -310,21 +311,21 @@ template&lt;typename ITERABLE &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a53f0599cf1d2639c4197c720fcf5acd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53f0599cf1d2639c4197c720fcf5acd6">&#9670;&nbsp;</a></span>scalar_iterator() <span class="overload">[1/2]</span></h2>
+<a id="afc89e3df126fb1c67dbaf6b9fa99b8cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc89e3df126fb1c67dbaf6b9fa99b8cc">&#9670;&nbsp;</a></span>scalar_iterator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a> </td>
           <td>(</td>
-          <td class="paramtype">ITERABLE *&#160;</td>
+          <td class="paramtype">IterableT *&#160;</td>
           <td class="paramname"><em>container</em>, </td>
         </tr>
         <tr>
@@ -356,21 +357,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a99855785276a79a0ccec4d9d9b5b5601"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99855785276a79a0ccec4d9d9b5b5601">&#9670;&nbsp;</a></span>scalar_iterator() <span class="overload">[2/2]</span></h2>
+<a id="a82994e89f0eeef63b18243b8e71a0835"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82994e89f0eeef63b18243b8e71a0835">&#9670;&nbsp;</a></span>scalar_iterator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::<a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a> </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::<a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
           <td></td>
         </tr>
@@ -391,19 +392,19 @@ template&lt;typename ITERABLE &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1d253b4819407a7023734f3b01f04310"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d253b4819407a7023734f3b01f04310">&#9670;&nbsp;</a></span>operator bool()</h2>
+<a id="a7186ee6fd00c2b3d2d7ce2faf486677f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7186ee6fd00c2b3d2d7ce2faf486677f">&#9670;&nbsp;</a></span>operator bool()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator bool </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator bool </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -420,21 +421,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a93793e935756ca7055ef4d62531fb409"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93793e935756ca7055ef4d62531fb409">&#9670;&nbsp;</a></span>operator!=()</h2>
+<a id="ad7c56f9ae588918bc12c6e01bdcc2d2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7c56f9ae588918bc12c6e01bdcc2d2f">&#9670;&nbsp;</a></span>operator!=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator!= </td>
+          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator!= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
           <td></td>
         </tr>
@@ -448,19 +449,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a64f60ee9afa2963c535abf3d1cdbf568"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64f60ee9afa2963c535abf3d1cdbf568">&#9670;&nbsp;</a></span>operator*()</h2>
+<a id="ab59f08990d4dfb5a4a367f213414b2d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab59f08990d4dfb5a4a367f213414b2d9">&#9670;&nbsp;</a></span>operator*()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a9d9c88b9bcd5dcb619483cb964f80b54">reference</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator* </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a495627b391a341c81b95d7ab597839b9">reference</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -483,19 +484,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a3c6fe127c0770ca466bd29b0b7e1d752"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c6fe127c0770ca466bd29b0b7e1d752">&#9670;&nbsp;</a></span>operator++() <span class="overload">[1/2]</span></h2>
+<a id="a2a7c3adc02ed3228d4d522dd547f1664"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a7c3adc02ed3228d4d522dd547f1664">&#9670;&nbsp;</a></span>operator++() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator++ </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator++ </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -510,19 +511,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="afb87e13a76dccd3622ec952f4f4a84f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb87e13a76dccd3622ec952f4f4a84f6">&#9670;&nbsp;</a></span>operator++() <span class="overload">[2/2]</span></h2>
+<a id="a2dc5d84c314fe8a68fae99ccfe69063c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dc5d84c314fe8a68fae99ccfe69063c">&#9670;&nbsp;</a></span>operator++() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator++ </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator++ </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -538,19 +539,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a9662c854d6da9771e32bae667e6a3c82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9662c854d6da9771e32bae667e6a3c82">&#9670;&nbsp;</a></span>operator+=()</h2>
+<a id="a5c202f8877e67d57c835ff664809b724"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c202f8877e67d57c835ff664809b724">&#9670;&nbsp;</a></span>operator+=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator+= </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator+= </td>
           <td>(</td>
           <td class="paramtype">ssize_t&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -566,19 +567,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a6950cb4323f347e5b31fde4c5b9e1e06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6950cb4323f347e5b31fde4c5b9e1e06">&#9670;&nbsp;</a></span>operator--() <span class="overload">[1/2]</span></h2>
+<a id="a248bdf9a7821f58f231e969e292047e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a248bdf9a7821f58f231e969e292047e5">&#9670;&nbsp;</a></span>operator--() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator-- </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator-- </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -593,19 +594,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a03b08d2b8139f6d2c1cc2dc60ba90f86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03b08d2b8139f6d2c1cc2dc60ba90f86">&#9670;&nbsp;</a></span>operator--() <span class="overload">[2/2]</span></h2>
+<a id="a3579d447ab444ddd877e8ca0245189ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3579d447ab444ddd877e8ca0245189ed">&#9670;&nbsp;</a></span>operator--() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator-- </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator-- </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -621,19 +622,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a85701e2b3160e8e99d7d56563b122fc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85701e2b3160e8e99d7d56563b122fc4">&#9670;&nbsp;</a></span>operator-=()</h2>
+<a id="a0e0c7f4fb32d9e0027ebea1aaf9db866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e0c7f4fb32d9e0027ebea1aaf9db866">&#9670;&nbsp;</a></span>operator-=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator-= </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a>&amp; <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator-= </td>
           <td>(</td>
           <td class="paramtype">ssize_t&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -649,19 +650,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a35c7d8d6691d8b4761920ec5ae4f5748"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35c7d8d6691d8b4761920ec5ae4f5748">&#9670;&nbsp;</a></span>operator-&gt;()</h2>
+<a id="a61bb754eb440e78cf5b349d428164438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61bb754eb440e78cf5b349d428164438">&#9670;&nbsp;</a></span>operator-&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#af56c78d4fb1cf4c3687334dab68913bc">pointer</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator-&gt; </td>
+          <td class="memname"><a class="el" href="classpni_1_1scalar__iterator.html#afe5621fb8322a5b93bf3a3efb2233d1f">pointer</a> <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -684,21 +685,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a114d241a66de24fbfcab9fa75413f041"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a114d241a66de24fbfcab9fa75413f041">&#9670;&nbsp;</a></span>operator&lt;()</h2>
+<a id="a53a5aedb1ad1097f1581316b35135d97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53a5aedb1ad1097f1581316b35135d97">&#9670;&nbsp;</a></span>operator&lt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator&lt; </td>
+          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator&lt; </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>b</em></td><td>)</td>
           <td></td>
         </tr>
@@ -712,21 +713,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a67d60d27f0e218443d97a896e4c936ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67d60d27f0e218443d97a896e4c936ca">&#9670;&nbsp;</a></span>operator&lt;=()</h2>
+<a id="a59d9534196d5b075260b0fe34b4c6b75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59d9534196d5b075260b0fe34b4c6b75">&#9670;&nbsp;</a></span>operator&lt;=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator&lt;= </td>
+          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator&lt;= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>b</em></td><td>)</td>
           <td></td>
         </tr>
@@ -740,21 +741,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a8eae18883b398135abb7e8940f10087b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8eae18883b398135abb7e8940f10087b">&#9670;&nbsp;</a></span>operator==()</h2>
+<a id="af5f27b95d85e95ed03f013d26e356cdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5f27b95d85e95ed03f013d26e356cdc">&#9670;&nbsp;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator== </td>
+          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator== </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
           <td></td>
         </tr>
@@ -768,21 +769,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a6cae2619bf3f4dde392c4d8a82c43a18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cae2619bf3f4dde392c4d8a82c43a18">&#9670;&nbsp;</a></span>operator&gt;()</h2>
+<a id="afd64dfd160bd66ee8738d21af5f64733"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd64dfd160bd66ee8738d21af5f64733">&#9670;&nbsp;</a></span>operator&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator&gt; </td>
+          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator&gt; </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>b</em></td><td>)</td>
           <td></td>
         </tr>
@@ -796,21 +797,21 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a1e3c80551b1be67478c928a3e811f8b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e3c80551b1be67478c928a3e811f8b3">&#9670;&nbsp;</a></span>operator&gt;=()</h2>
+<a id="a17781ad60aedb4a1c4a17c5ced35c96b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17781ad60aedb4a1c4a17c5ced35c96b">&#9670;&nbsp;</a></span>operator&gt;=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::operator&gt;= </td>
+          <td class="memname">bool <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::operator&gt;= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a30c0cb7c254d1c732f49ad5ede1497e9">iterator_type</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1scalar__iterator.html#a6b48c6a8c6eb95907b9df64938bb0104">iterator_type</a> &amp;&#160;</td>
           <td class="paramname"><em>b</em></td><td>)</td>
           <td></td>
         </tr>
@@ -824,19 +825,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="acb50b402645933c04ddeaccfee7ead74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb50b402645933c04ddeaccfee7ead74">&#9670;&nbsp;</a></span>state()</h2>
+<a id="a409e8f7cb34034688cf84e5dcd26d483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a409e8f7cb34034688cf84e5dcd26d483">&#9670;&nbsp;</a></span>state()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ssize_t <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::state </td>
+          <td class="memname">ssize_t <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::state </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -852,19 +853,19 @@ template&lt;typename ITERABLE &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a5788040f612bed6434d4362c0131bdb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5788040f612bed6434d4362c0131bdb0">&#9670;&nbsp;</a></span>_container</h2>
+<a id="a51be1d3e2c6dbb1504d6f09e7d259d28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51be1d3e2c6dbb1504d6f09e7d259d28">&#9670;&nbsp;</a></span>_container</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ITERABLE* <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::_container</td>
+          <td class="memname">IterableT* <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::_container</td>
         </tr>
       </table>
   </td>
@@ -876,19 +877,19 @@ template&lt;typename ITERABLE &gt; </div>
 
 </div>
 </div>
-<a id="a7cdcf1bdc22fc5c0ce3cfb90998e0c02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7cdcf1bdc22fc5c0ce3cfb90998e0c02">&#9670;&nbsp;</a></span>_state</h2>
+<a id="a38803ce256c69eedb8525040f385e508"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38803ce256c69eedb8525040f385e508">&#9670;&nbsp;</a></span>_state</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ITERABLE &gt; </div>
+template&lt;typename IterableT &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">ssize_t <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; ITERABLE &gt;::_state</td>
+          <td class="memname">ssize_t <a class="el" href="classpni_1_1scalar__iterator.html">pni::scalar_iterator</a>&lt; IterableT &gt;::_state</td>
         </tr>
       </table>
   </td>
@@ -909,7 +910,7 @@ template&lt;typename ITERABLE &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="classpni_1_1scalar__iterator.html">scalar_iterator</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

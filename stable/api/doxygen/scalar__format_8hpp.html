@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: scalar_format.hpp File Reference</title>
+<title>PNI NeXus Library: scalar_format.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -71,6 +72,7 @@ $(document).ready(function(){initNavTree('scalar__format_8hpp.html',''); initRes
 <div class="textblock"><code>#include &lt;<a class="el" href="types_8hpp_source.html">pni/types.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="type__erasures_8hpp_source.html">pni/type_erasures.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="windows_8hpp_source.html">pni/windows.hpp</a>&gt;</code><br />
+<code>#include &lt;h5cpp/contrib/nexus/ebool.hpp&gt;</code><br />
 </div>
 <p><a href="scalar__format_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -79,7 +81,7 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1format__config.html">pni::format_config</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">describe numeric output format  <a href="classpni_1_1format__config.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1format__str.html">pni::format_str&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1format__str.html">pni::format_str&lt; ElementT &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -125,6 +127,8 @@ Functions</h2></td></tr>
 <tr class="separator:afeef3e541391e2be4925f8be64dd5552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae999fe3d8becdd764a25a81b4e0beee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> <a class="el" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepni.html#aae999fe3d8becdd764a25a81b4e0beee">pni::format</a> (const <a class="el" href="classpni_1_1value__ref.html">pni::value_ref</a> &amp;v)</td></tr>
 <tr class="separator:aae999fe3d8becdd764a25a81b4e0beee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e64b53287aed6f0911f031f5a7ee6ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> <a class="el" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepni.html#a8e64b53287aed6f0911f031f5a7ee6ad">pni::format</a> (const hdf5::datatype::EBool &amp;v)</td></tr>
+<tr class="separator:a8e64b53287aed6f0911f031f5a7ee6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -132,7 +136,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_6f5a63f6eccfad8b20a7703022fd2104.html">formatters</a></li><li class="navelem"><a class="el" href="scalar__format_8hpp.html">scalar_format.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

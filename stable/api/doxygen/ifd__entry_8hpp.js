@@ -2,17 +2,17 @@ var ifd__entry_8hpp =
 [
     [ "ifd_entry", "classpni_1_1tiff_1_1ifd__entry.html", "classpni_1_1tiff_1_1ifd__entry" ],
     [ "ifd_entry_type_id", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19", [
-      [ "BYTE", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ae409eb2ba6eb6801f52763ae370c350e", null ],
+      [ "Byte", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aa245c3230debe5c956484ecc6fa93877", null ],
       [ "ASCII", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ad2cd8253361a9c732d21ca1d336599cc", null ],
-      [ "SHORT", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aa35c2b02966b1563e5bf7b81b8b0cf77", null ],
-      [ "LONG", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ac1fabfea54ec6011e694f211f3ffebf3", null ],
-      [ "RATIONAL", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a75e33ef57f63402e3e5f003a10841651", null ],
-      [ "SBYTE", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aed2faba8f48cf2c4bfa2014166424df0", null ],
-      [ "UNDEFINED", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a0db45d2a4141101bdfe48e3314cfbca3", null ],
-      [ "SSHORT", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aba0f0300d312de41663e531f077743d8", null ],
-      [ "SLONG", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aa45f0a4663734f979c836b6afe8cd41f", null ],
-      [ "SRATIONAL", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a1d61f9551490932d1375c7940a8a0b6c", null ],
-      [ "FLOAT", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ae738c26bf4ce1037fa81b039a915cbf6", null ],
-      [ "DOUBLE", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19afd3e4ece78a7d422280d5ed379482229", null ]
+      [ "Short", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a30bb747c98bccdd11b3f89e644c4d0ad", null ],
+      [ "Long", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a8394f0347c184cf156ac5924dccb773b", null ],
+      [ "Rational", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a1987a88c6ff10363e43d25ead3066ad8", null ],
+      [ "SByte", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a7e76fb67fc7b4cb0004bc45f2bd92723", null ],
+      [ "Undefined", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aec0fc0100c4fc1ce4eea230c3dc10360", null ],
+      [ "SShort", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ae4b8fd952589f904f9b653b9f7a1c110", null ],
+      [ "SLong", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a2e0bbbc630435816c863639978e4713c", null ],
+      [ "SRational", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a92251343c2345a6a430a68bc275b4198", null ],
+      [ "Float", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19a22ae0e2b89e5e3d477f988cc36d3272b", null ],
+      [ "Double", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ad909d38d705ce75386dd86e611a82f5b", null ]
     ] ]
 ];

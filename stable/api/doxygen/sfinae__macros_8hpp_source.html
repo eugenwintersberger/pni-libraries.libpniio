@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: sfinae_macros.hpp Source File</title>
+<title>PNI NeXus Library: sfinae_macros.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -96,59 +97,59 @@ $(document).ready(function(){initNavTree('sfinae__macros_8hpp_source.html',''); 
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespacepni.html#ab82344a050f112714a4af8c1a655d23e">   41</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#ab82344a050f112714a4af8c1a655d23e">invoke</a> = <span class="keyword">typename</span> T::type;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespacepni.html#aaf5ed7f9b2316a8c64ff063f59271574">   41</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> MetafunctionT&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#aaf5ed7f9b2316a8c64ff063f59271574">invoke</a> = <span class="keyword">typename</span> MetafunctionT::type;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;             <span class="keyword">typename</span> T1,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;             <span class="keyword">typename</span> T2</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;             <span class="keyword">typename</span> Operand1T,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;             <span class="keyword">typename</span> Operand2T</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            &gt; </div>
 <div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structpni_1_1or__t.html">   59</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structpni_1_1or__t.html">or_t</a></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    {</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structpni_1_1or__t.html#a1ed4e4ab6bb3302ed3a4250a73c565cf">   62</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = T1::value || T2::value;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structpni_1_1or__t.html#a9094f39bb2ba6aecc09d155c8cbf4fa2">   62</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = Operand1T::value || Operand2T::value;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;             <span class="keyword">typename</span> T1,</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;             <span class="keyword">typename</span> T2</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;             <span class="keyword">typename</span> Operand1T,</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;             <span class="keyword">typename</span> Operand2T</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            &gt;</div>
 <div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="structpni_1_1and__t.html">   81</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structpni_1_1and__t.html">and_t</a></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    {</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structpni_1_1and__t.html#a2fb84ca31a9798a40fac689528cd6ff1">   84</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = T1::value &amp;&amp; T2::value;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structpni_1_1and__t.html#aacf0f82f31982f17f4b9738d77a72442">   84</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = Operand1T::value &amp;&amp; Operand2T::value;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    };</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="structpni_1_1not__t.html">   96</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structpni_1_1not__t.html">not_t</a></div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="structpni_1_1not__t.html">   96</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> FunctionT&gt; <span class="keyword">struct </span><a class="code" href="structpni_1_1not__t.html">not_t</a></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    {</div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structpni_1_1not__t.html#a2b9556ff3f580ca5d0ed33c402ee2d86">   99</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = !T::value;</div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structpni_1_1not__t.html#a3f06818eb7b150e32e906e16d691cfe5">   99</a></span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1value.html">value</a> = !FunctionT::value;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    };</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment"></span><span class="preprocessor">#ifdef _MSC_VER</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> C&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#a10d336addcb471d1a0f727cf9f91fd3f">enable_if</a> = std::enable_if_t&lt;C::value&gt;;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> GeneralT&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#aec9ea31f62e69214bab4247566bc40b3">enable_if</a> = std::enable_if_t&lt;GeneralT::value&gt;;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="namespacepni.html#a10d336addcb471d1a0f727cf9f91fd3f">  110</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> C&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#a10d336addcb471d1a0f727cf9f91fd3f">enable_if</a> = <a class="code" href="namespacepni.html#ab82344a050f112714a4af8c1a655d23e">invoke&lt;std::enable_if&lt;C::value&gt;</a>&gt;;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="namespacepni.html#aec9ea31f62e69214bab4247566bc40b3">  110</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> GeneralT&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#aec9ea31f62e69214bab4247566bc40b3">enable_if</a> = <a class="code" href="namespacepni.html#aaf5ed7f9b2316a8c64ff063f59271574">invoke&lt;std::enable_if&lt;GeneralT::value&gt;</a>&gt;;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    </div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="namespacepni.html#afd02f1d6aa93285015b8478da46b0683">  118</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#afd02f1d6aa93285015b8478da46b0683">is_pod</a> = std::is_pod&lt;T&gt;;</div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="namespacepni.html#aeb2fe59951e962490d8ba70db87bccb4">  118</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> GeneralT&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#aeb2fe59951e962490d8ba70db87bccb4">is_pod</a> = std::is_pod&lt;GeneralT&gt;;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="namespacepni.html#ab58cc2c5d240c9aa108f7d175ad5e76f">  125</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#ab58cc2c5d240c9aa108f7d175ad5e76f">is_ptr</a> = std::is_pointer&lt;T&gt;;</div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="namespacepni.html#a3d78931b0153c505233cf06f62a77958">  125</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> GeneralT&gt; <span class="keyword">using</span> <a class="code" href="namespacepni.html#a3d78931b0153c505233cf06f62a77958">is_ptr</a> = std::is_pointer&lt;GeneralT&gt;;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="namespacepni.html#a9fd790bdb0be8efda5453adfb6b76d7d">  132</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">using</span> <a class="code" href="structpni_1_1is__complex__type.html">is_cmplx</a> = <a class="code" href="structpni_1_1is__complex__type.html">is_complex_type&lt;T&gt;</a>;</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="namespacepni.html#a55b31ab9efef75d51b135757e7f80f74">  132</a></span>&#160;<span class="comment"></span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> GeneralT&gt; <span class="keyword">using</span> <a class="code" href="structpni_1_1is__complex__type.html">is_cmplx</a> = <a class="code" href="structpni_1_1is__complex__type.html">is_complex_type&lt;GeneralT&gt;</a>;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">//end of namespace</span></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
-<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:49</div></div>
 <div class="ttc" id="acomplex__utils_8hpp_html"><div class="ttname"><a href="complex__utils_8hpp.html">complex_utils.hpp</a></div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="anamespacepni_html_a10d336addcb471d1a0f727cf9f91fd3f"><div class="ttname"><a href="namespacepni.html#a10d336addcb471d1a0f727cf9f91fd3f">pni::enable_if</a></div><div class="ttdeci">invoke&lt; std::enable_if&lt; C::value &gt; &gt; enable_if</div><div class="ttdoc">shortcut for std::enable_if</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:110</div></div>
-<div class="ttc" id="anamespacepni_html_ab58cc2c5d240c9aa108f7d175ad5e76f"><div class="ttname"><a href="namespacepni.html#ab58cc2c5d240c9aa108f7d175ad5e76f">pni::is_ptr</a></div><div class="ttdeci">std::is_pointer&lt; T &gt; is_ptr</div><div class="ttdoc">shortcut for std::is_pointer</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:125</div></div>
-<div class="ttc" id="anamespacepni_html_ab82344a050f112714a4af8c1a655d23e"><div class="ttname"><a href="namespacepni.html#ab82344a050f112714a4af8c1a655d23e">pni::invoke</a></div><div class="ttdeci">typename T::type invoke</div><div class="ttdoc">alias to invoke a metafunction</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:41</div></div>
-<div class="ttc" id="anamespacepni_html_afd02f1d6aa93285015b8478da46b0683"><div class="ttname"><a href="namespacepni.html#afd02f1d6aa93285015b8478da46b0683">pni::is_pod</a></div><div class="ttdeci">std::is_pod&lt; T &gt; is_pod</div><div class="ttdoc">shortcut for std::is_pod</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:118</div></div>
+<div class="ttc" id="anamespacepni_html_a3d78931b0153c505233cf06f62a77958"><div class="ttname"><a href="namespacepni.html#a3d78931b0153c505233cf06f62a77958">pni::is_ptr</a></div><div class="ttdeci">std::is_pointer&lt; GeneralT &gt; is_ptr</div><div class="ttdoc">shortcut for std::is_pointer</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:125</div></div>
+<div class="ttc" id="anamespacepni_html_aaf5ed7f9b2316a8c64ff063f59271574"><div class="ttname"><a href="namespacepni.html#aaf5ed7f9b2316a8c64ff063f59271574">pni::invoke</a></div><div class="ttdeci">typename MetafunctionT::type invoke</div><div class="ttdoc">alias to invoke a metafunction</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:41</div></div>
+<div class="ttc" id="anamespacepni_html_aeb2fe59951e962490d8ba70db87bccb4"><div class="ttname"><a href="namespacepni.html#aeb2fe59951e962490d8ba70db87bccb4">pni::is_pod</a></div><div class="ttdeci">std::is_pod&lt; GeneralT &gt; is_pod</div><div class="ttdoc">shortcut for std::is_pod</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:118</div></div>
+<div class="ttc" id="anamespacepni_html_aec9ea31f62e69214bab4247566bc40b3"><div class="ttname"><a href="namespacepni.html#aec9ea31f62e69214bab4247566bc40b3">pni::enable_if</a></div><div class="ttdeci">invoke&lt; std::enable_if&lt; GeneralT::value &gt; &gt; enable_if</div><div class="ttdoc">shortcut for std::enable_if</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:110</div></div>
 <div class="ttc" id="astructpni_1_1and__t_html"><div class="ttname"><a href="structpni_1_1and__t.html">pni::and_t</a></div><div class="ttdoc">and type</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:82</div></div>
 <div class="ttc" id="astructpni_1_1is__complex__type_html"><div class="ttname"><a href="structpni_1_1is__complex__type.html">pni::is_complex_type</a></div><div class="ttdoc">check complex type</div><div class="ttdef"><b>Definition:</b> traits.hpp:76</div></div>
 <div class="ttc" id="astructpni_1_1not__t_html"><div class="ttname"><a href="structpni_1_1not__t.html">pni::not_t</a></div><div class="ttdoc">logical not</div><div class="ttdef"><b>Definition:</b> sfinae_macros.hpp:97</div></div>
@@ -160,7 +161,7 @@ $(document).ready(function(){initNavTree('sfinae__macros_8hpp_source.html',''); 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_1c4471ea08b1bbc2d063021f2f59ddc1.html">utilities</a></li><li class="navelem"><a class="el" href="sfinae__macros_8hpp.html">sfinae_macros.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

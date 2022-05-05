@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: pni::array_trait&lt; OP1, OPT2 &gt; Struct Template Reference</title>
+<title>PNI NeXus Library: pni::array_trait&lt; Operand1T, Operand2T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -63,7 +64,7 @@ $(document).ready(function(){initNavTree('structpni_1_1array__trait.html',''); i
   <div class="summary">
 <a href="#pub-types">Public Types</a>  </div>
   <div class="headertitle">
-<div class="title">pni::array_trait&lt; OP1, OPT2 &gt; Struct Template Reference</div>  </div>
+<div class="title">pni::array_trait&lt; Operand1T, Operand2T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -74,52 +75,52 @@ $(document).ready(function(){initNavTree('structpni_1_1array__trait.html',''); i
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a1f429f031b563036caa6ad76e7b47932"><td class="memItemLeft" align="right" valign="top">typedef OP1::map_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1array__trait.html#a1f429f031b563036caa6ad76e7b47932">map_type</a></td></tr>
-<tr class="memdesc:a1f429f031b563036caa6ad76e7b47932"><td class="mdescLeft">&#160;</td><td class="mdescRight">index map type  <a href="structpni_1_1array__trait.html#a1f429f031b563036caa6ad76e7b47932">More...</a><br /></td></tr>
-<tr class="separator:a1f429f031b563036caa6ad76e7b47932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd5586069c326ca830ba3fea17a2a9e4"><td class="memItemLeft" align="right" valign="top">typedef OP1::inplace_arithmetic&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1array__trait.html#abd5586069c326ca830ba3fea17a2a9e4">inplace_arithmetic</a></td></tr>
-<tr class="memdesc:abd5586069c326ca830ba3fea17a2a9e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">inplace arithmetic type  <a href="structpni_1_1array__trait.html#abd5586069c326ca830ba3fea17a2a9e4">More...</a><br /></td></tr>
-<tr class="separator:abd5586069c326ca830ba3fea17a2a9e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade5d8ca7c2301c652a884ae061b2b3df"><td class="memItemLeft" align="right" valign="top">typedef Operand1T::map_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1array__trait.html#ade5d8ca7c2301c652a884ae061b2b3df">map_type</a></td></tr>
+<tr class="memdesc:ade5d8ca7c2301c652a884ae061b2b3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">index map type  <a href="structpni_1_1array__trait.html#ade5d8ca7c2301c652a884ae061b2b3df">More...</a><br /></td></tr>
+<tr class="separator:ade5d8ca7c2301c652a884ae061b2b3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45c23ec2046e4dc0cc673485bb23c76b"><td class="memItemLeft" align="right" valign="top">typedef Operand1T::inplace_arithmetic&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1array__trait.html#a45c23ec2046e4dc0cc673485bb23c76b">inplace_arithmetic</a></td></tr>
+<tr class="memdesc:a45c23ec2046e4dc0cc673485bb23c76b"><td class="mdescLeft">&#160;</td><td class="mdescRight">inplace arithmetic type  <a href="structpni_1_1array__trait.html#a45c23ec2046e4dc0cc673485bb23c76b">More...</a><br /></td></tr>
+<tr class="separator:a45c23ec2046e4dc0cc673485bb23c76b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename OP1, typename OPT2&gt;<br />
-struct pni::array_trait&lt; OP1, OPT2 &gt;</h3>
+<div class="textblock"><h3>template&lt;typename Operand1T, typename Operand2T&gt;<br />
+struct pni::array_trait&lt; Operand1T, Operand2T &gt;</h3>
 
 <p>This trait determines the common index map and inplace arithmetic implementation types to use for an expression template. This is the default template where we assume that both operands are array types.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">OP1</td><td>LHS operand type </td></tr>
-    <tr><td class="paramname">OP2</td><td>RHS operand type </td></tr>
+    <tr><td class="paramname">Operand1T</td><td>LHS operand type </td></tr>
+    <tr><td class="paramname">Operand2T</td><td>RHS operand type </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="abd5586069c326ca830ba3fea17a2a9e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd5586069c326ca830ba3fea17a2a9e4">&#9670;&nbsp;</a></span>inplace_arithmetic</h2>
+<a id="a45c23ec2046e4dc0cc673485bb23c76b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45c23ec2046e4dc0cc673485bb23c76b">&#9670;&nbsp;</a></span>inplace_arithmetic</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename OP1 , typename OPT2 &gt; </div>
+template&lt;typename Operand1T , typename Operand2T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef OP1::inplace_arithmetic <a class="el" href="structpni_1_1array__trait.html">pni::array_trait</a>&lt; OP1, OPT2 &gt;::<a class="el" href="structpni_1_1array__trait.html#abd5586069c326ca830ba3fea17a2a9e4">inplace_arithmetic</a></td>
+          <td class="memname">typedef Operand1T::inplace_arithmetic <a class="el" href="structpni_1_1array__trait.html">pni::array_trait</a>&lt; Operand1T, Operand2T &gt;::<a class="el" href="structpni_1_1array__trait.html#a45c23ec2046e4dc0cc673485bb23c76b">inplace_arithmetic</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a1f429f031b563036caa6ad76e7b47932"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f429f031b563036caa6ad76e7b47932">&#9670;&nbsp;</a></span>map_type</h2>
+<a id="ade5d8ca7c2301c652a884ae061b2b3df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade5d8ca7c2301c652a884ae061b2b3df">&#9670;&nbsp;</a></span>map_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename OP1 , typename OPT2 &gt; </div>
+template&lt;typename Operand1T , typename Operand2T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef OP1::map_type <a class="el" href="structpni_1_1array__trait.html">pni::array_trait</a>&lt; OP1, OPT2 &gt;::<a class="el" href="structpni_1_1array__trait.html#a1f429f031b563036caa6ad76e7b47932">map_type</a></td>
+          <td class="memname">typedef Operand1T::map_type <a class="el" href="structpni_1_1array__trait.html">pni::array_trait</a>&lt; Operand1T, Operand2T &gt;::<a class="el" href="structpni_1_1array__trait.html#ade5d8ca7c2301c652a884ae061b2b3df">map_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -135,7 +136,7 @@ template&lt;typename OP1 , typename OPT2 &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="structpni_1_1array__trait.html">array_trait</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

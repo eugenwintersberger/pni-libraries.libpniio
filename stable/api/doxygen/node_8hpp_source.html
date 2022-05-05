@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: node.hpp Source File</title>
+<title>PNI NeXus Library: node.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -128,9 +129,9 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="comment">//Node get_child_by_name(const std::string &amp;name) const;</span></div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1xml_1_1Node.html#ae4be4a7e9f5fa464b36fe6fc9a2e6270">  131</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; T <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html#ae4be4a7e9f5fa464b36fe6fc9a2e6270">data</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1xml_1_1Node.html#ad80a8cf8b94b1ba485e3a3f66a008978">  131</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> DataT&gt; DataT <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html#ad80a8cf8b94b1ba485e3a3f66a008978">data</a>()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <a class="code" href="classpni_1_1parser.html">pni::parser&lt;T&gt;</a> p;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <a class="code" href="classpni_1_1parser.html">pni::parser&lt;DataT&gt;</a> p;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      <span class="keywordflow">return</span> p(str_data());</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
@@ -153,12 +154,12 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_a8a6d8e417adff4ac5450ad05ba133a7d"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#a8a6d8e417adff4ac5450ad05ba133a7d">pni::nexus::xml::Node::from_string</a></div><div class="ttdeci">static Node from_string(const std::string &amp;s)</div><div class="ttdoc">create xml node from string</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_aba4d65262187fb72a74384c835d1426f"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#aba4d65262187fb72a74384c835d1426f">pni::nexus::xml::Node::str_data</a></div><div class="ttdeci">std::string str_data() const</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_acfd90a20ef665cd1c2fcac6fccd7a981"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#acfd90a20ef665cd1c2fcac6fccd7a981">pni::nexus::xml::Node::Node</a></div><div class="ttdeci">Node()</div></div>
-<div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_ae4be4a7e9f5fa464b36fe6fc9a2e6270"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#ae4be4a7e9f5fa464b36fe6fc9a2e6270">pni::nexus::xml::Node::data</a></div><div class="ttdeci">T data() const</div><div class="ttdef"><b>Definition:</b> node.hpp:131</div></div>
+<div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_ad80a8cf8b94b1ba485e3a3f66a008978"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#ad80a8cf8b94b1ba485e3a3f66a008978">pni::nexus::xml::Node::data</a></div><div class="ttdeci">DataT data() const</div><div class="ttdef"><b>Definition:</b> node.hpp:131</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_ae5a30c222f10d88bb5d5a0b5b1f2bcd2"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#ae5a30c222f10d88bb5d5a0b5b1f2bcd2">pni::nexus::xml::Node::from_file</a></div><div class="ttdeci">static Node from_file(const boost::filesystem::path &amp;path)</div><div class="ttdoc">create xml node from file</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_af5bcd01bffde679f164c9af6571f1661"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#af5bcd01bffde679f164c9af6571f1661">pni::nexus::xml::Node::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">get name of a node</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_afe357d8d9f36522ff76465eea3842bbe"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#afe357d8d9f36522ff76465eea3842bbe">pni::nexus::xml::Node::data</a></div><div class="ttdeci">void data(const std::string &amp;cdata)</div></div>
 <div class="ttc" id="aclasspni_1_1parser_html"><div class="ttname"><a href="classpni_1_1parser.html">pni::parser</a></div><div class="ttdoc">parser for primitive types</div><div class="ttdef"><b>Definition:</b> parsers/parser.hpp:70</div></div>
-<div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:73</div></div>
+<div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:76</div></div>
 <div class="ttc" id="anamespacepni_1_1nexus_1_1xml_html_a1d5d945e9941c32ef0c42c29a0bbaea3"><div class="ttname"><a href="namespacepni_1_1nexus_1_1xml.html#a1d5d945e9941c32ef0c42c29a0bbaea3">pni::nexus::xml::operator&lt;&lt;</a></div><div class="ttdeci">PNINEXUS_EXPORT std::ostream &amp; operator&lt;&lt;(std::ostream &amp;o, const Node &amp;n)</div><div class="ttdoc">XML stream output.</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
 <div class="ttc" id="aparsers_8hpp_html"><div class="ttname"><a href="parsers_8hpp.html">parsers.hpp</a></div></div>
@@ -171,7 +172,7 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_ed8c5bfd5a3964be977e59a07de61950.html">nexus</a></li><li class="navelem"><a class="el" href="dir_7e29aa6c392f81dd647a56f011407aa4.html">xml</a></li><li class="navelem"><a class="el" href="node_8hpp.html">node.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

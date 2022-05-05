@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: complex_parser.hpp Source File</title>
+<title>PNI NeXus Library: complex_parser.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -93,26 +94,26 @@ $(document).ready(function(){initNavTree('complex__parser_8hpp_source.html','');
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html">   38</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpni_1_1parser.html">parser</a>&lt;std::complex&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> BaseT&gt;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html">   38</a></span>&#160;<span class="keyword">class </span><a class="code" href="classpni_1_1parser.html">parser</a>&lt;std::complex&lt;BaseT&gt;&gt;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1580d8474dedce7d31e96ceda05dcc50">   41</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1580d8474dedce7d31e96ceda05dcc50">base_type</a> = T;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a46d7434ed7472e2d9b6cd6a36f629920">   42</a></span>&#160;    <a class="code" href="classpni_1_1parser.html">parser&lt;base_type&gt;</a> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a46d7434ed7472e2d9b6cd6a36f629920">_base_parser</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a12787946d8b97e7c44beebbb48db7691">   41</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a12787946d8b97e7c44beebbb48db7691">base_type</a> = BaseT;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1908e89da9b62ecbcd685f336a2f68d3">   42</a></span>&#160;    <a class="code" href="classpni_1_1parser.html">parser&lt;base_type&gt;</a> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1908e89da9b62ecbcd685f336a2f68d3">_base_parser</a>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a02bfde3db99089dcedfb3b31bc2fc5d4">   44</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a02bfde3db99089dcedfb3b31bc2fc5d4">result_type</a> = std::complex&lt;T&gt;;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1ab65a9962d5498bf2b100c8dc6eae08">   44</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1ab65a9962d5498bf2b100c8dc6eae08">result_type</a> = std::complex&lt;BaseT&gt;;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1ebebe0073653de34ff0c7443acde4f9">   46</a></span>&#160;    <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a02bfde3db99089dcedfb3b31bc2fc5d4">result_type</a> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1ebebe0073653de34ff0c7443acde4f9">operator()</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;input)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#ab82655a4c5a887dafffd10da1e6570a3">   46</a></span>&#160;    <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1ab65a9962d5498bf2b100c8dc6eae08">result_type</a> <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#ab82655a4c5a887dafffd10da1e6570a3">operator()</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;input)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">    </span>{</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      <span class="keyword">using namespace </span><a class="code" href="namespacepni.html">pni</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      boost::regex cmplx_regex(<a class="code" href="namespacepni.html#a6bb6ed847d7d937a5a61516dff59cc15">default_complex_regexp</a>);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a02bfde3db99089dcedfb3b31bc2fc5d4">result_type</a> <a class="code" href="classpni_1_1value.html">value</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1ab65a9962d5498bf2b100c8dc6eae08">result_type</a> <a class="code" href="classpni_1_1value.html">value</a>;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      boost::smatch results;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keywordflow">if</span>(boost::regex_match(input,results,cmplx_regex))</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1580d8474dedce7d31e96ceda05dcc50">base_type</a> real_part  = 0.0,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a12787946d8b97e7c44beebbb48db7691">base_type</a> real_part  = 0.0,</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            imag_part  = 0.0,</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            image_sign = 1.0;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">string</span> part = results.str(<span class="stringliteral">&quot;REALPART&quot;</span>);</div>
@@ -133,23 +134,23 @@ $(document).ready(function(){initNavTree('complex__parser_8hpp_source.html','');
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      {</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        std::stringstream ss;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        ss&lt;&lt;<span class="stringliteral">&quot;Cannot convert [&quot;</span>&lt;&lt;input&lt;&lt;<span class="stringliteral">&quot;] to &quot;</span>&lt;&lt;<a class="code" href="group__type__classes.html#ga6995a2c2e9d2d485c0ecbaa763bbfb44">type_id</a>(<a class="code" href="classpni_1_1value.html">value</a>)&lt;&lt;<span class="stringliteral">&quot;!&quot;</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1parser__error.html">parser_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,ss.str());</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        ss&lt;&lt;<span class="stringliteral">&quot;Cannot convert [&quot;</span>&lt;&lt;input&lt;&lt;<span class="stringliteral">&quot;] to &quot;</span>&lt;&lt;<a class="code" href="group__type__classes.html#ga412ff238d4e52823dca381dc6122177f">type_id</a>(<a class="code" href="classpni_1_1value.html">value</a>)&lt;&lt;<span class="stringliteral">&quot;!&quot;</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1parser__error.html">parser_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,ss.str());</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4_html_a02bfde3db99089dcedfb3b31bc2fc5d4"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a02bfde3db99089dcedfb3b31bc2fc5d4">pni::parser&lt; std::complex&lt; T &gt; &gt;::result_type</a></div><div class="ttdeci">std::complex&lt; T &gt; result_type</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:44</div></div>
-<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4_html_a1580d8474dedce7d31e96ceda05dcc50"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1580d8474dedce7d31e96ceda05dcc50">pni::parser&lt; std::complex&lt; T &gt; &gt;::base_type</a></div><div class="ttdeci">T base_type</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:41</div></div>
-<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4_html_a1ebebe0073653de34ff0c7443acde4f9"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a1ebebe0073653de34ff0c7443acde4f9">pni::parser&lt; std::complex&lt; T &gt; &gt;::operator()</a></div><div class="ttdeci">result_type operator()(const pni::string &amp;input) const</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:46</div></div>
-<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4_html_a46d7434ed7472e2d9b6cd6a36f629920"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html#a46d7434ed7472e2d9b6cd6a36f629920">pni::parser&lt; std::complex&lt; T &gt; &gt;::_base_parser</a></div><div class="ttdeci">parser&lt; base_type &gt; _base_parser</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:42</div></div>
+<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4_html_a12787946d8b97e7c44beebbb48db7691"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a12787946d8b97e7c44beebbb48db7691">pni::parser&lt; std::complex&lt; BaseT &gt; &gt;::base_type</a></div><div class="ttdeci">BaseT base_type</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:41</div></div>
+<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4_html_a1908e89da9b62ecbcd685f336a2f68d3"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1908e89da9b62ecbcd685f336a2f68d3">pni::parser&lt; std::complex&lt; BaseT &gt; &gt;::_base_parser</a></div><div class="ttdeci">parser&lt; base_type &gt; _base_parser</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:42</div></div>
+<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4_html_a1ab65a9962d5498bf2b100c8dc6eae08"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#a1ab65a9962d5498bf2b100c8dc6eae08">pni::parser&lt; std::complex&lt; BaseT &gt; &gt;::result_type</a></div><div class="ttdeci">std::complex&lt; BaseT &gt; result_type</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:44</div></div>
+<div class="ttc" id="aclasspni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4_html_ab82655a4c5a887dafffd10da1e6570a3"><div class="ttname"><a href="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html#ab82655a4c5a887dafffd10da1e6570a3">pni::parser&lt; std::complex&lt; BaseT &gt; &gt;::operator()</a></div><div class="ttdeci">result_type operator()(const pni::string &amp;input) const</div><div class="ttdef"><b>Definition:</b> complex_parser.hpp:46</div></div>
 <div class="ttc" id="aclasspni_1_1parser__error_html"><div class="ttname"><a href="classpni_1_1parser__error.html">pni::parser_error</a></div><div class="ttdoc">general parser related error</div><div class="ttdef"><b>Definition:</b> exceptions.hpp:101</div></div>
 <div class="ttc" id="aclasspni_1_1parser_html"><div class="ttname"><a href="classpni_1_1parser.html">pni::parser</a></div><div class="ttdoc">parser for primitive types</div><div class="ttdef"><b>Definition:</b> parsers/parser.hpp:70</div></div>
 <div class="ttc" id="aclasspni_1_1parser_html_a8b2ee967684eb3a8321be5cc30c0b096"><div class="ttname"><a href="classpni_1_1parser.html#a8b2ee967684eb3a8321be5cc30c0b096">pni::parser::result_type</a></div><div class="ttdeci">T result_type</div><div class="ttdef"><b>Definition:</b> parsers/parser.hpp:76</div></div>
-<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_a51dfad546cd33bda661305be8590d6fb"><div class="ttname"><a href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a></div><div class="ttdeci">#define EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
-<div class="ttc" id="agroup__type__classes_html_ga6995a2c2e9d2d485c0ecbaa763bbfb44"><div class="ttname"><a href="group__type__classes.html#ga6995a2c2e9d2d485c0ecbaa763bbfb44">pni::type_id</a></div><div class="ttdeci">type_id_t type_id(const array_view&lt; ATYPE &gt; &amp;)</div><div class="ttdoc">specialization for type_id</div><div class="ttdef"><b>Definition:</b> array_view.hpp:824</div></div>
-<div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:73</div></div>
+<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:49</div></div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_af42ca9eab4d41a452a46ff61e10e7be5"><div class="ttname"><a href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
+<div class="ttc" id="agroup__type__classes_html_ga412ff238d4e52823dca381dc6122177f"><div class="ttname"><a href="group__type__classes.html#ga412ff238d4e52823dca381dc6122177f">pni::type_id</a></div><div class="ttdeci">type_id_t type_id(const array_view&lt; ArrayT &gt; &amp;)</div><div class="ttdoc">specialization for type_id</div><div class="ttdef"><b>Definition:</b> array_view.hpp:824</div></div>
+<div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:76</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
 <div class="ttc" id="anamespacepni_html_a6bb6ed847d7d937a5a61516dff59cc15"><div class="ttname"><a href="namespacepni.html#a6bb6ed847d7d937a5a61516dff59cc15">pni::default_complex_regexp</a></div><div class="ttdeci">static const boost::regex default_complex_regexp(&quot;^(?&lt;REALPART&gt;[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?((?&lt;IMAGSIGN&gt;[+-]?[ijI])(?&lt;IMAGPART&gt;[+-]?\\d+\\.(\\d+)?([Ee][+-]?\\d+)?)?)?$&quot;)</div></div>
 <div class="ttc" id="aparsers_2parser_8hpp_html"><div class="ttname"><a href="parsers_2parser_8hpp.html">parser.hpp</a></div></div>
@@ -159,7 +160,7 @@ $(document).ready(function(){initNavTree('complex__parser_8hpp_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_26da42604563804b6a08a5e543cb7dd5.html">parsers</a></li><li class="navelem"><a class="el" href="complex__parser_8hpp.html">complex_parser.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

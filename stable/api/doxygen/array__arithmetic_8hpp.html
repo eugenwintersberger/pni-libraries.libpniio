@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: array_arithmetic.hpp File Reference</title>
+<title>PNI NeXus Library: array_arithmetic.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -80,7 +81,7 @@ $(document).ready(function(){initNavTree('array__arithmetic_8hpp.html',''); init
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1is__array.html">pni::is_array&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1is__array.html">pni::is_array&lt; GeneralT &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">struct identifying a type as an array type  <a href="structpni_1_1is__array.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -91,63 +92,63 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a8694f3a826aab958c14f1a81fc7815d1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8694f3a826aab958c14f1a81fc7815d1"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a8694f3a826aab958c14f1a81fc7815d1">pni::map_type</a> = typename T::map_type</td></tr>
-<tr class="separator:a8694f3a826aab958c14f1a81fc7815d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84162ecb8f01aaed8873d36dff50febe"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a84162ecb8f01aaed8873d36dff50febe"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a84162ecb8f01aaed8873d36dff50febe">pni::ipa_type</a> = typename T::inplace_arithmetic</td></tr>
-<tr class="separator:a84162ecb8f01aaed8873d36dff50febe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5cc1016cb8fd406cb452d43404b3d92"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:aa5cc1016cb8fd406cb452d43404b3d92"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aa5cc1016cb8fd406cb452d43404b3d92">pni::map_type</a> = typename GeneralT::map_type</td></tr>
+<tr class="separator:aa5cc1016cb8fd406cb452d43404b3d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bf6c4315f702282de1f3d497da35bdc"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:a2bf6c4315f702282de1f3d497da35bdc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a2bf6c4315f702282de1f3d497da35bdc">pni::ipa_type</a> = typename GeneralT::inplace_arithmetic</td></tr>
+<tr class="separator:a2bf6c4315f702282de1f3d497da35bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa0ffd33cf3df6c10850b96a691290fb6"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename  = enable_if&lt;and_t&lt;is_array&lt;LHS&gt;,is_array&lt;RHS&gt;&gt;&gt;&gt; </td></tr>
-<tr class="memitem:aa0ffd33cf3df6c10850b96a691290fb6"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; add_op&lt; LHS, RHS &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aa0ffd33cf3df6c10850b96a691290fb6">pni::operator+</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:aa0ffd33cf3df6c10850b96a691290fb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary addition operator  <a href="namespacepni.html#aa0ffd33cf3df6c10850b96a691290fb6">More...</a><br /></td></tr>
-<tr class="separator:aa0ffd33cf3df6c10850b96a691290fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30949474cf09bf7d1d2f2843adda929a"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename T , typename  = enable_if&lt;and_t&lt;                        is_array&lt;LHS&gt;,not_t&lt;is_array&lt;T&gt;&gt;                         &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a30949474cf09bf7d1d2f2843adda929a"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; add_op&lt; LHS, scalar&lt; T &gt; &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a30949474cf09bf7d1d2f2843adda929a">pni::operator+</a> (const LHS &amp;a, const T &amp;b)</td></tr>
-<tr class="memdesc:a30949474cf09bf7d1d2f2843adda929a"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary addition operator  <a href="namespacepni.html#a30949474cf09bf7d1d2f2843adda929a">More...</a><br /></td></tr>
-<tr class="separator:a30949474cf09bf7d1d2f2843adda929a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15f1304507287d50749f3a0a87cee2cf"><td class="memTemplParams" colspan="2">template&lt;typename T , typename RHS , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;T&gt;&gt;,is_array&lt;RHS&gt;                        &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a15f1304507287d50749f3a0a87cee2cf"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; add_op&lt; scalar&lt; T &gt;, RHS &gt;, map_type&lt; RHS &gt;, ipa_type&lt; RHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a15f1304507287d50749f3a0a87cee2cf">pni::operator+</a> (const T &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:a15f1304507287d50749f3a0a87cee2cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary addition operator  <a href="namespacepni.html#a15f1304507287d50749f3a0a87cee2cf">More...</a><br /></td></tr>
-<tr class="separator:a15f1304507287d50749f3a0a87cee2cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e198fa3e3dce4b823972130fdf017d1"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename  = enable_if&lt;and_t&lt;is_array&lt;LHS&gt;,is_array&lt;RHS&gt;&gt;&gt;&gt; </td></tr>
-<tr class="memitem:a8e198fa3e3dce4b823972130fdf017d1"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; sub_op&lt; LHS, RHS &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a8e198fa3e3dce4b823972130fdf017d1">pni::operator-</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:a8e198fa3e3dce4b823972130fdf017d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary subtraction operator  <a href="namespacepni.html#a8e198fa3e3dce4b823972130fdf017d1">More...</a><br /></td></tr>
-<tr class="separator:a8e198fa3e3dce4b823972130fdf017d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79839e2ab98aa4c2425d5864ea07fe7f"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename T , typename  = enable_if&lt;and_t&lt;                      is_array&lt;LHS&gt;,not_t&lt;is_array&lt;T&gt;&gt;                      &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a79839e2ab98aa4c2425d5864ea07fe7f"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; sub_op&lt; LHS, scalar&lt; T &gt; &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a79839e2ab98aa4c2425d5864ea07fe7f">pni::operator-</a> (const LHS &amp;a, const T &amp;b)</td></tr>
-<tr class="memdesc:a79839e2ab98aa4c2425d5864ea07fe7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary subtraction operator  <a href="namespacepni.html#a79839e2ab98aa4c2425d5864ea07fe7f">More...</a><br /></td></tr>
-<tr class="separator:a79839e2ab98aa4c2425d5864ea07fe7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4d55c13b2a291a72cacb5876d392fa8"><td class="memTemplParams" colspan="2">template&lt;typename T , typename RHS , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;T&gt;&gt;,is_array&lt;RHS&gt;                         &gt;&gt;&gt; </td></tr>
-<tr class="memitem:ac4d55c13b2a291a72cacb5876d392fa8"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; sub_op&lt; scalar&lt; T &gt;, RHS &gt;, map_type&lt; RHS &gt;, ipa_type&lt; RHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ac4d55c13b2a291a72cacb5876d392fa8">pni::operator-</a> (const T &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:ac4d55c13b2a291a72cacb5876d392fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary subtraction operator  <a href="namespacepni.html#ac4d55c13b2a291a72cacb5876d392fa8">More...</a><br /></td></tr>
-<tr class="separator:ac4d55c13b2a291a72cacb5876d392fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d143674c9fdb8b7709d9b9c59438da9"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename  = enable_if&lt;and_t&lt;is_array&lt;LHS&gt;,is_array&lt;RHS&gt;&gt;&gt;&gt; </td></tr>
-<tr class="memitem:a8d143674c9fdb8b7709d9b9c59438da9"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; div_op&lt; LHS, RHS &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a8d143674c9fdb8b7709d9b9c59438da9">pni::operator/</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:a8d143674c9fdb8b7709d9b9c59438da9"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary division operator  <a href="namespacepni.html#a8d143674c9fdb8b7709d9b9c59438da9">More...</a><br /></td></tr>
-<tr class="separator:a8d143674c9fdb8b7709d9b9c59438da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a652b7572ac2ee9d1712f4062c6554c1d"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename T , typename  = enable_if&lt;and_t&lt;                        is_array&lt;LHS&gt;,not_t&lt;is_array&lt;T&gt;&gt;                        &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a652b7572ac2ee9d1712f4062c6554c1d"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; div_op&lt; LHS, scalar&lt; T &gt; &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a652b7572ac2ee9d1712f4062c6554c1d">pni::operator/</a> (const LHS &amp;a, const T &amp;b)</td></tr>
-<tr class="memdesc:a652b7572ac2ee9d1712f4062c6554c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary division operator  <a href="namespacepni.html#a652b7572ac2ee9d1712f4062c6554c1d">More...</a><br /></td></tr>
-<tr class="separator:a652b7572ac2ee9d1712f4062c6554c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a708529e82c0445ec9fe70da6e5f77c8c"><td class="memTemplParams" colspan="2">template&lt;typename T , typename RHS , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;T&gt;&gt;,is_array&lt;RHS&gt;                        &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a708529e82c0445ec9fe70da6e5f77c8c"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; div_op&lt; scalar&lt; T &gt;, RHS &gt;, map_type&lt; RHS &gt;, ipa_type&lt; RHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a708529e82c0445ec9fe70da6e5f77c8c">pni::operator/</a> (const T &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:a708529e82c0445ec9fe70da6e5f77c8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary division operator  <a href="namespacepni.html#a708529e82c0445ec9fe70da6e5f77c8c">More...</a><br /></td></tr>
-<tr class="separator:a708529e82c0445ec9fe70da6e5f77c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a947f7253b664427b77a627e0826223f7"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename  = enable_if&lt;and_t&lt;is_array&lt;LHS&gt;,is_array&lt;RHS&gt; &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a947f7253b664427b77a627e0826223f7"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; mult_op&lt; LHS, RHS &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a947f7253b664427b77a627e0826223f7">pni::operator*</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:a947f7253b664427b77a627e0826223f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary multiplication operator  <a href="namespacepni.html#a947f7253b664427b77a627e0826223f7">More...</a><br /></td></tr>
-<tr class="separator:a947f7253b664427b77a627e0826223f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3032d655aa9a00834d171db261c812ba"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename T , typename  = enable_if&lt;and_t&lt;                        is_array&lt;LHS&gt;,not_t&lt;is_array&lt;T&gt;&gt;                        &gt;&gt;&gt; </td></tr>
-<tr class="memitem:a3032d655aa9a00834d171db261c812ba"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; mult_op&lt; LHS, scalar&lt; T &gt; &gt;, map_type&lt; LHS &gt;, ipa_type&lt; LHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a3032d655aa9a00834d171db261c812ba">pni::operator*</a> (const LHS &amp;a, const T &amp;b)</td></tr>
-<tr class="memdesc:a3032d655aa9a00834d171db261c812ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary multiplication operator  <a href="namespacepni.html#a3032d655aa9a00834d171db261c812ba">More...</a><br /></td></tr>
-<tr class="separator:a3032d655aa9a00834d171db261c812ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4c2a0f445472cc6a9ee1eb40c0082df"><td class="memTemplParams" colspan="2">template&lt;typename T , typename RHS , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;T&gt;&gt;,is_array&lt;RHS&gt;                        &gt;&gt;&gt; </td></tr>
-<tr class="memitem:ad4c2a0f445472cc6a9ee1eb40c0082df"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; mult_op&lt; scalar&lt; T &gt;, RHS &gt;, map_type&lt; RHS &gt;, ipa_type&lt; RHS &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ad4c2a0f445472cc6a9ee1eb40c0082df">pni::operator*</a> (const T &amp;a, const RHS &amp;b)</td></tr>
-<tr class="memdesc:ad4c2a0f445472cc6a9ee1eb40c0082df"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary multiplication operator  <a href="namespacepni.html#ad4c2a0f445472cc6a9ee1eb40c0082df">More...</a><br /></td></tr>
-<tr class="separator:ad4c2a0f445472cc6a9ee1eb40c0082df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b6c5498471b2c76b348ab3f7706c65c"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;is_array&lt;LHSArrayT&gt;,is_array&lt;RHSArrayT&gt;&gt;&gt;&gt; </td></tr>
+<tr class="memitem:a0b6c5498471b2c76b348ab3f7706c65c"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; add_op&lt; LHSArrayT, RHSArrayT &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a0b6c5498471b2c76b348ab3f7706c65c">pni::operator+</a> (const LHSArrayT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:a0b6c5498471b2c76b348ab3f7706c65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary addition operator  <a href="namespacepni.html#a0b6c5498471b2c76b348ab3f7706c65c">More...</a><br /></td></tr>
+<tr class="separator:a0b6c5498471b2c76b348ab3f7706c65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd82bb004077c2d8e8b659f8c785ab95"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename ScalarT , typename  = enable_if&lt;and_t&lt;                        is_array&lt;LHSArrayT&gt;,not_t&lt;is_array&lt;ScalarT&gt;&gt;                         &gt;&gt;&gt; </td></tr>
+<tr class="memitem:afd82bb004077c2d8e8b659f8c785ab95"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; add_op&lt; LHSArrayT, scalar&lt; ScalarT &gt; &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#afd82bb004077c2d8e8b659f8c785ab95">pni::operator+</a> (const LHSArrayT &amp;a, const ScalarT &amp;b)</td></tr>
+<tr class="memdesc:afd82bb004077c2d8e8b659f8c785ab95"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary addition operator  <a href="namespacepni.html#afd82bb004077c2d8e8b659f8c785ab95">More...</a><br /></td></tr>
+<tr class="separator:afd82bb004077c2d8e8b659f8c785ab95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab2971f852e11c1816a17c185639f317"><td class="memTemplParams" colspan="2">template&lt;typename ScalarT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;ScalarT&gt;&gt;,is_array&lt;RHSArrayT&gt;                        &gt;&gt;&gt; </td></tr>
+<tr class="memitem:aab2971f852e11c1816a17c185639f317"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; add_op&lt; scalar&lt; ScalarT &gt;, RHSArrayT &gt;, map_type&lt; RHSArrayT &gt;, ipa_type&lt; RHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aab2971f852e11c1816a17c185639f317">pni::operator+</a> (const ScalarT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:aab2971f852e11c1816a17c185639f317"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary addition operator  <a href="namespacepni.html#aab2971f852e11c1816a17c185639f317">More...</a><br /></td></tr>
+<tr class="separator:aab2971f852e11c1816a17c185639f317"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4359c75e22f6fbbf9276931208487a"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;is_array&lt;LHSArrayT&gt;,is_array&lt;RHSArrayT&gt;&gt;&gt;&gt; </td></tr>
+<tr class="memitem:aab4359c75e22f6fbbf9276931208487a"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; sub_op&lt; LHSArrayT, RHSArrayT &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aab4359c75e22f6fbbf9276931208487a">pni::operator-</a> (const LHSArrayT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:aab4359c75e22f6fbbf9276931208487a"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary subtraction operator  <a href="namespacepni.html#aab4359c75e22f6fbbf9276931208487a">More...</a><br /></td></tr>
+<tr class="separator:aab4359c75e22f6fbbf9276931208487a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa81e3e021e6bea1485dfbd89766c16"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename ScalarT , typename  = enable_if&lt;and_t&lt;                      is_array&lt;LHSArrayT&gt;,not_t&lt;is_array&lt;ScalarT&gt;&gt;                      &gt;&gt;&gt; </td></tr>
+<tr class="memitem:a1fa81e3e021e6bea1485dfbd89766c16"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; sub_op&lt; LHSArrayT, scalar&lt; ScalarT &gt; &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a1fa81e3e021e6bea1485dfbd89766c16">pni::operator-</a> (const LHSArrayT &amp;a, const ScalarT &amp;b)</td></tr>
+<tr class="memdesc:a1fa81e3e021e6bea1485dfbd89766c16"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary subtraction operator  <a href="namespacepni.html#a1fa81e3e021e6bea1485dfbd89766c16">More...</a><br /></td></tr>
+<tr class="separator:a1fa81e3e021e6bea1485dfbd89766c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab1256ade88c32b279d334180817271e"><td class="memTemplParams" colspan="2">template&lt;typename ScalarT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;ScalarT&gt;&gt;,is_array&lt;RHSArrayT&gt;                         &gt;&gt;&gt; </td></tr>
+<tr class="memitem:aab1256ade88c32b279d334180817271e"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; sub_op&lt; scalar&lt; ScalarT &gt;, RHSArrayT &gt;, map_type&lt; RHSArrayT &gt;, ipa_type&lt; RHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aab1256ade88c32b279d334180817271e">pni::operator-</a> (const ScalarT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:aab1256ade88c32b279d334180817271e"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary subtraction operator  <a href="namespacepni.html#aab1256ade88c32b279d334180817271e">More...</a><br /></td></tr>
+<tr class="separator:aab1256ade88c32b279d334180817271e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1120ede515181be0e98425a74066ff59"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;is_array&lt;LHSArrayT&gt;,is_array&lt;RHSArrayT&gt;&gt;&gt;&gt; </td></tr>
+<tr class="memitem:a1120ede515181be0e98425a74066ff59"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; div_op&lt; LHSArrayT, RHSArrayT &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a1120ede515181be0e98425a74066ff59">pni::operator/</a> (const LHSArrayT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:a1120ede515181be0e98425a74066ff59"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary division operator  <a href="namespacepni.html#a1120ede515181be0e98425a74066ff59">More...</a><br /></td></tr>
+<tr class="separator:a1120ede515181be0e98425a74066ff59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a5647b79b9095fb4fe5c7fab77f09e"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename ScalarT , typename  = enable_if&lt;and_t&lt;                        is_array&lt;LHSArrayT&gt;,not_t&lt;is_array&lt;ScalarT&gt;&gt;                        &gt;&gt;&gt; </td></tr>
+<tr class="memitem:ab7a5647b79b9095fb4fe5c7fab77f09e"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; div_op&lt; LHSArrayT, scalar&lt; ScalarT &gt; &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ab7a5647b79b9095fb4fe5c7fab77f09e">pni::operator/</a> (const LHSArrayT &amp;a, const ScalarT &amp;b)</td></tr>
+<tr class="memdesc:ab7a5647b79b9095fb4fe5c7fab77f09e"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary division operator  <a href="namespacepni.html#ab7a5647b79b9095fb4fe5c7fab77f09e">More...</a><br /></td></tr>
+<tr class="separator:ab7a5647b79b9095fb4fe5c7fab77f09e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7bd9762cc8ca7d0fa0d8577700cba07"><td class="memTemplParams" colspan="2">template&lt;typename ScalarT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;ScalarT&gt;&gt;,is_array&lt;RHSArrayT&gt;                        &gt;&gt;&gt; </td></tr>
+<tr class="memitem:af7bd9762cc8ca7d0fa0d8577700cba07"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; div_op&lt; scalar&lt; ScalarT &gt;, RHSArrayT &gt;, map_type&lt; RHSArrayT &gt;, ipa_type&lt; RHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#af7bd9762cc8ca7d0fa0d8577700cba07">pni::operator/</a> (const ScalarT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:af7bd9762cc8ca7d0fa0d8577700cba07"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary division operator  <a href="namespacepni.html#af7bd9762cc8ca7d0fa0d8577700cba07">More...</a><br /></td></tr>
+<tr class="separator:af7bd9762cc8ca7d0fa0d8577700cba07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0340474c3b874c46d329f1effabc67a3"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;is_array&lt;LHSArrayT&gt;,is_array&lt;RHSArrayT&gt; &gt;&gt;&gt; </td></tr>
+<tr class="memitem:a0340474c3b874c46d329f1effabc67a3"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; mult_op&lt; LHSArrayT, RHSArrayT &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a0340474c3b874c46d329f1effabc67a3">pni::operator*</a> (const LHSArrayT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:a0340474c3b874c46d329f1effabc67a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary multiplication operator  <a href="namespacepni.html#a0340474c3b874c46d329f1effabc67a3">More...</a><br /></td></tr>
+<tr class="separator:a0340474c3b874c46d329f1effabc67a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a144f6659404172ea695d92e195feed98"><td class="memTemplParams" colspan="2">template&lt;typename LHSArrayT , typename ScalarT , typename  = enable_if&lt;and_t&lt;                        is_array&lt;LHSArrayT&gt;,not_t&lt;is_array&lt;ScalarT&gt;&gt;                        &gt;&gt;&gt; </td></tr>
+<tr class="memitem:a144f6659404172ea695d92e195feed98"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; mult_op&lt; LHSArrayT, scalar&lt; ScalarT &gt; &gt;, map_type&lt; LHSArrayT &gt;, ipa_type&lt; LHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a144f6659404172ea695d92e195feed98">pni::operator*</a> (const LHSArrayT &amp;a, const ScalarT &amp;b)</td></tr>
+<tr class="memdesc:a144f6659404172ea695d92e195feed98"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary multiplication operator  <a href="namespacepni.html#a144f6659404172ea695d92e195feed98">More...</a><br /></td></tr>
+<tr class="separator:a144f6659404172ea695d92e195feed98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2aed25b24d6de34dd371ce47ea916086"><td class="memTemplParams" colspan="2">template&lt;typename ScalarT , typename RHSArrayT , typename  = enable_if&lt;and_t&lt;                        not_t&lt;is_array&lt;ScalarT&gt;&gt;,is_array&lt;RHSArrayT&gt;                        &gt;&gt;&gt; </td></tr>
+<tr class="memitem:a2aed25b24d6de34dd371ce47ea916086"><td class="memTemplItemLeft" align="right" valign="top">mdarray&lt; mult_op&lt; scalar&lt; ScalarT &gt;, RHSArrayT &gt;, map_type&lt; RHSArrayT &gt;, ipa_type&lt; RHSArrayT &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a2aed25b24d6de34dd371ce47ea916086">pni::operator*</a> (const ScalarT &amp;a, const RHSArrayT &amp;b)</td></tr>
+<tr class="memdesc:a2aed25b24d6de34dd371ce47ea916086"><td class="mdescLeft">&#160;</td><td class="mdescRight">binary multiplication operator  <a href="namespacepni.html#a2aed25b24d6de34dd371ce47ea916086">More...</a><br /></td></tr>
+<tr class="separator:a2aed25b24d6de34dd371ce47ea916086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -155,7 +156,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="array__arithmetic_8hpp.html">array_arithmetic.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

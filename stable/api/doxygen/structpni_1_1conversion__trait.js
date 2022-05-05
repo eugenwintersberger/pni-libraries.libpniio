@@ -1,7 +1,7 @@
 var structpni_1_1conversion__trait =
 [
-    [ "read_type", "structpni_1_1conversion__trait.html#ab90dbf1b53628fc6969847e83b0ed985", null ],
-    [ "result_type", "structpni_1_1conversion__trait.html#a3ca31c061f45afd52097cef3c58393d0", null ],
-    [ "convert", "structpni_1_1conversion__trait.html#aed925d446bc9f80398b71d1fb610298b", null ],
-    [ "convert", "structpni_1_1conversion__trait.html#ad339dbcc732885d4581f6690e8c111a7", null ]
+    [ "read_type", "structpni_1_1conversion__trait.html#af2b147d56cf178f3199b7ff2e2912c6b", null ],
+    [ "result_type", "structpni_1_1conversion__trait.html#a1f8451e26eaa4b88a0fac79af65bd9e6", null ],
+    [ "convert", "structpni_1_1conversion__trait.html#a293651ae4d482055fe32fec28a7f4531", null ],
+    [ "convert", "structpni_1_1conversion__trait.html#a6f3d346d10718e7497d5c7368b85bda3", null ]
 ];

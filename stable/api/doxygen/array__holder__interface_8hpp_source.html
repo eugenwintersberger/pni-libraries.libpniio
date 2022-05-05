@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: array_holder_interface.hpp Source File</title>
+<title>PNI NeXus Library: array_holder_interface.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -167,11 +168,11 @@ $(document).ready(function(){initNavTree('array__holder__interface_8hpp_source.h
 <div class="ttc" id="aclasspni_1_1array__holder__interface_html_abeb9009a3a740e878122012fd119ff35"><div class="ttname"><a href="classpni_1_1array__holder__interface.html#abeb9009a3a740e878122012fd119ff35">pni::array_holder_interface::ptr</a></div><div class="ttdeci">virtual const void * ptr() const =0</div><div class="ttdoc">get pointer to data</div></div>
 <div class="ttc" id="aclasspni_1_1array__holder__interface_html_adeb07210244c8d91ebc3d857d9e387a4"><div class="ttname"><a href="classpni_1_1array__holder__interface.html#adeb07210244c8d91ebc3d857d9e387a4">pni::array_holder_interface::at</a></div><div class="ttdeci">virtual value at(size_t i) const =0</div><div class="ttdoc">get value at linear index i</div></div>
 <div class="ttc" id="aclasspni_1_1array__holder__interface_html_aff455084a2eb6e537140fbe21075eed9"><div class="ttname"><a href="classpni_1_1array__holder__interface.html#aff455084a2eb6e537140fbe21075eed9">pni::array_holder_interface::operator[]</a></div><div class="ttdeci">virtual value_ref operator[](size_t i)=0</div><div class="ttdoc">get reference to element at linear index i</div></div>
-<div class="ttc" id="aclasspni_1_1value__ref_html"><div class="ttname"><a href="classpni_1_1value__ref.html">pni::value_ref</a></div><div class="ttdoc">type erasure for references to POD data</div><div class="ttdef"><b>Definition:</b> value_ref.hpp:45</div></div>
-<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
-<div class="ttc" id="agroup__type__classes_html_ga2c8ca0de37c42914554a1a9e500b31cd"><div class="ttname"><a href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">pni::type_id_t</a></div><div class="ttdeci">type_id_t</div><div class="ttdoc">type codes for PNI data types</div><div class="ttdef"><b>Definition:</b> types/types.hpp:152</div></div>
+<div class="ttc" id="aclasspni_1_1value__ref_html"><div class="ttname"><a href="classpni_1_1value__ref.html">pni::value_ref</a></div><div class="ttdoc">type erasure for references to POD data</div><div class="ttdef"><b>Definition:</b> value_ref.hpp:47</div></div>
+<div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:49</div></div>
+<div class="ttc" id="agroup__type__classes_html_ga2c8ca0de37c42914554a1a9e500b31cd"><div class="ttname"><a href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">pni::type_id_t</a></div><div class="ttdeci">type_id_t</div><div class="ttdoc">type codes for PNI data types</div><div class="ttdef"><b>Definition:</b> types/types.hpp:155</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="anamespacepni_html_a5b5c35e86d7bd211daf1b949d3e3fc8e"><div class="ttname"><a href="namespacepni.html#a5b5c35e86d7bd211daf1b949d3e3fc8e">pni::shape_t</a></div><div class="ttdeci">std::vector&lt; size_t &gt; shape_t</div><div class="ttdoc">standard type for array shapes</div><div class="ttdef"><b>Definition:</b> types/types.hpp:294</div></div>
+<div class="ttc" id="anamespacepni_html_a5b5c35e86d7bd211daf1b949d3e3fc8e"><div class="ttname"><a href="namespacepni.html#a5b5c35e86d7bd211daf1b949d3e3fc8e">pni::shape_t</a></div><div class="ttdeci">std::vector&lt; size_t &gt; shape_t</div><div class="ttdoc">standard type for array shapes</div><div class="ttdef"><b>Definition:</b> types/types.hpp:298</div></div>
 <div class="ttc" id="avalue_8hpp_html"><div class="ttname"><a href="value_8hpp.html">value.hpp</a></div></div>
 <div class="ttc" id="avalue__ref_8hpp_html"><div class="ttname"><a href="value__ref_8hpp.html">value_ref.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -180,7 +181,7 @@ $(document).ready(function(){initNavTree('array__holder__interface_8hpp_source.h
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_9a01e76c9ba32292e5d1e50948f9c01a.html">type_erasures</a></li><li class="navelem"><a class="el" href="array__holder__interface_8hpp.html">array_holder_interface.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

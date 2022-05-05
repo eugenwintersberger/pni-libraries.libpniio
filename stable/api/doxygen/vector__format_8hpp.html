@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: vector_format.hpp File Reference</title>
+<title>PNI NeXus Library: vector_format.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -83,13 +84,13 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac3cab89957fd67e89811c4de65291994"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ac3cab89957fd67e89811c4de65291994"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ac3cab89957fd67e89811c4de65291994">pni::format</a> (const std::vector&lt; T &gt; &amp;v, const <a class="el" href="classpni_1_1container__io__config.html">container_io_config</a> &amp;config=<a class="el" href="classpni_1_1container__io__config.html">container_io_config</a>())</td></tr>
-<tr class="separator:ac3cab89957fd67e89811c4de65291994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fca515d50e3755d908b71a5e82f0dc9"><td class="memTemplParams" colspan="2">template&lt;typename ... OTYPES&gt; </td></tr>
-<tr class="memitem:a0fca515d50e3755d908b71a5e82f0dc9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a0fca515d50e3755d908b71a5e82f0dc9">pni::format</a> (const <a class="el" href="classpni_1_1mdarray.html">pni::mdarray</a>&lt; OTYPES... &gt; &amp;v, const <a class="el" href="classpni_1_1container__io__config.html">container_io_config</a> &amp;config=<a class="el" href="classpni_1_1container__io__config.html">container_io_config</a>())</td></tr>
-<tr class="memdesc:a0fca515d50e3755d908b71a5e82f0dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">formatter for mdarray instances  <a href="namespacepni.html#a0fca515d50e3755d908b71a5e82f0dc9">More...</a><br /></td></tr>
-<tr class="separator:a0fca515d50e3755d908b71a5e82f0dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e45b03e5dae3c4070d990f3ff307e17"><td class="memTemplParams" colspan="2">template&lt;typename ElementT &gt; </td></tr>
+<tr class="memitem:a8e45b03e5dae3c4070d990f3ff307e17"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a8e45b03e5dae3c4070d990f3ff307e17">pni::format</a> (const std::vector&lt; ElementT &gt; &amp;v, const <a class="el" href="classpni_1_1container__io__config.html">container_io_config</a> &amp;config=<a class="el" href="classpni_1_1container__io__config.html">container_io_config</a>())</td></tr>
+<tr class="separator:a8e45b03e5dae3c4070d990f3ff307e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1601f7a91046c7b0af122e3b997bb1ee"><td class="memTemplParams" colspan="2">template&lt;typename ... TemplateParametersT&gt; </td></tr>
+<tr class="memitem:a1601f7a91046c7b0af122e3b997bb1ee"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a1601f7a91046c7b0af122e3b997bb1ee">pni::format</a> (const <a class="el" href="classpni_1_1mdarray.html">pni::mdarray</a>&lt; TemplateParametersT... &gt; &amp;v, const <a class="el" href="classpni_1_1container__io__config.html">container_io_config</a> &amp;config=<a class="el" href="classpni_1_1container__io__config.html">container_io_config</a>())</td></tr>
+<tr class="memdesc:a1601f7a91046c7b0af122e3b997bb1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">formatter for mdarray instances  <a href="namespacepni.html#a1601f7a91046c7b0af122e3b997bb1ee">More...</a><br /></td></tr>
+<tr class="separator:a1601f7a91046c7b0af122e3b997bb1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57b360f7e07437ecde5a88bea7fa08f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> <a class="el" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacepni.html#a57b360f7e07437ecde5a88bea7fa08f0">pni::format</a> (const <a class="el" href="classpni_1_1array.html">pni::array</a> &amp;v, const <a class="el" href="classpni_1_1container__io__config.html">container_io_config</a> &amp;config=<a class="el" href="classpni_1_1container__io__config.html">container_io_config</a>())</td></tr>
 <tr class="separator:a57b360f7e07437ecde5a88bea7fa08f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -99,7 +100,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_6f5a63f6eccfad8b20a7703022fd2104.html">formatters</a></li><li class="navelem"><a class="el" href="vector__format_8hpp.html">vector_format.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: utils.hpp Source File</title>
+<title>PNI NeXus Library: utils.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -96,66 +97,66 @@ $(document).ready(function(){initNavTree('types_2utils_8hpp_source.html',''); in
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html">   37</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> CTYPE&gt; <span class="keyword">class </span><a class="code" href="classpni_1_1type__id__container__builder.html">type_id_container_builder</a></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html">   37</a></span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ContainerT&gt; <span class="keyword">class </span><a class="code" href="classpni_1_1type__id__container__builder.html">type_id_container_builder</a></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html#a914111afaa468c8a8ce7d467767f6f1c">   40</a></span>&#160;            CTYPE <a class="code" href="classpni_1_1type__id__container__builder.html#a914111afaa468c8a8ce7d467767f6f1c">_container</a>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html#a4276f5d3b85cea95bcd6a29118daf1a1">   40</a></span>&#160;            ContainerT <a class="code" href="classpni_1_1type__id__container__builder.html#a4276f5d3b85cea95bcd6a29118daf1a1">_container</a>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html#a84913a433502ddf9ad04718f0b42f89f">   43</a></span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keywordtype">void</span> <a class="code" href="classpni_1_1type__id__container__builder.html#a84913a433502ddf9ad04718f0b42f89f">operator()</a>(T)</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html#aad4b9a68251ea6a469dc594bb309b1b5">   43</a></span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> ElementT&gt; <span class="keywordtype">void</span> <a class="code" href="classpni_1_1type__id__container__builder.html#aad4b9a68251ea6a469dc594bb309b1b5">operator()</a>(ElementT)</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <a class="code" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">type_id_t</a> tid = <a class="code" href="structpni_1_1type__id__map.html">type_id_map&lt;T&gt;::type_id</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                <a class="code" href="classpni_1_1type__id__container__builder.html#a914111afaa468c8a8ce7d467767f6f1c">_container</a>.push_back(tid);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <a class="code" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">type_id_t</a> tid = <a class="code" href="structpni_1_1type__id__map.html">type_id_map&lt;ElementT&gt;::type_id</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                <a class="code" href="classpni_1_1type__id__container__builder.html#a4276f5d3b85cea95bcd6a29118daf1a1">_container</a>.push_back(tid);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            }</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html#a4da27b95ecd0e72a21fcfd056c0afd22">   49</a></span>&#160;            CTYPE <a class="code" href="classpni_1_1type__id__container__builder.html#a4da27b95ecd0e72a21fcfd056c0afd22">get</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classpni_1_1type__id__container__builder.html#a16f04db8c1341bf635490cb306d7b5f8">   49</a></span>&#160;            ContainerT <a class="code" href="classpni_1_1type__id__container__builder.html#a16f04db8c1341bf635490cb306d7b5f8">get</a>()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classpni_1_1type__id__container__builder.html#a914111afaa468c8a8ce7d467767f6f1c">_container</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classpni_1_1type__id__container__builder.html#a4276f5d3b85cea95bcd6a29118daf1a1">_container</a>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">//------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;             <span class="keyword">typename</span> CTYPE,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;             <span class="keyword">typename</span> TS</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;             <span class="keyword">typename</span> ContainerT,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;             <span class="keyword">typename</span> SourceT</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            &gt;</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="namespacepni.html#a2bb793192222d45fcd3b9a8c02c91422">   61</a></span>&#160;    CTYPE <a class="code" href="namespacepni.html#a2bb793192222d45fcd3b9a8c02c91422">build_type_id_container</a>()</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="namespacepni.html#a8fc25815126216a8c42fc75ddc8483fe">   61</a></span>&#160;    ContainerT <a class="code" href="namespacepni.html#a8fc25815126216a8c42fc75ddc8483fe">build_type_id_container</a>()</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="classpni_1_1type__id__container__builder.html">type_id_container_builder&lt;CTYPE&gt;</a> builder;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="classpni_1_1type__id__container__builder.html">type_id_container_builder&lt;ContainerT&gt;</a> builder;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        boost::mpl::for_each&lt;TS&gt;(std::ref(builder));</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        boost::mpl::for_each&lt;SourceT&gt;(std::ref(builder));</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> builder.<a class="code" href="classpni_1_1type__id__container__builder.html#a4da27b95ecd0e72a21fcfd056c0afd22">get</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> builder.<a class="code" href="classpni_1_1type__id__container__builder.html#a16f04db8c1341bf635490cb306d7b5f8">get</a>();</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;   </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="namespacepni.html#a92a619e389a5e7f8600cf10857da88db">   71</a></span>&#160;    <span class="keyword">typedef</span> std::vector&lt;type_id_t&gt; <a class="code" href="namespacepni.html#a92a619e389a5e7f8600cf10857da88db">type_id_vector</a>; </div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;             <span class="keyword">typename</span> T,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;             <span class="keyword">typename</span> MAPT</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;             <span class="keyword">typename</span> KeyT,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;             <span class="keyword">typename</span> MapT</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            &gt;</div>
 <div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="namespacepni.html#abe5d083de7da82d07c903954e50a53b1">   83</a></span>&#160;    std::pair&lt;type_id_t,type_id_vector&gt; <a class="code" href="namespacepni.html#abe5d083de7da82d07c903954e50a53b1">generate_map_element</a>()</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> boost::mpl::at&lt;MAPT,T&gt;::type vector_t;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> boost::mpl::at&lt;MapT,KeyT&gt;::type vector_t;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> {<a class="code" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">type_id_t</a>(<a class="code" href="structpni_1_1type__id__map.html">type_id_map&lt;T&gt;::type_id</a>),</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> {<a class="code" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">type_id_t</a>(<a class="code" href="structpni_1_1type__id__map.html">type_id_map&lt;KeyT&gt;::type_id</a>),</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                build_type_id_container&lt;type_id_vector,vector_t&gt;()};</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">//end of namespace</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
 <div class="ttc" id="aclasspni_1_1type__id__container__builder_html"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html">pni::type_id_container_builder</a></div><div class="ttdoc">type id container builder</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:38</div></div>
-<div class="ttc" id="aclasspni_1_1type__id__container__builder_html_a4da27b95ecd0e72a21fcfd056c0afd22"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html#a4da27b95ecd0e72a21fcfd056c0afd22">pni::type_id_container_builder::get</a></div><div class="ttdeci">CTYPE get() const</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:49</div></div>
-<div class="ttc" id="aclasspni_1_1type__id__container__builder_html_a84913a433502ddf9ad04718f0b42f89f"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html#a84913a433502ddf9ad04718f0b42f89f">pni::type_id_container_builder::operator()</a></div><div class="ttdeci">void operator()(T)</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:43</div></div>
-<div class="ttc" id="aclasspni_1_1type__id__container__builder_html_a914111afaa468c8a8ce7d467767f6f1c"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html#a914111afaa468c8a8ce7d467767f6f1c">pni::type_id_container_builder::_container</a></div><div class="ttdeci">CTYPE _container</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:40</div></div>
-<div class="ttc" id="agroup__type__classes_html_ga2c8ca0de37c42914554a1a9e500b31cd"><div class="ttname"><a href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">pni::type_id_t</a></div><div class="ttdeci">type_id_t</div><div class="ttdoc">type codes for PNI data types</div><div class="ttdef"><b>Definition:</b> types/types.hpp:152</div></div>
+<div class="ttc" id="aclasspni_1_1type__id__container__builder_html_a16f04db8c1341bf635490cb306d7b5f8"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html#a16f04db8c1341bf635490cb306d7b5f8">pni::type_id_container_builder::get</a></div><div class="ttdeci">ContainerT get() const</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:49</div></div>
+<div class="ttc" id="aclasspni_1_1type__id__container__builder_html_a4276f5d3b85cea95bcd6a29118daf1a1"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html#a4276f5d3b85cea95bcd6a29118daf1a1">pni::type_id_container_builder::_container</a></div><div class="ttdeci">ContainerT _container</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:40</div></div>
+<div class="ttc" id="aclasspni_1_1type__id__container__builder_html_aad4b9a68251ea6a469dc594bb309b1b5"><div class="ttname"><a href="classpni_1_1type__id__container__builder.html#aad4b9a68251ea6a469dc594bb309b1b5">pni::type_id_container_builder::operator()</a></div><div class="ttdeci">void operator()(ElementT)</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:43</div></div>
+<div class="ttc" id="agroup__type__classes_html_ga2c8ca0de37c42914554a1a9e500b31cd"><div class="ttname"><a href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">pni::type_id_t</a></div><div class="ttdeci">type_id_t</div><div class="ttdoc">type codes for PNI data types</div><div class="ttdef"><b>Definition:</b> types/types.hpp:155</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="anamespacepni_html_a2bb793192222d45fcd3b9a8c02c91422"><div class="ttname"><a href="namespacepni.html#a2bb793192222d45fcd3b9a8c02c91422">pni::build_type_id_container</a></div><div class="ttdeci">CTYPE build_type_id_container()</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:61</div></div>
+<div class="ttc" id="anamespacepni_html_a8fc25815126216a8c42fc75ddc8483fe"><div class="ttname"><a href="namespacepni.html#a8fc25815126216a8c42fc75ddc8483fe">pni::build_type_id_container</a></div><div class="ttdeci">ContainerT build_type_id_container()</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:61</div></div>
 <div class="ttc" id="anamespacepni_html_a92a619e389a5e7f8600cf10857da88db"><div class="ttname"><a href="namespacepni.html#a92a619e389a5e7f8600cf10857da88db">pni::type_id_vector</a></div><div class="ttdeci">std::vector&lt; type_id_t &gt; type_id_vector</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:71</div></div>
 <div class="ttc" id="anamespacepni_html_abe5d083de7da82d07c903954e50a53b1"><div class="ttname"><a href="namespacepni.html#abe5d083de7da82d07c903954e50a53b1">pni::generate_map_element</a></div><div class="ttdeci">std::pair&lt; type_id_t, type_id_vector &gt; generate_map_element()</div><div class="ttdoc">generate type map pairs</div><div class="ttdef"><b>Definition:</b> types/utils.hpp:83</div></div>
-<div class="ttc" id="astructpni_1_1type__id__map_html"><div class="ttname"><a href="structpni_1_1type__id__map.html">pni::type_id_map</a></div><div class="ttdoc">map from a type to type_id</div><div class="ttdef"><b>Definition:</b> type_id_map.hpp:51</div></div>
+<div class="ttc" id="astructpni_1_1type__id__map_html"><div class="ttname"><a href="structpni_1_1type__id__map.html">pni::type_id_map</a></div><div class="ttdoc">map from a type to type_id</div><div class="ttdef"><b>Definition:</b> type_id_map.hpp:54</div></div>
 <div class="ttc" id="atype__id__map_8hpp_html"><div class="ttname"><a href="type__id__map_8hpp.html">type_id_map.hpp</a></div></div>
 <div class="ttc" id="atypes_2types_8hpp_html"><div class="ttname"><a href="types_2types_8hpp.html">types.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -164,7 +165,7 @@ $(document).ready(function(){initNavTree('types_2utils_8hpp_source.html',''); in
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_0ebfec922f8118e34738e031f02bbcb3.html">types</a></li><li class="navelem"><a class="el" href="types_2utils_8hpp.html">utils.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

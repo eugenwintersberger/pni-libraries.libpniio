@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: array_selection.hpp File Reference</title>
+<title>PNI NeXus Library: array_selection.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -90,22 +91,22 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2ad907fcd914dfa92f042a2bdd97a7ed"><td class="memTemplParams" colspan="2">template&lt;typename MAPT , typename CTYPE &gt; </td></tr>
-<tr class="memitem:a2ad907fcd914dfa92f042a2bdd97a7ed"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a2ad907fcd914dfa92f042a2bdd97a7ed">pni::offset</a> (const MAPT &amp;map, const array_selection &amp;s, const CTYPE &amp;index)</td></tr>
-<tr class="memdesc:a2ad907fcd914dfa92f042a2bdd97a7ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute offset  <a href="namespacepni.html#a2ad907fcd914dfa92f042a2bdd97a7ed">More...</a><br /></td></tr>
-<tr class="separator:a2ad907fcd914dfa92f042a2bdd97a7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09ff2283432a3ed54dc94236a24237b0"><td class="memTemplParams" colspan="2">template&lt;typename MAPT &gt; </td></tr>
-<tr class="memitem:a09ff2283432a3ed54dc94236a24237b0"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a09ff2283432a3ed54dc94236a24237b0">pni::start_offset</a> (const MAPT &amp;map, const array_selection &amp;s)</td></tr>
-<tr class="memdesc:a09ff2283432a3ed54dc94236a24237b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute first element offset  <a href="namespacepni.html#a09ff2283432a3ed54dc94236a24237b0">More...</a><br /></td></tr>
-<tr class="separator:a09ff2283432a3ed54dc94236a24237b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f43c6595406f0efdcf86bc2e35ddd6f"><td class="memTemplParams" colspan="2">template&lt;typename MAPT &gt; </td></tr>
-<tr class="memitem:a4f43c6595406f0efdcf86bc2e35ddd6f"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a4f43c6595406f0efdcf86bc2e35ddd6f">pni::last_offset</a> (const MAPT &amp;map, const array_selection &amp;s)</td></tr>
-<tr class="memdesc:a4f43c6595406f0efdcf86bc2e35ddd6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute last element offset  <a href="namespacepni.html#a4f43c6595406f0efdcf86bc2e35ddd6f">More...</a><br /></td></tr>
-<tr class="separator:a4f43c6595406f0efdcf86bc2e35ddd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dbbcb29b6fa171122e4a984b21d7930"><td class="memTemplParams" colspan="2">template&lt;typename MAPT &gt; </td></tr>
-<tr class="memitem:a7dbbcb29b6fa171122e4a984b21d7930"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a7dbbcb29b6fa171122e4a984b21d7930">pni::is_contiguous</a> (const MAPT &amp;map, const array_selection &amp;s)</td></tr>
-<tr class="memdesc:a7dbbcb29b6fa171122e4a984b21d7930"><td class="mdescLeft">&#160;</td><td class="mdescRight">check continuity of a selection  <a href="namespacepni.html#a7dbbcb29b6fa171122e4a984b21d7930">More...</a><br /></td></tr>
-<tr class="separator:a7dbbcb29b6fa171122e4a984b21d7930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7a1ebbf6e5ba0b68ea3d9a523ed2228"><td class="memTemplParams" colspan="2">template&lt;typename MapT , typename ContainerT &gt; </td></tr>
+<tr class="memitem:ae7a1ebbf6e5ba0b68ea3d9a523ed2228"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ae7a1ebbf6e5ba0b68ea3d9a523ed2228">pni::offset</a> (const MapT &amp;map, const array_selection &amp;s, const ContainerT &amp;index)</td></tr>
+<tr class="memdesc:ae7a1ebbf6e5ba0b68ea3d9a523ed2228"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute offset  <a href="namespacepni.html#ae7a1ebbf6e5ba0b68ea3d9a523ed2228">More...</a><br /></td></tr>
+<tr class="separator:ae7a1ebbf6e5ba0b68ea3d9a523ed2228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab01896ba81995c4540b4230baa6e13cc"><td class="memTemplParams" colspan="2">template&lt;typename MapT &gt; </td></tr>
+<tr class="memitem:ab01896ba81995c4540b4230baa6e13cc"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ab01896ba81995c4540b4230baa6e13cc">pni::start_offset</a> (const MapT &amp;map, const array_selection &amp;s)</td></tr>
+<tr class="memdesc:ab01896ba81995c4540b4230baa6e13cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute first element offset  <a href="namespacepni.html#ab01896ba81995c4540b4230baa6e13cc">More...</a><br /></td></tr>
+<tr class="separator:ab01896ba81995c4540b4230baa6e13cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b5f93cbfde86db957f65e220d84980"><td class="memTemplParams" colspan="2">template&lt;typename MapT &gt; </td></tr>
+<tr class="memitem:a93b5f93cbfde86db957f65e220d84980"><td class="memTemplItemLeft" align="right" valign="top">size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a93b5f93cbfde86db957f65e220d84980">pni::last_offset</a> (const MapT &amp;map, const array_selection &amp;s)</td></tr>
+<tr class="memdesc:a93b5f93cbfde86db957f65e220d84980"><td class="mdescLeft">&#160;</td><td class="mdescRight">compute last element offset  <a href="namespacepni.html#a93b5f93cbfde86db957f65e220d84980">More...</a><br /></td></tr>
+<tr class="separator:a93b5f93cbfde86db957f65e220d84980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50c13016075a9210809a9c8bf866b214"><td class="memTemplParams" colspan="2">template&lt;typename MapT &gt; </td></tr>
+<tr class="memitem:a50c13016075a9210809a9c8bf866b214"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a50c13016075a9210809a9c8bf866b214">pni::is_contiguous</a> (const MapT &amp;map, const array_selection &amp;s)</td></tr>
+<tr class="memdesc:a50c13016075a9210809a9c8bf866b214"><td class="mdescLeft">&#160;</td><td class="mdescRight">check continuity of a selection  <a href="namespacepni.html#a50c13016075a9210809a9c8bf866b214">More...</a><br /></td></tr>
+<tr class="separator:a50c13016075a9210809a9c8bf866b214"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -113,7 +114,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="array__selection_8hpp.html">array_selection.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

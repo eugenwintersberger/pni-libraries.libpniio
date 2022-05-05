@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Working with files &#8212; libpninexus 2.0.0 documentation</title>
+    <title>Working with files &#8212; libpninexus 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="nexus_introduction.html" title="A basic introduction to Nexus"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Working with files</a></li> 
@@ -84,7 +84,7 @@ wrapper function which in turn will return an instance of
 <p>The code should be rather self explaining.  If the file already exists a
 <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::runtime_error</span></code> exception is thrown.
 In order to overwrite an existing file one can use</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">TRUNCATE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">create_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">Truncate</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This option should be used with case as all data stored in the original file
@@ -108,7 +108,7 @@ to open a NeXus file.</p>
 </div>
 <p>By default files are opened in read-only mode in order to avoid accidental
 data manipulations. To open a file for reading and writing use</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">READWRITE</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">open_file</span><span class="p">(</span><span class="s">&quot;test.nxs&quot;</span><span class="p">,</span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">AccessFlags</span><span class="o">::</span><span class="n">ReadWrite</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The object returned by <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code> is again an instance
@@ -168,6 +168,7 @@ check use the <code class="xref cpp cpp-func docutils literal notranslate"><span
       <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
       <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
       
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
       <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
       <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
       <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
@@ -191,7 +192,7 @@ check use the <code class="xref cpp cpp-func docutils literal notranslate"><span
         <li class="right" >
           <a href="nexus_introduction.html" title="A basic introduction to Nexus"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Working with files</a></li> 

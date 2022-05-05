@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Type erasures &#8212; libpninexus 2.0.0 documentation</title>
+    <title>Type erasures &#8212; libpninexus 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="core_arrays.html" title="Multidimensional arrays"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="core.html" accesskey="U">PNI core</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Type erasures</a></li> 
@@ -517,10 +517,10 @@ as will be shown here.</p>
 59
 60
 61
-62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ITERT</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">complex_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span>
+62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">complex_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">complex_rule</span><span class="p">;</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">complex_rule</span><span class="p">;</span>
 
     <span class="n">complex_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">complex_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">complex_rule</span><span class="p">)</span>
     <span class="p">{</span>
@@ -571,12 +571,12 @@ parser in <em>boost::spirit</em>.</p>
 90
 91
 92
-93</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ITERT</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">value_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span>
+93</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">value_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">value_rule</span><span class="p">;</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">value_rule</span><span class="p">;</span>
 
-    <span class="n">complex_parser</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="o">&gt;</span> <span class="n">complex_</span><span class="p">;</span>
+    <span class="n">complex_parser</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="o">&gt;</span> <span class="n">complex_</span><span class="p">;</span>
 
     <span class="n">value_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">value_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">value_rule</span><span class="p">)</span>
     <span class="p">{</span>
@@ -619,12 +619,12 @@ results in containers.</p>
 108
 109
 110
-111</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ITERT</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">record_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span>
+111</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">record_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">record_rule</span><span class="p">;</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">record_rule</span><span class="p">;</span>
 
-    <span class="n">value_parser</span><span class="o">&lt;</span><span class="n">ITERT</span><span class="o">&gt;</span> <span class="n">value_</span><span class="p">;</span>
+    <span class="n">value_parser</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="o">&gt;</span> <span class="n">value_</span><span class="p">;</span>
 
     <span class="n">record_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">record_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">record_rule</span><span class="p">)</span>
     <span class="p">{</span>
@@ -811,6 +811,7 @@ to the beginning and end of the line.</p>
       <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
       <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
       
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
       <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
       <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
       <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
@@ -834,7 +835,7 @@ to the beginning and end of the line.</p>
         <li class="right" >
           <a href="core_arrays.html" title="Multidimensional arrays"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="core.html" >PNI core</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Type erasures</a></li> 

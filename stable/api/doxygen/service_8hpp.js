@@ -1,4 +1,4 @@
 var service_8hpp =
 [
-    [ "DEPRECATED_FUNCTION", "service_8hpp.html#a36361a3e796611a8443d50356e233cde", null ]
+    [ "PNINEXUS_DEPRECATED_FUNCTION", "service_8hpp.html#af88085b3806fb9e58a8c1830f1978374", null ]
 ];

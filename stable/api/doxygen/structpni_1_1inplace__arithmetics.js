@@ -1,11 +1,11 @@
 var structpni_1_1inplace__arithmetics =
 [
-    [ "add", "structpni_1_1inplace__arithmetics.html#a99a52d7eac2958320cfe415a3a5d2e2b", null ],
-    [ "add", "structpni_1_1inplace__arithmetics.html#ae2f5a9cc705a9e99a19be18f42b2a1e6", null ],
-    [ "div", "structpni_1_1inplace__arithmetics.html#abc3e0f5b0fa846d2708a1b2a0ba1b4c5", null ],
-    [ "div", "structpni_1_1inplace__arithmetics.html#ac1df7a19ebc2ea5785b6806eaae944f1", null ],
-    [ "mult", "structpni_1_1inplace__arithmetics.html#adab9f8946353a978b4ed762b57abd9fc", null ],
-    [ "mult", "structpni_1_1inplace__arithmetics.html#a9980768729986fedfb27682102bf7e19", null ],
-    [ "sub", "structpni_1_1inplace__arithmetics.html#a02c4b716c6b2e1848ebed5bb5e21d2f5", null ],
-    [ "sub", "structpni_1_1inplace__arithmetics.html#a52ffb689036bc8bcaff584bb106042c0", null ]
+    [ "add", "structpni_1_1inplace__arithmetics.html#a8659b591a3b172c82139e297ca4ce79b", null ],
+    [ "add", "structpni_1_1inplace__arithmetics.html#a716d9133630c2bf27905d60421d33f16", null ],
+    [ "div", "structpni_1_1inplace__arithmetics.html#aaa4f3ceae35968862cda34926088b257", null ],
+    [ "div", "structpni_1_1inplace__arithmetics.html#a73f8f1146d92c5bf2b5a04aa4df6ac31", null ],
+    [ "mult", "structpni_1_1inplace__arithmetics.html#a785864a8e10c3eff8e8d83c6e947596a", null ],
+    [ "mult", "structpni_1_1inplace__arithmetics.html#a61b85e57c2d91089e2d921611ebaba9e", null ],
+    [ "sub", "structpni_1_1inplace__arithmetics.html#af144908e86668156c8002bed57c39d3a", null ],
+    [ "sub", "structpni_1_1inplace__arithmetics.html#adaf55b91115e20b9e588af832d8bef1e", null ]
 ];

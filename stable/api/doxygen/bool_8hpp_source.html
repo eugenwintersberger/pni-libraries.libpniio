@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: bool.hpp Source File</title>
+<title>PNI NeXus Library: bool.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -85,45 +86,50 @@ $(document).ready(function(){initNavTree('bool_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">// ============================================================================</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// Created on: Apr 11, 2014</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//     Author: Eugen Wintersberger &lt;eugen.wintersberger@desy.de&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#pragma once</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// Authors:</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//         Eugen Wintersberger &lt;eugen.wintersberger@desy.de&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//         Jan Kotanski &lt;jan.kotanski@desy.de&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="windows_8hpp.html">pni/windows.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html">   44</a></span>&#160;    <span class="keyword">class </span><a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <a class="code" href="classpni_1_1bool__t.html">bool_t</a></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">   47</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">_value</a>; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#ab9df2f212a254a3c51ee72a332bbad30">   50</a></span>&#160;            <a class="code" href="classpni_1_1bool__t.html#ab9df2f212a254a3c51ee72a332bbad30">bool_t</a>():_value(false) {}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#a55ba2a02d61a7f4422e43dccd378191a">   53</a></span>&#160;            <a class="code" href="classpni_1_1bool__t.html#a55ba2a02d61a7f4422e43dccd378191a">bool_t</a>(<span class="keywordtype">bool</span> v):_value(v) {}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="windows_8hpp.html">pni/windows.hpp</a>&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;h5cpp/contrib/nexus/ebool.hpp&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html">   47</a></span>&#160;    <span class="keyword">class </span><a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <a class="code" href="classpni_1_1bool__t.html">bool_t</a></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">   50</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">_value</a>; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#ab9df2f212a254a3c51ee72a332bbad30">   53</a></span>&#160;            <a class="code" href="classpni_1_1bool__t.html#ab9df2f212a254a3c51ee72a332bbad30">bool_t</a>():_value(false) {}</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#a37d8fcd08f5e2ff79192d380dfec826d">   56</a></span>&#160;            <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">            </span>{</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="keywordflow">return</span> _value;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    };</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="namespacepni.html#a5ca9bb2620f3528c2240d61b93de1fb5">   65</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;<a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;stream,<span class="keyword">const</span> <a class="code" href="classpni_1_1bool__t.html">bool_t</a> &amp;b);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespacepni.html#a0127c98150b1380e9c3c153c4a05fe30">   68</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::istream &amp;<a class="code" href="namespacepni.html#ad08537a51d621e64abb327ff1701688f">operator&gt;&gt;</a>(std::istream &amp;stream,<a class="code" href="classpni_1_1bool__t.html">bool_t</a> &amp;b);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">//end of namespace</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="ttc" id="aclasspni_1_1bool__t_html"><div class="ttname"><a href="classpni_1_1bool__t.html">pni::bool_t</a></div><div class="ttdoc">boolean type</div><div class="ttdef"><b>Definition:</b> bool.hpp:45</div></div>
-<div class="ttc" id="aclasspni_1_1bool__t_html_a55ba2a02d61a7f4422e43dccd378191a"><div class="ttname"><a href="classpni_1_1bool__t.html#a55ba2a02d61a7f4422e43dccd378191a">pni::bool_t::bool_t</a></div><div class="ttdeci">bool_t(bool v)</div><div class="ttdoc">conversion constructor</div><div class="ttdef"><b>Definition:</b> bool.hpp:53</div></div>
-<div class="ttc" id="aclasspni_1_1bool__t_html_aac59dd353ffbe113f0ebb5d080c756a7"><div class="ttname"><a href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">pni::bool_t::_value</a></div><div class="ttdeci">bool _value</div><div class="ttdoc">data element holding the current boolean value</div><div class="ttdef"><b>Definition:</b> bool.hpp:47</div></div>
-<div class="ttc" id="aclasspni_1_1bool__t_html_ab9df2f212a254a3c51ee72a332bbad30"><div class="ttname"><a href="classpni_1_1bool__t.html#ab9df2f212a254a3c51ee72a332bbad30">pni::bool_t::bool_t</a></div><div class="ttdeci">bool_t()</div><div class="ttdoc">default constructor</div><div class="ttdef"><b>Definition:</b> bool.hpp:50</div></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#a55ba2a02d61a7f4422e43dccd378191a">   56</a></span>&#160;            <a class="code" href="classpni_1_1bool__t.html#a55ba2a02d61a7f4422e43dccd378191a">bool_t</a>(<span class="keywordtype">bool</span> v):_value(v) {}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classpni_1_1bool__t.html#a37d8fcd08f5e2ff79192d380dfec826d">   59</a></span>&#160;            <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                <span class="keywordflow">return</span> _value;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    </div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespacepni.html#a5ca9bb2620f3528c2240d61b93de1fb5">   68</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;<a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;stream,<span class="keyword">const</span> <a class="code" href="classpni_1_1bool__t.html">bool_t</a> &amp;b);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="namespacepni.html#a0127c98150b1380e9c3c153c4a05fe30">   71</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::istream &amp;<a class="code" href="namespacepni.html#abe2aacb6d078bb640c30ebc9d28fea0e">operator&gt;&gt;</a>(std::istream &amp;stream,<a class="code" href="classpni_1_1bool__t.html">bool_t</a> &amp;b);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="namespacepni.html#a0887774263fc1221b266d79d1568d162">   74</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::istream &amp;<a class="code" href="namespacepni.html#abe2aacb6d078bb640c30ebc9d28fea0e">operator&gt;&gt;</a>(std::istream &amp;stream,hdf5::datatype::EBool &amp;b);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">//end of namespace</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="ttc" id="aclasspni_1_1bool__t_html"><div class="ttname"><a href="classpni_1_1bool__t.html">pni::bool_t</a></div><div class="ttdoc">boolean type</div><div class="ttdef"><b>Definition:</b> bool.hpp:48</div></div>
+<div class="ttc" id="aclasspni_1_1bool__t_html_a55ba2a02d61a7f4422e43dccd378191a"><div class="ttname"><a href="classpni_1_1bool__t.html#a55ba2a02d61a7f4422e43dccd378191a">pni::bool_t::bool_t</a></div><div class="ttdeci">bool_t(bool v)</div><div class="ttdoc">conversion constructor</div><div class="ttdef"><b>Definition:</b> bool.hpp:56</div></div>
+<div class="ttc" id="aclasspni_1_1bool__t_html_aac59dd353ffbe113f0ebb5d080c756a7"><div class="ttname"><a href="classpni_1_1bool__t.html#aac59dd353ffbe113f0ebb5d080c756a7">pni::bool_t::_value</a></div><div class="ttdeci">bool _value</div><div class="ttdoc">data element holding the current boolean value</div><div class="ttdef"><b>Definition:</b> bool.hpp:50</div></div>
+<div class="ttc" id="aclasspni_1_1bool__t_html_ab9df2f212a254a3c51ee72a332bbad30"><div class="ttname"><a href="classpni_1_1bool__t.html#ab9df2f212a254a3c51ee72a332bbad30">pni::bool_t::bool_t</a></div><div class="ttdeci">bool_t()</div><div class="ttdoc">default constructor</div><div class="ttdef"><b>Definition:</b> bool.hpp:53</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
-<div class="ttc" id="anamespacepni_html_a0c4c3da0670cb4207f02dbf341a3cce5"><div class="ttname"><a href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">pni::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const array_view&lt; ATYPE &gt; &amp;v)</div><div class="ttdoc">output operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:906</div></div>
-<div class="ttc" id="anamespacepni_html_ad08537a51d621e64abb327ff1701688f"><div class="ttname"><a href="namespacepni.html#ad08537a51d621e64abb327ff1701688f">pni::operator&gt;&gt;</a></div><div class="ttdeci">std::istream &amp; operator&gt;&gt;(std::istream &amp;stream, array_view&lt; ATYPE &gt; &amp;v)</div><div class="ttdoc">input operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:926</div></div>
+<div class="ttc" id="anamespacepni_html_abe2aacb6d078bb640c30ebc9d28fea0e"><div class="ttname"><a href="namespacepni.html#abe2aacb6d078bb640c30ebc9d28fea0e">pni::operator&gt;&gt;</a></div><div class="ttdeci">std::istream &amp; operator&gt;&gt;(std::istream &amp;stream, array_view&lt; ArrayT &gt; &amp;v)</div><div class="ttdoc">input operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:926</div></div>
+<div class="ttc" id="anamespacepni_html_ac1ee966073630add8e2830bc712c1455"><div class="ttname"><a href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">pni::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const array_view&lt; ArrayT &gt; &amp;v)</div><div class="ttdoc">output operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:906</div></div>
 <div class="ttc" id="awindows_8hpp_html"><div class="ttname"><a href="windows_8hpp.html">windows.hpp</a></div></div>
 <div class="ttc" id="awindows_8hpp_html_abcc7ce29ca8863e31e7945d1905a72f6"><div class="ttname"><a href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a></div><div class="ttdeci">#define PNINEXUS_EXPORT</div><div class="ttdef"><b>Definition:</b> windows.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -132,7 +138,7 @@ $(document).ready(function(){initNavTree('bool_8hpp_source.html',''); initResiza
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_0ebfec922f8118e34738e031f02bbcb3.html">types</a></li><li class="navelem"><a class="el" href="bool_8hpp.html">bool.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

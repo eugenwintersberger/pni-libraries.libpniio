@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: slice.hpp Source File</title>
+<title>PNI NeXus Library: slice.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -139,11 +140,11 @@ $(document).ready(function(){initNavTree('slice_8hpp_source.html',''); initResiz
 <div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="classpni_1_1slice.html#a9c716ac36f1f2ad0f6b89c19639f84bc">  165</a></span>&#160;<span class="comment"></span>            <span class="keywordtype">size_t</span> <a class="code" href="classpni_1_1slice.html#a9c716ac36f1f2ad0f6b89c19639f84bc">stride</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _stride; }</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    }; </div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="namespacepni.html#a3fd23126a950b05ee8ad649bcf718888">  169</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;<a class="code" href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;s);</div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="namespacepni.html#a3fd23126a950b05ee8ad649bcf718888">  169</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> std::ostream &amp;<a class="code" href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">operator&lt;&lt;</a>(std::ostream &amp;o,<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;s);</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="namespacepni.html#a7b9fd779f21aa8a30cb9968c7c99d6df">  171</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <span class="keywordtype">bool</span> <a class="code" href="namespacepni.html#ade2634b76555add4f693175c2e80ba68">operator==</a>(<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;lhs,<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;rhs);</div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="namespacepni.html#a7b9fd779f21aa8a30cb9968c7c99d6df">  171</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <span class="keywordtype">bool</span> <a class="code" href="namespacepni.html#a30c943c72378fafdd22174b5fd7562a7">operator==</a>(<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;lhs,<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;rhs);</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="namespacepni.html#a39bfeaf7ca57d536154a94cd8deb48d2">  173</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <span class="keywordtype">bool</span> <a class="code" href="namespacepni.html#a04c1f53a5848dac2e142725b948f3063">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;lhs,<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;rhs);</div>
+<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="namespacepni.html#a39bfeaf7ca57d536154a94cd8deb48d2">  173</a></span>&#160;    <a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <span class="keywordtype">bool</span> <a class="code" href="namespacepni.html#a31fc6717e6275e8bedb48e8f0b1b37a7">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;lhs,<span class="keyword">const</span> <a class="code" href="classpni_1_1slice.html">slice</a> &amp;rhs);</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="comment"></span> </div>
@@ -175,10 +176,10 @@ $(document).ready(function(){initNavTree('slice_8hpp_source.html',''); initResiz
 <div class="ttc" id="aerror_2exceptions_8hpp_html"><div class="ttname"><a href="error_2exceptions_8hpp.html">exceptions.hpp</a></div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
 <div class="ttc" id="anamespacepni_html_a00094494cfad50d0a67085bec79eb2fd"><div class="ttname"><a href="namespacepni.html#a00094494cfad50d0a67085bec79eb2fd">pni::span</a></div><div class="ttdeci">PNINEXUS_EXPORT size_t span(const slice &amp;s)</div><div class="ttdoc">compute total elements spanned</div></div>
-<div class="ttc" id="anamespacepni_html_a04c1f53a5848dac2e142725b948f3063"><div class="ttname"><a href="namespacepni.html#a04c1f53a5848dac2e142725b948f3063">pni::operator!=</a></div><div class="ttdeci">bool operator!=(const array_view&lt; ATYPE &gt; &amp;a, const array_view&lt; ATYPE &gt; &amp;b)</div><div class="ttdoc">compare two array views</div><div class="ttdef"><b>Definition:</b> array_view.hpp:888</div></div>
-<div class="ttc" id="anamespacepni_html_a0c4c3da0670cb4207f02dbf341a3cce5"><div class="ttname"><a href="namespacepni.html#a0c4c3da0670cb4207f02dbf341a3cce5">pni::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const array_view&lt; ATYPE &gt; &amp;v)</div><div class="ttdoc">output operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:906</div></div>
+<div class="ttc" id="anamespacepni_html_a30c943c72378fafdd22174b5fd7562a7"><div class="ttname"><a href="namespacepni.html#a30c943c72378fafdd22174b5fd7562a7">pni::operator==</a></div><div class="ttdeci">bool operator==(const array_view&lt; ArrayT &gt; &amp;a, const array_view&lt; ArrayT &gt; &amp;b)</div><div class="ttdoc">compare two array views</div><div class="ttdef"><b>Definition:</b> array_view.hpp:865</div></div>
+<div class="ttc" id="anamespacepni_html_a31fc6717e6275e8bedb48e8f0b1b37a7"><div class="ttname"><a href="namespacepni.html#a31fc6717e6275e8bedb48e8f0b1b37a7">pni::operator!=</a></div><div class="ttdeci">bool operator!=(const array_view&lt; ArrayT &gt; &amp;a, const array_view&lt; ArrayT &gt; &amp;b)</div><div class="ttdoc">compare two array views</div><div class="ttdef"><b>Definition:</b> array_view.hpp:888</div></div>
 <div class="ttc" id="anamespacepni_html_ab20a3d8d51f1c5aee26a971b5fe2cf65"><div class="ttname"><a href="namespacepni.html#ab20a3d8d51f1c5aee26a971b5fe2cf65">pni::size</a></div><div class="ttdeci">PNINEXUS_EXPORT size_t size(const slice &amp;s)</div><div class="ttdoc">compute slice size</div></div>
-<div class="ttc" id="anamespacepni_html_ade2634b76555add4f693175c2e80ba68"><div class="ttname"><a href="namespacepni.html#ade2634b76555add4f693175c2e80ba68">pni::operator==</a></div><div class="ttdeci">bool operator==(const array_view&lt; ATYPE &gt; &amp;a, const array_view&lt; ATYPE &gt; &amp;b)</div><div class="ttdoc">compare two array views</div><div class="ttdef"><b>Definition:</b> array_view.hpp:865</div></div>
+<div class="ttc" id="anamespacepni_html_ac1ee966073630add8e2830bc712c1455"><div class="ttname"><a href="namespacepni.html#ac1ee966073630add8e2830bc712c1455">pni::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;stream, const array_view&lt; ArrayT &gt; &amp;v)</div><div class="ttdoc">output operator for view</div><div class="ttdef"><b>Definition:</b> array_view.hpp:906</div></div>
 <div class="ttc" id="awindows_8hpp_html"><div class="ttname"><a href="windows_8hpp.html">windows.hpp</a></div></div>
 <div class="ttc" id="awindows_8hpp_html_abcc7ce29ca8863e31e7945d1905a72f6"><div class="ttname"><a href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a></div><div class="ttdeci">#define PNINEXUS_EXPORT</div><div class="ttdef"><b>Definition:</b> windows.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -187,7 +188,7 @@ $(document).ready(function(){initNavTree('slice_8hpp_source.html',''); initResiz
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="slice_8hpp.html">slice.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

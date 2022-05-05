@@ -29,7 +29,8 @@ var files_dup =
     [ "binary.hpp", "binary_8hpp.html", "binary_8hpp" ],
     [ "bool.hpp", "bool_8hpp.html", "bool_8hpp" ],
     [ "bool_parser.hpp", "bool__parser_8hpp.html", [
-      [ "parser< pni::bool_t >", "classpni_1_1parser_3_01pni_1_1bool__t_01_4.html", "classpni_1_1parser_3_01pni_1_1bool__t_01_4" ]
+      [ "parser< pni::bool_t >", "classpni_1_1parser_3_01pni_1_1bool__t_01_4.html", "classpni_1_1parser_3_01pni_1_1bool__t_01_4" ],
+      [ "parser< hdf5::datatype::EBool >", "classpni_1_1parser_3_01hdf5_1_1datatype_1_1EBool_01_4.html", "classpni_1_1parser_3_01hdf5_1_1datatype_1_1EBool_01_4" ]
     ] ],
     [ "builder_factory.hpp", "builder__factory_8hpp.html", [
       [ "BuilderFactory", "classpni_1_1nexus_1_1xml_1_1BuilderFactory.html", "classpni_1_1nexus_1_1xml_1_1BuilderFactory" ]
@@ -43,7 +44,7 @@ var files_dup =
     [ "checked_convertible.hpp", "checked__convertible_8hpp.html", "checked__convertible_8hpp" ],
     [ "column_info.hpp", "column__info_8hpp.html", "column__info_8hpp" ],
     [ "complex_parser.hpp", "complex__parser_8hpp.html", [
-      [ "parser< std::complex< T > >", "classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4.html", "classpni_1_1parser_3_01std_1_1complex_3_01T_01_4_01_4" ]
+      [ "parser< std::complex< BaseT > >", "classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4.html", "classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4" ]
     ] ],
     [ "complex_utils.hpp", "complex__utils_8hpp.html", "complex__utils_8hpp" ],
     [ "container_io_config.hpp", "container__io__config_8hpp.html", [
@@ -124,9 +125,9 @@ var files_dup =
     ] ],
     [ "hdf5_support.hpp", "hdf5__support_8hpp.html", [
       [ "TypeTrait< pni::array >", "classhdf5_1_1datatype_1_1TypeTrait_3_01pni_1_1array_01_4.html", "classhdf5_1_1datatype_1_1TypeTrait_3_01pni_1_1array_01_4" ],
-      [ "TypeTrait< pni::mdarray< STORAGE, IMAP, IPA > >", "classhdf5_1_1datatype_1_1TypeTrait_3_01pni_1_1mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html", "classhdf5_1_1datatype_1_1TypeTrait_3_01pni_1_1mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4" ],
+      [ "TypeTrait< pni::mdarray< StorageT, IndexMapT, InplaceArithmeticT > >", "classhdf5_1_1datatype_1_1TypeTrait_3_01pni_1_1mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html", "classhdf5_1_1datatype_1_1TypeTrait_3_01pni_1_1mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4" ],
       [ "TypeTrait< pni::array >", "classhdf5_1_1dataspace_1_1TypeTrait_3_01pni_1_1array_01_4.html", "classhdf5_1_1dataspace_1_1TypeTrait_3_01pni_1_1array_01_4" ],
-      [ "TypeTrait< pni::mdarray< STORAGE, IMAP, IPA > >", "classhdf5_1_1dataspace_1_1TypeTrait_3_01pni_1_1mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html", "classhdf5_1_1dataspace_1_1TypeTrait_3_01pni_1_1mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4" ],
+      [ "TypeTrait< pni::mdarray< StorageT, IndexMapT, InplaceArithmeticT > >", "classhdf5_1_1dataspace_1_1TypeTrait_3_01pni_1_1mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html", "classhdf5_1_1dataspace_1_1TypeTrait_3_01pni_1_1mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4" ],
       [ "VarLengthStringTrait< pni::dynamic_array< std::string > >", "classhdf5_1_1VarLengthStringTrait_3_01pni_1_1dynamic__array_3_01std_1_1string_01_4_01_4.html", "classhdf5_1_1VarLengthStringTrait_3_01pni_1_1dynamic__array_3_01std_1_1string_01_4_01_4" ]
     ] ],
     [ "id_type_map.hpp", "id__type__map_8hpp.html", "id__type__map_8hpp" ],
@@ -180,10 +181,10 @@ var files_dup =
     ] ],
     [ "op_traits.hpp", "op__traits_8hpp.html", [
       [ "op_trait", "structpni_1_1op__trait.html", "structpni_1_1op__trait" ],
-      [ "op_trait< scalar< T > >", "structpni_1_1op__trait_3_01scalar_3_01T_01_4_01_4.html", "structpni_1_1op__trait_3_01scalar_3_01T_01_4_01_4" ],
+      [ "op_trait< scalar< GeneralT > >", "structpni_1_1op__trait_3_01scalar_3_01GeneralT_01_4_01_4.html", "structpni_1_1op__trait_3_01scalar_3_01GeneralT_01_4_01_4" ],
       [ "array_trait", "structpni_1_1array__trait.html", "structpni_1_1array__trait" ],
-      [ "array_trait< OP1, scalar< T > >", "structpni_1_1array__trait_3_01OP1_00_01scalar_3_01T_01_4_01_4.html", "structpni_1_1array__trait_3_01OP1_00_01scalar_3_01T_01_4_01_4" ],
-      [ "array_trait< scalar< T >, OP1 >", "structpni_1_1array__trait_3_01scalar_3_01T_01_4_00_01OP1_01_4.html", "structpni_1_1array__trait_3_01scalar_3_01T_01_4_00_01OP1_01_4" ]
+      [ "array_trait< Operand1T, scalar< ScalarOperandT > >", "structpni_1_1array__trait_3_01Operand1T_00_01scalar_3_01ScalarOperandT_01_4_01_4.html", "structpni_1_1array__trait_3_01Operand1T_00_01scalar_3_01ScalarOperandT_01_4_01_4" ],
+      [ "array_trait< scalar< ScalarOperandT >, Operand1T >", "structpni_1_1array__trait_3_01scalar_3_01ScalarOperandT_01_4_00_01Operand1T_01_4.html", "structpni_1_1array__trait_3_01scalar_3_01ScalarOperandT_01_4_00_01Operand1T_01_4" ]
     ] ],
     [ "nexus/path/parser.hpp", "nexus_2path_2parser_8hpp.html", "nexus_2path_2parser_8hpp" ],
     [ "parsers/parser.hpp", "parsers_2parser_8hpp.html", "parsers_2parser_8hpp" ],
@@ -263,7 +264,7 @@ var files_dup =
     [ "value_ref.hpp", "value__ref_8hpp.html", "value__ref_8hpp" ],
     [ "vector_format.hpp", "vector__format_8hpp.html", "vector__format_8hpp" ],
     [ "vector_parser.hpp", "vector__parser_8hpp.html", [
-      [ "parser< std::vector< T > >", "classpni_1_1parser_3_01std_1_1vector_3_01T_01_4_01_4.html", "classpni_1_1parser_3_01std_1_1vector_3_01T_01_4_01_4" ]
+      [ "parser< std::vector< ElementT > >", "classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4.html", "classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4" ]
     ] ],
     [ "version.hpp", "version_8hpp.html", "version_8hpp" ],
     [ "windows.hpp", "windows_8hpp.html", "windows_8hpp" ]

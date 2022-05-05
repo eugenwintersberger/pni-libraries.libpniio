@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: types.hpp File Reference</title>
+<title>PNI NeXus Library: types.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -75,6 +76,7 @@ $(document).ready(function(){initNavTree('types_2types_8hpp.html',''); initResiz
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;boost/mpl/vector.hpp&gt;</code><br />
 <code>#include &lt;boost/mpl/joint_view.hpp&gt;</code><br />
+<code>#include &lt;h5cpp/contrib/nexus/ebool.hpp&gt;</code><br />
 <code>#include &lt;<a class="el" href="binary_8hpp_source.html">pni/types/binary.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="bool_8hpp_source.html">pni/types/bool.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="none_8hpp_source.html">pni/types/none.hpp</a>&gt;</code><br />
@@ -148,9 +150,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga58fbe5d75590006cbac83b07014da1ba"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::joint_view&lt; boost::mpl::joint_view&lt; integer_types, float_types &gt;::type, complex_types &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__type__classes.html#ga58fbe5d75590006cbac83b07014da1ba">pni::numeric_types</a></td></tr>
 <tr class="memdesc:ga58fbe5d75590006cbac83b07014da1ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">non numeric types vector  <a href="group__type__classes.html#ga58fbe5d75590006cbac83b07014da1ba">More...</a><br /></td></tr>
 <tr class="separator:ga58fbe5d75590006cbac83b07014da1ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga849acfa54c3cfcbc19ba277b7bc52bb7"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::vector&lt; none, bool_t, binary, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__type__classes.html#ga849acfa54c3cfcbc19ba277b7bc52bb7">pni::non_numeric_types</a></td></tr>
-<tr class="memdesc:ga849acfa54c3cfcbc19ba277b7bc52bb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">non numeric types  <a href="group__type__classes.html#ga849acfa54c3cfcbc19ba277b7bc52bb7">More...</a><br /></td></tr>
-<tr class="separator:ga849acfa54c3cfcbc19ba277b7bc52bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9406166148f118a22958b77118fbdac6"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::vector&lt; none, bool_t, hdf5::datatype::EBool, binary, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__type__classes.html#ga9406166148f118a22958b77118fbdac6">pni::non_numeric_types</a></td></tr>
+<tr class="memdesc:ga9406166148f118a22958b77118fbdac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">non numeric types  <a href="group__type__classes.html#ga9406166148f118a22958b77118fbdac6">More...</a><br /></td></tr>
+<tr class="separator:ga9406166148f118a22958b77118fbdac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga09c2c225bf1677084f0b32e684726625"><td class="memItemLeft" align="right" valign="top">typedef boost::mpl::joint_view&lt; numeric_types, non_numeric_types &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__type__classes.html#ga09c2c225bf1677084f0b32e684726625">pni::primitive_types</a></td></tr>
 <tr class="memdesc:ga09c2c225bf1677084f0b32e684726625"><td class="mdescLeft">&#160;</td><td class="mdescRight">all primitive types  <a href="group__type__classes.html#ga09c2c225bf1677084f0b32e684726625">More...</a><br /></td></tr>
 <tr class="separator:ga09c2c225bf1677084f0b32e684726625"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,41 +166,42 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga2c8ca0de37c42914554a1a9e500b31cd"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">pni::type_id_t</a> { <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdab50339a10e1de285ac99d4c3990b8693">pni::NONE</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdaee9d73311ff0658494edfff14c3ec1e3">pni::INT8</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdaecfc091ed2a607335524c8389cfa41b5">pni::UINT8</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda5f90af42814c0a419d715d43ae54fd7a">pni::INT16</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda6adf97f83acf6453d4a6a4b1070f3754">pni::None</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda7d839b2c12bfd40ac121b4cc9e81c539">pni::Int8</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdab31df9c476d20e85ff898121efe11b5a">pni::UInt8</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda39bc2ae44b184207f560ff8619823208">pni::Int16</a>
 , <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda48d8f1a723d44ff4a87db1bb6c551c62">pni::UINT16</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda6495adba09844fac8eeb0aba86e6f1bf">pni::INT32</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda17266551181f69a1b4a3ad5c9e270afc">pni::UINT32</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda4e866b275c85fbb439f6484251cfb31c">pni::INT64</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda8bd950a9d7779b83f5c30046c9aaf1cf">pni::UInt16</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdac06129f6e6e15c09328365e553f1dc31">pni::Int32</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdae7956ed7be1c5025a27ed3cb42a396bd">pni::UInt32</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdafbde23b11d7e59af7828e81144c8b487">pni::Int64</a>
 , <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda6de7acf711860176ba606e9aa2b85d5f">pni::UINT64</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda967d280b5c16d95f2947647dd2ca6cc2">pni::FLOAT32</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda139882c654db8a57f7c3092de1dd0b02">pni::FLOAT64</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda73f43669fa33937b2473bca6677a89b0">pni::FLOAT128</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdaaf71234725f0470ccf993e263a8b820a">pni::UInt64</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda166495adc0d0f53bee6baecc577f5204">pni::Float32</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdad2b556d8a8f5c8ac323f51a4b82e79a0">pni::Float64</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdae74f68ddb36c1ed379de92ae3b589d34">pni::Float128</a>
 , <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda5488b80cc175491db0f39f994de99cc4">pni::COMPLEX32</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda5ec904f0f04137548aed8fe5c54656a8">pni::COMPLEX64</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda173c5b5c19a9213d4fb257c537f745c3">pni::COMPLEX128</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda63b588d5559f64f89a416e656880b949">pni::STRING</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda2ef2a9d5fdeebb762c9b0bc85c533ba1">pni::Complex32</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdad966dd0f6dc22b834b636fb9df4b756a">pni::Complex64</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdaee63a91375f038924d9671f9fec7059b">pni::Complex128</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda27118326006d3829667a400ad23d5d98">pni::String</a>
 , <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda98ad0e8750ae10ad556ed7a62affb452">pni::BINARY</a>
-, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdaa97b2c144243b2b9d2c593ec268b62f5">pni::BOOL</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cda6ce976e8f061b2b5cfe4d0c50c3405dd">pni::Binary</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdac26f15e86e3de4c398a8273272aba034">pni::Bool</a>
+, <a class="el" href="group__type__classes.html#gga2c8ca0de37c42914554a1a9e500b31cdae9ea9a7e4f8a765f1765d6f7a2ea187e">pni::EBool</a>
 <br />
  }</td></tr>
 <tr class="memdesc:ga2c8ca0de37c42914554a1a9e500b31cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">type codes for PNI data types  <a href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">More...</a><br /></td></tr>
 <tr class="separator:ga2c8ca0de37c42914554a1a9e500b31cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1642c8c1645f56b86fac5837490b408d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__type__classes.html#ga1642c8c1645f56b86fac5837490b408d">pni::type_class_t</a> { <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408dab50339a10e1de285ac99d4c3990b8693">pni::NONE</a>
-, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da5d5cd46919fa987731fb2edefe0f2a0c">pni::INTEGER</a>
-, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408dae738c26bf4ce1037fa81b039a915cbf6">pni::FLOAT</a>
-, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da98ad0e8750ae10ad556ed7a62affb452">pni::BINARY</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da6adf97f83acf6453d4a6a4b1070f3754">pni::None</a>
+, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408daa0faef0851b4294c06f2b94bb1cb2044">pni::Integer</a>
+, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da22ae0e2b89e5e3d477f988cc36d3272b">pni::Float</a>
+, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da6ce976e8f061b2b5cfe4d0c50c3405dd">pni::Binary</a>
 , <br />
-&#160;&#160;<a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408daa97b2c144243b2b9d2c593ec268b62f5">pni::BOOL</a>
-, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da921a0157a6e61eebbaa0f713fdfbb0f7">pni::COMPLEX</a>
-, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da63b588d5559f64f89a416e656880b949">pni::STRING</a>
+&#160;&#160;<a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408dac26f15e86e3de4c398a8273272aba034">pni::Bool</a>
+, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da10b4eb76294b70d7fd6df997ff06edb1">pni::Complex</a>
+, <a class="el" href="group__type__classes.html#gga1642c8c1645f56b86fac5837490b408da27118326006d3829667a400ad23d5d98">pni::String</a>
 <br />
  }</td></tr>
 <tr class="memdesc:ga1642c8c1645f56b86fac5837490b408d"><td class="mdescLeft">&#160;</td><td class="mdescRight">type class definitions  <a href="group__type__classes.html#ga1642c8c1645f56b86fac5837490b408d">More...</a><br /></td></tr>
@@ -216,7 +219,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_0ebfec922f8118e34738e031f02bbcb3.html">types</a></li><li class="navelem"><a class="el" href="types_2types_8hpp.html">types.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: link.hpp Source File</title>
+<title>PNI NeXus Library: link.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -108,24 +109,24 @@ $(document).ready(function(){initNavTree('link_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        </div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                     <span class="keyword">typename</span> GTYPE,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                     <span class="keyword">typename</span> FTYPE,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                     <span class="keyword">typename</span> ATYPE,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                     <span class="keyword">typename</span> LTYPE</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                     <span class="keyword">typename</span> GroupT,</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                     <span class="keyword">typename</span> FieldT,</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                     <span class="keyword">typename</span> ArrayT,</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                     <span class="keyword">typename</span> LinkT</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                    &gt;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> object_from_xml(<span class="keyword">const</span> nxobject&lt;GTYPE,FTYPE,ATYPE,LTYPE&gt; &amp;parent,</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> object_from_xml(<span class="keyword">const</span> nxobject&lt;GroupT,FieldT,ArrayT,LinkT&gt; &amp;parent,</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                                        <span class="keyword">const</span> node &amp;link_node);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                      </div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    };</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    </div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;             <span class="keyword">typename</span> GTYPE,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;             <span class="keyword">typename</span> FTYPE,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;             <span class="keyword">typename</span> ATYPE,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;             <span class="keyword">typename</span> LTYPE</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;             <span class="keyword">typename</span> GroupT,</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;             <span class="keyword">typename</span> FieldT,</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;             <span class="keyword">typename</span> ArrayT,</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;             <span class="keyword">typename</span> LinkT</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            &gt;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classpni_1_1nx_1_1xml_1_1link.html#a5a04b4a60fc15f8d8c217a73b9e60d14">  113</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpni_1_1nx_1_1xml_1_1link.html#a5a04b4a60fc15f8d8c217a73b9e60d14">link::object_from_xml</a>(<span class="keyword">const</span> nxobject&lt;GTYPE,FTYPE,ATYPE,LTYPE&gt; &amp;parent,</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classpni_1_1nx_1_1xml_1_1link.html#a36379ab712524e5bd295c9f65f85f297">  113</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpni_1_1nx_1_1xml_1_1link.html#a36379ab712524e5bd295c9f65f85f297">link::object_from_xml</a>(<span class="keyword">const</span> nxobject&lt;GroupT,FieldT,ArrayT,LinkT&gt; &amp;parent,</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                               <span class="keyword">const</span> node &amp;link_node)</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    {</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="comment">//will throw key error if name attribute does not exist</span></div>
@@ -134,7 +135,7 @@ $(document).ready(function(){initNavTree('link_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> link_target = <a class="code" href="classpni_1_1nx_1_1xml_1_1link.html#aadf069937132fede631afbd5361e606e">get_link_target</a>(link_node);</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        </div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="comment">//will throw type_error if the parent is not a group</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        GTYPE parent_group = as_group(parent);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        GroupT parent_group = as_group(parent);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        </div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        pni::nx::link(link_target,parent_group,link_name);</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }            </div>
@@ -145,10 +146,10 @@ $(document).ready(function(){initNavTree('link_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
 <div class="ttc" id="aclasspni_1_1nx_1_1xml_1_1link_html"><div class="ttname"><a href="classpni_1_1nx_1_1xml_1_1link.html">pni::nx::xml::link</a></div><div class="ttdoc">manages links in XML</div><div class="ttdef"><b>Definition:</b> link.hpp:43</div></div>
-<div class="ttc" id="aclasspni_1_1nx_1_1xml_1_1link_html_a5a04b4a60fc15f8d8c217a73b9e60d14"><div class="ttname"><a href="classpni_1_1nx_1_1xml_1_1link.html#a5a04b4a60fc15f8d8c217a73b9e60d14">pni::nx::xml::link::object_from_xml</a></div><div class="ttdeci">static void object_from_xml(const nxobject&lt; GTYPE, FTYPE, ATYPE, LTYPE &gt; &amp;parent, const node &amp;link_node)</div><div class="ttdoc">generate HDF5 link</div><div class="ttdef"><b>Definition:</b> link.hpp:113</div></div>
+<div class="ttc" id="aclasspni_1_1nx_1_1xml_1_1link_html_a36379ab712524e5bd295c9f65f85f297"><div class="ttname"><a href="classpni_1_1nx_1_1xml_1_1link.html#a36379ab712524e5bd295c9f65f85f297">pni::nx::xml::link::object_from_xml</a></div><div class="ttdeci">static void object_from_xml(const nxobject&lt; GroupT, FieldT, ArrayT, LinkT &gt; &amp;parent, const node &amp;link_node)</div><div class="ttdoc">generate HDF5 link</div><div class="ttdef"><b>Definition:</b> link.hpp:113</div></div>
 <div class="ttc" id="aclasspni_1_1nx_1_1xml_1_1link_html_a79a5ed5494eb459d5377543cb8575a7a"><div class="ttname"><a href="classpni_1_1nx_1_1xml_1_1link.html#a79a5ed5494eb459d5377543cb8575a7a">pni::nx::xml::link::get_link_name</a></div><div class="ttdeci">static pni::string get_link_name(const node &amp;link_node)</div><div class="ttdoc">get name of link</div></div>
 <div class="ttc" id="aclasspni_1_1nx_1_1xml_1_1link_html_aadf069937132fede631afbd5361e606e"><div class="ttname"><a href="classpni_1_1nx_1_1xml_1_1link.html#aadf069937132fede631afbd5361e606e">pni::nx::xml::link::get_link_target</a></div><div class="ttdeci">static pni::string get_link_target(const node &amp;link_node)</div><div class="ttdoc">get link target</div></div>
-<div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:73</div></div>
+<div class="ttc" id="agroup__type__classes_html_gae86d1ac54b7b94227f4e32f2129bb534"><div class="ttname"><a href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a></div><div class="ttdeci">std::string string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition:</b> types/types.hpp:76</div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
 <div class="ttc" id="awindows_8hpp_html"><div class="ttname"><a href="windows_8hpp.html">windows.hpp</a></div></div>
 <div class="ttc" id="awindows_8hpp_html_abcc7ce29ca8863e31e7945d1905a72f6"><div class="ttname"><a href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a></div><div class="ttdeci">#define PNINEXUS_EXPORT</div><div class="ttdef"><b>Definition:</b> windows.hpp:33</div></div>
@@ -158,7 +159,7 @@ $(document).ready(function(){initNavTree('link_8hpp_source.html',''); initResiza
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_ed8c5bfd5a3964be977e59a07de61950.html">nexus</a></li><li class="navelem"><a class="el" href="dir_7e29aa6c392f81dd647a56f011407aa4.html">xml</a></li><li class="navelem"><a class="el" href="link_8hpp.html">link.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:07 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

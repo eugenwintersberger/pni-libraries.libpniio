@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: scalar.hpp File Reference</title>
+<title>PNI NeXus Library: scalar.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -78,7 +79,7 @@ $(document).ready(function(){initNavTree('scalar_8hpp.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar.html">pni::scalar&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1scalar.html">pni::scalar&lt; ElementT &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scalar template for scalar values.  <a href="classpni_1_1scalar.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -89,22 +90,22 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a76bb7f3ff0106adf89b6f42744d0910b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a76bb7f3ff0106adf89b6f42744d0910b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a76bb7f3ff0106adf89b6f42744d0910b">pni::operator==</a> (const scalar&lt; T &gt; &amp;a, const scalar&lt; T &gt; &amp;b)</td></tr>
-<tr class="memdesc:a76bb7f3ff0106adf89b6f42744d0910b"><td class="mdescLeft">&#160;</td><td class="mdescRight">== operator for scalar  <a href="namespacepni.html#a76bb7f3ff0106adf89b6f42744d0910b">More...</a><br /></td></tr>
-<tr class="separator:a76bb7f3ff0106adf89b6f42744d0910b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9be4f163ad2782576b01234006292cfc"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a9be4f163ad2782576b01234006292cfc"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a9be4f163ad2782576b01234006292cfc">pni::operator!=</a> (const scalar&lt; T &gt; &amp;a, const scalar&lt; T &gt; &amp;b)</td></tr>
-<tr class="memdesc:a9be4f163ad2782576b01234006292cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">!= operator for scalar  <a href="namespacepni.html#a9be4f163ad2782576b01234006292cfc">More...</a><br /></td></tr>
-<tr class="separator:a9be4f163ad2782576b01234006292cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8500567b3084c68bf91f629750b8d3d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aa8500567b3084c68bf91f629750b8d3d"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aa8500567b3084c68bf91f629750b8d3d">pni::operator&lt;&lt;</a> (std::ostream &amp;os, const scalar&lt; T &gt; &amp;s)</td></tr>
-<tr class="memdesc:aa8500567b3084c68bf91f629750b8d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">stream output operator  <a href="namespacepni.html#aa8500567b3084c68bf91f629750b8d3d">More...</a><br /></td></tr>
-<tr class="separator:aa8500567b3084c68bf91f629750b8d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ccd8063e5e281e35465ec467bd7b08b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a2ccd8063e5e281e35465ec467bd7b08b"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a2ccd8063e5e281e35465ec467bd7b08b">pni::operator&gt;&gt;</a> (std::istream &amp;is, scalar&lt; T &gt; &amp;s)</td></tr>
-<tr class="memdesc:a2ccd8063e5e281e35465ec467bd7b08b"><td class="mdescLeft">&#160;</td><td class="mdescRight">input strema data  <a href="namespacepni.html#a2ccd8063e5e281e35465ec467bd7b08b">More...</a><br /></td></tr>
-<tr class="separator:a2ccd8063e5e281e35465ec467bd7b08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9ad4bac0c3c4f6e1d2006868f39836c"><td class="memTemplParams" colspan="2">template&lt;typename ElementT &gt; </td></tr>
+<tr class="memitem:aa9ad4bac0c3c4f6e1d2006868f39836c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aa9ad4bac0c3c4f6e1d2006868f39836c">pni::operator==</a> (const scalar&lt; ElementT &gt; &amp;a, const scalar&lt; ElementT &gt; &amp;b)</td></tr>
+<tr class="memdesc:aa9ad4bac0c3c4f6e1d2006868f39836c"><td class="mdescLeft">&#160;</td><td class="mdescRight">== operator for scalar  <a href="namespacepni.html#aa9ad4bac0c3c4f6e1d2006868f39836c">More...</a><br /></td></tr>
+<tr class="separator:aa9ad4bac0c3c4f6e1d2006868f39836c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf004d73858ff6f9b3117e137293c085"><td class="memTemplParams" colspan="2">template&lt;typename ElementT &gt; </td></tr>
+<tr class="memitem:acf004d73858ff6f9b3117e137293c085"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#acf004d73858ff6f9b3117e137293c085">pni::operator!=</a> (const scalar&lt; ElementT &gt; &amp;a, const scalar&lt; ElementT &gt; &amp;b)</td></tr>
+<tr class="memdesc:acf004d73858ff6f9b3117e137293c085"><td class="mdescLeft">&#160;</td><td class="mdescRight">!= operator for scalar  <a href="namespacepni.html#acf004d73858ff6f9b3117e137293c085">More...</a><br /></td></tr>
+<tr class="separator:acf004d73858ff6f9b3117e137293c085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6658dd7b214ac22b58b91624966c5b9a"><td class="memTemplParams" colspan="2">template&lt;typename ElementT &gt; </td></tr>
+<tr class="memitem:a6658dd7b214ac22b58b91624966c5b9a"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a6658dd7b214ac22b58b91624966c5b9a">pni::operator&lt;&lt;</a> (std::ostream &amp;os, const scalar&lt; ElementT &gt; &amp;s)</td></tr>
+<tr class="memdesc:a6658dd7b214ac22b58b91624966c5b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">stream output operator  <a href="namespacepni.html#a6658dd7b214ac22b58b91624966c5b9a">More...</a><br /></td></tr>
+<tr class="separator:a6658dd7b214ac22b58b91624966c5b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b5d3293e77005349a8a4ab1c19eda1f"><td class="memTemplParams" colspan="2">template&lt;typename ElementT &gt; </td></tr>
+<tr class="memitem:a9b5d3293e77005349a8a4ab1c19eda1f"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a9b5d3293e77005349a8a4ab1c19eda1f">pni::operator&gt;&gt;</a> (std::istream &amp;is, scalar&lt; ElementT &gt; &amp;s)</td></tr>
+<tr class="memdesc:a9b5d3293e77005349a8a4ab1c19eda1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">input strema data  <a href="namespacepni.html#a9b5d3293e77005349a8a4ab1c19eda1f">More...</a><br /></td></tr>
+<tr class="separator:a9b5d3293e77005349a8a4ab1c19eda1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -112,7 +113,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="scalar_8hpp.html">scalar.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

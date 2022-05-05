@@ -1,5 +1,5 @@
 var structpni_1_1min__max =
 [
-    [ "max", "structpni_1_1min__max.html#a49c2593220564a509263326b011015bc", null ],
-    [ "min", "structpni_1_1min__max.html#a1e8f8278f7d371450ada1cc444b32b48", null ]
+    [ "max", "structpni_1_1min__max.html#a02e42f52605e0403ea1bfe8ec74b7de1", null ],
+    [ "min", "structpni_1_1min__max.html#a0d236fd8a5cf790ae0a454eb03bd50fa", null ]
 ];

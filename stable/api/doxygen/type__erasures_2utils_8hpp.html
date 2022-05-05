@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: utils.hpp File Reference</title>
+<title>PNI NeXus Library: utils.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -81,11 +82,11 @@ $(document).ready(function(){initNavTree('type__erasures_2utils_8hpp.html',''); 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1value__converter.html">pni::value_converter&lt; TT, ST, convertible &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1value__converter.html">pni::value_converter&lt; TargetT, SourceT, convertible &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">converter class  <a href="structpni_1_1value__converter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1value__converter_3_01TT_00_01ST_00_01true_01_4.html">pni::value_converter&lt; TT, ST, true &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">converter class specialization  <a href="structpni_1_1value__converter_3_01TT_00_01ST_00_01true_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1value__converter_3_01TargetT_00_01SourceT_00_01true_01_4.html">pni::value_converter&lt; TargetT, SourceT, true &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">converter class specialization  <a href="structpni_1_1value__converter_3_01TargetT_00_01SourceT_00_01true_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -95,28 +96,28 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ad84719ca127bc394822658f9b5ecae2c"><td class="memTemplParams" colspan="2">template&lt;typename TT , typename ST &gt; </td></tr>
-<tr class="memitem:ad84719ca127bc394822658f9b5ecae2c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ad84719ca127bc394822658f9b5ecae2c">pni::strategy</a> = value_converter&lt; TT, ST, convertible&lt; ST, TT &gt;::value &gt;</td></tr>
-<tr class="separator:ad84719ca127bc394822658f9b5ecae2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf156fe0e9b3918149e973ac5bdea27c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aaf156fe0e9b3918149e973ac5bdea27c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#aaf156fe0e9b3918149e973ac5bdea27c">pni::ref_type</a> = std::reference_wrapper&lt; T &gt;</td></tr>
-<tr class="memdesc:aaf156fe0e9b3918149e973ac5bdea27c"><td class="mdescLeft">&#160;</td><td class="mdescRight">alias for std::reference_wrapper  <a href="namespacepni.html#aaf156fe0e9b3918149e973ac5bdea27c">More...</a><br /></td></tr>
-<tr class="separator:aaf156fe0e9b3918149e973ac5bdea27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ee4ed2a773d68844b7d9d68fc94066"><td class="memTemplParams" colspan="2">template&lt;typename TargetT , typename SourceT &gt; </td></tr>
+<tr class="memitem:a08ee4ed2a773d68844b7d9d68fc94066"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a08ee4ed2a773d68844b7d9d68fc94066">pni::strategy</a> = value_converter&lt; TargetT, SourceT, convertible&lt; SourceT, TargetT &gt;::value &gt;</td></tr>
+<tr class="separator:a08ee4ed2a773d68844b7d9d68fc94066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e71c9ac38fabb17416cef2f0e1b3d33"><td class="memTemplParams" colspan="2">template&lt;typename GeneralT &gt; </td></tr>
+<tr class="memitem:a3e71c9ac38fabb17416cef2f0e1b3d33"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a3e71c9ac38fabb17416cef2f0e1b3d33">pni::ref_type</a> = std::reference_wrapper&lt; GeneralT &gt;</td></tr>
+<tr class="memdesc:a3e71c9ac38fabb17416cef2f0e1b3d33"><td class="mdescLeft">&#160;</td><td class="mdescRight">alias for std::reference_wrapper  <a href="namespacepni.html#a3e71c9ac38fabb17416cef2f0e1b3d33">More...</a><br /></td></tr>
+<tr class="separator:a3e71c9ac38fabb17416cef2f0e1b3d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a780d8172ac70005fe68694bb4f5800fd"><td class="memTemplParams" colspan="2">template&lt;typename T , typename PTR &gt; </td></tr>
-<tr class="memitem:a780d8172ac70005fe68694bb4f5800fd"><td class="memTemplItemLeft" align="right" valign="top">value_holder&lt; T &gt; *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a780d8172ac70005fe68694bb4f5800fd">pni::get_holder_ptr</a> (PTR &amp;ptr)</td></tr>
-<tr class="memdesc:a780d8172ac70005fe68694bb4f5800fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">get pointer to value holder  <a href="namespacepni.html#a780d8172ac70005fe68694bb4f5800fd">More...</a><br /></td></tr>
-<tr class="separator:a780d8172ac70005fe68694bb4f5800fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02196d9d6ba3cab69f1f9e9cae9b7155"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S , typename PTR &gt; </td></tr>
-<tr class="memitem:a02196d9d6ba3cab69f1f9e9cae9b7155"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a02196d9d6ba3cab69f1f9e9cae9b7155">pni::get_value</a> (PTR holder_ptr)</td></tr>
-<tr class="memdesc:a02196d9d6ba3cab69f1f9e9cae9b7155"><td class="mdescLeft">&#160;</td><td class="mdescRight">get value from holder  <a href="namespacepni.html#a02196d9d6ba3cab69f1f9e9cae9b7155">More...</a><br /></td></tr>
-<tr class="separator:a02196d9d6ba3cab69f1f9e9cae9b7155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a361268cb93de3a551773cc02d1dfc42d"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename PTR &gt; </td></tr>
-<tr class="memitem:a361268cb93de3a551773cc02d1dfc42d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a361268cb93de3a551773cc02d1dfc42d">pni::set_value</a> (PTR holder_ptr, const T &amp;v)</td></tr>
-<tr class="memdesc:a361268cb93de3a551773cc02d1dfc42d"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value to holder  <a href="namespacepni.html#a361268cb93de3a551773cc02d1dfc42d">More...</a><br /></td></tr>
-<tr class="separator:a361268cb93de3a551773cc02d1dfc42d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27667670141c64f3aa20e0280883c96f"><td class="memTemplParams" colspan="2">template&lt;typename DataT , typename PointerT &gt; </td></tr>
+<tr class="memitem:a27667670141c64f3aa20e0280883c96f"><td class="memTemplItemLeft" align="right" valign="top">value_holder&lt; DataT &gt; *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a27667670141c64f3aa20e0280883c96f">pni::get_holder_ptr</a> (PointerT &amp;ptr)</td></tr>
+<tr class="memdesc:a27667670141c64f3aa20e0280883c96f"><td class="mdescLeft">&#160;</td><td class="mdescRight">get pointer to value holder  <a href="namespacepni.html#a27667670141c64f3aa20e0280883c96f">More...</a><br /></td></tr>
+<tr class="separator:a27667670141c64f3aa20e0280883c96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae77b7a4b02919abedfedcbc34852d421"><td class="memTemplParams" colspan="2">template&lt;typename TargetT , typename SourceT , typename PointerT &gt; </td></tr>
+<tr class="memitem:ae77b7a4b02919abedfedcbc34852d421"><td class="memTemplItemLeft" align="right" valign="top">TargetT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ae77b7a4b02919abedfedcbc34852d421">pni::get_value</a> (PointerT holder_ptr)</td></tr>
+<tr class="memdesc:ae77b7a4b02919abedfedcbc34852d421"><td class="mdescLeft">&#160;</td><td class="mdescRight">get value from holder  <a href="namespacepni.html#ae77b7a4b02919abedfedcbc34852d421">More...</a><br /></td></tr>
+<tr class="separator:ae77b7a4b02919abedfedcbc34852d421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addd3514df6b58ef00906322a75c2a265"><td class="memTemplParams" colspan="2">template&lt;typename TargetT , typename SourceT , typename PointerT &gt; </td></tr>
+<tr class="memitem:addd3514df6b58ef00906322a75c2a265"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#addd3514df6b58ef00906322a75c2a265">pni::set_value</a> (PointerT holder_ptr, const SourceT &amp;v)</td></tr>
+<tr class="memdesc:addd3514df6b58ef00906322a75c2a265"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value to holder  <a href="namespacepni.html#addd3514df6b58ef00906322a75c2a265">More...</a><br /></td></tr>
+<tr class="separator:addd3514df6b58ef00906322a75c2a265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -124,7 +125,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_9a01e76c9ba32292e5d1e50948f9c01a.html">type_erasures</a></li><li class="navelem"><a class="el" href="type__erasures_2utils_8hpp.html">utils.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

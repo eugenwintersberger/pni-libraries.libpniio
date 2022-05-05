@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Types &#8212; libpninexus 2.0.0 documentation</title>
+    <title>Data Types &#8212; libpninexus 3.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="core.html" title="PNI core"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="core.html" accesskey="U">PNI core</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Data Types</a></li> 
@@ -188,10 +188,10 @@ provided by <cite>libpninexus</cite> and their corresponding <code class="xref c
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="c1">//determine the type ID for a given type</span>
-<span class="n">type_id_map</span><span class="o">&lt;</span><span class="n">float32</span><span class="o">&gt;::</span><span class="n">type_id</span> <span class="o">==</span> <span class="n">type_id_t</span><span class="o">::</span><span class="n">FLOAT32</span><span class="p">;</span>
+<span class="n">type_id_map</span><span class="o">&lt;</span><span class="n">float32</span><span class="o">&gt;::</span><span class="n">type_id</span> <span class="o">==</span> <span class="n">type_id_t</span><span class="o">::</span><span class="n">Float32</span><span class="p">;</span>
 
 <span class="c1">//obtain the class of a particular type</span>
-<span class="n">type_class_map</span><span class="o">&lt;</span><span class="n">float32</span><span class="o">&gt;::</span><span class="n">type_class</span> <span class="o">==</span> <span class="n">type_class_t</span><span class="o">::</span><span class="n">FLOAT</span><span class="p">;</span>
+<span class="n">type_class_map</span><span class="o">&lt;</span><span class="n">float32</span><span class="o">&gt;::</span><span class="n">type_class</span> <span class="o">==</span> <span class="n">type_class_t</span><span class="o">::</span><span class="n">Float</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>For IDs the other way around is also possible with the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">id_type_map</span></code></p>
@@ -200,7 +200,7 @@ provided by <cite>libpninexus</cite> and their corresponding <code class="xref c
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
 
 <span class="c1">//determine the type for a given ID</span>
-<span class="n">id_type_map</span><span class="o">&lt;</span><span class="n">type_id_t</span><span class="o">::</span><span class="n">FLOAT32</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">data</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">id_type_map</span><span class="o">&lt;</span><span class="n">type_id_t</span><span class="o">::</span><span class="n">Float32</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">data</span> <span class="o">=</span> <span class="p">...;</span>
 </pre></div>
 </div>
 <p>For numeric types there are also some other templates for a more detailed type
@@ -362,7 +362,7 @@ of this two guys is again straight forward.</p>
 <span class="n">type_id_t</span> <span class="n">id</span> <span class="o">=</span> <span class="n">type_id_from_str</span><span class="p">(</span><span class="s">&quot;str&quot;</span><span class="p">);</span>
 
 <span class="c1">//get a string from a type id</span>
-<span class="n">rep</span> <span class="o">=</span> <span class="n">str_from_type_id</span><span class="p">(</span><span class="n">type_id_t</span><span class="o">::</span><span class="n">FLOAT32</span><span class="p">);</span>
+<span class="n">rep</span> <span class="o">=</span> <span class="n">str_from_type_id</span><span class="p">(</span><span class="n">type_id_t</span><span class="o">::</span><span class="n">Float32</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -739,13 +739,13 @@ used.</p>
 <h3>The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> function template<a class="headerlink" href="#the-convert-function-template" title="Permalink to this headline">¶</a></h3>
 <p>At the heart of <cite>libpninexus</cite> s type conversion system is the cpp{convert}
 function template. The declaration of the template looks somehow like this</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ST</span><span class="p">,</span><span class="k">typename</span> <span class="nc">TT</span><span class="o">&gt;</span> <span class="n">TT</span> <span class="n">convert</span><span class="p">(</span><span class="k">const</span> <span class="n">ST</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SourceT</span><span class="p">,</span><span class="k">typename</span> <span class="nc">TargetT</span><span class="o">&gt;</span> <span class="n">TargetT</span> <span class="n">convert</span><span class="p">(</span><span class="k">const</span> <span class="n">SourceT</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A value of a particular source type (denoted by the template parameter
-<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">ST</span></code>) is passed as an argument to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> template. The value
+<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">SourceT</span></code>) is passed as an argument to the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">convert()</span></code> template. The value
 of this argument will then be converted to a value of the target type
-<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">TT</span></code> and returned from the function template.
+<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">TargetT</span></code> and returned from the function template.
 This function template throws two exceptions</p>
 <table class="docutils align-default">
 <colgroup>
@@ -837,6 +837,7 @@ value of 10000 in an 8-Bit unsigned variable.</p>
       <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
       <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
       
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
       <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
       <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
       <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
@@ -860,7 +861,7 @@ value of 10000 in an 8-Bit unsigned variable.</p>
         <li class="right" >
           <a href="core.html" title="PNI core"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 2.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="core.html" >PNI core</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Data Types</a></li> 

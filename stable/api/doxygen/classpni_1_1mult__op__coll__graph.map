@@ -1,5 +1,5 @@
-<map id="pni::mult_op&lt; OP1T, OP2T &gt;" name="pni::mult_op&lt; OP1T, OP2T &gt;">
-<area shape="rect" id="node1" title="Multiplication expression template." alt="" coords="93,95,236,136"/>
-<area shape="rect" id="node2" href="$structpni_1_1op__trait.html" title=" " alt="" coords="5,5,153,32"/>
-<area shape="rect" id="node3" href="$structpni_1_1op__trait.html" title=" " alt="" coords="177,5,325,32"/>
+<map id="pni::mult_op&lt; Operand1T, Operand2T &gt;" name="pni::mult_op&lt; Operand1T, Operand2T &gt;">
+<area shape="rect" id="node1" title="Multiplication expression template." alt="" coords="110,95,282,136"/>
+<area shape="rect" id="node2" href="$structpni_1_1op__trait.html" title=" " alt="" coords="5,5,184,32"/>
+<area shape="rect" id="node3" href="$structpni_1_1op__trait.html" title=" " alt="" coords="208,5,387,32"/>
 </map>

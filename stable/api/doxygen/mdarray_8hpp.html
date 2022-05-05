@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>pninexus: mdarray.hpp File Reference</title>
+<title>PNI NeXus Library: mdarray.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -14,8 +14,7 @@
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
-<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-bizflat.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -24,8 +23,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">pninexus
+   <div id="projectname">PNI NeXus Library
+   &#160;<span id="projectnumber">3.0.0</span>
    </div>
+   <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
  </tr>
  </tbody>
@@ -91,11 +92,11 @@ $(document).ready(function(){initNavTree('mdarray_8hpp.html',''); initResizable(
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1mdarray.html">pni::mdarray&lt; STORAGE, IMAP, IPA &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1mdarray.html">pni::mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">template for a multi-dimensional array class  <a href="classpni_1_1mdarray.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html">pni::container_trait&lt; mdarray&lt; STORAGE, IMAP, IPA &gt; &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">container trait mdarray  <a href="structpni_1_1container__trait_3_01mdarray_3_01STORAGE_00_01IMAP_00_01IPA_01_4_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpni_1_1container__trait_3_01mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html">pni::container_trait&lt; mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">container trait mdarray  <a href="structpni_1_1container__trait_3_01mdarray_3_01StorageT_00_01IndexMapT_00_01InplaceArithmeticT_01_4_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -105,22 +106,22 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4197ee3cd0df363bc7cb5786f601fa5b"><td class="memTemplParams" colspan="2">template&lt;typename STORAGE , typename IMAP , typename IPA &gt; </td></tr>
-<tr class="memitem:a4197ee3cd0df363bc7cb5786f601fa5b"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a4197ee3cd0df363bc7cb5786f601fa5b">pni::operator&lt;&lt;</a> (std::ostream &amp;o, const mdarray&lt; STORAGE, IMAP, IPA &gt; &amp;a)</td></tr>
-<tr class="memdesc:a4197ee3cd0df363bc7cb5786f601fa5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">output operator  <a href="namespacepni.html#a4197ee3cd0df363bc7cb5786f601fa5b">More...</a><br /></td></tr>
-<tr class="separator:a4197ee3cd0df363bc7cb5786f601fa5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99577d91aad81c22c1cb093c40c5d282"><td class="memTemplParams" colspan="2">template&lt;typename STORAGE , typename IMAP , typename IPA &gt; </td></tr>
-<tr class="memitem:a99577d91aad81c22c1cb093c40c5d282"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a99577d91aad81c22c1cb093c40c5d282">pni::operator&gt;&gt;</a> (std::istream &amp;is, mdarray&lt; STORAGE, IMAP, IPA &gt; &amp;a)</td></tr>
-<tr class="memdesc:a99577d91aad81c22c1cb093c40c5d282"><td class="mdescLeft">&#160;</td><td class="mdescRight">input stream operator  <a href="namespacepni.html#a99577d91aad81c22c1cb093c40c5d282">More...</a><br /></td></tr>
-<tr class="separator:a99577d91aad81c22c1cb093c40c5d282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6143e2e6cd79ceb311c502fef320de74"><td class="memTemplParams" colspan="2">template&lt;typename STORAGE , typename IMAP , typename IPA &gt; </td></tr>
-<tr class="memitem:a6143e2e6cd79ceb311c502fef320de74"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a6143e2e6cd79ceb311c502fef320de74">pni::operator==</a> (const mdarray&lt; STORAGE, IMAP, IPA &gt; &amp;b1, const mdarray&lt; STORAGE, IMAP, IPA &gt; &amp;b2)</td></tr>
-<tr class="memdesc:a6143e2e6cd79ceb311c502fef320de74"><td class="mdescLeft">&#160;</td><td class="mdescRight">equality comparison operator  <a href="namespacepni.html#a6143e2e6cd79ceb311c502fef320de74">More...</a><br /></td></tr>
-<tr class="separator:a6143e2e6cd79ceb311c502fef320de74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1537dad519c8f41145fbf61b7767fd8"><td class="memTemplParams" colspan="2">template&lt;typename STORAGE , typename IMAP , typename IPA &gt; </td></tr>
-<tr class="memitem:ad1537dad519c8f41145fbf61b7767fd8"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#ad1537dad519c8f41145fbf61b7767fd8">pni::operator!=</a> (const mdarray&lt; STORAGE, IMAP, IPA &gt; &amp;b1, const mdarray&lt; STORAGE, IMAP, IPA &gt; &amp;b2)</td></tr>
-<tr class="memdesc:ad1537dad519c8f41145fbf61b7767fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">inequality comparison operator  <a href="namespacepni.html#ad1537dad519c8f41145fbf61b7767fd8">More...</a><br /></td></tr>
-<tr class="separator:ad1537dad519c8f41145fbf61b7767fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b019be5b8618eb651063dce518b0b3"><td class="memTemplParams" colspan="2">template&lt;typename StorageT , typename IndexMapT , typename InplaceArithmeticT &gt; </td></tr>
+<tr class="memitem:a58b019be5b8618eb651063dce518b0b3"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a58b019be5b8618eb651063dce518b0b3">pni::operator&lt;&lt;</a> (std::ostream &amp;o, const mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &amp;a)</td></tr>
+<tr class="memdesc:a58b019be5b8618eb651063dce518b0b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">output operator  <a href="namespacepni.html#a58b019be5b8618eb651063dce518b0b3">More...</a><br /></td></tr>
+<tr class="separator:a58b019be5b8618eb651063dce518b0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af147b4c5c0279534e0e0625695a9fcc3"><td class="memTemplParams" colspan="2">template&lt;typename StorageT , typename IndexMapT , typename InplaceArithmeticT &gt; </td></tr>
+<tr class="memitem:af147b4c5c0279534e0e0625695a9fcc3"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#af147b4c5c0279534e0e0625695a9fcc3">pni::operator&gt;&gt;</a> (std::istream &amp;is, mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &amp;a)</td></tr>
+<tr class="memdesc:af147b4c5c0279534e0e0625695a9fcc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">input stream operator  <a href="namespacepni.html#af147b4c5c0279534e0e0625695a9fcc3">More...</a><br /></td></tr>
+<tr class="separator:af147b4c5c0279534e0e0625695a9fcc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af96da3356844bf9f27cd2e46370a91e2"><td class="memTemplParams" colspan="2">template&lt;typename StorageT , typename IndexMapT , typename InplaceArithmeticT &gt; </td></tr>
+<tr class="memitem:af96da3356844bf9f27cd2e46370a91e2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#af96da3356844bf9f27cd2e46370a91e2">pni::operator==</a> (const mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &amp;b1, const mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &amp;b2)</td></tr>
+<tr class="memdesc:af96da3356844bf9f27cd2e46370a91e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">equality comparison operator  <a href="namespacepni.html#af96da3356844bf9f27cd2e46370a91e2">More...</a><br /></td></tr>
+<tr class="separator:af96da3356844bf9f27cd2e46370a91e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68c268517fc4a4f0d4601a9ce4110c47"><td class="memTemplParams" colspan="2">template&lt;typename StorageT , typename IndexMapT , typename InplaceArithmeticT &gt; </td></tr>
+<tr class="memitem:a68c268517fc4a4f0d4601a9ce4110c47"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacepni.html#a68c268517fc4a4f0d4601a9ce4110c47">pni::operator!=</a> (const mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &amp;b1, const mdarray&lt; StorageT, IndexMapT, InplaceArithmeticT &gt; &amp;b2)</td></tr>
+<tr class="memdesc:a68c268517fc4a4f0d4601a9ce4110c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">inequality comparison operator  <a href="namespacepni.html#a68c268517fc4a4f0d4601a9ce4110c47">More...</a><br /></td></tr>
+<tr class="separator:a68c268517fc4a4f0d4601a9ce4110c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -128,7 +129,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="mdarray_8hpp.html">mdarray.hpp</a></li>
-    <li class="footer">Generated on Mon Nov 29 2021 11:36:08 for pninexus by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
