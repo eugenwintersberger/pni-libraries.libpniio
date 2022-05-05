@@ -17,7 +17,7 @@ In order to install `libpninexus` on a Linux system the following software packa
 are requiered sdfdsf
 
 * a C++11 compatiable compiler (gcc >= 4.9, msvc >= 2014)
-* cmake (>= 3.5)
+* cmake (>= 3.10)
 * doxygen in order to build the documentation
 * sphinx to build the users guide
 
@@ -25,7 +25,7 @@ are requiered sdfdsf
 build system
 
 * Boost (>=1.60)
-* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.4.0) -- from https://ess-dmsc.github.io/h5cpp/
+* [h5cpp](https://github.com/ess-dmsc/h5cpp) (>=0.5.0) -- from https://ess-dmsc.github.io/h5cpp/
 
 and their transitive dependencies. If all dependencies are available on your
 system you can clone this repository and configure the build
@@ -35,7 +35,7 @@ $ git clone https://github.com/pni-libraries/libpninexus.git
 $ cd libpninexus
 $ mkdir build
 $ cd build
-$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pninexus ../
+$ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pninexus -DPNINEXUS_CONAN=DISABLE ../
 ```
 
 with `CMAKE_INSTALL_PREFIX` we tell the system where to install the library

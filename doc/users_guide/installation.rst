@@ -82,12 +82,12 @@ Requirements
 
 For a successful build some requirements must be satisfied
 
-* `h5cpp` >= 0.4.1
+* `h5cpp` >= 0.5.0
 * `gcc` >= 4.7 -- since version 1.0.0 `libpninexus` requires a mostly C++11
    compliant compiler. For the gcc familiy this is 4.7 and upwards
-* `BOOST` >= 4.1
+* `BOOST` >= 1.60
 * `doxygen` \cite{web:doxygen} -- used to build the API documentation
-* `cmake` \cite{web:cmake} $>=$ 2.4.8 -- the build software used by the `libpninexus`
+* `cmake` \cite{web:cmake} $>=$ 3.10 -- the build software used by the `libpninexus`
 * `pkg-config` \cite{web:pkgconfig} -- program to manage libraries
 
 Building the code
@@ -99,8 +99,6 @@ The sources can be obtained directly from the Git repository.
 
    $ git clone https://github.com/pni-libraries/libpninexus.git
    $ cd libpninexus
-   $ git submodule init
-   $ git submodule update --remote
    $ cd ..
 
 which will result in a new directory named :file:`libpninexus`. As we use
@@ -117,14 +115,14 @@ Now call :command:`cmake` with a path to the original source directory
 
 .. code-block:: bash
 
-   $ cmake -DCMAKE_BUILD_TYPE=Release ../libpninexus
+   $ cmake -DCMAKE_BUILD_TYPE=Release -DPNINEXUS_CONAN=DISABLE ../libpninexus
 
 or
 
 .. code-block:: bash
 
-   $ export H5CPP=/opt/pni/lib/cmake/h5cpp-0.4.1
-   $ cmake -Dh5cpp_DIR=$H5CPP -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni ../libpninexus
+   $ export H5CPP=/opt/pni/lib/cmake/h5cpp-0.5.0
+   $ cmake -Dh5cpp_DIR=$H5CPP -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni -DPNINEXUS_CONAN=DISABLE ../libpninexus
 
 if `h5cpp` is installed in the non-standard directory.
 
@@ -166,6 +164,6 @@ be used the :envvar:`CMAKE_INSTALL_PREFIX` variable must be set when running
 
 .. code-block:: bash
 
-   $ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni ../libpninexus
+   $ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni -DPNINEXUS_CONAN=DISABLE ../libpninexus
 
 which causes the installation prefix to be :file:`/opt/pni`.
