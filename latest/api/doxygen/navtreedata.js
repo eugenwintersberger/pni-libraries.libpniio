@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "PNI NeXus Library", "index.html", [
-    [ "PNI NeXus Library 3.0 Documentation", "index.html", [
+    [ "PNI NeXus Library 3.0.0 Documentation", "index.html", [
       [ "Introduction", "index.html#Introduction", null ],
       [ "Outlook - concurrent applications", "index.html#outlook", [
         [ "Thread safety", "index.html#ths", null ],
