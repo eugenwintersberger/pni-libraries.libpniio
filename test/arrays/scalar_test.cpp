@@ -47,7 +47,7 @@ template<typename GeneralT> struct scalar_fixture
     {}
 };
 
-#define SETUP_SCALAR_FIXTURE() \
+#define PNINEXUS_SETUP_SCALAR_FIXTURE() \
     typedef scalar_fixture<GeneralT> fixture_type; \
     fixture_type fixture
 
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_SUITE(scalar_test)
 
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction,GeneralT,numeric_types)   
     {
-        SETUP_SCALAR_FIXTURE();
+        PNINEXUS_SETUP_SCALAR_FIXTURE();
 
         scalar<GeneralT> s;
         BOOST_CHECK_EQUAL(s.rank(),0u);
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_SUITE(scalar_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_assignment,GeneralT,numeric_types)
     {
-        SETUP_SCALAR_FIXTURE();
+        PNINEXUS_SETUP_SCALAR_FIXTURE();
 
         scalar<GeneralT> s(fixture.v);
         scalar<GeneralT> a;
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_SUITE(scalar_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_access_unchecked,GeneralT,numeric_types)
     {
-        SETUP_SCALAR_FIXTURE();
+        PNINEXUS_SETUP_SCALAR_FIXTURE();
 
         scalar<GeneralT> s = fixture.v;
         BOOST_CHECK_EQUAL(s[0],fixture.v);
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_SUITE(scalar_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_access_checked,GeneralT,numeric_types)
     {
-        SETUP_SCALAR_FIXTURE();
+        PNINEXUS_SETUP_SCALAR_FIXTURE();
 
         scalar<GeneralT> s = fixture.v;
         BOOST_CHECK_EQUAL(s.at(0),fixture.v);
@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_SUITE(scalar_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_comparison,GeneralT,numeric_types)
     {
-        SETUP_SCALAR_FIXTURE();
+        PNINEXUS_SETUP_SCALAR_FIXTURE();
 
         scalar<GeneralT> a = fixture.generator();
         scalar<GeneralT> b = a;

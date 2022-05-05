@@ -56,24 +56,24 @@ Node Node::from_string(const std::string &s)
   }
   catch(boost::property_tree::ptree_bad_data &)
   {
-    throw pni::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(PNINEXUS_EXCEPTION_RECORD,
                                 "A parser error occured due to invalid input data!");
   }
   catch(boost::property_tree::ptree_bad_path &)
   {
-    throw pni::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(PNINEXUS_EXCEPTION_RECORD,
                                 "A parser error occured as the requested object could not"
                                 " be resolved!");
   }
   catch(boost::property_tree::ptree_error &)
   {
-    throw pni::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(PNINEXUS_EXCEPTION_RECORD,
                                 "A general parser error has occured!");
   }
   catch(...)
   {
     //whatever exception is thrown here is related to parsing
-    throw pni::parser_error(EXCEPTION_RECORD,
+    throw pni::parser_error(PNINEXUS_EXCEPTION_RECORD,
                                 "A unkown fatal error parsing XML string has occured!");
   }
 
@@ -88,7 +88,7 @@ Node Node::from_file(const boost::filesystem::path &path)
   {
     std::stringstream ss;
     ss<<"Error opening "<<path<<" for reading!";
-    throw file_error(EXCEPTION_RECORD,ss.str());
+    throw file_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
   }
 
 
@@ -103,7 +103,7 @@ Node Node::from_file(const boost::filesystem::path &path)
   {
     std::stringstream ss;
     ss<<"Error parsing XML file "<<path<<"!";
-    throw pni::parser_error(EXCEPTION_RECORD,ss.str());
+    throw pni::parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
   }
 
   return t;
@@ -124,11 +124,11 @@ Node Node::attribute(const std::string &name) const
   }
   catch(boost::property_tree::ptree_bad_path &)
   {
-    throw key_error(EXCEPTION_RECORD, "Attribute not found!");
+    throw key_error(PNINEXUS_EXCEPTION_RECORD, "Attribute not found!");
   }
   catch(...)
   {
-    throw parser_error(EXCEPTION_RECORD,
+    throw parser_error(PNINEXUS_EXCEPTION_RECORD,
                        "Unkown error when retrieving attribute!");
   }
 }

@@ -217,7 +217,7 @@ namespace pni{
             typename array_iterator_types<const_flag>::return_type operator*()
             {
                 if(!(*this))
-                    throw iterator_error(EXCEPTION_RECORD,"Iterator invalid!");
+                    throw iterator_error(PNINEXUS_EXCEPTION_RECORD,"Iterator invalid!");
             
                 return (*_container)[_state];
             }
@@ -237,7 +237,7 @@ namespace pni{
                 const
             {
                 if(!(*this))
-                    throw iterator_error(EXCEPTION_RECORD,"Iterator invalid!");
+                    throw iterator_error(PNINEXUS_EXCEPTION_RECORD,"Iterator invalid!");
             
                 return (*_container)[_state];
             }

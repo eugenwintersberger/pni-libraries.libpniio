@@ -152,7 +152,7 @@ void Path::push_back(const Element &o)
 {
   using namespace pni;
   if(is_root_element(o)&&size())
-    throw value_error(EXCEPTION_RECORD,
+    throw value_error(PNINEXUS_EXCEPTION_RECORD,
                       "Cannot push back a root group to a non-empty path!");
 
   if(o.first==".")

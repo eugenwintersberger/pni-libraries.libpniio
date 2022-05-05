@@ -41,7 +41,7 @@ namespace pni{
         {
             std::stringstream ss;
             ss<<"Input ["<<input<<"]cannot be converted to pni::value!";
-            throw parser_error(EXCEPTION_RECORD,ss.str());
+            throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
         }
     }
 }

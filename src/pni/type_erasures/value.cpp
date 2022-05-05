@@ -116,7 +116,7 @@ namespace pni{
             case type_id_t::Bool:       return make_value<bool_t>();
             case type_id_t::EBool:       return make_value<hdf5::datatype::EBool>();
             default:
-                throw type_error(EXCEPTION_RECORD,
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,
                         "Unknown type ID - cannot instantive value!");
         }
     }

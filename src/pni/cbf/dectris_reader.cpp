@@ -81,13 +81,13 @@ namespace cbf{
                 if(boost::regex_match(linebuffer,conversion_regex))
                 {
                     if(!boost::regex_search(linebuffer,match,quoted_text))
-                        throw file_error(EXCEPTION_RECORD,
+                        throw file_error(PNINEXUS_EXCEPTION_RECORD,
                                 "Cannot find conversion string!");
                     
                     if(match.str(0) == "\"x-CBF_BYTE_OFFSET\"")
                         ct = compression_id::CBFByteOffset;
                     else
-                        throw file_error(EXCEPTION_RECORD,
+                        throw file_error(PNINEXUS_EXCEPTION_RECORD,
                                 "Unknown compression algorithm!");
 
                 }
@@ -96,7 +96,7 @@ namespace cbf{
                 if(boost::regex_match(linebuffer,type_regex))
                 {
                     if(!boost::regex_search(linebuffer,match,quoted_text))
-                        throw file_error(EXCEPTION_RECORD,
+                        throw file_error(PNINEXUS_EXCEPTION_RECORD,
                         "Cannot find data type string!");
 
                     //set the data type id
@@ -106,14 +106,14 @@ namespace cbf{
                         bits_per_pixel = 32;
                     }
                     else
-                        throw file_error(EXCEPTION_RECORD,"Unkown data type!");
+                        throw file_error(PNINEXUS_EXCEPTION_RECORD,"Unkown data type!");
                 }
 
                 //---------get number of pixels in y-direction-------------
                 if(boost::regex_match(linebuffer,ny_regex))
                 {
                     if(!boost::regex_search(linebuffer,match,int_numbers))
-                        throw file_error(EXCEPTION_RECORD,
+                        throw file_error(PNINEXUS_EXCEPTION_RECORD,
                         "Cannot read number of pixels in y-direction!");
 
                     ny = std::atoi(match.str(0).c_str());
@@ -123,7 +123,7 @@ namespace cbf{
                 if(boost::regex_match(linebuffer,nx_regex))
                 {
                     if(!boost::regex_search(linebuffer,match,int_numbers))
-                        throw file_error(EXCEPTION_RECORD,
+                        throw file_error(PNINEXUS_EXCEPTION_RECORD,
                         "Cannot read number of pixels in x-direction!");
 
                     nx = std::atoi(match.str(0).c_str());

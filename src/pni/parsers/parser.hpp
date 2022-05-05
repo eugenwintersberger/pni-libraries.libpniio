@@ -95,7 +95,7 @@ namespace pni{
                 std::stringstream ss;
                 ss<<"Cannot store a signed value ["<<data<<"] an instance of "
                   <<type_id(value);
-                throw parser_error(EXCEPTION_RECORD,ss.str());
+                throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
 
             try
@@ -109,7 +109,7 @@ namespace pni{
                 std::stringstream ss;
                 ss<<"Could not convert ["<<data<<"] to a value of type ";
                 ss<<type_id(value);
-                throw parser_error(EXCEPTION_RECORD,ss.str());
+                throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
             catch(const pni::range_error &error)
             {
@@ -117,14 +117,14 @@ namespace pni{
                 ss<<"A range error occured with: "<<error.description()<<std::endl;
                 ss<<"Could not convert input ["<<data<<"] to a value fo type ";
                 ss<<type_id(result_type());
-                throw parser_error(EXCEPTION_RECORD,ss.str());
+                throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
             catch(...)
             {
                 std::stringstream ss;
                 ss<<"Unknown error when trying to convert ["<<data<<"] to ";
                 ss<<type_id(result_type());
-                throw parser_error(EXCEPTION_RECORD,ss.str());
+                throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
 
             return value;

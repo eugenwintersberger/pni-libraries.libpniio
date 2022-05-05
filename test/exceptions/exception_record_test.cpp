@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(exceptions_record_test)
 
     BOOST_AUTO_TEST_CASE(macro_reation)
     {
-        exception_record record = EXCEPTION_RECORD;
+        exception_record record = PNINEXUS_EXCEPTION_RECORD;
         BOOST_CHECK_EQUAL(record.line(),42);
     }
 

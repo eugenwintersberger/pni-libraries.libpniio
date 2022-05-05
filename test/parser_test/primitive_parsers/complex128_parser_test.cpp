@@ -28,7 +28,7 @@
 
 using namespace pni;
 
-#define NUM_RES 1.e-12
+static const double num_res = 1.e-12;
 
 struct complex128_parser_test_fixture : parser_test_fixture<complex128>
 {};
@@ -41,60 +41,60 @@ BOOST_FIXTURE_TEST_SUITE(complex128_parser_test,complex128_parser_test_fixture)
     BOOST_AUTO_TEST_CASE(test_regular_value_for_j)
     {
         result_type result = p("1.0+j2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),num_res);
 
         result = p("-1.0+j2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),num_res);
 
         result = p("1.0-j2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),num_res);
 
         result = p("-1.0-j2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),num_res);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_regular_value_for_i)
     {
         result_type result = p("1.0+i2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),num_res);
 
         result = p("-1.0+i2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),num_res);
 
         result = p("1.0-i2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),num_res);
 
         result = p("-1.0-i2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),num_res);
     }
 
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_regular_value_for_I)
     {
         result_type result = p("1.0+I2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),num_res);
 
         result = p("-1.0+I2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+2.0),result.imag(),num_res);
 
         result = p("1.0-I2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(+1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),num_res);
 
         result = p("-1.0-I2.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-2.0),result.imag(),num_res);
     }
     //-------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_invalid_input)
@@ -111,48 +111,48 @@ BOOST_FIXTURE_TEST_SUITE(complex128_parser_test,complex128_parser_test_fixture)
     BOOST_AUTO_TEST_CASE(test_complex_zero)
     {
         result_type result = p("0.+i0.");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),num_res);
 
         result = p("0.+I0.");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),num_res);
 
         result = p("0.+j0.");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),num_res);
     }
 
     //------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_real_only)
     {
         result_type result = p("1.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),num_res);
 
         result = p("-1.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(), NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(), num_res);
 
         result = p("+1.0");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(1.0),result.real(),NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(1.0),result.real(),num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.imag(),num_res);
     }
 
     //------------------------------------------------------------------------
     BOOST_AUTO_TEST_CASE(test_imag_only)
     {
         result_type result = p("-i1.e+6");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),  NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(-1e+6),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(),  num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(-1e+6),result.imag(),num_res);
 
         result = p("+i1.e+6");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(), NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(1e+6),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(), num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(1e+6),result.imag(),num_res);
 
         result = p("i2.e+6");
-        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(), NUM_RES);
-        BOOST_CHECK_CLOSE_FRACTION(base_type(2e+6),result.imag(),NUM_RES);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(0.0),result.real(), num_res);
+        BOOST_CHECK_CLOSE_FRACTION(base_type(2e+6),result.imag(),num_res);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

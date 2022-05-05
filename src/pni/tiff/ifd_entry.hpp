@@ -230,7 +230,7 @@ namespace tiff{
         }
         catch(type_error &e)
         {
-            e.append(EXCEPTION_RECORD);
+            e.append(PNINEXUS_EXCEPTION_RECORD);
             //reset the stream to its original position
             stream.seekg(orig_stream_pos,std::ios::beg);
             throw e;
@@ -271,7 +271,7 @@ namespace tiff{
             ifd_entry_reader<ElementT,float64>::read(r,stream);
         else
             //reset stream position
-            throw type_error(EXCEPTION_RECORD,"IFD entry ["+this->name()+
+            throw type_error(PNINEXUS_EXCEPTION_RECORD,"IFD entry ["+this->name()+
                     "] contains unknown data!");
     }
 

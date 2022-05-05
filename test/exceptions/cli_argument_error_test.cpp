@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(cli_argument_error_test)
 
     BOOST_AUTO_TEST_CASE(record_construction)
     {
-        cli_argument_error error(EXCEPTION_RECORD,"test error");
+        cli_argument_error error(PNINEXUS_EXCEPTION_RECORD,"test error");
         BOOST_CHECK_EQUAL(error.name(),"cli_argument_error");
         BOOST_CHECK_EQUAL(error.size(),1);
         BOOST_CHECK_EQUAL(error.description(),"test error");
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_SUITE(cli_argument_error_test)
 
     BOOST_AUTO_TEST_CASE(output_stream)
     {
-        cli_argument_error error(EXCEPTION_RECORD,"test error");
+        cli_argument_error error(PNINEXUS_EXCEPTION_RECORD,"test error");
         std::stringstream stream;
         stream<<error<<std::endl;
 

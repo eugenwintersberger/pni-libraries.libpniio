@@ -29,7 +29,7 @@ using namespace pni;
 
 void function1()
 {
-    throw exception("test_error",EXCEPTION_RECORD,"single throw test");
+    throw exception("test_error",PNINEXUS_EXCEPTION_RECORD,"single throw test");
 }
 
 void function2()
@@ -41,7 +41,7 @@ void function2()
     }
     catch(exception &error)
     {
-        error.push_back(EXCEPTION_RECORD);
+        error.push_back(PNINEXUS_EXCEPTION_RECORD);
         throw error;
     }
 }

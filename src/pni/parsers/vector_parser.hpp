@@ -98,7 +98,7 @@ class parser<std::vector<ElementT>>
         {
           std::stringstream ss;
           ss<<"Input: "<<input<<" - has no start symbol!";
-          throw parser_error(EXCEPTION_RECORD,ss.str());
+          throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
         }
         std::advance(first,1);
       }
@@ -110,7 +110,7 @@ class parser<std::vector<ElementT>>
         {
           std::stringstream ss;
           ss<<"Input: "<<input<<" - has no stop symbol!";
-          throw parser_error(EXCEPTION_RECORD,ss.str());
+          throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
         }
       }
 

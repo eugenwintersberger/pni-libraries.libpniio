@@ -119,13 +119,13 @@ void cbf_reader::_parse_file()
         return;
       }else{
         //should raise an exception here
-        throw file_error(EXCEPTION_RECORD,"Unknown CBF style!");
+        throw file_error(PNINEXUS_EXCEPTION_RECORD,"Unknown CBF style!");
       }
     }
   }
 
   if(_istream.eof())
-    throw file_error(EXCEPTION_RECORD,
+    throw file_error(PNINEXUS_EXCEPTION_RECORD,
                      "File is most probably not a CBF file");
 }
 

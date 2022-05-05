@@ -272,7 +272,7 @@ namespace pni{
         catch(key_error &error)
         {
             //append a new issuer to the exception
-            error.append(EXCEPTION_RECORD);
+            error.append(PNINEXUS_EXCEPTION_RECORD);
             throw error;
         }
     }

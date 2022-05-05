@@ -250,7 +250,7 @@ namespace pni{
     template<typename ReturnT> ReturnT value_ref::as() const
     {
         //check if the reference points to something
-        _check_pointer(EXCEPTION_RECORD);
+        _check_pointer(PNINEXUS_EXCEPTION_RECORD);
 
         type_id_t tid = type_id();
         switch(tid)
@@ -274,7 +274,7 @@ namespace pni{
             case type_id_t::Bool:       return _get<ReturnT,bool_t>();
             case type_id_t::EBool:       return _get<ReturnT,hdf5::datatype::EBool>();
             default:
-                throw type_error(EXCEPTION_RECORD,
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,
                         "The reference points to an object of unkown type!");
         }
         
@@ -283,7 +283,7 @@ namespace pni{
     //-------------------------------------------------------------------------
     template<typename ReturnT> value_ref &value_ref::operator=(const ReturnT &v)
     {
-        _check_pointer(EXCEPTION_RECORD);
+        _check_pointer(PNINEXUS_EXCEPTION_RECORD);
         
         type_id_t tid = type_id();
 
@@ -308,7 +308,7 @@ namespace pni{
             case type_id_t::Bool:       _set<bool_t>(v);     break;
             case type_id_t::EBool:      _set<hdf5::datatype::EBool>(v);     break;
             default:
-                throw type_error(EXCEPTION_RECORD,
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,
                         "The reference points to an object of unknown type!");
         }
 

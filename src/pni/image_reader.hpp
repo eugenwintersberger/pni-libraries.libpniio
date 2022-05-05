@@ -121,7 +121,7 @@ namespace pni{
             template<typename ArrayT> ArrayT image(size_t i,size_t c) 
             {
                 using namespace pni;
-                throw not_implemented_error(EXCEPTION_RECORD,
+                throw not_implemented_error(PNINEXUS_EXCEPTION_RECORD,
                         "Method not implemented!");
 
                 return ArrayT(); //just to make the compiler happy
@@ -147,7 +147,7 @@ namespace pni{
                 void image(ArrayT & array,size_t i,size_t c) 
             {
                 using namespace pni;
-                throw not_implemented_error(EXCEPTION_RECORD,
+                throw not_implemented_error(PNINEXUS_EXCEPTION_RECORD,
                         "Method not implemented!");
             }
 

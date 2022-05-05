@@ -133,7 +133,7 @@ namespace pni{
                   <<map.max_elements()
 				  <<") does not match data size ("
 				  <<data.size()<<")!";
-                throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
 
             auto storage = container_utils<storage_type>::create(data.size());
@@ -179,7 +179,7 @@ namespace pni{
             	  <<map.max_elements()
 				  <<"does not match data size ("
 				  <<data.size()<<")!";
-                throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
 
             auto storage = container_utils<storage_type>::create(data.size());

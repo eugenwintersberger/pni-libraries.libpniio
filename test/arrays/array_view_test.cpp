@@ -38,14 +38,14 @@
 
 using namespace pni;
 
-#define NX 100
-#define NY 125
-
+static const int nx = 100;
+static const int ny = 125;
+  
 typedef  boost::mpl::joint_view<all_dynamic_arrays,
 #if GCC_VERSION > 40800
                                 boost::mpl::joint_view<
                                 all_fixed_dim_arrays<2>,
-                                all_static_arrays<NX,NY>
+                                all_static_arrays<nx,ny>
                                 >
 #else 
                                 all_fixed_dim_arrays<2>
@@ -68,14 +68,14 @@ template<typename TestArrayT> struct array_view_test_fixture
 
     array_view_test_fixture():
         generator(),
-        shape({NX,NY}),
+        shape({nx,ny}),
         a(array_type::create(shape))
     {
         std::generate(a.begin(),a.end(),generator); 
     }
 };
 
-#define SETUP_VIEW_FIXTURE()\
+#define PNINEXUS_SETUP_VIEW_FIXTURE()\
         typedef array_view_test_fixture<TestArrayT> fixture_type;  \
         fixture_type fixture 
 
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
         typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction_from_array,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
         typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_construction_from_array_variadic,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
 
         auto view = fixture.a(slice(0,3),slice(3,7));
         shape_t view_shape{3,4};
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
         typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
 
@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_linear_access_pointer,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
 
         //create a selection
         auto view1 = fixture.a(slice(0,50,2),slice(1,100,3));
@@ -186,23 +186,23 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
         //should not work
         BOOST_CHECK_THROW(view1.data(),shape_mismatch_error);
 
-        auto view2 = fixture.a(slice(0,5),slice(0,NY));
+        auto view2 = fixture.a(slice(0,5),slice(0,ny));
         auto ptr  = view2.data();
         auto iter = view2.begin();
         
-        for(size_t i=0;i<5*NY;++i) BOOST_CHECK_EQUAL(*ptr++,*iter++);
+        for(size_t i=0;i<5*ny;++i) BOOST_CHECK_EQUAL(*ptr++,*iter++);
 
         const decltype(view2) &cview2 = view2;
         auto cptr  = cview2.data();
         auto citer = cview2.begin();
 
-        for(size_t i=0;i<5*NY;++i) BOOST_CHECK_EQUAL(*cptr++,*citer++);
+        for(size_t i=0;i<5*ny;++i) BOOST_CHECK_EQUAL(*cptr++,*citer++);
     }
 
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_iterator_access,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
         typedef typename TestArrayT::value_type value_type;        
         typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
@@ -245,7 +245,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_assignment,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
         typedef typename TestArrayT::value_type value_type;
         typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
@@ -277,7 +277,7 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_multiindex_access,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
+        PNINEXUS_SETUP_VIEW_FIXTURE();
         typedef typename TestArrayT::value_type value_type;
         typedef typename TestArrayT::view_type view_type;
         typedef std::vector<slice> slice_vector;
@@ -309,9 +309,9 @@ BOOST_AUTO_TEST_SUITE(array_view_test)
     //========================================================================
     BOOST_AUTO_TEST_CASE_TEMPLATE(test_comparison,TestArrayT,all_array_types)
     {
-        SETUP_VIEW_FIXTURE();
-        auto a1 = fixture.a(0,slice(0,NY));
-        auto a2 = fixture.a(1,slice(0,NY));
+        PNINEXUS_SETUP_VIEW_FIXTURE();
+        auto a1 = fixture.a(0,slice(0,ny));
+        auto a2 = fixture.a(1,slice(0,ny));
 
         BOOST_CHECK(a1==a1);
         BOOST_CHECK(a2==a2);

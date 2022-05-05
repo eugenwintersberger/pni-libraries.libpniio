@@ -43,7 +43,7 @@ Path::Element object_element(const std::string &name,const std::string &type)
 {
   using namespace pni;
   Path::Element e = Path::Element{name,type};
-  throw_if_empty(e,EXCEPTION_RECORD);
+  throw_if_empty(e,PNINEXUS_EXCEPTION_RECORD);
 
   return e;
 }
@@ -57,7 +57,7 @@ void split_path(const Path &p,size_t s,Path &p1,Path &p2)
     std::stringstream ss;
     ss<<"Split index "<<s<<" exceeds input path size ";
     ss<<p.size()<<"!";
-    throw index_error(EXCEPTION_RECORD,ss.str());
+    throw index_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
   }
   auto split_iter = p.begin();
   std::advance(split_iter,s);
@@ -96,7 +96,7 @@ bool has_attribute_section(const Path &p)
 bool is_root_element(const Path::Element &e)
 {
   using namespace pni;
-  throw_if_empty(e,EXCEPTION_RECORD);
+  throw_if_empty(e,PNINEXUS_EXCEPTION_RECORD);
 
   return (has_name(e) && (e.first=="/") &&
       has_class(e) && (e.second=="NXroot"));
@@ -124,7 +124,7 @@ bool has_class(const Path::Element &e)
 bool is_complete(const Path::Element &e)
 {
   using namespace pni;
-  throw_if_empty(e,EXCEPTION_RECORD);
+  throw_if_empty(e,PNINEXUS_EXCEPTION_RECORD);
 
   return has_name(e)&&has_class(e);
 }
@@ -147,15 +147,15 @@ Path join(const Path &a,const Path &b)
   if(is_empty(b)) return a;
 
   if(has_attribute_section(a))
-    throw value_error(EXCEPTION_RECORD,"First path must not have an "
+    throw value_error(PNINEXUS_EXCEPTION_RECORD,"First path must not have an "
                       "attribute section!");
 
   if(is_absolute(b))
-    throw value_error(EXCEPTION_RECORD,"Second path must not be"
+    throw value_error(PNINEXUS_EXCEPTION_RECORD,"Second path must not be"
                       " absolute!");
 
   if(has_file_section(b))
-    throw value_error(EXCEPTION_RECORD,"Second path must not have a "
+    throw value_error(PNINEXUS_EXCEPTION_RECORD,"Second path must not have a "
                       "file section!");
 
   //ok - here we are ready to do the join

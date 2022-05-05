@@ -190,7 +190,7 @@ namespace pni{
             operator*()
             {
                 if(!(*this))
-                    throw iterator_error(EXCEPTION_RECORD,"Iterator invalid!");
+                    throw iterator_error(PNINEXUS_EXCEPTION_RECORD,"Iterator invalid!");
 
                 return (*(_container))[_state];
             }
@@ -208,7 +208,7 @@ namespace pni{
             value_type operator*() const
             {
                 if(!(*this))
-                    throw iterator_error(EXCEPTION_RECORD,"Iterator invalid!");
+                    throw iterator_error(PNINEXUS_EXCEPTION_RECORD,"Iterator invalid!");
 
                 return (*(_container))[_state];
             }
@@ -227,7 +227,7 @@ namespace pni{
             pointer operator->()
             {
                 if(!(*this))
-                    throw iterator_error(EXCEPTION_RECORD,"Iterator invalid!");
+                    throw iterator_error(PNINEXUS_EXCEPTION_RECORD,"Iterator invalid!");
 
                 return &(*(_container))[_state];
             }

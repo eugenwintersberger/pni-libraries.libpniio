@@ -43,7 +43,7 @@ namespace pni{
     \code 
     void old_function()
     {
-       DEPRECATED_FUNCTION("void new_function()");
+       PNINEXUS_DEPRECATED_FUNCTION("void new_function()");
        .......
     }
     
@@ -56,7 +56,7 @@ namespace pni{
     //! 
     //! \param newfunc the new function to use
     //!
-#define DEPRECATED_FUNCTION(newfunc)\
+#define PNINEXUS_DEPRECATED_FUNCTION(newfunc)\
     std::cerr<<"DEPRECATION WARNING:"<<std::endl; \
     std::cerr<<""<<BOOST_CURRENT_FUNCTION;\
     std::cerr<<" is deprecated use "<<newfunc<<" instread!";\

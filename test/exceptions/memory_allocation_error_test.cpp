@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_SUITE(memory_allocation_error_test)
 
     BOOST_AUTO_TEST_CASE(record_construction)
     {
-        memory_allocation_error error(EXCEPTION_RECORD,"test error");
+        memory_allocation_error error(PNINEXUS_EXCEPTION_RECORD,"test error");
         BOOST_CHECK_EQUAL(error.size(),1);
         BOOST_CHECK_EQUAL(error.description(),"test error");
     }
@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_SUITE(memory_allocation_error_test)
     BOOST_AUTO_TEST_CASE(output_stream)
     {
         std::stringstream stream;
-        memory_allocation_error error(EXCEPTION_RECORD,"test error");
+        memory_allocation_error error(PNINEXUS_EXCEPTION_RECORD,"test error");
         stream<<error<<std::endl;
         BOOST_TEST_MESSAGE(stream.str());
     }

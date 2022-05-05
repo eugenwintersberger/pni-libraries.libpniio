@@ -26,12 +26,12 @@
 
 #include <boost/current_function.hpp>
 
-#define REMOVE_FUNCTION(sig)\
+#define PNINEXUS_REMOVE_FUNCTION(sig)\
     std::cerr<<"Function "<<sig<<" is deprecated and will be removed";\
     std::cerr<<" in a future release!"<<std::endl
 
-#define REPLACE_FUNCTION(oldsig,newsig)\
-    REMOVE_FUNCTION(oldsig);\
+#define PNINEXUS_REPLACE_FUNCTION(oldsig,newsig)\
+    PNINEXUS_REMOVE_FUNCTION(oldsig);\
     std::cerr<<"Use "<<newsig<<" instread!"<<sdt::endl;
 
 

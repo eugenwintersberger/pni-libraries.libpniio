@@ -53,7 +53,7 @@ Path::Element get_element(const std::string &estr)
 
     if(group_name.empty() && group_type.empty())
     {
-      throw parser_error(EXCEPTION_RECORD,"Missing path element!");
+      throw parser_error(PNINEXUS_EXCEPTION_RECORD,"Missing path element!");
     }
 
     return {group_name,group_type};
@@ -63,7 +63,7 @@ Path::Element get_element(const std::string &estr)
   {
     std::stringstream ss;
     ss<<"The element ["<<estr<<"] is not a valid NeXus path element!";
-    throw parser_error(EXCEPTION_RECORD,ss.str());
+    throw parser_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
   }
 }
 

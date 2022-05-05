@@ -37,7 +37,7 @@
 
 namespace pni {
 
-#define IDX_ARRAY(IteratorT,i)\
+#define PNINEXUS_IDX_ARRAY(IteratorT,i)\
     std::array<size_t,sizeof...(IteratorT)>{{size_t(i)...}}
 
 //!

@@ -238,7 +238,7 @@ namespace pni{
                 std::stringstream message;
                 message<<"Number of elements ("<<n<<") not supported by ";
                 message<<"array type which has ("<<TDimN<<")!";
-                throw size_mismatch_error(EXCEPTION_RECORD,message.str());
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,message.str());
             }
 
             container_type v;
@@ -283,7 +283,7 @@ namespace pni{
                 std::stringstream message;
                 message<<"Iterators span ("<<std::distance(begin,end)<<")";
                 message<<" only ("<<TDimN<<") supported by the array type!";
-                throw size_mismatch_error(EXCEPTION_RECORD,message.str());
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,message.str());
             }
 
             container_type v;
@@ -322,7 +322,7 @@ namespace pni{
                std::stringstream message;
                message<<"Original container has ("<<o.size()<<") elements, ";
                message<<"array supports only ("<<TDimN<<")!";
-               throw size_mismatch_error(EXCEPTION_RECORD,message.str());
+               throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,message.str());
            }
 
            container_type v;
@@ -374,7 +374,7 @@ namespace pni{
                 std::stringstream message;
                 message<<"Initializer list has ("<<list.size()<<") elements, ";
                 message<<"array supports only ("<<TDimN<<")!";
-                throw size_mismatch_error(EXCEPTION_RECORD,message.str());
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,message.str());
             }
 
             container_type v;

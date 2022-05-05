@@ -140,7 +140,7 @@ namespace pni{
                 ss<<"The map supports only a fixed number of dimensions ("
                     <<storage.size()<<")! However, the container you are "
                     <<"passing has ("<<c.size()<<") elements!"<<std::endl;
-                throw shape_mismatch_error(EXCEPTION_RECORD,ss.str());
+                throw shape_mismatch_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
             }
             std::copy(c.begin(),c.end(),storage.begin());
             return MapT(std::move(storage)); 
@@ -166,7 +166,7 @@ namespace pni{
             }
             catch(size_mismatch_error &)
             {
-                throw shape_mismatch_error(EXCEPTION_RECORD,
+                throw shape_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                     "Rank of user shape ("
                     +boost::lexical_cast<string>(shape.size())+
                     ") does not match the map rank ("
@@ -209,11 +209,11 @@ namespace pni{
         {
             map_type map;
             if(c.size() != map.rank())
-                throw size_mismatch_error(EXCEPTION_RECORD,
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                         "rank does not match");
 
             if(!std::equal(map.begin(),map.end(),c.begin()))
-                throw shape_mismatch_error(EXCEPTION_RECORD,
+                throw shape_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                         "Elements counts do not match!");
 
             return map;
@@ -234,11 +234,11 @@ namespace pni{
         {
             map_type map;
             if(shape.size() != map.rank())
-                throw size_mismatch_error(EXCEPTION_RECORD,
+                throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                         "rank does not match");
 
             if(!std::equal(map.begin(),map.end(),shape.begin()))
-                throw shape_mismatch_error(EXCEPTION_RECORD,
+                throw shape_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                         "Elements counts do not match!");
 
             return map;

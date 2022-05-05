@@ -37,7 +37,7 @@ namespace pni{
     {        
         std::unique_ptr<std::ifstream> stream(new std::ifstream()); 
         if(!stream)
-            throw memory_allocation_error(EXCEPTION_RECORD,
+            throw memory_allocation_error(PNINEXUS_EXCEPTION_RECORD,
             "Cannot allocate memory for stream object!");
 
         if(_is_binary)
@@ -65,7 +65,7 @@ namespace pni{
     { 
         
         if(_istream->fail())
-            throw file_error(EXCEPTION_RECORD,
+            throw file_error(PNINEXUS_EXCEPTION_RECORD,
                     "Error opening file ["+fname+"]!");
     }
 

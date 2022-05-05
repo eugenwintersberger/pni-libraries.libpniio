@@ -50,7 +50,7 @@ column_info spreadsheet_reader::_get_column(const pni::string &n) const
     i++;
   }
 
-  throw key_error(EXCEPTION_RECORD,"Column ["+n+"] not found!");
+  throw key_error(PNINEXUS_EXCEPTION_RECORD,"Column ["+n+"] not found!");
 
   return column_info(); //just to get rid of compiler warning
 }

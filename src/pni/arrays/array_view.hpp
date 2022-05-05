@@ -299,11 +299,11 @@ namespace pni{
 
                 if(_is_contiguous)
                     return ref[_start_offset +
-                               _imap.offset(IDX_ARRAY(ITypes,indices))];
+                               _imap.offset(PNINEXUS_IDX_ARRAY(ITypes,indices))];
                 else
                 {
                     auto  map = const_cast<omap_type&>(ref.map());
-                    size_t o = map.offset(_selection,IDX_ARRAY(ITypes,indices));
+                    size_t o = map.offset(_selection,PNINEXUS_IDX_ARRAY(ITypes,indices));
                     return ref[o];
                 }
 
@@ -336,12 +336,12 @@ namespace pni{
 
                 if(_is_contiguous)
                     return ref[_start_offset + 
-                               _imap.offset(IDX_ARRAY(ITypes,indices))];
+                               _imap.offset(PNINEXUS_IDX_ARRAY(ITypes,indices))];
                 else
                 {
                     //have to do some more work here
                     auto map = const_cast<omap_type&>(ref.map());
-                    return ref[map.offset(_selection,IDX_ARRAY(ITypes,indices))];
+                    return ref[map.offset(_selection,PNINEXUS_IDX_ARRAY(ITypes,indices))];
                 }
             }
 
@@ -374,7 +374,7 @@ namespace pni{
             value_type &operator[](size_t i)
             {
 #ifdef DEBUG
-                check_index_in_dim(i,size(),EXCEPTION_RECORD);
+                check_index_in_dim(i,size(),PNINEXUS_EXCEPTION_RECORD);
 #endif
                 //compute the multidimensional index in the original array for
                 //the linear index i in the view
@@ -402,7 +402,7 @@ namespace pni{
             value_type operator[](size_t i) const
             {
 #ifdef DEBUG
-                check_index_in_dim(i,size(),EXCEPTION_RECORD);
+                check_index_in_dim(i,size(),PNINEXUS_EXCEPTION_RECORD);
 #endif
                 if(_is_contiguous) return _parray.get()[i+_start_offset];
                 else
@@ -432,7 +432,7 @@ namespace pni{
                 if(_is_contiguous) 
                     return &_parray.get()[_start_offset];
                 else
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                    throw shape_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                             "Selection view is not contiguous!");
             }
 
@@ -454,7 +454,7 @@ namespace pni{
                 if(_is_contiguous) 
                     return &_parray.get()[_start_offset];
                 else
-                    throw shape_mismatch_error(EXCEPTION_RECORD,
+                    throw shape_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                             "Selection view is not contiguous!");
             }
 
@@ -473,7 +473,7 @@ namespace pni{
             //!
             value_type &at(size_t i) 
             { 
-                check_index_in_dim(i,size(),EXCEPTION_RECORD); 
+                check_index_in_dim(i,size(),PNINEXUS_EXCEPTION_RECORD); 
                 return (*this)[i]; 
             }
 
@@ -492,7 +492,7 @@ namespace pni{
             //!
             value_type at(size_t i) const 
             { 
-                check_index_in_dim(i,size(),EXCEPTION_RECORD);
+                check_index_in_dim(i,size(),PNINEXUS_EXCEPTION_RECORD);
                 return (*this)[i]; 
             }
 
@@ -865,7 +865,7 @@ namespace pni{
     bool operator==(const array_view<ArrayT> &a,const array_view<ArrayT> &b)
     {
         if(a.size()!=b.size())
-            throw size_mismatch_error(EXCEPTION_RECORD,
+            throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,
                     "Array view sizes do not match!");
 
         return std::equal(a.begin(),a.end(),b.begin());

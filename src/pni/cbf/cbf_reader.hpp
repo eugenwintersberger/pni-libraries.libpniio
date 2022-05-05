@@ -186,7 +186,7 @@ template<typename ContainerT> ContainerT cbf_reader::image(size_t i,size_t c)
   }
   catch(...)
   {
-    throw memory_allocation_error(EXCEPTION_RECORD,
+    throw memory_allocation_error(PNINEXUS_EXCEPTION_RECORD,
                                   "Allocation of container for image data failed!");
   }
 
@@ -197,7 +197,7 @@ template<typename ContainerT> ContainerT cbf_reader::image(size_t i,size_t c)
   catch(file_error &error)
   {
     //propagate exception
-    error.append(EXCEPTION_RECORD);
+    error.append(PNINEXUS_EXCEPTION_RECORD);
     throw error;
   }
 
@@ -217,7 +217,7 @@ void cbf_reader::image(ContainerT &data,size_t i,size_t c)
     std::stringstream ss;
     ss<<"Container size ("<<data.size()<<") does not match image ";
     ss<<"size ("<<inf.npixels()<<")!";
-    throw size_mismatch_error(EXCEPTION_RECORD,ss.str());
+    throw size_mismatch_error(PNINEXUS_EXCEPTION_RECORD,ss.str());
   }
 
   //load the channel information
@@ -235,14 +235,14 @@ void cbf_reader::image(ContainerT &data,size_t i,size_t c)
           _get_stream(),inf,data);
     else
     {
-      file_error error(EXCEPTION_RECORD,
+      file_error error(PNINEXUS_EXCEPTION_RECORD,
                        "No data reader for this data type!");
       throw error;
     }
 
   }
   else
-    throw file_error(EXCEPTION_RECORD,"Unknown detector vendor!");
+    throw file_error(PNINEXUS_EXCEPTION_RECORD,"Unknown detector vendor!");
 
 }
 //end of namespace

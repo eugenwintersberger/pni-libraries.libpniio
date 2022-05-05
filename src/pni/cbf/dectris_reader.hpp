@@ -115,7 +115,7 @@ namespace cbf{
             try { is.read((char *)(&buffer),1); }
             catch(...)
             {
-                throw file_error(EXCEPTION_RECORD,
+                throw file_error(PNINEXUS_EXCEPTION_RECORD,
                         "Error reading 1Byte from the CBF stream!");
             }
 
@@ -131,7 +131,7 @@ namespace cbf{
             try { is.read((char *) (&buffer), 2); }
             catch(...)
             {
-                throw file_error(EXCEPTION_RECORD,
+                throw file_error(PNINEXUS_EXCEPTION_RECORD,
                         "Error reading 2Byte from the CBF stream!");
             }
 
@@ -147,7 +147,7 @@ namespace cbf{
             try { is.read((char*) (&buffer), 4); }
             catch(...)
             {
-                throw file_error(EXCEPTION_RECORD,
+                throw file_error(PNINEXUS_EXCEPTION_RECORD,
                         "Error reading 4byte from the CBF stream!");
             }
 

@@ -87,36 +87,36 @@ BOOST_AUTO_TEST_CASE(test_no_throw)
 BOOST_AUTO_TEST_CASE(test_throw)
 {
     //check 1D case
-    BOOST_CHECK_NO_THROW(check_indexes(vector_type{0},index_1,EXCEPTION_RECORD));
-    BOOST_CHECK_NO_THROW(check_indexes(vector_type{3},index_1,EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_indexes(vector_type{4},index_1,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_indexes(vector_type{0},index_1,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_NO_THROW(check_indexes(vector_type{3},index_1,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_indexes(vector_type{4},index_1,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{10},index_1,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{10},index_1,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
 
     // check 2D case
-    BOOST_CHECK_NO_THROW(check_indexes(vector_type{2,1},index_2,EXCEPTION_RECORD));
-    BOOST_CHECK_NO_THROW(check_indexes(vector_type{4,2},index_2,EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_indexes(vector_type{10,10},index_2,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_indexes(vector_type{2,1},index_2,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_NO_THROW(check_indexes(vector_type{4,2},index_2,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_indexes(vector_type{10,10},index_2,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{10,2},index_2,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{10,2},index_2,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{3,5},index_2,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{3,5},index_2,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
     
     // check the 3D case
-    BOOST_CHECK_NO_THROW(check_indexes(vector_type{0,0,0},index_3,EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_indexes(vector_type{7,0,0},index_3,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_indexes(vector_type{0,0,0},index_3,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_indexes(vector_type{7,0,0},index_3,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{0,3,0},index_3,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{0,3,0},index_3,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{0,0,10},index_3,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{0,0,10},index_3,PNINEXUS_EXCEPTION_RECORD),
                          index_error);
 
     // check different ranks
-    BOOST_CHECK_THROW(check_indexes(vector_type{2},index_3,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{2},index_3,PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{3,2},index_1,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{3,2},index_1,PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
 }
 
@@ -124,10 +124,10 @@ BOOST_AUTO_TEST_CASE(test_throw)
 BOOST_AUTO_TEST_CASE(test_invalid_input)
 {
     BOOST_CHECK(check_indexes(vector_type(),vector_type()));
-    BOOST_CHECK_NO_THROW(check_indexes(vector_type(),vector_type(),EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_indexes(vector_type(),index_3,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_indexes(vector_type(),vector_type(),PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_indexes(vector_type(),index_3,PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
-    BOOST_CHECK_THROW(check_indexes(vector_type{2,2},vector_type(),EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_indexes(vector_type{2,2},vector_type(),PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
 }
 

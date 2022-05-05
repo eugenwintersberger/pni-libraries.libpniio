@@ -77,9 +77,9 @@ BOOST_AUTO_TEST_CASE(test_throw)
 {
     std_vector = vector_type(100);
 
-    BOOST_CHECK_THROW(check_equal_size(std_vector,std_array,EXCEPTION_RECORD)
+    BOOST_CHECK_THROW(check_equal_size(std_vector,std_array,PNINEXUS_EXCEPTION_RECORD)
                          ,size_mismatch_error);
-    BOOST_CHECK_THROW(check_equal_size(sarray_1,std_vector,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_equal_size(sarray_1,std_vector,PNINEXUS_EXCEPTION_RECORD),
                          size_mismatch_error);
 
     vector_type v1,v2;

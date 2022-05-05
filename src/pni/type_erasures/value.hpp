@@ -214,7 +214,7 @@ namespace pni{
             case type_id_t::Bool:       return _get<TargetT,bool_t>();
             case type_id_t::EBool:      return _get<TargetT,hdf5::datatype::EBool>();
             default:
-                throw type_error(EXCEPTION_RECORD,"Uknown type!");
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,"Uknown type!");
         }
 
     }
@@ -245,7 +245,7 @@ namespace pni{
             case type_id_t::EBool:      _set<hdf5::datatype::EBool>(v);     break;
             case type_id_t::String:     _set<string>(v);     break;
             default:
-                throw type_error(EXCEPTION_RECORD,
+                throw type_error(PNINEXUS_EXCEPTION_RECORD,
                         "Value is of unkonw type!");
         }
 

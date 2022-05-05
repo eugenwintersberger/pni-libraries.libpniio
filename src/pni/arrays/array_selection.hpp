@@ -410,10 +410,10 @@ namespace pni{
 #ifdef DEBUG
 //check here if the size (rank) of the original shape of the
     	//selection matches that of the original index.
-    	check_equal_size(_oshape,oindex,EXCEPTION_RECORD);
+    	check_equal_size(_oshape,oindex,PNINEXUS_EXCEPTION_RECORD);
     	//check if the size of the selection index container matches the
     	//effective rank of the selection
-    	check_equal_size(shape<ContainerIndexT>(),sindex,EXCEPTION_RECORD);
+    	check_equal_size(shape<ContainerIndexT>(),sindex,PNINEXUS_EXCEPTION_RECORD);
 #endif
 
     	//now we have to add index*stride from the selection index too
@@ -444,7 +444,7 @@ namespace pni{
     	auto oindex = cutils_type::create(_oshape.size());
 
     	try{ index(sindex,oindex); }
-    	EXCEPTION_FORWARD(size_mismatch_error);
+    	PNINEXUS_EXCEPTION_FORWARD(size_mismatch_error);
 
     	return oindex;
     }

@@ -64,8 +64,8 @@ BOOST_AUTO_TEST_CASE(test_no_throw)
 //-----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(test_throw)
 {
-    BOOST_CHECK_NO_THROW(check_equal_rank(darray_1,farray_1,EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_equal_rank(darray_1,sarray_1,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_equal_rank(darray_1,farray_1,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_equal_rank(darray_1,sarray_1,PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
 }
 
@@ -78,10 +78,10 @@ BOOST_AUTO_TEST_CASE(test_invalid_input)
     BOOST_CHECK(!check_equal_rank(d1,darray_1));
     BOOST_CHECK(!check_equal_rank(darray_1,d2));
 
-    BOOST_CHECK_NO_THROW(check_equal_rank(d1,d2,EXCEPTION_RECORD));
-    BOOST_CHECK_THROW(check_equal_rank(d1,darray_1,EXCEPTION_RECORD),
+    BOOST_CHECK_NO_THROW(check_equal_rank(d1,d2,PNINEXUS_EXCEPTION_RECORD));
+    BOOST_CHECK_THROW(check_equal_rank(d1,darray_1,PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
-    BOOST_CHECK_THROW(check_equal_rank(darray_1,d2,EXCEPTION_RECORD),
+    BOOST_CHECK_THROW(check_equal_rank(darray_1,d2,PNINEXUS_EXCEPTION_RECORD),
                          shape_mismatch_error);
     
 }
