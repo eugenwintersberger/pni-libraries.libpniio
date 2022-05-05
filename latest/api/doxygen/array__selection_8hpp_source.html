@@ -274,10 +274,10 @@ $(document).ready(function(){initNavTree('array__selection_8hpp_source.html','')
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor">#ifdef DEBUG</span></div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="comment">//check here if the size (rank) of the original shape of the</span></div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;        <span class="comment">//selection matches that of the original index.</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        <a class="code" href="namespacepni.html#a49f2d0ee91d2c32f6c2f91812ed3cfd1">check_equal_size</a>(_oshape,oindex,<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>);</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        <a class="code" href="namespacepni.html#a49f2d0ee91d2c32f6c2f91812ed3cfd1">check_equal_size</a>(_oshape,oindex,<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>);</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;        <span class="comment">//check if the size of the selection index container matches the</span></div>
 <div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        <span class="comment">//effective rank of the selection</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        <a class="code" href="namespacepni.html#a49f2d0ee91d2c32f6c2f91812ed3cfd1">check_equal_size</a>(shape&lt;ContainerIndexT&gt;(),sindex,<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        <a class="code" href="namespacepni.html#a49f2d0ee91d2c32f6c2f91812ed3cfd1">check_equal_size</a>(shape&lt;ContainerIndexT&gt;(),sindex,<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>);</div>
 <div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;        <span class="comment">//now we have to add index*stride from the selection index too</span></div>
@@ -308,7 +308,7 @@ $(document).ready(function(){initNavTree('array__selection_8hpp_source.html','')
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        <span class="keyword">auto</span> oindex = cutils_type::create(_oshape.size());</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160; </div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;        <span class="keywordflow">try</span>{ index(sindex,oindex); }</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        <a class="code" href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">EXCEPTION_FORWARD</a>(<a class="code" href="classpni_1_1size__mismatch__error.html">size_mismatch_error</a>);</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        <a class="code" href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">PNINEXUS_EXCEPTION_FORWARD</a>(<a class="code" href="classpni_1_1size__mismatch__error.html">size_mismatch_error</a>);</div>
 <div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160; </div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;        <span class="keywordflow">return</span> oindex;</div>
 <div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    }</div>
@@ -397,8 +397,8 @@ $(document).ready(function(){initNavTree('array__selection_8hpp_source.html','')
 <div class="ttc" id="aclasspni_1_1array__selection_html_af69070b57438d8388b8ab364ad3afb07"><div class="ttname"><a href="classpni_1_1array__selection.html#af69070b57438d8388b8ab364ad3afb07">pni::array_selection::full_shape</a></div><div class="ttdeci">const index_type &amp; full_shape() const noexcept</div><div class="ttdoc">get full shape reference</div></div>
 <div class="ttc" id="aclasspni_1_1size__mismatch__error_html"><div class="ttname"><a href="classpni_1_1size__mismatch__error.html">pni::size_mismatch_error</a></div><div class="ttdoc">Size mismatch error.</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:429</div></div>
 <div class="ttc" id="acontainer__utils_8hpp_html"><div class="ttname"><a href="container__utils_8hpp.html">container_utils.hpp</a></div></div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_a51dfad546cd33bda661305be8590d6fb"><div class="ttname"><a href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a></div><div class="ttdeci">#define EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_aeefce5606b2ee21990fac0c0946336ed"><div class="ttname"><a href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">EXCEPTION_FORWARD</a></div><div class="ttdeci">#define EXCEPTION_FORWARD(ExceptionT)</div><div class="ttdoc">forward an exception</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:68</div></div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_ab490a07665d904c3f915b44b6436cbfd"><div class="ttname"><a href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">PNINEXUS_EXCEPTION_FORWARD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_FORWARD(ExceptionT)</div><div class="ttdoc">forward an exception</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:68</div></div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_af42ca9eab4d41a452a46ff61e10e7be5"><div class="ttname"><a href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
 <div class="ttc" id="aexception__utils_8hpp_html"><div class="ttname"><a href="exception__utils_8hpp.html">exception_utils.hpp</a></div></div>
 <div class="ttc" id="anamespacepni_html"><div class="ttname"><a href="namespacepni.html">pni</a></div><div class="ttdef"><b>Definition:</b> add_op.hpp:29</div></div>
 <div class="ttc" id="anamespacepni_html_a49f2d0ee91d2c32f6c2f91812ed3cfd1"><div class="ttname"><a href="namespacepni.html#a49f2d0ee91d2c32f6c2f91812ed3cfd1">pni::check_equal_size</a></div><div class="ttdeci">bool check_equal_size(const ContainerAT &amp;a, const ContainerBT &amp;b)</div><div class="ttdoc">check if two container have equal size</div><div class="ttdef"><b>Definition:</b> exception_utils.hpp:79</div></div>
@@ -419,7 +419,7 @@ $(document).ready(function(){initNavTree('array__selection_8hpp_source.html','')
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="array__selection_8hpp.html">array_selection.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 08:30:35 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

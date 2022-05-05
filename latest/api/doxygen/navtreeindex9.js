@@ -238,7 +238,7 @@ var NAVTREEINDEX9 =
 "traits_8hpp.html#gafd69134dd1bf43aa064f9a33ea8dde32":[4,0,107,1],
 "traits_8hpp_source.html":[4,0,107],
 "type__class__map_8hpp.html":[4,0,108],
-"type__class__map_8hpp.html#a4027b85a1d1e910a89ca768a08e05786":[4,0,108,0],
+"type__class__map_8hpp.html#a96ef055a8de7bf0b9f00ebba4a039ced":[4,0,108,0],
 "type__class__map_8hpp_source.html":[4,0,108],
 "type__conversion_8hpp.html":[4,0,109],
 "type__conversion_8hpp.html#ga2757078f2804201c182045700d3c150a":[4,0,109,0],

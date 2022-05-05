@@ -205,7 +205,7 @@
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="n">catch</span><span class="p">(</span><span class="n">exception</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="n">error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EXCEPTION_RECORD</span><span class="p">);</span>
+    <span class="n">error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PNINEXUS_EXCEPTION_RECORD</span><span class="p">);</span>
     <span class="n">throw</span> <span class="n">error</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -406,19 +406,19 @@ denote different failure situations.</p>
 <div class="section" id="macros">
 <h2>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
 <dl class="cpp macro">
-<dt id="c.EXCEPTION_RECORD">
-<span class="target" id="error_2exceptions_8hpp_1a51dfad546cd33bda661305be8590d6fb"></span><code class="sig-name descname">EXCEPTION_RECORD</code><a class="headerlink" href="#c.EXCEPTION_RECORD" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="c.PNINEXUS_EXCEPTION_RECORD">
+<span class="target" id="error_2exceptions_8hpp_1af42ca9eab4d41a452a46ff61e10e7be5"></span><code class="sig-name descname">PNINEXUS_EXCEPTION_RECORD</code><a class="headerlink" href="#c.PNINEXUS_EXCEPTION_RECORD" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>macro creating an instance of ExceptionRecord </p>
 </dd></dl>
 
 <dl class="cpp macro">
-<dt id="c.EXCEPTION_FORWARD">
-<span class="target" id="error_2exceptions_8hpp_1aeefce5606b2ee21990fac0c0946336ed"></span><code class="sig-name descname">EXCEPTION_FORWARD</code><span class="sig-paren">(</span><em>ExceptionT</em><span class="sig-paren">)</span><a class="headerlink" href="#c.EXCEPTION_FORWARD" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="c.PNINEXUS_EXCEPTION_FORWARD">
+<span class="target" id="error_2exceptions_8hpp_1ab490a07665d904c3f915b44b6436cbfd"></span><code class="sig-name descname">PNINEXUS_EXCEPTION_FORWARD</code><span class="sig-paren">(</span><em>ExceptionT</em><span class="sig-paren">)</span><a class="headerlink" href="#c.PNINEXUS_EXCEPTION_FORWARD" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>forward an exception </p>
 <p>This macro can be used to forward an exception caught from another function. It appends the exception_record of the current function to the existing exception and throws the exception again. Consider the following examples</p>
 <p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span> <span class="n">value</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">);</span> <span class="p">}</span>
-<span class="n">EXCEPTION_FORWARD</span><span class="p">(</span><span class="ne">IndexError</span><span class="p">)</span>
-<span class="n">EXCEPTION_FORWARD</span><span class="p">(</span><span class="n">MemoryNotAllocatedError</span><span class="p">)</span>
+<span class="n">PNINEXUS_EXCEPTION_FORWARD</span><span class="p">(</span><span class="ne">IndexError</span><span class="p">)</span>
+<span class="n">PNINEXUS_EXCEPTION_FORWARD</span><span class="p">(</span><span class="n">MemoryNotAllocatedError</span><span class="p">)</span>
 </pre></div>
 </div>
  Please note that the MUST NOT BE a semicolon at the end of this macro. </p>

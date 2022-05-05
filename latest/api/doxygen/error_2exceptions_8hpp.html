@@ -145,12 +145,12 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a51dfad546cd33bda661305be8590d6fb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>&#160;&#160;&#160;    <a class="el" href="classpni_1_1exception__record.html">pni::exception_record</a>(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)</td></tr>
-<tr class="memdesc:a51dfad546cd33bda661305be8590d6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro creating an instance of ExceptionRecord  <a href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">More...</a><br /></td></tr>
-<tr class="separator:a51dfad546cd33bda661305be8590d6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeefce5606b2ee21990fac0c0946336ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">EXCEPTION_FORWARD</a>(ExceptionT)</td></tr>
-<tr class="memdesc:aeefce5606b2ee21990fac0c0946336ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">forward an exception  <a href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">More...</a><br /></td></tr>
-<tr class="separator:aeefce5606b2ee21990fac0c0946336ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af42ca9eab4d41a452a46ff61e10e7be5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>&#160;&#160;&#160;    <a class="el" href="classpni_1_1exception__record.html">pni::exception_record</a>(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)</td></tr>
+<tr class="memdesc:af42ca9eab4d41a452a46ff61e10e7be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro creating an instance of ExceptionRecord  <a href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">More...</a><br /></td></tr>
+<tr class="separator:af42ca9eab4d41a452a46ff61e10e7be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab490a07665d904c3f915b44b6436cbfd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">PNINEXUS_EXCEPTION_FORWARD</a>(ExceptionT)</td></tr>
+<tr class="memdesc:ab490a07665d904c3f915b44b6436cbfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">forward an exception  <a href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">More...</a><br /></td></tr>
+<tr class="separator:ab490a07665d904c3f915b44b6436cbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -159,14 +159,14 @@ Functions</h2></td></tr>
 <tr class="separator:ab3c8434813fb9d112b4dec2961b8c09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aeefce5606b2ee21990fac0c0946336ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeefce5606b2ee21990fac0c0946336ed">&#9670;&nbsp;</a></span>EXCEPTION_FORWARD</h2>
+<a id="ab490a07665d904c3f915b44b6436cbfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab490a07665d904c3f915b44b6436cbfd">&#9670;&nbsp;</a></span>PNINEXUS_EXCEPTION_FORWARD</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define EXCEPTION_FORWARD</td>
+          <td class="memname">#define PNINEXUS_EXCEPTION_FORWARD</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">ExceptionT</td><td>)</td>
@@ -176,27 +176,27 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">catch</span>(ExceptionT &amp;error)\</div>
 <div class="line">    {\</div>
-<div class="line">        error.append(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>);\</div>
+<div class="line">        error.append(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>);\</div>
 <div class="line">        throw error;\</div>
 <div class="line">    }</div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_a51dfad546cd33bda661305be8590d6fb"><div class="ttname"><a href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a></div><div class="ttdeci">#define EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_af42ca9eab4d41a452a46ff61e10e7be5"><div class="ttname"><a href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
 </div><!-- fragment --><p>This macro can be used to forward an exception caught from another function. It appends the exception_record of the current function to the existing exception and throws the exception again. Consider the following examples</p>
 <div class="fragment"><div class="line"><span class="keywordflow">try</span> { value = buffer.at(index); }</div>
-<div class="line"><a class="code" href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">EXCEPTION_FORWARD</a>(IndexError)</div>
-<div class="line"><a class="code" href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">EXCEPTION_FORWARD</a>(MemoryNotAllocatedError)</div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_aeefce5606b2ee21990fac0c0946336ed"><div class="ttname"><a href="error_2exceptions_8hpp.html#aeefce5606b2ee21990fac0c0946336ed">EXCEPTION_FORWARD</a></div><div class="ttdeci">#define EXCEPTION_FORWARD(ExceptionT)</div><div class="ttdoc">forward an exception</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:68</div></div>
+<div class="line"><a class="code" href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">PNINEXUS_EXCEPTION_FORWARD</a>(IndexError)</div>
+<div class="line"><a class="code" href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">PNINEXUS_EXCEPTION_FORWARD</a>(MemoryNotAllocatedError)</div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_ab490a07665d904c3f915b44b6436cbfd"><div class="ttname"><a href="error_2exceptions_8hpp.html#ab490a07665d904c3f915b44b6436cbfd">PNINEXUS_EXCEPTION_FORWARD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_FORWARD(ExceptionT)</div><div class="ttdoc">forward an exception</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:68</div></div>
 </div><!-- fragment --><p> Please note that the MUST NOT BE a semicolon at the end of this macro. </p>
 
 </div>
 </div>
-<a id="a51dfad546cd33bda661305be8590d6fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51dfad546cd33bda661305be8590d6fb">&#9670;&nbsp;</a></span>EXCEPTION_RECORD</h2>
+<a id="af42ca9eab4d41a452a46ff61e10e7be5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af42ca9eab4d41a452a46ff61e10e7be5">&#9670;&nbsp;</a></span>PNINEXUS_EXCEPTION_RECORD</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define EXCEPTION_RECORD&#160;&#160;&#160;    <a class="el" href="classpni_1_1exception__record.html">pni::exception_record</a>(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)</td>
+          <td class="memname">#define PNINEXUS_EXCEPTION_RECORD&#160;&#160;&#160;    <a class="el" href="classpni_1_1exception__record.html">pni::exception_record</a>(__FILE__,__LINE__,BOOST_CURRENT_FUNCTION)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -209,7 +209,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_348784b3bb391197734e378dc2c036a6.html">error</a></li><li class="navelem"><a class="el" href="error_2exceptions_8hpp.html">exceptions.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 08:30:35 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

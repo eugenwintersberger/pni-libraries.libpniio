@@ -224,7 +224,7 @@ $(document).ready(function(){initNavTree('mdarray_8hpp_source.html',''); initRes
 <div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="classpni_1_1mdarray.html#ad306df88a1e1e18f8c71ad8e43f07be4">  262</a></span>&#160;<span class="comment"></span>            <a class="code" href="classpni_1_1mdarray.html">array_type</a> &amp;<a class="code" href="classpni_1_1mdarray.html#ad306df88a1e1e18f8c71ad8e43f07be4">operator=</a>(<span class="keyword">const</span> std::initializer_list&lt;value_type&gt; &amp;l)</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            {</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                <span class="keywordflow">if</span>(l.size() != this-&gt;size())</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                    <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1size__mismatch__error.html">size_mismatch_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                    <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1size__mismatch__error.html">size_mismatch_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                            <span class="stringliteral">&quot;Size of array and initializer list do not match&quot;</span>);</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                std::copy(l.begin(),l.end(),this-&gt;begin());</div>
@@ -286,7 +286,7 @@ $(document).ready(function(){initNavTree('mdarray_8hpp_source.html',''); initRes
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;                {</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;                    std::stringstream ss;</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;                    ss&lt;&lt;<span class="stringliteral">&quot;Index &quot;</span>&lt;&lt;i&lt;&lt;<span class="stringliteral">&quot; is out of range (&quot;</span>&lt;&lt;<a class="code" href="classpni_1_1mdarray.html#a4f7e0e4aeca161de80f5076a4419dc4a">size</a>()&lt;&lt;<span class="stringliteral">&quot;)!&quot;</span>;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                    <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1index__error.html">index_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,ss.str());</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                    <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1index__error.html">index_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,ss.str());</div>
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;                }</div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;            </div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;            } </div>
@@ -302,7 +302,7 @@ $(document).ready(function(){initNavTree('mdarray_8hpp_source.html',''); initRes
 <div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;                {</div>
 <div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;                    std::stringstream ss;</div>
 <div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;                    ss&lt;&lt;<span class="stringliteral">&quot;Index &quot;</span>&lt;&lt;i&lt;&lt;<span class="stringliteral">&quot; is out of range (&quot;</span>&lt;&lt;<a class="code" href="classpni_1_1mdarray.html#a4f7e0e4aeca161de80f5076a4419dc4a">size</a>()&lt;&lt;<span class="stringliteral">&quot;)!&quot;</span>;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                    <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1index__error.html">index_error</a>(<a class="code" href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a>,ss.str());</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                    <span class="keywordflow">throw</span> <a class="code" href="classpni_1_1index__error.html">index_error</a>(<a class="code" href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a>,ss.str());</div>
 <div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                }</div>
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;            </div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;            } </div>
@@ -657,7 +657,7 @@ $(document).ready(function(){initNavTree('mdarray_8hpp_source.html',''); initRes
 <div class="ttc" id="aclasspni_1_1mdarray_html_af8acca7d89af09a5bf8f878e50c5d68c"><div class="ttname"><a href="classpni_1_1mdarray.html#af8acca7d89af09a5bf8f878e50c5d68c">pni::mdarray::front</a></div><div class="ttdeci">value_type front() const</div><div class="ttdoc">value of first element</div><div class="ttdef"><b>Definition:</b> mdarray.hpp:622</div></div>
 <div class="ttc" id="aclasspni_1_1size__mismatch__error_html"><div class="ttname"><a href="classpni_1_1size__mismatch__error.html">pni::size_mismatch_error</a></div><div class="ttdoc">Size mismatch error.</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:429</div></div>
 <div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:49</div></div>
-<div class="ttc" id="aerror_2exceptions_8hpp_html_a51dfad546cd33bda661305be8590d6fb"><div class="ttname"><a href="error_2exceptions_8hpp.html#a51dfad546cd33bda661305be8590d6fb">EXCEPTION_RECORD</a></div><div class="ttdeci">#define EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
+<div class="ttc" id="aerror_2exceptions_8hpp_html_af42ca9eab4d41a452a46ff61e10e7be5"><div class="ttname"><a href="error_2exceptions_8hpp.html#af42ca9eab4d41a452a46ff61e10e7be5">PNINEXUS_EXCEPTION_RECORD</a></div><div class="ttdeci">#define PNINEXUS_EXCEPTION_RECORD</div><div class="ttdoc">macro creating an instance of ExceptionRecord</div><div class="ttdef"><b>Definition:</b> error/exceptions.hpp:49</div></div>
 <div class="ttc" id="aexception__utils_8hpp_html"><div class="ttname"><a href="exception__utils_8hpp.html">exception_utils.hpp</a></div></div>
 <div class="ttc" id="agroup__type__classes_html_ga2c8ca0de37c42914554a1a9e500b31cd"><div class="ttname"><a href="group__type__classes.html#ga2c8ca0de37c42914554a1a9e500b31cd">pni::type_id_t</a></div><div class="ttdeci">type_id_t</div><div class="ttdoc">type codes for PNI data types</div><div class="ttdef"><b>Definition:</b> types/types.hpp:155</div></div>
 <div class="ttc" id="aindex__maps_8hpp_html"><div class="ttname"><a href="index__maps_8hpp.html">index_maps.hpp</a></div></div>
@@ -695,7 +695,7 @@ $(document).ready(function(){initNavTree('mdarray_8hpp_source.html',''); initRes
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_b178f5a1825339176b49075a299a8ac9.html">arrays</a></li><li class="navelem"><a class="el" href="mdarray_8hpp.html">mdarray.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 08:30:35 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

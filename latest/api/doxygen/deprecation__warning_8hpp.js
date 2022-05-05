@@ -1,5 +1,5 @@
 var deprecation__warning_8hpp =
 [
-    [ "REMOVE_FUNCTION", "deprecation__warning_8hpp.html#ae6d1717d1c0ca36d338708ba23895baa", null ],
-    [ "REPLACE_FUNCTION", "deprecation__warning_8hpp.html#a66d756ea02a8ef1a7d6cf9d3d7bc64fc", null ]
+    [ "PNINEXUS_REMOVE_FUNCTION", "deprecation__warning_8hpp.html#a1036ee5434a944b7e8bd9803593e9657", null ],
+    [ "PNINEXUS_REPLACE_FUNCTION", "deprecation__warning_8hpp.html#ad27cf6dc74f6d9834ed30a66b367ee0d", null ]
 ];

@@ -79,19 +79,19 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a36361a3e796611a8443d50356e233cde"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="service_8hpp.html#a36361a3e796611a8443d50356e233cde">DEPRECATED_FUNCTION</a>(newfunc)</td></tr>
-<tr class="memdesc:a36361a3e796611a8443d50356e233cde"><td class="mdescLeft">&#160;</td><td class="mdescRight">runtime warning for functions  <a href="service_8hpp.html#a36361a3e796611a8443d50356e233cde">More...</a><br /></td></tr>
-<tr class="separator:a36361a3e796611a8443d50356e233cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af88085b3806fb9e58a8c1830f1978374"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="service_8hpp.html#af88085b3806fb9e58a8c1830f1978374">PNINEXUS_DEPRECATED_FUNCTION</a>(newfunc)</td></tr>
+<tr class="memdesc:af88085b3806fb9e58a8c1830f1978374"><td class="mdescLeft">&#160;</td><td class="mdescRight">runtime warning for functions  <a href="service_8hpp.html#af88085b3806fb9e58a8c1830f1978374">More...</a><br /></td></tr>
+<tr class="separator:af88085b3806fb9e58a8c1830f1978374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a36361a3e796611a8443d50356e233cde"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36361a3e796611a8443d50356e233cde">&#9670;&nbsp;</a></span>DEPRECATED_FUNCTION</h2>
+<a id="af88085b3806fb9e58a8c1830f1978374"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af88085b3806fb9e58a8c1830f1978374">&#9670;&nbsp;</a></span>PNINEXUS_DEPRECATED_FUNCTION</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DEPRECATED_FUNCTION</td>
+          <td class="memname">#define PNINEXUS_DEPRECATED_FUNCTION</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">newfunc</td><td>)</td>
@@ -106,7 +106,7 @@ Macros</h2></td></tr>
 </div><!-- fragment --><p>This macro inserts a warning message shown at runtime when a deprecated function or class member function is used. It should remaind the developer that the function in use will most probably vanish in a future release. Call the macro at the beginning of the deprecated function. It uses the BOOST_CURRENT_FUNCTION macro to get the name of the actual function. The only argument is the signature of the new function to be used instread.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> old_function()</div>
 <div class="line">{</div>
-<div class="line">   <a class="code" href="service_8hpp.html#a36361a3e796611a8443d50356e233cde">DEPRECATED_FUNCTION</a>(<span class="stringliteral">&quot;void new_function()&quot;</span>);</div>
+<div class="line">   <a class="code" href="service_8hpp.html#af88085b3806fb9e58a8c1830f1978374">PNINEXUS_DEPRECATED_FUNCTION</a>(<span class="stringliteral">&quot;void new_function()&quot;</span>);</div>
 <div class="line">   .......</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -114,7 +114,7 @@ Macros</h2></td></tr>
 <div class="line">{</div>
 <div class="line">  .......</div>
 <div class="line">}</div>
-<div class="ttc" id="aservice_8hpp_html_a36361a3e796611a8443d50356e233cde"><div class="ttname"><a href="service_8hpp.html#a36361a3e796611a8443d50356e233cde">DEPRECATED_FUNCTION</a></div><div class="ttdeci">#define DEPRECATED_FUNCTION(newfunc)</div><div class="ttdoc">runtime warning for functions</div><div class="ttdef"><b>Definition:</b> service.hpp:59</div></div>
+<div class="ttc" id="aservice_8hpp_html_af88085b3806fb9e58a8c1830f1978374"><div class="ttname"><a href="service_8hpp.html#af88085b3806fb9e58a8c1830f1978374">PNINEXUS_DEPRECATED_FUNCTION</a></div><div class="ttdeci">#define PNINEXUS_DEPRECATED_FUNCTION(newfunc)</div><div class="ttdoc">runtime warning for functions</div><div class="ttdef"><b>Definition:</b> service.hpp:59</div></div>
 </div><!-- fragment --><p> ! </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">newfunc</td><td>the new function to use </td></tr>
@@ -130,7 +130,7 @@ Macros</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_1c4471ea08b1bbc2d063021f2f59ddc1.html">utilities</a></li><li class="navelem"><a class="el" href="service_8hpp.html">service.hpp</a></li>
-    <li class="footer">Generated on Wed May 4 2022 18:57:20 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Thu May 5 2022 08:30:35 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
