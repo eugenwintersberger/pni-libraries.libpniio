@@ -109,15 +109,15 @@ usually requires some expert knowledge keep be prepared to get your hands dirty.
 <h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>For a successful build some requirements must be satisfied</p>
 <ul class="simple">
-<li><p><cite>h5cpp</cite> &gt;= 0.4.1</p></li>
+<li><p><cite>h5cpp</cite> &gt;= 0.5.0</p></li>
 <li><dl class="simple">
 <dt><cite>gcc</cite> &gt;= 4.7 – since version 1.0.0 <cite>libpninexus</cite> requires a mostly C++11</dt><dd><p>compliant compiler. For the gcc familiy this is 4.7 and upwards</p>
 </dd>
 </dl>
 </li>
-<li><p><cite>BOOST</cite> &gt;= 4.1</p></li>
+<li><p><cite>BOOST</cite> &gt;= 1.60</p></li>
 <li><p><cite>doxygen</cite> cite{web:doxygen} – used to build the API documentation</p></li>
-<li><p><cite>cmake</cite> cite{web:cmake} $&gt;=$ 2.4.8 – the build software used by the <cite>libpninexus</cite></p></li>
+<li><p><cite>cmake</cite> cite{web:cmake} $&gt;=$ 3.10 – the build software used by the <cite>libpninexus</cite></p></li>
 <li><p><cite>pkg-config</cite> cite{web:pkgconfig} – program to manage libraries</p></li>
 </ul>
 </div>
@@ -126,8 +126,6 @@ usually requires some expert knowledge keep be prepared to get your hands dirty.
 <p>The sources can be obtained directly from the Git repository.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/pni-libraries/libpninexus.git
 $ <span class="nb">cd</span> libpninexus
-$ git submodule init
-$ git submodule update --remote
 $ <span class="nb">cd</span> ..
 </pre></div>
 </div>
@@ -140,12 +138,12 @@ $ <span class="nb">cd</span> libpninexus-build
 </pre></div>
 </div>
 <p>Now call <strong class="command">cmake</strong> with a path to the original source directory</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release ../libpninexus
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DPNINEXUS_CONAN<span class="o">=</span>DISABLE ../libpninexus
 </pre></div>
 </div>
 <p>or</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">H5CPP</span><span class="o">=</span>/opt/pni/lib/cmake/h5cpp-0.4.1
-$ cmake -Dh5cpp_DIR<span class="o">=</span><span class="nv">$H5CPP</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/pni ../libpninexus
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">H5CPP</span><span class="o">=</span>/opt/pni/lib/cmake/h5cpp-0.5.0
+$ cmake -Dh5cpp_DIR<span class="o">=</span><span class="nv">$H5CPP</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/pni -DPNINEXUS_CONAN<span class="o">=</span>DISABLE ../libpninexus
 </pre></div>
 </div>
 <p>if <cite>h5cpp</cite> is installed in the non-standard directory.</p>
@@ -176,7 +174,7 @@ the build directory with</p>
 <p>By default the installation prefix is <code class="file docutils literal notranslate"><span class="pre">/usr/local</span></code>. If another prefix should
 be used the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> variable must be set when running
 <strong class="command">cmake</strong> with</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/pni ../libpninexus
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/pni -DPNINEXUS_CONAN<span class="o">=</span>DISABLE ../libpninexus
 </pre></div>
 </div>
 <p>which causes the installation prefix to be <code class="file docutils literal notranslate"><span class="pre">/opt/pni</span></code>.</p>
