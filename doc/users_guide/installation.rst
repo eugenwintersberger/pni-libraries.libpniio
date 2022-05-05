@@ -82,7 +82,7 @@ Requirements
 
 For a successful build some requirements must be satisfied
 
-* `h5cpp` >= 0.4.1
+* `h5cpp` >= 0.5.0
 * `gcc` >= 4.7 -- since version 1.0.0 `libpninexus` requires a mostly C++11
    compliant compiler. For the gcc familiy this is 4.7 and upwards
 * `BOOST` >= 1.60
@@ -121,7 +121,7 @@ or
 
 .. code-block:: bash
 
-   $ export H5CPP=/opt/pni/lib/cmake/h5cpp-0.4.1
+   $ export H5CPP=/opt/pni/lib/cmake/h5cpp-0.5.0
    $ cmake -Dh5cpp_DIR=$H5CPP -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/pni -DPNINEXUS_CONAN=DISABLE ../libpninexus
 
 if `h5cpp` is installed in the non-standard directory.
