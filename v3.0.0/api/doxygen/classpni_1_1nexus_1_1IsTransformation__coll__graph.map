@@ -1,0 +1,7 @@
+<map id="pni::nexus::IsTransformation" name="pni::nexus::IsTransformation">
+<area shape="rect" id="node1" title="matches an NXtransformations" alt="" coords="47,261,235,288"/>
+<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1IsBaseClass.html" title="predicate to search for base classes" alt="" coords="59,185,224,212"/>
+<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1NodePredicate.html" title="abstract predicate interface for nodes" alt="" coords="5,96,181,123"/>
+<area shape="rect" id="node4" title=" " alt="" coords="205,96,285,123"/>
+<area shape="rect" id="node5" title=" " alt="" coords="182,5,309,47"/>
+</map>
