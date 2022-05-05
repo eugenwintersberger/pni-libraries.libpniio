@@ -1,5 +1,16 @@
 # ChangeLog
 
+## 3.0.0 - 2022-05-05
+- add PNINEXUS_ prefix to libpninexus macros ([#183](https://github.com/pni-libraries/libpniio/pull/183))
+- update template parameter names ([#181](https://github.com/pni-libraries/libpniio/pull/181))
+- add documentation versioning ([#161](https://github.com/pni-libraries/libpniio/pull/161), [#171](https://github.com/pni-libraries/libpniio/pull/171))
+- merge cmake submodule to the main repository ([#168](https://github.com/pni-libraries/libpniio/pull/168))
+- add EBool type ([#166](https://github.com/pni-libraries/libpniio/pull/166))
+- update core examples in the documentation ([#151](https://github.com/pni-libraries/libpniio/pull/151))
+- adopt code to the newer boost version ([#154](https://github.com/pni-libraries/libpniio/pull/154))
+- adopt code to libh5cpp >= v0.5.0 (required) ([#162](https://github.com/pni-libraries/libpniio/pull/162))
+
+
 ## 2.0.0 - 2021-07-05
 - merge pniio and pnicore to pninexus
 - move 'pni/core/' and 'pni/io/' to 'pni'
