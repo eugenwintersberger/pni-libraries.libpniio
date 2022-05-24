@@ -19,7 +19,7 @@ RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g
 RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
 RUN apt-get -qq update && apt-get -t stretch-backports-sloppy -y install libarchive13
 RUN apt-get -qq update && apt-get -t stretch-backports -y install cmake
-RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.5.0-dev libh5cpp0.5.0
+RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.5.1-dev libh5cpp0.5.1
 
 RUN apt-get clean
 RUN pip3 install jinja2==2.11.3
