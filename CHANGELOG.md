@@ -1,5 +1,8 @@
 # ChangeLog
 
+## 3.0.1 - 2022-05-24
+- technical release for libh5cpp v0.5.1 (https://github.com/ess-dmsc/h5cpp/issues/602)
+
 ## 3.0.0 - 2022-05-05
 - add PNINEXUS_ prefix to libpninexus macros ([#183](https://github.com/pni-libraries/libpniio/pull/183))
 - update template parameter names ([#181](https://github.com/pni-libraries/libpniio/pull/181))
