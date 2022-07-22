@@ -51,7 +51,7 @@ jobs:
       - name: Build check
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE -- -j4"
+        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE -- -j3"
 
       - name: Append documentation for the latest release version
         if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
