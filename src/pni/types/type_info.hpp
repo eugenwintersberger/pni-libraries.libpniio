@@ -34,6 +34,11 @@
 
 namespace pni{
 
+#ifdef _MSC_VER
+      #undef min
+	#undef max
+#endif
+
     //!
     //! \ingroup type_classes
     //! \brief get minimum and maximum

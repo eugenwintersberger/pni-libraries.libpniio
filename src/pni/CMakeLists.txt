@@ -67,7 +67,7 @@ set(PNINEXUS_SOURCE_FILES ${PNINEXUS_SOURCE_FILES} ${SOURCE_FILES})
 # ============================================================================
 # adding header files to the doxygen build dependencies
 # ============================================================================
-add_doxygen_source_deps(${PNINEXUS_HEADER_FILES})
+#add_doxygen_source_deps(${PNINEXUS_HEADER_FILES})
 
 # ============================================================================
 # building the library
