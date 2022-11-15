@@ -176,41 +176,15 @@ jobs:
       - uses: actions/checkout@v2
       - name: Add MSVC to PATH
         uses: ilammy/msvc-dev-cmd@v1
-      - name: get h5cpp
-        run: |
-         mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && cd h5cpp
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade conan
-          CONAN_ARGS="--profile .github/workflows/conan/profiles/vs2019 \
-            -o with_boost=True \
-            -o shared=True \
-            -o hdf5:shared=True"
-          conan lock create conanfile.py ${CONAN_ARGS} --base --lockfile-out base.lock
-          conan lock create conanfile.py ${CONAN_ARGS} --build missing
-      - name: install conan dependencies
+      - name: build h5cpp
         run: |
-          conan install . \
-            --install-folder build \
-            --lockfile conan.lock \
-            --build missing \
-            --update \
-            --generator virtualrunenv
-      - name: build with cmake
-        run: |
-          conan build . --build-folder build
-      - name: run tests
-        run: |
-          cd build
-          .\activate_run.ps1
-          ctest --extra-verbose --no-tests=error
-        shell: pwsh
-      #- name: build h5cpp
-      #  run: |
-      #    mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-      #    cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True -DH5CPP_CONAN_FILE=../../conanfile.txt  ../h5cpp
-      #    make install -j4 && cd ../../
+          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
+          ls ../../
+          cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True -DH5CPP_CONAN_FILE=../../conanfile.txt  ../h5cpp
       #- name: build pninexus
       #  run: |
       #    mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
