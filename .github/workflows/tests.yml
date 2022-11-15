@@ -173,6 +173,9 @@ jobs:
         ]
     runs-on: windows-2019
     steps:
+      - name: check cmake
+        run: |
+            cmake --version
       - uses: actions/checkout@v2
       - name: Add MSVC to PATH
         uses: ilammy/msvc-dev-cmd@v1
