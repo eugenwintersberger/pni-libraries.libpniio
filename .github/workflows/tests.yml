@@ -187,6 +187,5 @@ jobs:
           cmake --install . --prefix "../h5cppbin/"
       - name: build pninexus
         run: |
-          $H5CPP_ROOT=Join-Path -Path $PWD -ChildPath ../h5cpp-src/h5cppbin/lib/cmake/h5cpp-0.5
-          mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR="${H5CPP_ROOT}" ../
+          mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR="D:\a\libpninexus\libpninexus\h5cpp-src\h5cppbin\lib\cmake\h5cpp-0.5" ../
           cmake --build . --verbose --target ALL_BUILD --config RELEASE
