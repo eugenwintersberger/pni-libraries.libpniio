@@ -167,16 +167,8 @@ jobs:
         mpi: [
         # mpi,   # not supported yet
         serial]
-        libcxx: [
-            libstdc++11,
-            # libc++   # not supported yet
-        ]
     runs-on: windows-2019
     steps:
-      #- name: Setup cmake
-      #  uses: jwlawson/actions-setup-cmake@v1.13
-      #  with:
-      #   cmake-version: "3.25.x"
       - name: check cmake
         run: |
             cmake --version
