@@ -193,7 +193,7 @@ jobs:
         run: |
           cd build
           .\activate_run.ps1
-	    copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
-	    ls bin
+          copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
+          ls bin
           cmake --build . --verbose --target check --config RELEASE
         shell: pwsh
