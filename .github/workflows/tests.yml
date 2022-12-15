@@ -7,155 +7,155 @@ on:
     - cron: '30 0 22 * *'
 
 jobs:
-  dpkg:
-    runs-on: ubuntu-latest
+  #dpkg:
+  #  runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        os: [debian11, debian10, debian9, ubuntu22.10, ubuntu22.04, ubuntu20.04]
-        buildtype: [Debug, Release]
+  #  strategy:
+  #    matrix:
+  #      os: [debian11, debian10, debian9, ubuntu22.10, ubuntu22.04, ubuntu20.04]
+  #      buildtype: [Debug, Release]
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - uses: actions/setup-python@v2
 
-      - name: Build the docker
-        env:
-          OS: ${{ matrix.os }}
-        run: docker build -t build .ci/${OS}
+  #    - name: Build the docker
+  #      env:
+  #        OS: ${{ matrix.os }}
+  #      run: docker build -t build .ci/${OS}
 
-      - name: Run the docker
-        run: docker run --name build -i -d -v"$PWD:/src" build
+  #    - name: Run the docker
+  #      run: docker run --name build -i -d -v"$PWD:/src" build
 
-      - name: Run Ninja
-        env:
-          BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "mkdir build && cd build && cmake -G Ninja -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
-        # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+  #    - name: Run Ninja
+  #      env:
+  #        BUILDTYPE: ${{ matrix.buildtype }}
+  #      run: docker  exec build /bin/bash -c "mkdir build && cd build && cmake -G Ninja -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+  #      # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
-      - name: Build all
-        env:
-          BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target all --config $BUILDTYPE -- -j4"
+  #    - name: Build all
+  #      env:
+  #        BUILDTYPE: ${{ matrix.buildtype }}
+  #      run: docker  exec build /bin/bash -c "cd build && cmake --build . --target all --config $BUILDTYPE -- -j4"
 
-      - name: Build api_doc
-        env:
-          BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target api_doc --config $BUILDTYPE"
+  #    - name: Build api_doc
+  #      env:
+  #        BUILDTYPE: ${{ matrix.buildtype }}
+  #      run: docker  exec build /bin/bash -c "cd build && cmake --build . --target api_doc --config $BUILDTYPE"
 
-      - name: Build html
-        env:
-          BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target html --config $BUILDTYPE"
+  #    - name: Build html
+  #      env:
+  #        BUILDTYPE: ${{ matrix.buildtype }}
+  #      run: docker  exec build /bin/bash -c "cd build && cmake --build . --target html --config $BUILDTYPE"
 
-      - name: Build check
-        env:
-          BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE -- -j3"
+  #    - name: Build check
+  #      env:
+  #        BUILDTYPE: ${{ matrix.buildtype }}
+  #      run: docker  exec build /bin/bash -c "cd build && cmake --build . --target check --config $BUILDTYPE -- -j3"
 
-      - name: Append documentation for the latest release version
-        if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
-        run: |
-             docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-             docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
-             docker  exec build /bin/bash -c "mkdir -p ./latest && shopt -u dotglob && rm -rf ./latest/*"
-             docker  exec build /bin/bash -c "mv -f build/doc/build/html/* ./latest/"
-             docker  exec build /bin/bash -c "mv -f build/doc/api/html ./latest/api/doxygen"
-             docker  exec build /bin/bash -c "mv -f build/doc/index.html ./"
-             docker  exec build /bin/bash -c "mv -f build/doc/_config.yml ./"
-             docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "rm -rf ./latest/_sources"
-             docker  exec build /bin/bash -c "rm -rf build"
-             docker  exec build /bin/bash -c "rm -rf doc"
-             docker  exec build /bin/bash -c "rm -rf cmake"
+  #    - name: Append documentation for the latest release version
+  #      if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+  #      run: |
+  #           docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
+  #           docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
+  #           docker  exec build /bin/bash -c "mkdir -p ./latest && shopt -u dotglob && rm -rf ./latest/*"
+  #           docker  exec build /bin/bash -c "mv -f build/doc/build/html/* ./latest/"
+  #           docker  exec build /bin/bash -c "mv -f build/doc/api/html ./latest/api/doxygen"
+  #           docker  exec build /bin/bash -c "mv -f build/doc/index.html ./"
+  #           docker  exec build /bin/bash -c "mv -f build/doc/_config.yml ./"
+  #           docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\; "
+  #           docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
+  #           docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\; "
+  #           docker  exec build /bin/bash -c "rm -rf ./latest/_sources"
+  #           docker  exec build /bin/bash -c "rm -rf build"
+  #           docker  exec build /bin/bash -c "rm -rf doc"
+  #           docker  exec build /bin/bash -c "rm -rf cmake"
 
-      - name: Extract the code version from the branch name
-        if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
-        shell: bash
-        run: echo "##[set-output name=docver;]$(echo ${GITHUB_REF#refs/heads/docs_})"
-        id: extract_docver
+  #    - name: Extract the code version from the branch name
+  #      if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+  #      shell: bash
+  #      run: echo "##[set-output name=docver;]$(echo ${GITHUB_REF#refs/heads/docs_})"
+  #      id: extract_docver
 
-      - name: Append documentation for the extracted release version
-        if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
-        run: |
-             echo Version: ${{ steps.extract_docver.outputs.docver }}
-             docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-             docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
-             docker  exec build /bin/bash -c "mkdir -p ./${{ steps.extract_docver.outputs.docver }}"
-             docker  exec build /bin/bash -c "shopt -u dotglob && rm -rf ./${{ steps.extract_docver.outputs.docver }}/* "
-             docker  exec build /bin/bash -c "mv -f build/doc/build/html/* ./${{ steps.extract_docver.outputs.docver }}/"
-             docker  exec build /bin/bash -c "mv -f build/doc/api/html ./${{ steps.extract_docver.outputs.docver }}/api/doxygen"
-             docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\;"
-             docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\;"
-             docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
-             docker  exec build /bin/bash -c "rm -rf build"
-             docker  exec build /bin/bash -c "rm -rf doc"
-             docker  exec build /bin/bash -c "rm -rf cmake"
+  #    - name: Append documentation for the extracted release version
+  #      if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+  #      run: |
+  #           echo Version: ${{ steps.extract_docver.outputs.docver }}
+  #           docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
+  #           docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
+  #           docker  exec build /bin/bash -c "mkdir -p ./${{ steps.extract_docver.outputs.docver }}"
+  #           docker  exec build /bin/bash -c "shopt -u dotglob && rm -rf ./${{ steps.extract_docver.outputs.docver }}/* "
+  #           docker  exec build /bin/bash -c "mv -f build/doc/build/html/* ./${{ steps.extract_docver.outputs.docver }}/"
+  #           docker  exec build /bin/bash -c "mv -f build/doc/api/html ./${{ steps.extract_docver.outputs.docver }}/api/doxygen"
+  #           docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\;"
+  #           docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
+  #           docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\;"
+  #           docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
+  #           docker  exec build /bin/bash -c "rm -rf build"
+  #           docker  exec build /bin/bash -c "rm -rf doc"
+  #           docker  exec build /bin/bash -c "rm -rf cmake"
 
-      - name: Deploy documentation
-        if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: gh-pages
-          FOLDER: .
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build: ({sha}) {msg}"
+  #    - name: Deploy documentation
+  #      if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+  #      uses: s0/git-publish-subdir-action@develop
+  #      env:
+  #        REPO: self
+  #        BRANCH: gh-pages
+  #        FOLDER: .
+  #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #        MESSAGE: "Build: ({sha}) {msg}"
 
-      - name: Stop the docker
-        run: docker container stop build
+  #    - name: Stop the docker
+  #      run: docker container stop build
 
-  conan:
-    strategy:
-      matrix:
-        shared: [
-          shared,
-          # static  # not supported yet
-        ]
-        mpi: [
-        # mpi,   # not supported yet
-        serial]
-        libcxx: [
-            libstdc++11,
-            # libc++   # not supported yet
-        ]
-        image: [
-            "conanio/gcc11-ubuntu16.04",
-            # "conanio/clang13-ubuntu16.04"
-        ]
-    runs-on: ubuntu-20.04
-    container:
-      image: ${{ matrix.image }}
-      options: '--user=root'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set environment variables
-        run: |
-            bash .github/workflows/set_env_vars.sh \
-              ${{ matrix.shared }} \
-              ${{ matrix.mpi }}
-      - name: Install MPI prerequisites
-        if: ${{ matrix.mpi == 'mpi' }}
-        run: |
-            apt-get update
-            apt-get install -y --no-install-recommends ssh
-      - name: build h5cpp
-        run: |
-          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-          cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True -DH5CPP_CONAN_FILE=../../conanfile.txt  ../h5cpp
-          make install -j4 && cd ../../
-      - name: build pninexus
-        run: |
-          mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
-          make install -j4
-      - name: run tests
-        run: |
-          cd build
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-          make check CTEST_OUTPUT_ON_FAILURE=TRUE -j4
+  #conan:
+  #  strategy:
+  #    matrix:
+  #      shared: [
+  #        shared,
+  #        # static  # not supported yet
+  #      ]
+  #      mpi: [
+  #      # mpi,   # not supported yet
+  #      serial]
+  #      libcxx: [
+  #          libstdc++11,
+  #          # libc++   # not supported yet
+  #      ]
+  #      image: [
+  #          "conanio/gcc11-ubuntu16.04",
+  #          # "conanio/clang13-ubuntu16.04"
+  #      ]
+  #  runs-on: ubuntu-20.04
+  #  container:
+  #    image: ${{ matrix.image }}
+  #    options: '--user=root'
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - name: Set environment variables
+  #      run: |
+  #          bash .github/workflows/set_env_vars.sh \
+  #            ${{ matrix.shared }} \
+  #            ${{ matrix.mpi }}
+  #    - name: Install MPI prerequisites
+  #      if: ${{ matrix.mpi == 'mpi' }}
+  #      run: |
+  #          apt-get update
+  #          apt-get install -y --no-install-recommends ssh
+  #    - name: build h5cpp
+  #      run: |
+  #        mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
+  #        cd h5cpp-build && cmake -DCMAKE_BUILD_TYPE=Release -DH5CPP_WITH_BOOST=ON -DH5CPP_DISABLE_TESTS=True -DH5CPP_CONAN_FILE=../../conanfile.txt  ../h5cpp
+  #        make install -j4 && cd ../../
+  #    - name: build pninexus
+  #      run: |
+  #        mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR=/usr/local/lib/cmake/h5cpp-0.5 ../
+  #        make install -j4
+  #    - name: run tests
+  #      run: |
+  #        cd build
+  #        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+  #        make check CTEST_OUTPUT_ON_FAILURE=TRUE -j4
 
   windows-2019:
     strategy:
@@ -189,3 +189,7 @@ jobs:
         run: |
           mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -Dh5cpp_DIR="D:\a\libpninexus\libpninexus\h5cpp-src\h5cppbin\lib\cmake\h5cpp-0.5" ../
           cmake --build . --verbose --target ALL_BUILD --config RELEASE
+      - name: run tests
+        run: |
+          .\activate_run.ps1
+          cmake --build . --verbose --target check --config RELEASE
