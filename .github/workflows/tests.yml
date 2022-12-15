@@ -191,5 +191,7 @@ jobs:
           cmake --build . --verbose --target ALL_BUILD --config RELEASE
       - name: run tests
         run: |
+          cd build
           .\activate_run.ps1
           cmake --build . --verbose --target check --config RELEASE
+        shell: pwsh
