@@ -40,6 +40,7 @@ boost:shared=True
 hdf5:szip_support=with_libaec
 hdf5:szip_encoding=True
 hdf5:enable_cxx=False
+hdf5:shared=True
 zip:shared=True
 Boost:python=False
 zlib:shared=True
