@@ -40,8 +40,15 @@ class PNINEXUS_EXPORT FieldBuilder : public ObjectBuilder
 
     DataspaceBuilder dataspace_builder_;
     DatatypeBuilder  datatype_builder_;
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
     DatasetCreationListBuilder dcpl_builder_;
     DataWriter writer_;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
   public:
     FieldBuilder() = default;

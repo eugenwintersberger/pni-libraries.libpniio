@@ -157,18 +157,28 @@ class PNINEXUS_EXPORT PathObject
     explicit operator hdf5::node::Link() const;
 
   private:
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
     Type type_;
     hdf5::attribute::Attribute attribute_;
     hdf5::node::Group group_;
     hdf5::node::Dataset dataset_;
     hdf5::node::Link link_;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 };
 
 #ifdef _MSC_VER
 PNINEXUS_EXPORT bool operator==(const PathObject &a,const PathObject &b);
 PNINEXUS_EXPORT bool operator<(const PathObject &a,const PathObject &b);
 #endif
-
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
 //!
 //! @brief container for PathObject
 //!
@@ -180,7 +190,9 @@ class PNINEXUS_EXPORT PathObjectList : public std::list<PathObject>
 {
   public:
     using std::list<PathObject>::list;
-
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
     //!
     //! @brief implicit conversion to a NodeList
     //!

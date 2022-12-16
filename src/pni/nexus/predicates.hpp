@@ -78,7 +78,14 @@ class PNINEXUS_EXPORT NodePredicate
 class PNINEXUS_EXPORT IsBaseClass : public NodePredicate
 {
   private:
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
     std::string class_name_;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
   public:
     //!
     //! @brief default constructor
@@ -219,7 +226,14 @@ class PNINEXUS_EXPORT IsData : public IsBaseClass
 class PNINEXUS_EXPORT IsValidNeXusName
 {
   private:
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
     boost::regex name_regex_;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
   public:
     IsValidNeXusName();
 

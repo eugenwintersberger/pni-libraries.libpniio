@@ -69,7 +69,10 @@ namespace pni{
         private:
             //! private index type
             typedef std::vector<size_t> index_type;
-
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
             //member variables describing the selection in the original array
             //all of these containers have the same size which is equal to the
             //rank of the original array
@@ -79,6 +82,9 @@ namespace pni{
             index_type _offset;
             //! stride in the original array
             index_type _stride;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
         public:
             //===================constructors and destructor====================

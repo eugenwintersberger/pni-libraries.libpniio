@@ -33,7 +33,14 @@ namespace pni{
         //!
         //! regular expression for slices
         //!
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
         boost::regex _regexpr;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
     public:
         using result_type = pni::slice;
 
