@@ -45,8 +45,15 @@ template<>
 class PNINEXUS_EXPORT parser<pni::bool_t>
 {
   private:
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
     boost::regex _true_regex;
     boost::regex _false_regex;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
   public:
     using result_type = bool;
 
@@ -93,8 +100,15 @@ template<>
 class PNINEXUS_EXPORT parser<hdf5::datatype::EBool>
 {
   private:
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
     boost::regex _true_regex;
     boost::regex _false_regex;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
   public:
     using result_type = hdf5::datatype::EBool;
 

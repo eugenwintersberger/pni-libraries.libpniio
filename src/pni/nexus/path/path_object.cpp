@@ -178,6 +178,7 @@ bool operator==(const PathObject &a,const PathObject &b)
 {
     using hdf5::node::Dataset;
     using hdf5::node::Group;
+    using hdf5::node::Link;
     using hdf5::attribute::Attribute;
 
     if(a.type()!=b.type())
@@ -189,12 +190,15 @@ bool operator==(const PathObject &a,const PathObject &b)
             return static_cast<Dataset>(a)==static_cast<Dataset>(b);
         case PathObject::Type::Group:
             return static_cast<Group>(a)==static_cast<Group>(b);
+        case PathObject::Type::Link:
+            return static_cast<Link>(a) == static_cast<Link>(b);
         case PathObject::Type::Attribute:
             return attributes_are_equal(static_cast<Attribute>(a),
                                         static_cast<Attribute>(b));
         case PathObject::Type::None:
             return true;
     }
+    return false;
 }
 
 bool operator<(const PathObject &a,const PathObject &b)

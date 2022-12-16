@@ -74,7 +74,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
       use_shuffle = node.attribute("shuffle").data<hdf5::datatype::EBool>();
 
     if(node.has_attribute("rate"))
-      compression_rate = node.attribute("rate").data<size_t>();
+      compression_rate = static_cast<long>(node.attribute("rate").data<size_t>());
 
     if(use_compression)
     {

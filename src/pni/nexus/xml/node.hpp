@@ -32,7 +32,10 @@
 namespace pni{
 namespace nexus{
 namespace xml{    
-
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
 //!
 //! @ingroup nexus_xml_classes
 //! @brief alias for ptree
@@ -42,6 +45,9 @@ namespace xml{
 //!
 class PNINEXUS_EXPORT Node : public boost::property_tree::ptree
 {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
   private:
 
     //!

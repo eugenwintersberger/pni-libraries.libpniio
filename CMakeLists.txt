@@ -35,6 +35,7 @@ if (NOT PNINEXUS_BUILD_SHARED)
 endif()
 option(PNINEXUS_LOCAL_MODULES "Build pninexus using cmake local modules first")
 option(PNINEXUS_BUILD_EXAMPLES "Include the examples in the project" OFF)
+option(PNINEXUS_BUILD_DOC "build document" ON)
 
 
 set(PNINEXUS_CONAN "AUTO" CACHE STRING "conan options AUTO (conan must be in path), MANUAL (expects conanbuildinfo.cmake in build directory) or DISABLE")
@@ -81,8 +82,12 @@ include(${EXTRA_MODULES_DIR}/OutputDirConfig.cmake)
 include(${EXTRA_MODULES_DIR}/WindowsUtils.cmake)
 include(${EXTRA_MODULES_DIR}/PackageConfig.cmake)
 include(${EXTRA_MODULES_DIR}/BuildInfo.cmake)
-include(${EXTRA_MODULES_DIR}/DoxygenUtilities.cmake)
-include(Sphinx)
+
+if(PNINEXUS_BUILD_DOC)
+  include(${EXTRA_MODULES_DIR}/DoxygenUtilities.cmake)
+  include(Sphinx)
+endif()
+
 include(utilities)
 # include(DoxygenUtilities)
 
@@ -150,5 +155,7 @@ install(FILES ${PROJECT_BINARY_DIR}/${PACKAGE_CONFIG_FILE_NAME}
 
 #need this to get the generated header files into the build.
 add_subdirectory("src")
-add_subdirectory("doc")
+if(PNINEXUS_BUILD_DOC)
+  add_subdirectory("doc")
+endif()
 add_subdirectory("test")

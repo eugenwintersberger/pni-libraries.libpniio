@@ -59,7 +59,14 @@ namespace pni{
         //!
         //! parser for complex values
         //!
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
         parser<pni::complex64> _complex_parser;
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
     public:
         using result_type = pni::value;
 

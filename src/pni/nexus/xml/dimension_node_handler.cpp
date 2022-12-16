@@ -41,7 +41,7 @@ hdf5::Dimensions DimensionNodeHandler::dimensions(const Node &node)
     if(value.first == "dim")
       index_values.push_back(index_value_from_node(value.second));
 
-  if (rank > 0 and index_values.size() == 0){
+  if (rank > 0 && index_values.size() == 0){
     for(size_t rk = 0; rk != rank; rk++)
       index_values.push_back({rk, rk == 0 ? 0 : 1});
   }

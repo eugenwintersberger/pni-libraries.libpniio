@@ -31,7 +31,10 @@ namespace pni {
 namespace nexus {
 
 class PathObjectList;
-
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4251)
+#endif
 //!
 //! @brief list of HDF5 nodes
 //!
@@ -114,6 +117,8 @@ class PNINEXUS_EXPORT AttributeList : public std::vector<hdf5::attribute::Attrib
   public:
     using std::vector<hdf5::attribute::Attribute>::vector;
 };
-
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 } // namespace nexus
 } // namespace pni
