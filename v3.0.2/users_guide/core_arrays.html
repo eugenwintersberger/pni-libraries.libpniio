@@ -1,0 +1,1432 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multidimensional arrays &#8212; libpninexus 3.0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Type erasures" href="core_type_erasures.html" />
+    <link rel="prev" title="Data Types" href="core_types.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="core_type_erasures.html" title="Type erasures"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="core_types.html" title="Data Types"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="core.html" accesskey="U">PNI core</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Multidimensional arrays</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="multidimensional-arrays">
+<span id="arrays"></span><h1>Multidimensional arrays<a class="headerlink" href="#multidimensional-arrays" title="Permalink to this headline">¶</a></h1>
+<p>C++ has no multidimensional array type (MDA) in its standard library.
+However, MDAs are crucial for the developmemt of scientific applications.
+One of the reasons for the continuing success of languages like Fortran or Python
+is their excellent support for MDAsfootnote{For Python arrays are introduced by
+the texttt{numpy} package.}. The lack of an MDA type in C++
+was indeed the spark that initiated the developement of libpninexus.  Before
+discussing <cite>libpninexus</cite> s array facilities some terminology should be defined:</p>
+<dl class="simple">
+<dt>element type (ET)</dt><dd><p>referes to the data type of the individual elements stored in an MDA. For
+MDAs this will typically be a numeric type like an integer or a floating
+point number.</p>
+</dd>
+<dt>rank <span class="math notranslate nohighlight">\(r\)</span></dt><dd><p>denotes the number of dimensions of an MDA</p>
+</dd>
+<dt>shape <span class="math notranslate nohighlight">\(\mathbf{s}\)</span></dt><dd><p>is a vector of dimension <span class="math notranslate nohighlight">\(r\)</span> whose elements are the
+number of elements along each dimension. The elements of <span class="math notranslate nohighlight">\(\mathbf{s}\)</span> are
+denoted as <span class="math notranslate nohighlight">\(s_i\)</span> with <span class="math notranslate nohighlight">\(i=0,\dots,r-1\)</span></p>
+</dd>
+</dl>
+<p>The hart of <cite>libpninexus</cite> s MDA support is the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code> template.
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code> is extremely powerfull. Thus, using <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code>
+directly to define array types is not for the faint harted.  To simplify the
+usage of multidimensional arrays the library provides three templates derived
+form <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code> which are easy to use.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 53%" />
+<col style="width: 1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>template alias</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>static_array&lt;T,size_t …N&gt;</em></p></td>
+<td><p>a static arrays whose shape, rank,
+and element type are fixed at
+compile time.</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><em>fixed_dim_array&lt;T,R&gt;</em></p></td>
+<td><p>element type and rank are fixed at
+compile time but the shape can be
+changed at runtime.</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><em>dynamic_array&lt;T&gt;</em></p></td>
+<td><p>a fully dynamic array type where
+only the element type must be
+known at compile time. The rank
+as well as the shape can be
+altered at runtime</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>These types are all defined in <code class="file docutils literal notranslate"><span class="pre">pni/arrays.hpp</span></code>.
+In addition to this two basic templates there are several utility classes and
+templates like</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 56%" />
+<col style="width: 2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>template</p></th>
+<th class="head"><p>functionality</p></th>
+<th class="head"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">arrayview</span></code></p></td>
+<td><p>this template provides a view on a
+particular part of an array</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">arrayerasure</span></code></p></td>
+<td><p>type erasure for an array</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>All array types derived from <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code> provide the following features</p>
+<ul class="simple">
+<li><p>unary and binary arithmetics if the element type is a numeric type.</p></li>
+<li><p>slicing to extract only a part of a large array</p></li>
+<li><p>simple access to data elements using variadic operators.</p></li>
+<li><p>all array types are full STL compliant containers and thus can be used
+along with STL algorithms.</p></li>
+</ul>
+<div class="section" id="array-construction-and-inquery">
+<h2>Array construction and inquery<a class="headerlink" href="#array-construction-and-inquery" title="Permalink to this headline">¶</a></h2>
+<p>Constructing arrays is rather simple by means of the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> function
+provided by the array templates. As shown in <code class="file docutils literal notranslate"><span class="pre">array_create.cpp</span></code></p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_create.cpp</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="c1">//some usefull type definitions</span>
+<span class="k">typedef</span> <span class="n">dynamic_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span> <span class="n">darray_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">//construction from shape</span>
+    <span class="k">auto</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">darray_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">});</span>
+
+    <span class="c1">//construction from shape and buffer</span>
+    <span class="k">auto</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">darray_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">},</span>
+                                  <span class="n">darray_type</span><span class="o">::</span><span class="n">storage_type</span><span class="p">(</span><span class="mi">1024</span><span class="o">*</span><span class="mi">2048</span><span class="p">));</span>
+
+    <span class="c1">//construction from initializer lists</span>
+    <span class="k">auto</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">darray_type</span><span class="o">::</span><span class="n">create</span><span class="p">({</span><span class="mi">5</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">});</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>In line 35 a concrete array type is defined from the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">dynamic_array</span></code>
+utility template.
+The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> function comes in three flavors as shown in the previous
+example</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>line</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>40</p></td>
+<td><p>Only the shape is passed as an argument. The storage container
+is allocated automatically by the constructor.</p></td>
+</tr>
+<tr class="row-odd"><td><p>43</p></td>
+<td><p>The storage container with initial data is passed as a second
+argument to <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">create()</span></code> along with the shape of the
+array.</p></td>
+</tr>
+<tr class="row-even"><td><p>47</p></td>
+<td><p>shape as well as initial data are provided via
+initializer lists.</p></td>
+</tr>
+</tbody>
+</table>
+<p>After an array has been created we may want to retrieve some of its basic
+properties. In the next example we do exactly this</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_inquery.cpp</span></code> for full code</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="c1">//some usefull type definitions</span>
+<span class="k">typedef</span> <span class="n">dynamic_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span> <span class="n">darray_type</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ArrayT</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">show_info</span><span class="p">(</span><span class="k">const</span> <span class="n">ArrayT</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Data type: &quot;</span><span class="o">&lt;&lt;</span><span class="n">type_id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Rank     : &quot;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="p">.</span><span class="n">rank</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Shape    : (&quot;</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">s</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="k">template</span> <span class="n">shape</span><span class="o">&lt;</span><span class="n">shape_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">n</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">n</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;)&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Size     : &quot;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">darray_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">});</span>
+
+    <span class="n">show_info</span><span class="p">(</span><span class="n">a1</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The important part is the implementation of the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">show_info()</span></code> function
+template starting at line 37. The function template <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">type_id()</span></code> is used in
+line 40 to retrieve the type ID of the arrays element type. <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">rank()</span></code> in line
+41 returns the number of dimension and <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">size()</span></code> in line 46 the total
+number of elements stored in the array.
+The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">shape()</span></code> template function in line 43 returns the number of elements
+along each dimension stored in a user provided container type.</p>
+<p>The content of arrays can be copied to and from containers using the standard
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">std::copy()</span></code> template function from the STL. In addition a version of the
+assignment operator is provided which allows assignment of values from an
+initializer list. This is particularly useful for static arrays which basically
+do not require construction.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">static_array_type</span> <span class="o">=</span> <span class="p">....;</span>
+
+<span class="n">static_array_type</span> <span class="n">a</span><span class="p">;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="linear-access-to-data">
+<h2>Linear access to data<a class="headerlink" href="#linear-access-to-data" title="Permalink to this headline">¶</a></h2>
+<p>As already mentioned in the first section of this chapter, the array types
+provided by <em>libpninexus</em> are fully STL compliant containers. They provided all
+the iterators required by the STL.
+Before we have a look on STL lets first investigate how to simply access data
+elements in an array</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_linear_access.cpp</span></code> for full code</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">uint16</span>                          <span class="n">channel_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">channel_type</span><span class="p">,</span><span class="mi">1</span><span class="o">&gt;</span> <span class="n">mca_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">mca</span> <span class="o">=</span> <span class="n">mca_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">128</span><span class="p">});</span> 
+
+    <span class="c1">//initialize</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rdev</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">generator</span><span class="p">(</span><span class="n">rdev</span><span class="p">());</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="n">channel_type</span><span class="o">&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">65000</span><span class="p">);</span>
+
+    <span class="c1">//generate data</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">channel</span><span class="p">:</span> <span class="n">mca</span><span class="p">)</span>  <span class="n">channel</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">);</span>
+
+    <span class="c1">//subtract some number </span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">mca</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span><span class="p">(</span><span class="n">mca</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">10</span><span class="p">)</span> <span class="n">mca</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">10</span><span class="p">;</span>
+
+    <span class="c1">//set the first and last element to 0 </span>
+    <span class="n">mca</span><span class="p">.</span><span class="n">front</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">mca</span><span class="p">.</span><span class="n">back</span><span class="p">()</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    
+    <span class="c1">//output data</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">channel</span><span class="p">:</span> <span class="n">mca</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">channel</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>For all array types the new C++ <em>for-each</em> construction can be used as shown
+in lines 47 and 57. Unchecked access (no index bounds are checked) is
+provided via the <em>[]</em> operator as demonstrated in line 50 (use <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">at()</span></code>
+for checked access).
+Some of the operations in this example can be done much more efficient with STL
+algorithms as demonstrated in the next example</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_stl.cpp</span></code> for full code</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">image</span> <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">});</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//use STL std::fill to initialize</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rdev</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">generator</span><span class="p">(</span><span class="n">rdev</span><span class="p">());</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="o">&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">65000</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                  <span class="p">[</span><span class="o">&amp;</span><span class="n">generator</span><span class="p">,</span><span class="o">&amp;</span><span class="n">dist</span><span class="p">](){</span> <span class="k">return</span> <span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">);</span> <span class="p">});</span>
+
+    <span class="c1">//get min and max</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Min: &quot;</span><span class="o">&lt;&lt;*</span><span class="n">std</span><span class="o">::</span><span class="n">min_element</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Max: &quot;</span><span class="o">&lt;&lt;*</span><span class="n">std</span><span class="o">::</span><span class="n">max_element</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">())</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Sum: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">pixel_type</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>In line 42 <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">std::fill()</span></code> is used to initialize the array to 0 and
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">std::generate()</span></code> in line 48 fills it with random numbers using a lambda
+expression . The rest of the example should be trivial (if not, please lookup a
+good C++ STL reference).</p>
+</div>
+<div class="section" id="multidimensional-access">
+<h2>Multidimensional access<a class="headerlink" href="#multidimensional-access" title="Permalink to this headline">¶</a></h2>
+<p>Though being an important feature, linear access to multidimensional arrays is
+not always useful. In particular the last example where we pretended to work on
+image data implementing algorithms would be rather tedious if we would have had
+only linear access. It is natural for such objects to think in pixel coordinates
+<em>(i,j)</em> rather than the linear offset in memory.
+<em>libpninexus</em> provides easy multidimensional access to the data stored in an
+array. The next example shows how to use this feature to work only on a small
+region of the image data as defined in the last example</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_multiindex.cpp</span></code> for full code</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>          <span class="n">index_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">image</span> <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">});</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//use STL std::fill to initialize</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rdev</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">generator</span><span class="p">(</span><span class="n">rdev</span><span class="p">());</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="o">&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">65000</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                  <span class="p">[</span><span class="o">&amp;</span><span class="n">generator</span><span class="p">,</span><span class="o">&amp;</span><span class="n">dist</span><span class="p">](){</span> <span class="k">return</span> <span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">);</span> <span class="p">});</span>
+
+    
+    <span class="kt">size_t</span> <span class="n">zero_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">max_count</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">512</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">934</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">j</span><span class="o">=</span><span class="mi">128</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">414</span><span class="p">;</span><span class="o">++</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">image</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">zero_count</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">image</span><span class="p">(</span><span class="n">index_type</span><span class="p">{{</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">}})</span> <span class="o">&gt;=</span> <span class="mi">10000</span><span class="p">)</span> <span class="n">max_count</span><span class="o">++</span><span class="p">;</span>
+                
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Found 0 in &quot;</span><span class="o">&lt;&lt;</span><span class="n">zero_count</span><span class="o">&lt;&lt;</span><span class="s">&quot; pixels!&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Found max in &quot;</span><span class="o">&lt;&lt;</span><span class="n">max_count</span><span class="o">&lt;&lt;</span><span class="s">&quot; pixels!&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The interesting part here are lines 59 and 60. You can pass the
+multidimensional indexes either as a variadic argument list to the  <em>()</em>
+operator of the array type (as in line 59) or you can use a container like
+in line 60. The former approach might look a bit more familiar, however, in
+some cases when decisions have to made at runtime the container approach might
+fits better. However, passing containers reduces access performance
+approximately by a factor of 2. Thus, as a rule of thumb you should always use
+the variadic form when you know the number of dimensions the array has and
+containers only in those cases where this information is only available at
+runtime.</p>
+</div>
+<div class="section" id="array-views-and-slicing">
+<h2>Array views and slicing<a class="headerlink" href="#array-views-and-slicing" title="Permalink to this headline">¶</a></h2>
+<p>In the previous example multiindex access was used to do work on only a small
+part of the image data. <em>libpninexus</em> provides view types for arrays which would
+make these operations easier. Views are created by passing instances of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">slice</span></code> to the <em>()</em> operator of an array type. Slices in <em>libpninexus</em> work
+pretty much the same as in python. Lets have a look on the following example</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_view.cpp</span></code> for full code</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>          <span class="n">index_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">image</span> <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">});</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//use STL std::fill to initialize</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rdev</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">generator</span><span class="p">(</span><span class="n">rdev</span><span class="p">());</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="o">&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">65000</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                  <span class="p">[</span><span class="o">&amp;</span><span class="n">generator</span><span class="p">,</span><span class="o">&amp;</span><span class="n">dist</span><span class="p">](){</span> <span class="k">return</span> <span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">);</span> <span class="p">});</span>
+
+    
+    <span class="k">auto</span> <span class="n">roi</span> <span class="o">=</span> <span class="n">image</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span><span class="mi">934</span><span class="p">),</span><span class="n">slice</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">414</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">zero_count</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">count_if</span><span class="p">(</span><span class="n">roi</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">roi</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                                    <span class="p">[](</span><span class="n">pixel_type</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">){</span><span class="k">return</span> <span class="n">p</span><span class="o">==</span><span class="mi">0</span><span class="p">;});</span>
+    <span class="k">auto</span> <span class="n">max_count</span>  <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">count_if</span><span class="p">(</span><span class="n">roi</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">roi</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                                    <span class="p">[](</span><span class="n">pixel_type</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">){</span><span class="k">return</span> <span class="n">p</span><span class="o">&gt;=</span> <span class="mi">10000</span><span class="p">;</span> <span class="p">});</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Found 0 in &quot;</span><span class="o">&lt;&lt;</span><span class="n">zero_count</span><span class="o">&lt;&lt;</span><span class="s">&quot; pixels!&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Found max in &quot;</span><span class="o">&lt;&lt;</span><span class="n">max_count</span><span class="o">&lt;&lt;</span><span class="s">&quot; pixels!&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The view is created in line 53 where the slices are passed instead of integer
+indices to the <em>()</em> operator. A slice selects an entire index range along a
+dimension. The first argument to the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">slice</span></code> constructor is the starting
+index and the last the stop index of the range. The stop index is not included
+(just as it is the case with Python slices). If the <em>()</em> operator of an
+array is called with any of its arguments being a slice a view object is
+returned instead of a single value or reference to a single value.
+View objects are pretty much like arrays themselves. However, they do not hold
+data by themselves but only a reference to the original array.
+Like arrays they are fully STL compliant containers and thus can be used with
+STL algorithms as shown in lines 54 and 56.</p>
+<p>View types can be copied and moved and thus can be stored in STL containers as
+shown in the next example</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_view_container.cpp</span></code> for full code</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">uint16</span>                        <span class="n">pixel_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>          <span class="n">index_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">image_type</span><span class="o">::</span><span class="n">view_type</span>         <span class="n">roi_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">roi_type</span><span class="o">&gt;</span>         <span class="n">roi_vector</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">image</span> <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">});</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">fill</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="mi">0</span><span class="p">);</span> <span class="c1">//use STL std::fill to initialize</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rdev</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">generator</span><span class="p">(</span><span class="n">rdev</span><span class="p">());</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="n">pixel_type</span><span class="o">&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">65000</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">generate</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">image</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                  <span class="p">[</span><span class="o">&amp;</span><span class="n">generator</span><span class="p">,</span><span class="o">&amp;</span><span class="n">dist</span><span class="p">](){</span> <span class="k">return</span> <span class="n">dist</span><span class="p">(</span><span class="n">generator</span><span class="p">);</span> <span class="p">});</span>
+
+    <span class="n">roi_vector</span> <span class="n">rois</span><span class="p">;</span> 
+    <span class="n">rois</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">image</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span><span class="mi">934</span><span class="p">),</span><span class="n">slice</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">414</span><span class="p">)));</span>
+    <span class="n">rois</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">image</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">128</span><span class="p">),</span><span class="n">slice</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">)));</span>
+    <span class="n">rois</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">image</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="n">slice</span><span class="p">(</span><span class="mi">450</span><span class="p">,</span><span class="mi">512</span><span class="p">)));</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">roi</span><span class="p">:</span> <span class="n">rois</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">zero_count</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">count_if</span><span class="p">(</span><span class="n">roi</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">roi</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                                        <span class="p">[](</span><span class="n">pixel_type</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">){</span><span class="k">return</span> <span class="n">p</span><span class="o">==</span><span class="mi">0</span><span class="p">;});</span>
+        <span class="k">auto</span> <span class="n">max_count</span>  <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">count_if</span><span class="p">(</span><span class="n">roi</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">roi</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                                        <span class="p">[](</span><span class="n">pixel_type</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">){</span><span class="k">return</span> <span class="n">p</span><span class="o">&gt;=</span> <span class="mi">10000</span><span class="p">;</span> <span class="p">});</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Found 0 in &quot;</span><span class="o">&lt;&lt;</span><span class="n">zero_count</span><span class="o">&lt;&lt;</span><span class="s">&quot; pixels!&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Found max in &quot;</span><span class="o">&lt;&lt;</span><span class="n">max_count</span><span class="o">&lt;&lt;</span><span class="s">&quot; pixels!&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Here we apply the algorithms from the previous example not to a single but to
+several selections in the image. As shown in lines 55 to 57 we can safely
+store views in a container and later iterate over it.</p>
+<p>In general views make algorithm development much easier as we have to develop
+algorithms only for entire arrays. If it should be applied to only a part of an
+array we can use a view and pass it to the algorithm. As views expose the same
+interface as an array the algorithm should work on views too.</p>
+</div>
+<div class="section" id="arithmetic-expressions">
+<h2>Arithmetic expressions<a class="headerlink" href="#arithmetic-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Array and view types fully support the common arithmetic
+operators <em>+</em>, <em>*</em>, <em>/</em>, and <em>-</em> in their binary and unary
+forms. The binary versions are implemented as expression templates avoiding the
+allocation of unnecessary temporary and giving the compiler more possibilities
+to optimize the code.
+Views, arrays and scalars can be mixed within all arithmetic expressions.
+There is nothing magical with expression templates as they work entirely
+transparent to the user. Just use the arithmetic expressions as you are used to</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_arithmetic1.cpp</span></code></span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">float64</span>                        <span class="n">number_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">shape_t</span> <span class="n">s</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">};</span>
+    <span class="k">auto</span> <span class="n">image</span>      <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">background</span> <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+    <span class="n">number_type</span> <span class="n">exp_time</span> <span class="o">=</span> <span class="mf">1.234</span><span class="p">;</span>
+    <span class="n">number_type</span> <span class="n">current</span>  <span class="o">=</span> <span class="mf">98.3445</span><span class="p">;</span>
+
+    <span class="c1">//compute the corrected image</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="p">(</span><span class="n">image</span><span class="o">-</span><span class="n">background</span><span class="p">)</span><span class="o">/</span><span class="n">exp_time</span><span class="o">/</span><span class="n">current</span><span class="p">;</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The important line here is 47 where arrays and scalars are mixed in an
+arithmetic expression.
+One can also mix arrays, selections, and scalars as the next examples
+shows</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_arithmetic2.cpp</span></code> for full code</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">float64</span>                        <span class="n">number_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span> <span class="n">stack_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">image_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">1</span><span class="o">&gt;</span> <span class="n">data_type</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">shape_t</span> <span class="n">frame_shape</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">};</span>
+    <span class="n">shape_t</span> <span class="n">data_shape</span><span class="p">{</span><span class="mi">100</span><span class="p">};</span>
+    <span class="n">shape_t</span> <span class="n">stack_shape</span><span class="p">{</span><span class="mi">100</span><span class="p">,</span><span class="mi">1024</span><span class="p">,</span><span class="mi">512</span><span class="p">};</span>
+    <span class="k">auto</span> <span class="n">image_stack</span> <span class="o">=</span> <span class="n">stack_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">stack_shape</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">background</span>  <span class="o">=</span> <span class="n">image_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">frame_shape</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">exp_time</span>    <span class="o">=</span> <span class="n">data_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">data_shape</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">current</span>     <span class="o">=</span> <span class="n">data_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">data_shape</span><span class="p">);</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">data_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Processing frame &quot;</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s">&quot; ...&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">auto</span> <span class="n">curr_frame</span> <span class="o">=</span> <span class="n">image_stack</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">512</span><span class="p">));</span>
+        <span class="n">curr_frame</span> <span class="o">=</span> <span class="p">(</span><span class="n">curr_frame</span> <span class="o">-</span> <span class="n">background</span><span class="p">)</span><span class="o">/</span><span class="n">exp_time</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">current</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>In line 53 a single image frame is selected from a stack of images and used in
+line 54 in an arithmetic expression. In fact, what we are doing here is,
+we are writing the corrected data back on the stack since <code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">curr_frame</span></code> is
+just a view on the particular image in the stack.</p>
+</div>
+<div class="section" id="example-matrix-vector-and-matrix-matrix-multiplication">
+<h2>Example: matrix-vector and matrix-matrix multiplication<a class="headerlink" href="#example-matrix-vector-and-matrix-matrix-multiplication" title="Permalink to this headline">¶</a></h2>
+<p>In the last example matrix vector multiplications are treated. The full code can
+be viewed in <code class="file docutils literal notranslate"><span class="pre">array_arithmetic3.cpp</span></code> in the source distribution. But lets
+first start with the header</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/array_arithmetic3.cpp</span></code> for full code</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="c1">// define the matrix and  vector types</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">matrix_temp</span> <span class="o">=</span> <span class="n">static_array</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">vector_temp</span> <span class="o">=</span> <span class="n">static_array</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// print a matrix</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">o</span><span class="p">,</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">o</span><span class="o">&lt;&lt;</span><span class="s">&quot;| &quot;</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="n">o</span><span class="o">&lt;&lt;</span><span class="n">m</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="p">;</span>
+        <span class="n">o</span><span class="o">&lt;&lt;</span><span class="s">&quot;|&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// print a vector</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">o</span><span class="p">,</span><span class="k">const</span> <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">x</span><span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="n">o</span><span class="o">&lt;&lt;</span><span class="s">&quot;| &quot;</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="s">&quot; |&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// matrix-vector multiplication</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">mv_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span><span class="k">const</span> <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">r</span><span class="p">:</span> <span class="n">result</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">const</span> <span class="k">auto</span> <span class="n">row</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">,</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">));</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">inner_product</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">row</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ElementT</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// vector-matrix multiplication</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">mv_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">,</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">r</span><span class="p">:</span> <span class="n">result</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">const</span> <span class="k">auto</span> <span class="n">col</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">),</span><span class="n">i</span><span class="o">++</span><span class="p">);</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">inner_product</span><span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">col</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ElementT</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// matrix-matrix multiplication</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">mv_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m1</span><span class="p">,</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m2</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">TDimN</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">TDimN</span><span class="p">;</span><span class="o">++</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">const</span> <span class="k">auto</span> <span class="n">row</span> <span class="o">=</span> <span class="n">m1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">));</span>
+            <span class="k">const</span> <span class="k">auto</span> <span class="n">col</span> <span class="o">=</span> <span class="n">m2</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">),</span><span class="n">j</span><span class="p">);</span>
+            <span class="n">result</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">inner_product</span><span class="p">(</span><span class="n">row</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">row</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                                             <span class="n">col</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ElementT</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//-----------------------------------------------------------------------------</span>
+<span class="c1">// define some local types</span>
+<span class="k">typedef</span> <span class="n">float64</span>                    <span class="n">number_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span> <span class="n">vector_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">number_type</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span> <span class="n">matrix_type</span><span class="p">;</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector_type</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">matrix_type</span> <span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">;</span> 
+    <span class="n">m1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">};</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
+    <span class="n">v</span>  <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m1 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">m1</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m2 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">m2</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;v  = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">v</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m1.v = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">mv_mult</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">v</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;v.m1 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">mv_mult</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">m1</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m1.m2 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">mv_mult</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Besides including all required header files matrix and vector templates are
+defined in lines 37 and 38 using the new C++11 template aliasing.</p>
+<div class="section" id="matrix-vector-multiplication">
+<h3>Matrix vector multiplication<a class="headerlink" href="#matrix-vector-multiplication" title="Permalink to this headline">¶</a></h3>
+<p>The implementation of the matrix vector multiplication is shown in the next
+block.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{r} = A\mathbf{v} \mbox{ or } r_j = A_{j,i}v_i\]</div>
+<p>with <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> denoting a <span class="math notranslate nohighlight">\(N\times N\)</span> matrix and
+<span class="math notranslate nohighlight">\(\mathbf{r}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> are
+<span class="math notranslate nohighlight">\(N\)</span>-dimensional vectors. In all formulas Einsteins sum convention is used.</p>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">mv_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span><span class="k">const</span> <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">r</span><span class="p">:</span> <span class="n">result</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">const</span> <span class="k">auto</span> <span class="n">row</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">i</span><span class="o">++</span><span class="p">,</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">));</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">inner_product</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">row</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ElementT</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>In line 74 we select the <span class="math notranslate nohighlight">\(i\)</span>-th row of the matrix and compute the inner
+product of the row vector and the input vector in line 75.</p>
+</div>
+<div class="section" id="vector-matrix-multiplication">
+<h3>Vector matrix multiplication<a class="headerlink" href="#vector-matrix-multiplication" title="Permalink to this headline">¶</a></h3>
+<p>The vector matrix multiplication</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{r} = \mathbf{v}A\mbox{ or } r_i = v_j A_{j,i}\]</div>
+<p>is computed analogously</p>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">mv_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">,</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">r</span><span class="p">:</span> <span class="n">result</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">const</span> <span class="k">auto</span> <span class="n">col</span> <span class="o">=</span> <span class="n">m</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">),</span><span class="n">i</span><span class="o">++</span><span class="p">);</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">inner_product</span><span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">col</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ElementT</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>despite the fact that we are choosing the appropriate column instead of a row in
+line 90.</p>
+</div>
+<div class="section" id="matrix-matrix-multiplication">
+<h3>Matrix matrix multiplication<a class="headerlink" href="#matrix-matrix-multiplication" title="Permalink to this headline">¶</a></h3>
+<p>Finally we need an implementation for the matrix - matrix
+multiplication</p>
+<div class="math notranslate nohighlight">
+\[C = AB \mbox{ or } C_{i,j} = A_{i,k}B_{k,j}\]</div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="p">,</span><span class="kt">size_t</span> <span class="n">TDimN</span><span class="o">&gt;</span>
+<span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">mv_mult</span><span class="p">(</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m1</span><span class="p">,</span><span class="k">const</span> <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m2</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">matrix_temp</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="p">,</span><span class="n">TDimN</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">TDimN</span><span class="p">;</span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">TDimN</span><span class="p">;</span><span class="o">++</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">const</span> <span class="k">auto</span> <span class="n">row</span> <span class="o">=</span> <span class="n">m1</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">));</span>
+            <span class="k">const</span> <span class="k">auto</span> <span class="n">col</span> <span class="o">=</span> <span class="n">m2</span><span class="p">(</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">TDimN</span><span class="p">),</span><span class="n">j</span><span class="p">);</span>
+            <span class="n">result</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">inner_product</span><span class="p">(</span><span class="n">row</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">row</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+                                             <span class="n">col</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ElementT</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>The rows and columns are selected in lines 107 and 108 respectively.
+Line 109 finally computes the inner product of the row and column vector.</p>
+</div>
+<div class="section" id="putting-it-all-together-the-main-function">
+<h3>Putting it all together: the main function<a class="headerlink" href="#putting-it-all-together-the-main-function" title="Permalink to this headline">¶</a></h3>
+<p>Finally the main program shows a simple application of these template functions.</p>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector_type</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">matrix_type</span> <span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">;</span> 
+    <span class="n">m1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">};</span>
+    <span class="n">m2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
+    <span class="n">v</span>  <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m1 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">m1</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m2 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">m2</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;v  = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">v</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m1.v = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">mv_mult</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">v</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;v.m1 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">mv_mult</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">m1</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;m1.m2 = &quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="n">mv_mult</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+                               
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>It is important to understand that the appropriate function is determined by the
+types of the arguments (vector or matrix). This is a rather nice example of how
+to use the typing system of C++ to add meaning to objects.</p>
+<p>The output of the program is</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;./array_arithmetic3
+<span class="nv">m1</span> <span class="o">=</span>
+<span class="p">|</span> <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">4</span> <span class="m">5</span> <span class="m">6</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">7</span> <span class="m">8</span> <span class="m">9</span> <span class="p">|</span>
+
+<span class="nv">m2</span> <span class="o">=</span>
+<span class="p">|</span> <span class="m">9</span> <span class="m">8</span> <span class="m">7</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">6</span> <span class="m">5</span> <span class="m">4</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">3</span> <span class="m">2</span> <span class="m">1</span> <span class="p">|</span>
+
+<span class="nv">v</span>  <span class="o">=</span>
+<span class="p">|</span> <span class="m">1</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">2</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">3</span> <span class="p">|</span>
+
+m1.v <span class="o">=</span>
+<span class="p">|</span> <span class="m">14</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">32</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">50</span> <span class="p">|</span>
+
+v.m1 <span class="o">=</span>
+<span class="p">|</span> <span class="m">30</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">36</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">42</span> <span class="p">|</span>
+
+m1.m2 <span class="o">=</span>
+<span class="p">|</span> <span class="m">30</span> <span class="m">24</span> <span class="m">18</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">84</span> <span class="m">69</span> <span class="m">54</span> <span class="p">|</span>
+<span class="p">|</span> <span class="m">138</span> <span class="m">114</span> <span class="m">90</span> <span class="p">|</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Multidimensional arrays</a><ul>
+<li><a class="reference internal" href="#array-construction-and-inquery">Array construction and inquery</a></li>
+<li><a class="reference internal" href="#linear-access-to-data">Linear access to data</a></li>
+<li><a class="reference internal" href="#multidimensional-access">Multidimensional access</a></li>
+<li><a class="reference internal" href="#array-views-and-slicing">Array views and slicing</a></li>
+<li><a class="reference internal" href="#arithmetic-expressions">Arithmetic expressions</a></li>
+<li><a class="reference internal" href="#example-matrix-vector-and-matrix-matrix-multiplication">Example: matrix-vector and matrix-matrix multiplication</a><ul>
+<li><a class="reference internal" href="#matrix-vector-multiplication">Matrix vector multiplication</a></li>
+<li><a class="reference internal" href="#vector-matrix-multiplication">Vector matrix multiplication</a></li>
+<li><a class="reference internal" href="#matrix-matrix-multiplication">Matrix matrix multiplication</a></li>
+<li><a class="reference internal" href="#putting-it-all-together-the-main-function">Putting it all together: the main function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="core_types.html"
+                        title="previous chapter">Data Types</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="core_type_erasures.html"
+                        title="next chapter">Type erasures</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="core_type_erasures.html" title="Type erasures"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="core_types.html" title="Data Types"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="core.html" >PNI core</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Multidimensional arrays</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

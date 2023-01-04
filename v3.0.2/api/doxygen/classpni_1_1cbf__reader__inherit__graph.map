@@ -1,0 +1,5 @@
+<map id="pni::cbf_reader" name="pni::cbf_reader">
+<area shape="rect" id="node1" title="base clase for CBF readers" alt="" coords="14,155,122,181"/>
+<area shape="rect" id="node2" href="$classpni_1_1image__reader.html" title="base class for image readers" alt="" coords="5,80,131,107"/>
+<area shape="rect" id="node3" href="$classpni_1_1data__reader.html" title="base class for data readers" alt="" coords="11,5,125,32"/>
+</map>

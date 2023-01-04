@@ -1,0 +1,779 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image reader API &#8212; libpninexus 3.0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NeXus API" href="nexus.html" />
+    <link rel="prev" title="ASCII spreadsheet API" href="ascii_spreadsheet.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="ASCII spreadsheet API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Image reader API</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="image-reader-api">
+<h1>Image reader API<a class="headerlink" href="#image-reader-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="utility-classes">
+<h2>Utility classes<a class="headerlink" href="#utility-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pni-image-info">
+<h3><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::image_info</span></code></a><a class="headerlink" href="#pni-image-info" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni10image_infoE">
+<span id="_CPPv3N3pni10image_infoE"></span><span id="_CPPv2N3pni10image_infoE"></span><span id="pni::image_info"></span><span class="target" id="classpni_1_1image__info"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">image_info</code><a class="headerlink" href="#_CPPv4N3pni10image_infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>image information type </p>
+<p>ImageInfo holds basic information about a particular image. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_info10image_infoEv">
+<span id="_CPPv3N3pni10image_info10image_infoEv"></span><span id="_CPPv2N3pni10image_info10image_infoEv"></span><span id="pni::image_info::image_info"></span><span class="target" id="classpni_1_1image__info_1a6e9042f2ca389191a63c2e3a4dd7d95e"></span><code class="sig-name descname">image_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10image_info10image_infoEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_info10image_infoE6size_t6size_t">
+<span id="_CPPv3N3pni10image_info10image_infoE6size_t6size_t"></span><span id="_CPPv2N3pni10image_info10image_infoE6size_t6size_t"></span><span id="pni::image_info::image_info__s.s"></span><span class="target" id="classpni_1_1image__info_1ac73970c494e6e1b6ae60b993c67e7dab"></span><code class="sig-name descname">image_info</code><span class="sig-paren">(</span>size_t <em>nx</em>, size_t <em>ny</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10image_info10image_infoE6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nx</span></code>: number of pixels in x-direction </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ny</span></code>: number of pixels in y-direction </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_info10image_infoERR10image_info">
+<span id="_CPPv3N3pni10image_info10image_infoERR10image_info"></span><span id="_CPPv2N3pni10image_info10image_infoERR10image_info"></span><span id="pni::image_info::image_info__image_infoRR"></span><span class="target" id="classpni_1_1image__info_1a1003c5b0da51d0f4c44c627a9f710cd8"></span><code class="sig-name descname">image_info</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10image_info10image_infoERR10image_info" title="pni::image_info::image_info">image_info</a> &amp;&amp;<em>i</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10image_info10image_infoERR10image_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move constructor </p>
+<p>Use compiler provided default implementation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_info10image_infoERK10image_info">
+<span id="_CPPv3N3pni10image_info10image_infoERK10image_info"></span><span id="_CPPv2N3pni10image_info10image_infoERK10image_info"></span><span id="pni::image_info::image_info__image_infoCR"></span><span class="target" id="classpni_1_1image__info_1a2cfad0d434657b5854232b9e9c808bc1"></span><code class="sig-name descname">image_info</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10image_info10image_infoERK10image_info" title="pni::image_info::image_info">image_info</a> &amp;<em>i</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10image_info10image_infoERK10image_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor </p>
+<p>Use compiler provided default implementation </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_infoaSERR10image_info">
+<span id="_CPPv3N3pni10image_infoaSERR10image_info"></span><span id="_CPPv2N3pni10image_infoaSERR10image_info"></span><span id="pni::image_info::assign-operator__image_infoRR"></span><span class="target" id="classpni_1_1image__info_1a69d63403ac0aa4a5ab602f05230967b9"></span><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> &amp;&amp;<em>i</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10image_infoaSERR10image_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move assignment operator </p>
+<p>Use compiler provided default implementation </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_infoaSERK10image_info">
+<span id="_CPPv3N3pni10image_infoaSERK10image_info"></span><span id="_CPPv2N3pni10image_infoaSERK10image_info"></span><span id="pni::image_info::assign-operator__image_infoCR"></span><span class="target" id="classpni_1_1image__info_1a4460480f9f59b055ddbb99c528d1ac76"></span><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> &amp;<em>i</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10image_infoaSERK10image_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy assignment operator </p>
+<p>Use compiler provided default implementation </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info2nxEv">
+<span id="_CPPv3NK3pni10image_info2nxEv"></span><span id="_CPPv2NK3pni10image_info2nxEv"></span><span id="pni::image_info::nxC"></span><span class="target" id="classpni_1_1image__info_1a3423f3bc83e0c5ffb1829aa3cda5918d"></span>size_t <code class="sig-name descname">nx</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni10image_info2nxEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get pixels along x </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of pixels in x-direction (the slow direction) </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info2nyEv">
+<span id="_CPPv3NK3pni10image_info2nyEv"></span><span id="_CPPv2NK3pni10image_info2nyEv"></span><span id="pni::image_info::nyC"></span><span class="target" id="classpni_1_1image__info_1af5fb74e1124e73d0fdfef5f9a5150b05"></span>size_t <code class="sig-name descname">ny</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni10image_info2nyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get pixels along y </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of pixels in y-direction (the fast direction) </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info7npixelsEv">
+<span id="_CPPv3NK3pni10image_info7npixelsEv"></span><span id="_CPPv2NK3pni10image_info7npixelsEv"></span><span id="pni::image_info::npixelsC"></span><span class="target" id="classpni_1_1image__info_1a3cb7217cd526b0fecf1fe90cf825376e"></span>size_t <code class="sig-name descname">npixels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> <em class="property">noexcept</em><a class="headerlink" href="#_CPPv4NK3pni10image_info7npixelsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get total number of pixels </p>
+<p>Computes the total number of pixels of the image (nx*ny). <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>total number of pixels. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info13bit_per_pixelEv">
+<span id="_CPPv3NK3pni10image_info13bit_per_pixelEv"></span><span id="_CPPv2NK3pni10image_info13bit_per_pixelEv"></span><span id="pni::image_info::bit_per_pixelC"></span><span class="target" id="classpni_1_1image__info_1ad1de03bb7baccaed6caf3f22c249990f"></span>size_t <code class="sig-name descname">bit_per_pixel</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10image_info13bit_per_pixelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get number of bits per pixel </p>
+<p>Return the number of bits per pixel. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of bits per pixel </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info16bits_per_channelEv">
+<span id="_CPPv3NK3pni10image_info16bits_per_channelEv"></span><span id="_CPPv2NK3pni10image_info16bits_per_channelEv"></span><span id="pni::image_info::bits_per_channelC"></span><span class="target" id="classpni_1_1image__info_1adf76fa701ccfcd6b1151fe4e83f33eba"></span>std::vector&lt;size_t&gt; <code class="sig-name descname">bits_per_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10image_info16bits_per_channelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get bits per channel </p>
+<p>Return the number of bits used to store data for each channel. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>vector with the number of bits for each channel </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info17types_per_channelEv">
+<span id="_CPPv3NK3pni10image_info17types_per_channelEv"></span><span id="_CPPv2NK3pni10image_info17types_per_channelEv"></span><span id="pni::image_info::types_per_channelC"></span><span class="target" id="classpni_1_1image__info_1aac80441262520d5ac24d7abd3a7986fe"></span>std::vector&lt;pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a>&gt; <code class="sig-name descname">types_per_channel</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10image_info17types_per_channelEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get types per channel </p>
+<p>Return a vector with the different types per channel. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>vector with data types for each channel </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info9nchannelsEv">
+<span id="_CPPv3NK3pni10image_info9nchannelsEv"></span><span id="_CPPv2NK3pni10image_info9nchannelsEv"></span><span id="pni::image_info::nchannelsC"></span><span class="target" id="classpni_1_1image__info_1a941508f06fd9f80006da883edc1f3dc5"></span>size_t <code class="sig-name descname">nchannels</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10image_info9nchannelsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get number of channels </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of channels </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_info14append_channelERK18image_channel_info">
+<span id="_CPPv3N3pni10image_info14append_channelERK18image_channel_info"></span><span id="_CPPv2N3pni10image_info14append_channelERK18image_channel_info"></span><span id="pni::image_info::append_channel__image_channel_infoCR"></span><span class="target" id="classpni_1_1image__info_1a9e4421ef9f5208fbc0b2b3eab38179d2"></span>void <code class="sig-name descname">append_channel</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni18image_channel_infoE" title="pni::image_channel_info">image_channel_info</a> &amp;<em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10image_info14append_channelERK18image_channel_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>append a new channel </p>
+<p>Append information about a channel to the image information class. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: channel information </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10image_info11get_channelE6size_t">
+<span id="_CPPv3NK3pni10image_info11get_channelE6size_t"></span><span id="_CPPv2NK3pni10image_info11get_channelE6size_t"></span><span id="pni::image_info::get_channel__sC"></span><span class="target" id="classpni_1_1image__info_1aaf435b09dfb294d0049a4e3bab092ebd"></span><a class="reference internal" href="#_CPPv4N3pni18image_channel_infoE" title="pni::image_channel_info">image_channel_info</a> <code class="sig-name descname">get_channel</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10image_info11get_channelE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get channel information </p>
+<p>Return the channel information for channle i. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>channel information. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: channel number </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Related</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10image_infolsERNSt7ostreamERK10image_info">
+<span id="_CPPv3N3pni10image_infolsERNSt7ostreamERK10image_info"></span><span id="_CPPv2N3pni10image_infolsERNSt7ostreamERK10image_info"></span><span id="pni::image_info::lshift-operator__osR.image_infoCR"></span><span class="target" id="classpni_1_1image__info_1ab462f6530317e12518fb0cc6b381d45d"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> &amp;<em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10image_infolsERNSt7ostreamERK10image_info" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>brief output operator for ImageInfo </p>
+<p>Overloaded output stream operator for the ImageInfo type. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to the output stream </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: reference to output stream </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: reference to an instance of ImageInfo </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pni-image-channel-info">
+<h3><a class="reference internal" href="#_CPPv4N3pni18image_channel_infoE" title="pni::image_channel_info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::image_channel_info</span></code></a><a class="headerlink" href="#pni-image-channel-info" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni18image_channel_infoE">
+<span id="_CPPv3N3pni18image_channel_infoE"></span><span id="_CPPv2N3pni18image_channel_infoE"></span><span id="pni::image_channel_info"></span><span class="target" id="classpni_1_1image__channel__info"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">image_channel_info</code><a class="headerlink" href="#_CPPv4N3pni18image_channel_infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>image channel information class </p>
+<p>image_channle_info holds information specific to a particular image channel. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni18image_channel_info18image_channel_infoEv">
+<span id="_CPPv3N3pni18image_channel_info18image_channel_infoEv"></span><span id="_CPPv2N3pni18image_channel_info18image_channel_infoEv"></span><span id="pni::image_channel_info::image_channel_info"></span><span class="target" id="classpni_1_1image__channel__info_1ad75f7b3fa85cdea65edfa61cb4c64132"></span><code class="sig-name descname">image_channel_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18image_channel_info18image_channel_infoEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni18image_channel_info18image_channel_infoERKN3pni9type_id_tE6size_t">
+<span id="_CPPv3N3pni18image_channel_info18image_channel_infoERKN3pni9type_id_tE6size_t"></span><span id="_CPPv2N3pni18image_channel_info18image_channel_infoERKN3pni9type_id_tE6size_t"></span><span id="pni::image_channel_info::image_channel_info__pni::type_id_tCR.s"></span><span class="target" id="classpni_1_1image__channel__info_1a62f07d8a6928e69af28996ed72d58779"></span><code class="sig-name descname">image_channel_info</code><span class="sig-paren">(</span><em class="property">const</em> pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> &amp;<em>id</em>, size_t <em>bits</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18image_channel_info18image_channel_infoERKN3pni9type_id_tE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>standard constructor </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code>: Typd id for the channel </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bits</span></code>: number of bits used to store channel data </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni18image_channel_info7type_idEv">
+<span id="_CPPv3NK3pni18image_channel_info7type_idEv"></span><span id="_CPPv2NK3pni18image_channel_info7type_idEv"></span><span id="pni::image_channel_info::type_idC"></span><span class="target" id="classpni_1_1image__channel__info_1a19d4131b77708e08529480e2e66b935e"></span>pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-name descname">type_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18image_channel_info7type_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get type ID </p>
+<p>Returns the TypeID for the channel described by this object. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type ID </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni18image_channel_info4bitsEv">
+<span id="_CPPv3NK3pni18image_channel_info4bitsEv"></span><span id="_CPPv2NK3pni18image_channel_info4bitsEv"></span><span id="pni::image_channel_info::bitsC"></span><span class="target" id="classpni_1_1image__channel__info_1af1f330c7b7cf4344666de3ade4d5ed69"></span>size_t <code class="sig-name descname">bits</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18image_channel_info4bitsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get bits </p>
+<p>Return the number of bits used to store this channels data <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of bits </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="reader-classes">
+<h2>Reader classes<a class="headerlink" href="#reader-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pni-image-reader">
+<h3><a class="reference internal" href="#_CPPv4N3pni12image_readerE" title="pni::image_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::image_reader</span></code></a><a class="headerlink" href="#pni-image-reader" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni12image_readerE">
+<span id="_CPPv3N3pni12image_readerE"></span><span id="_CPPv2N3pni12image_readerE"></span><span id="pni::image_reader"></span><span class="target" id="classpni_1_1image__reader"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">image_reader</code> : <em class="property">public</em> pni::data_reader<a class="headerlink" href="#_CPPv4N3pni12image_readerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>base class for image readers </p>
+<p>The <a class="reference internal" href="#classpni_1_1image__reader"><span class="std std-ref">image_reader</span></a> class provides the basic functionality for all other image readers. It opens the file and provides a stream from which to read data. ImageReader objects cannot be copied or copy-assigned. However, they can be moved using std::move.</p>
+<p>Like data_reader (from which it is derived) an ImageReader object cannot be instantiated using this class. All constructors and assignment operators are thus protected making them only available to derived classes. </p>
+<p>Subclassed by <a class="reference internal" href="#classpni_1_1cbf__reader"><span class="std std-ref">pni::cbf_reader</span></a>, <a class="reference internal" href="#classpni_1_1tiff__reader"><span class="std std-ref">pni::tiff_reader</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni12image_readerD0Ev">
+<span id="_CPPv3N3pni12image_readerD0Ev"></span><span id="_CPPv2N3pni12image_readerD0Ev"></span><span id="pni::image_reader::~image_reader"></span><span class="target" id="classpni_1_1image__reader_1aaecf77f577dae6be6b74186fdfc864f9"></span><code class="sig-name descname">~image_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni12image_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni12image_reader7nimagesEv">
+<span id="_CPPv3NK3pni12image_reader7nimagesEv"></span><span id="_CPPv2NK3pni12image_reader7nimagesEv"></span><span id="pni::image_reader::nimagesC"></span><span class="target" id="classpni_1_1image__reader_1a246e6f2067472548c01db5a4e8c5d748"></span>size_t <code class="sig-name descname">nimages</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK3pni12image_reader7nimagesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get number of images </p>
+<p>Returns the number of images stored in the file. This methods reflects the fact that many image formats can hold more than one image in a single file (CBF, TIFF). Although this feature is hardly used for experiments it should be taken into account. This is a virtual function which must be implemented by the concrete reader classes.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of images </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni12image_reader4infoE6size_t">
+<span id="_CPPv3NK3pni12image_reader4infoE6size_t"></span><span id="_CPPv2NK3pni12image_reader4infoE6size_t"></span><span id="pni::image_reader::info__sC"></span><span class="target" id="classpni_1_1image__reader_1a4226283d4d36aa1bc1f0ec800a914f2c"></span><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> <code class="sig-name descname">info</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em> = 0<a class="headerlink" href="#_CPPv4NK3pni12image_reader4infoE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get image info </p>
+<p>Return an instance of ImageInfo with the information of image i in the image stack. This is a virtual function which must be implemented by the concrete reader classes.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>vector with ImageInfo objects </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni12image_reader5imageE6ArrayT6size_t6size_t">
+<span id="_CPPv3I0EN3pni12image_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni12image_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ArrayT</code>&gt;<br /><span class="target" id="classpni_1_1image__reader_1a6a842c1c1d68cdf5a007fc9878e42a1a"></span><a class="reference internal" href="#_CPPv4I0EN3pni12image_reader5imageE6ArrayT6size_t6size_t" title="pni::image_reader::image::ArrayT">ArrayT</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni12image_reader5imageE6ArrayT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>method to read a single channel </p>
+<p>This method returns an object determined by ArrayType holding the data from channel c (default is 0) of image i in the file. <p> This method must be implemented by all child classes of ImageReader. It is assumed that the method will allocate enough memory and configure the returning object appropriately.</p>
+</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of ArrayType holding the channel data </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image in the file </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: (default = 0) image channel to read </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni12image_reader5imageEvR6ArrayT6size_t6size_t">
+<span id="_CPPv3I0EN3pni12image_reader5imageER6ArrayT6size_t6size_t"></span><span id="_CPPv2I0EN3pni12image_reader5imageER6ArrayT6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ArrayT</code>&gt;<br /><span class="target" id="classpni_1_1image__reader_1a3bfb3e1dd44b53871d9f2f4471cac984"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni12image_reader5imageEvR6ArrayT6size_t6size_t" title="pni::image_reader::image::ArrayT">ArrayT</a> &amp;<em>array</em>, size_t <em>i</em>, size_t <em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni12image_reader5imageEvR6ArrayT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>method to read a single image channel </p>
+<p>This method reads the data from channle c (default = 0) of image i in the file and stores it in an Array template supplied by the user. The array must provide enough space to hold the data otherwise exceptions will be thrown. The addvantage of this method is that it does not waste time with memory allocation. It is thus useful in cases where data from many files of same size must be read.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: array where to store the data </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image in the file </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: (default = 0) index of the channel from which to read data. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pni-tiff-reader">
+<h3><a class="reference internal" href="#_CPPv4N3pni11tiff_readerE" title="pni::tiff_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::tiff_reader</span></code></a><a class="headerlink" href="#pni-tiff-reader" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni11tiff_readerE">
+<span id="_CPPv3N3pni11tiff_readerE"></span><span id="_CPPv2N3pni11tiff_readerE"></span><span id="pni::tiff_reader"></span><span class="target" id="classpni_1_1tiff__reader"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">tiff_reader</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni12image_readerE" title="pni::image_reader">image_reader</a><a class="headerlink" href="#_CPPv4N3pni11tiff_readerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>TIFF file reader. </p>
+<p>TIFFReader is an implementation of the Reader class for reading TIFF image files. Actually only uncompressed TIFF images are supported. The copy constructor and the copy assignment operator are deleted to prevent copy construction of this object. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_reader11tiff_readerEv">
+<span id="_CPPv3N3pni11tiff_reader11tiff_readerEv"></span><span id="_CPPv2N3pni11tiff_reader11tiff_readerEv"></span><span id="pni::tiff_reader::tiff_reader"></span><span class="target" id="classpni_1_1tiff__reader_1a10a1d50d1ce674264027ad680be6372d"></span><code class="sig-name descname">tiff_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_reader11tiff_readerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_reader11tiff_readerERR11tiff_reader">
+<span id="_CPPv3N3pni11tiff_reader11tiff_readerERR11tiff_reader"></span><span id="_CPPv2N3pni11tiff_reader11tiff_readerERR11tiff_reader"></span><span id="pni::tiff_reader::tiff_reader__tiff_readerRR"></span><span class="target" id="classpni_1_1tiff__reader_1ad035a6dec093f03f1c901a50c06fbb67"></span><code class="sig-name descname">tiff_reader</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni11tiff_reader11tiff_readerERR11tiff_reader" title="pni::tiff_reader::tiff_reader">tiff_reader</a> &amp;&amp;<em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_reader11tiff_readerERR11tiff_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move constructor </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code>: reader from which to move data to the new instance </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_reader11tiff_readerERKN3pni6stringE">
+<span id="_CPPv3N3pni11tiff_reader11tiff_readerERKN3pni6stringE"></span><span id="_CPPv2N3pni11tiff_reader11tiff_readerERKN3pni6stringE"></span><span id="pni::tiff_reader::tiff_reader__pni::stringCR"></span><span class="target" id="classpni_1_1tiff__reader_1adf4e2eff8b2b78cd8ffea4db04a9c4c2"></span><code class="sig-name descname">tiff_reader</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_reader11tiff_readerERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>standard constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_reader11tiff_readerERK11tiff_reader">
+<span id="_CPPv3N3pni11tiff_reader11tiff_readerERK11tiff_reader"></span><span id="_CPPv2N3pni11tiff_reader11tiff_readerERK11tiff_reader"></span><span id="pni::tiff_reader::tiff_reader__tiff_readerCR"></span><span class="target" id="classpni_1_1tiff__reader_1ac625a4b771baf34decae114042c6b728"></span><code class="sig-name descname">tiff_reader</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni11tiff_reader11tiff_readerERK11tiff_reader" title="pni::tiff_reader::tiff_reader">tiff_reader</a>&amp;<span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni11tiff_reader11tiff_readerERK11tiff_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor is deleted </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_readerD0Ev">
+<span id="_CPPv3N3pni11tiff_readerD0Ev"></span><span id="_CPPv2N3pni11tiff_readerD0Ev"></span><span id="pni::tiff_reader::~tiff_reader"></span><span class="target" id="classpni_1_1tiff__reader_1a1e260682498ff08c8384a664836dc0f8"></span><code class="sig-name descname">~tiff_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_readeraSERR11tiff_reader">
+<span id="_CPPv3N3pni11tiff_readeraSERR11tiff_reader"></span><span id="_CPPv2N3pni11tiff_readeraSERR11tiff_reader"></span><span id="pni::tiff_reader::assign-operator__tiff_readerRR"></span><span class="target" id="classpni_1_1tiff__reader_1a2489ddc486915139ffa8fe514b67e457"></span><a class="reference internal" href="#_CPPv4N3pni11tiff_readerE" title="pni::tiff_reader">tiff_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni11tiff_readerE" title="pni::tiff_reader">tiff_reader</a> &amp;&amp;<em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_readeraSERR11tiff_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move assignment operator </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_readeraSERK11tiff_reader">
+<span id="_CPPv3N3pni11tiff_readeraSERK11tiff_reader"></span><span id="_CPPv2N3pni11tiff_readeraSERK11tiff_reader"></span><span id="pni::tiff_reader::assign-operator__tiff_readerCR"></span><span class="target" id="classpni_1_1tiff__reader_1ae54aab0c498c682797e7fb8375b924ae"></span><a class="reference internal" href="#_CPPv4N3pni11tiff_readerE" title="pni::tiff_reader">tiff_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni11tiff_readerE" title="pni::tiff_reader">tiff_reader</a> &amp;<em>r</em><span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni11tiff_readeraSERK11tiff_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy assignment operator is deleted </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni11tiff_reader7nimagesEv">
+<span id="_CPPv3NK3pni11tiff_reader7nimagesEv"></span><span id="_CPPv2NK3pni11tiff_reader7nimagesEv"></span><span id="pni::tiff_reader::nimagesC"></span><span class="target" id="classpni_1_1tiff__reader_1af9eef62d66c1fd5d56cfa51d716a1b8d"></span>size_t <code class="sig-name descname">nimages</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni11tiff_reader7nimagesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get number of images </p>
+<p>Return the number of images stored in the image file. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of images </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni11tiff_reader4infoE6size_t">
+<span id="_CPPv3NK3pni11tiff_reader4infoE6size_t"></span><span id="_CPPv2NK3pni11tiff_reader4infoE6size_t"></span><span id="pni::tiff_reader::info__sC"></span><span class="target" id="classpni_1_1tiff__reader_1a19f0b1237653bd2f4d8f8ce0a76eda61"></span><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> <code class="sig-name descname">info</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni11tiff_reader4infoE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get ImageInfo </p>
+<p>Return an instance of ImageInfo for image i stored in the file. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of ImageInfo for the requested image </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_reader4openEv">
+<span id="_CPPv3N3pni11tiff_reader4openEv"></span><span id="_CPPv2N3pni11tiff_reader4openEv"></span><span id="pni::tiff_reader::open"></span><span class="target" id="classpni_1_1tiff__reader_1a357fbe26a37f03511fd8e54fa48f7e69"></span>void <code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_reader4openEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>open the file </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_reader5closeEv">
+<span id="_CPPv3N3pni11tiff_reader5closeEv"></span><span id="_CPPv2N3pni11tiff_reader5closeEv"></span><span id="pni::tiff_reader::close"></span><span class="target" id="classpni_1_1tiff__reader_1a3d4e03f8f3f38de02251b2e131366814"></span>void <code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_reader5closeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>close the file </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni11tiff_reader5imageE10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni11tiff_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni11tiff_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1tiff__reader_1a0d0e1a85d26f531f05d2ebce861395c5"></span><a class="reference internal" href="#_CPPv4I0EN3pni11tiff_reader5imageE10ContainerT6size_t6size_t" title="pni::tiff_reader::image::ContainerT">ContainerT</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni11tiff_reader5imageE10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read image data </p>
+<p>Template method to read image data from the file. The returns an instance of the the template Array&lt;T,BaseT&gt; and does all the configuration and memory allocation work for this object. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of an array template </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__allocation__error"><span class="std std-ref"><span class="pre">memory_allocation_error</span></span></a></code>: if array allocation fails </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image in the file </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: index of the image channel to read </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni11tiff_reader5imageEvR10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni11tiff_reader5imageER10ContainerT6size_t6size_t"></span><span id="_CPPv2I0EN3pni11tiff_reader5imageER10ContainerT6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1tiff__reader_1ae5771091255ce4f78710546cb3187708"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni11tiff_reader5imageEvR10ContainerT6size_t6size_t" title="pni::tiff_reader::image::ContainerT">ContainerT</a> &amp;<em>data</em>, size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni11tiff_reader5imageEvR10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read image data </p>
+<p>Reads the image data from the file and stores it in a user suppliedb array object. The method checks if the arrays shape and allocation state fits the requirements of the image. The advantage of this method is that memory allocation must be done only once before this method is called. This increases performance dramatically in particular if many images of equal size should be read.</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1size__mismatch__error"><span class="std std-ref"><span class="pre">size_mismatch_error</span></span></a></code>: if the size of the container does not match the number of pixels stored in the image </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: instance of ContainerT where data will be stored </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image in the file </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: index of the image channel to read </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Friends</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni11tiff_readerlsERNSt7ostreamERK11tiff_reader">
+<span id="_CPPv3N3pni11tiff_readerlsERNSt7ostreamERK11tiff_reader"></span><span id="_CPPv2N3pni11tiff_readerlsERNSt7ostreamERK11tiff_reader"></span><span id="pni::tiff_reader::lshift-operator__osR.tiff_readerCR"></span><span class="target" id="classpni_1_1tiff__reader_1a316959c103a604d078c471286cced6ac"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni11tiff_readerE" title="pni::tiff_reader">tiff_reader</a> &amp;<em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11tiff_readerlsERNSt7ostreamERK11tiff_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>output operator of an TIFFReader object </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pni-cbf-reader">
+<h3><a class="reference internal" href="#_CPPv4N3pni10cbf_readerE" title="pni::cbf_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::cbf_reader</span></code></a><a class="headerlink" href="#pni-cbf-reader" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni10cbf_readerE">
+<span id="_CPPv3N3pni10cbf_readerE"></span><span id="_CPPv2N3pni10cbf_readerE"></span><span id="pni::cbf_reader"></span><span class="target" id="classpni_1_1cbf__reader"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">cbf_reader</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni12image_readerE" title="pni::image_reader">image_reader</a><a class="headerlink" href="#_CPPv4N3pni10cbf_readerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>base clase for CBF readers </p>
+<p>CBFReader is the base class for all readers of data stored in binary CIF format. Although CBF is standardized by the ICUR the guys from Dectris (the vendor of the Pilatus detector) use a kind of dialect which must be treated in a slightly different way. The field _header_convention in the class indicates whether or not the header is in standard CBF format or in the Dectris dialect.</p>
+<p>Reading a CBF file is a two step process:<ul class="simple">
+<li><p>the header is read and the information stored there kept in in a CIFBinaryHeader object</p></li>
+<li><p>the binary data is read from the stream using a CBFBinStreamReader object The header information contains enough information to decide which binary reader to use and to construct the data objects which will hold the data read from the file. From such a point of view the header object can be consideres as a factory for the binary readers and the array objects holding the data. </p></li>
+</ul>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_reader10cbf_readerEv">
+<span id="_CPPv3N3pni10cbf_reader10cbf_readerEv"></span><span id="_CPPv2N3pni10cbf_reader10cbf_readerEv"></span><span id="pni::cbf_reader::cbf_reader"></span><span class="target" id="classpni_1_1cbf__reader_1a492a02945407759534443228f9e2f130"></span><code class="sig-name descname">cbf_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10cbf_reader10cbf_readerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_reader10cbf_readerERKN3pni6stringE">
+<span id="_CPPv3N3pni10cbf_reader10cbf_readerERKN3pni6stringE"></span><span id="_CPPv2N3pni10cbf_reader10cbf_readerERKN3pni6stringE"></span><span id="pni::cbf_reader::cbf_reader__pni::stringCR"></span><span class="target" id="classpni_1_1cbf__reader_1ad18251b736cef6496566b982d257868c"></span><code class="sig-name descname">cbf_reader</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10cbf_reader10cbf_readerERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>construct reader object </p>
+<p>The name of the CBFFile is passed as a String object. During instantiation of class the file is parsed. Throws an exception if the flavor of the CBF file cannot be deduced from the header. <dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1file__error"><span class="std std-ref"><span class="pre">file_error</span></span></a></code>: if the CBF flavor cannot be deduced </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fname</span></code>: name of the file </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_readerD0Ev">
+<span id="_CPPv3N3pni10cbf_readerD0Ev"></span><span id="_CPPv2N3pni10cbf_readerD0Ev"></span><span id="pni::cbf_reader::~cbf_reader"></span><span class="target" id="classpni_1_1cbf__reader_1a38457f4f5df8138c29b17edb059e6cef"></span><code class="sig-name descname">~cbf_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10cbf_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>destructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_reader10cbf_readerERK10cbf_reader">
+<span id="_CPPv3N3pni10cbf_reader10cbf_readerERK10cbf_reader"></span><span id="_CPPv2N3pni10cbf_reader10cbf_readerERK10cbf_reader"></span><span id="pni::cbf_reader::cbf_reader__cbf_readerCR"></span><span class="target" id="classpni_1_1cbf__reader_1a37a0b9649f0169cd81601ec6babe5ac8"></span><code class="sig-name descname">cbf_reader</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10cbf_reader10cbf_readerERK10cbf_reader" title="pni::cbf_reader::cbf_reader">cbf_reader</a> &amp;<em>r</em><span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni10cbf_reader10cbf_readerERK10cbf_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>the copy constructor is deleted </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_readeraSERK10cbf_reader">
+<span id="_CPPv3N3pni10cbf_readeraSERK10cbf_reader"></span><span id="_CPPv2N3pni10cbf_readeraSERK10cbf_reader"></span><span id="pni::cbf_reader::assign-operator__cbf_readerCR"></span><span class="target" id="classpni_1_1cbf__reader_1a6e25f1d9c096745ca131db1273bce180"></span><a class="reference internal" href="#_CPPv4N3pni10cbf_readerE" title="pni::cbf_reader">cbf_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10cbf_readerE" title="pni::cbf_reader">cbf_reader</a> &amp;<em>r</em><span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni10cbf_readeraSERK10cbf_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>the copy assignment operator is deleted </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_readeraSERR10cbf_reader">
+<span id="_CPPv3N3pni10cbf_readeraSERR10cbf_reader"></span><span id="_CPPv2N3pni10cbf_readeraSERR10cbf_reader"></span><span id="pni::cbf_reader::assign-operator__cbf_readerRR"></span><span class="target" id="classpni_1_1cbf__reader_1abfdc320c6eeba13f1db7adbdd1d3a3f7"></span><a class="reference internal" href="#_CPPv4N3pni10cbf_readerE" title="pni::cbf_reader">cbf_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10cbf_readerE" title="pni::cbf_reader">cbf_reader</a> &amp;&amp;<em>r</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10cbf_readeraSERR10cbf_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move assignment </p>
+<p>Use compiler provided default implementation here </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_reader5closeEv">
+<span id="_CPPv3N3pni10cbf_reader5closeEv"></span><span id="_CPPv2N3pni10cbf_reader5closeEv"></span><span id="pni::cbf_reader::close"></span><span class="target" id="classpni_1_1cbf__reader_1aaef58acf842c1d669097d7a7c87b3f32"></span>void <code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10cbf_reader5closeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>close the file </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10cbf_reader4openEv">
+<span id="_CPPv3N3pni10cbf_reader4openEv"></span><span id="_CPPv2N3pni10cbf_reader4openEv"></span><span id="pni::cbf_reader::open"></span><span class="target" id="classpni_1_1cbf__reader_1af647d5e6e5a72de91254f81408e9152d"></span>void <code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10cbf_reader4openEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>open file </p>
+<p>Opens the file given by filename. <dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FileError</span></code>: in case of errors </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10cbf_reader7nimagesEv">
+<span id="_CPPv3NK3pni10cbf_reader7nimagesEv"></span><span id="_CPPv2NK3pni10cbf_reader7nimagesEv"></span><span id="pni::cbf_reader::nimagesC"></span><span class="target" id="classpni_1_1cbf__reader_1ab54e46b30eb0ec7584f1ef93734cb529"></span>size_t <code class="sig-name descname">nimages</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10cbf_reader7nimagesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get number of images </p>
+<p>Returns the number of images stored in the file. This methods reflects the fact that many image formats can hold more than one image in a single file (CBF, TIFF). Although this feature is hardly used for experiments it should be taken into account. This is a virtual function which must be implemented by the concrete reader classes.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of images </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni10cbf_reader4infoE6size_t">
+<span id="_CPPv3NK3pni10cbf_reader4infoE6size_t"></span><span id="_CPPv2NK3pni10cbf_reader4infoE6size_t"></span><span id="pni::cbf_reader::info__sC"></span><span class="target" id="classpni_1_1cbf__reader_1ad466a6391e17c9d8dd0dde53ee4c1d45"></span><a class="reference internal" href="#_CPPv4N3pni10image_infoE" title="pni::image_info">image_info</a> <code class="sig-name descname">info</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10cbf_reader4infoE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get image info </p>
+<p>Return an instance of ImageInfo with the information of image i in the image stack. This is a virtual function which must be implemented by the concrete reader classes.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>vector with ImageInfo objects </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: index of the image </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni10cbf_reader5imageE10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni10cbf_reader5imageE6size_t6size_t"></span><span id="_CPPv2I0EN3pni10cbf_reader5imageE6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1cbf__reader_1a4c0b1f081f45a9996981633dccbd3242"></span><a class="reference internal" href="#_CPPv4I0EN3pni10cbf_reader5imageE10ContainerT6size_t6size_t" title="pni::cbf_reader::image::ContainerT">ContainerT</a> <code class="sig-name descname">image</code><span class="sig-paren">(</span>size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10cbf_reader5imageE10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read image </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of ContainerT with image data </p>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type for storing data</p></li>
+</ul>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__allocation__error"><span class="std std-ref"><span class="pre">memory_allocation_error</span></span></a></code>: if container allocation failes </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1file__error"><span class="std std-ref"><span class="pre">file_error</span></span></a></code>: in case of IO errors</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: image number to read </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: channel to read (default = 0)</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni10cbf_reader5imageEvR10ContainerT6size_t6size_t">
+<span id="_CPPv3I0EN3pni10cbf_reader5imageER10ContainerT6size_t6size_t"></span><span id="_CPPv2I0EN3pni10cbf_reader5imageER10ContainerT6size_t6size_t"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1cbf__reader_1a883627407a9d003ee54f69a6498e9091"></span>void <code class="sig-name descname">image</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN3pni10cbf_reader5imageEvR10ContainerT6size_t6size_t" title="pni::cbf_reader::image::ContainerT">ContainerT</a> &amp;<em>array</em>, size_t <em>i</em>, size_t <em>c</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10cbf_reader5imageEvR10ContainerT6size_t6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read data from detector file </p>
+<p>Reads a single image from a detector file and stores it in an container of type ContainerT.</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1file__error"><span class="std std-ref"><span class="pre">file_error</span></span></a></code>: if case of IO errors </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1size__mismatch__error"><span class="std std-ref"><span class="pre">size_mismatch_error</span></span></a></code>: if container and image size do not match</p></li>
+</ul>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type holding the image data </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: instance of ContainerT where data will be stored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: image number </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: channel number </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Image reader API</a><ul>
+<li><a class="reference internal" href="#utility-classes">Utility classes</a><ul>
+<li><a class="reference internal" href="#pni-image-info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::image_info</span></code></a></li>
+<li><a class="reference internal" href="#pni-image-channel-info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::image_channel_info</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reader-classes">Reader classes</a><ul>
+<li><a class="reference internal" href="#pni-image-reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::image_reader</span></code></a></li>
+<li><a class="reference internal" href="#pni-tiff-reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::tiff_reader</span></code></a></li>
+<li><a class="reference internal" href="#pni-cbf-reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::cbf_reader</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ascii_spreadsheet.html"
+                        title="previous chapter">ASCII spreadsheet API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus.html"
+                        title="next chapter">NeXus API</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="ASCII spreadsheet API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Image reader API</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

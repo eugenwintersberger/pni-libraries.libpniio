@@ -1,0 +1,289 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASCII parsers &#8212; libpninexus 3.0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ASCII spreadsheet API" href="ascii_spreadsheet.html" />
+    <link rel="prev" title="ASCII IO API" href="ascii.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="ASCII spreadsheet API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ascii.html" title="ASCII IO API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ascii.html" accesskey="U">ASCII IO API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ASCII parsers</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ascii-parsers">
+<h1>ASCII parsers<a class="headerlink" href="#ascii-parsers" title="Permalink to this headline">¶</a></h1>
+<p>The basic template for all parsers is <a class="reference internal" href="#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a></p>
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3pni6parserE">
+<span id="_CPPv3I0EN3pni6parserE"></span><span id="_CPPv2I0EN3pni6parserE"></span>template&lt;typename <code class="sig-name descname">T</code>&gt;<br /><span class="target" id="classpni_1_1parser"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">parser</code><a class="headerlink" href="#_CPPv4I0EN3pni6parserE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>parser for primitive types </p>
+<p>This version of the parser structure provides a default parsing implementation for primitive types. The aim of this class is to hide all the complexity of the boost::spirit::qi parsers. In addition it catches all spirit exceptions and wraps them into a <a class="reference internal" href="exceptions.html#classpni_1_1parser__error"><span class="std std-ref">parser_error</span></a> exception.</p>
+<p>Use this parser to parse a single primitive value from a string. The input data must be trimmed - so no leading or trailing blanks are allowed. The string is supposed to end with the last character assembling the value to parse.</p>
+<p>By default the output iterator is a const string iterator.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: primitive data type </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni6parserclERKN3pni6stringE">
+<span id="_CPPv3NK3pni6parserclERKN3pni6stringE"></span><span id="_CPPv2NK3pni6parserclERKN3pni6stringE"></span><span id="pni::parser::call-operator__pni::stringCRC"></span><span class="target" id="classpni_1_1parser_1aff0ed37b0a0f6656b7c9a1d305a9af3f"></span>result_type <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>data</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni6parserclERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>parser primitive type </p>
+<p>Parses the input string and returns an instance of a primitive type. In case of errors <a class="reference internal" href="exceptions.html#classpni_1_1parser__error"><span class="std std-ref">parser_error</span></a> is thrown.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of the primitive type </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="exceptions.html#classpni_1_1parser__error"><span class="std std-ref"><span class="pre">parser_error</span></span></a></code>: in case of any problems </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: the string with input data </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<div class="section" id="parser-specializations">
+<h2>Parser specializations<a class="headerlink" href="#parser-specializations" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4IEN3pni6parserIN3pni5valueEEE">
+<span id="_CPPv3IEN3pni6parserIN3pni5valueEEE"></span><span id="_CPPv2IEN3pni6parserIN3pni5valueEEE"></span>template&lt;&gt;<br /><span class="target" id="classpni_1_1parser_3_01pni_1_1value_01_4"></span><em class="property">class </em><code class="sig-name descname">parser</code>&lt;pni::<a class="reference internal" href="core_type_erasure.html#_CPPv4N3pni5valueE" title="pni::value">value</a>&gt;<a class="headerlink" href="#_CPPv4IEN3pni6parserIN3pni5valueEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>parser for general values </p>
+<p>This is a specialization of the parser class for the value type erasure. The parser tries to identify the value provided by the data string and converts it to the appropriate type which will then be wrapped in an instance of <a class="reference internal" href="core_type_erasure.html#classpni_1_1value"><span class="std std-ref">pni::value</span></a>.</p>
+<p>The class currently supports the following types<ul class="simple">
+<li><p>64Bit integer</p></li>
+<li><p>64Bit floating point</p></li>
+<li><p>64Bit complex floats</p></li>
+<li><p>and strings </p></li>
+</ul>
+</p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4IEN3pni6parserIN3pni6bool_tEEE">
+<span id="_CPPv3IEN3pni6parserIN3pni6bool_tEEE"></span><span id="_CPPv2IEN3pni6parserIN3pni6bool_tEEE"></span>template&lt;&gt;<br /><span class="target" id="classpni_1_1parser_3_01pni_1_1bool__t_01_4"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">parser</code>&lt;pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni6bool_tE" title="pni::bool_t">bool_t</a>&gt;<a class="headerlink" href="#_CPPv4IEN3pni6parserIN3pni6bool_tEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>parser specialization for bool values </p>
+<p>This specialization of the parser template reads boolean values from a string. The parser uses regular expressions to distinguish between strings representing <em>true</em> and <em>false</em>.</p>
+<p>When instantiated using the default constructor</p>
+<p><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TRUE</span></code>, <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">True</span></code> are interpreted as <em>true</em></p></li>
+<li><p>and <code class="docutils literal notranslate"><span class="pre">FALSE</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> as <em>false</em>. </p></li>
+</ul>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni6parserIN3pni6bool_tEE6parserEv">
+<span id="_CPPv3N3pni6parserIN3pni6bool_tEE6parserEv"></span><span id="_CPPv2N3pni6parserIN3pni6bool_tEE6parserEv"></span><span id="pni::parser:pni::bool_t:::parser"></span><span class="target" id="classpni_1_1parser_3_01pni_1_1bool__t_01_4_1a2c0850528893654220abdbfb893ca7f4"></span><code class="sig-name descname">parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6parserIN3pni6bool_tEE6parserEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+<p>With the default constructor the following regular expressions are used to distinguish between true and false</p>
+<p><ul class="simple">
+<li><p>for <em>true</em> - <code class="docutils literal notranslate"><span class="pre">^T(rue|RUE)|true|1$</span></code></p></li>
+<li><p>for <em>false</em> - <code class="docutils literal notranslate"><span class="pre">^F(alse|ALSE)|false|0$</span></code> </p></li>
+</ul>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni6parserIN3pni6bool_tEE6parserERKN3pni6stringERKN3pni6stringE">
+<span id="_CPPv3N3pni6parserIN3pni6bool_tEE6parserERKN3pni6stringERKN3pni6stringE"></span><span id="_CPPv2N3pni6parserIN3pni6bool_tEE6parserERKN3pni6stringERKN3pni6stringE"></span><span id="pni::parser:pni::bool_t:::parser__pni::stringCR.pni::stringCR"></span><span class="target" id="classpni_1_1parser_3_01pni_1_1bool__t_01_4_1a975e371eda39167026e6b182a83ba94f"></span><code class="sig-name descname">parser</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>true_regex</em>, <em class="property">const</em> pni::string &amp;<em>false_regex</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6parserIN3pni6bool_tEE6parserERKN3pni6stringERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+<p>With this constructor the regular expressions used for <em>true</em> and <em>false</em> values can be customized.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">true_regex</span></code>: regular expression evaluating to true </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">false_regex</span></code>: regular expression evaluating to false </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4IEN3pni6parserIN3pni5sliceEEE">
+<span id="_CPPv3IEN3pni6parserIN3pni5sliceEEE"></span><span id="_CPPv2IEN3pni6parserIN3pni5sliceEEE"></span>template&lt;&gt;<br /><span class="target" id="classpni_1_1parser_3_01pni_1_1slice_01_4"></span><em class="property">class </em><code class="sig-name descname">parser</code>&lt;pni::<a class="reference internal" href="core_mdarray.html#_CPPv4N3pni5sliceE" title="pni::slice">slice</a>&gt;<a class="headerlink" href="#_CPPv4IEN3pni6parserIN3pni5sliceEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4IEN3pni6parserIN3pni6stringEEE">
+<span id="_CPPv3IEN3pni6parserIN3pni6stringEEE"></span><span id="_CPPv2IEN3pni6parserIN3pni6stringEEE"></span>template&lt;&gt;<br /><span class="target" id="classpni_1_1parser_3_01pni_1_1string_01_4"></span><em class="property">class </em><code class="sig-name descname">parser</code>&lt;pni::string&gt;<a class="headerlink" href="#_CPPv4IEN3pni6parserIN3pni6stringEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>parsing strings </p>
+<p>This specialization of the parser template parses strings form user input. Virtually this class does nothing it just passes the string provided by the user right through. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3pni6parserINSt6vectorI8ElementTEEEE">
+<span id="_CPPv3I0EN3pni6parserINSt6vectorI8ElementTEEEE"></span><span id="_CPPv2I0EN3pni6parserINSt6vectorI8ElementTEEEE"></span>template&lt;typename <code class="sig-name descname">ElementT</code>&gt;<br /><span class="target" id="classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">parser</code>&lt;std::vector&lt;<a class="reference internal" href="#_CPPv4I0EN3pni6parserINSt6vectorI8ElementTEEEE" title="pni::parser&lt;std::vector&lt;ElementT&gt;&gt;::ElementT">ElementT</a>&gt;&gt;<a class="headerlink" href="#_CPPv4I0EN3pni6parserINSt6vectorI8ElementTEEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>std::vector parser </p>
+<p>This parser reads a linear container of data from a string. The data type of the container is assumed to be homogeneous. This means that all elements must match with the parser selected for the element type.</p>
+<p>In their string representation container data is assumed to be embraced between a start and a stop token. The elements are assumed to be separated by a delimiter token.</p>
+<p>The container can be any STL compliant container type.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: the value type of the vector </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni6parserINSt6vectorI8ElementTEEE6parserERK19container_io_config">
+<span id="_CPPv3N3pni6parserINSt6vectorI8ElementTEEE6parserERK19container_io_config"></span><span id="_CPPv2N3pni6parserINSt6vectorI8ElementTEEE6parserERK19container_io_config"></span><span id="pni::parser:std::vector:ElementT::::parser__container_io_configCR"></span><span class="target" id="classpni_1_1parser_3_01std_1_1vector_3_01ElementT_01_4_01_4_1aed55b0f07ddc53aca860ec4a1d5e66d2"></span><code class="sig-name descname">parser</code><span class="sig-paren">(</span><em class="property">const</em> container_io_config &amp;<em>config</em> = container_io_config()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6parserINSt6vectorI8ElementTEEE6parserERK19container_io_config" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>constructor </p>
+<p>With this constructor a container IO configuration can be passed which determines the value seperator, start and stop symbols.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: reference to the IO configuration </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN3pni6parserINSt7complexI5BaseTEEEE">
+<span id="_CPPv3I0EN3pni6parserINSt7complexI5BaseTEEEE"></span><span id="_CPPv2I0EN3pni6parserINSt7complexI5BaseTEEEE"></span>template&lt;typename <code class="sig-name descname">BaseT</code>&gt;<br /><span class="target" id="classpni_1_1parser_3_01std_1_1complex_3_01BaseT_01_4_01_4"></span><em class="property">class </em><code class="sig-name descname">parser</code>&lt;std::complex&lt;<a class="reference internal" href="#_CPPv4I0EN3pni6parserINSt7complexI5BaseTEEEE" title="pni::parser&lt;std::complex&lt;BaseT&gt;&gt;::BaseT">BaseT</a>&gt;&gt;<a class="headerlink" href="#_CPPv4I0EN3pni6parserINSt7complexI5BaseTEEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>parser specialization for complex numbers </p>
+<p>This parser reads complex numbers from a string.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">BaseT</span></code>: base type for the complex number </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ASCII parsers</a><ul>
+<li><a class="reference internal" href="#parser-specializations">Parser specializations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ascii.html"
+                        title="previous chapter">ASCII IO API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ascii_spreadsheet.html"
+                        title="next chapter">ASCII spreadsheet API</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="ASCII spreadsheet API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ascii.html" title="ASCII IO API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="ascii.html" >ASCII IO API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ASCII parsers</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+<map id="pni::cbf_reader" name="pni::cbf_reader">
+<area shape="rect" id="node1" title="base clase for CBF readers" alt="" coords="1061,101,1169,127"/>
+<area shape="rect" id="node2" href="$classpni_1_1image__reader.html" title="base class for image readers" alt="" coords="798,71,923,98"/>
+<area shape="rect" id="node3" href="$classpni_1_1data__reader.html" title="base class for data readers" alt="" coords="563,71,677,98"/>
+<area shape="rect" id="node4" title=" " alt="" coords="282,5,421,47"/>
+<area shape="rect" id="node5" title=" " alt="" coords="311,71,391,98"/>
+<area shape="rect" id="node6" title=" " alt="" coords="23,64,150,105"/>
+<area shape="rect" id="node7" title=" " alt="" coords="783,123,939,164"/>
+<area shape="rect" id="node8" href="$classpni_1_1image__info.html" title="image information type" alt="" coords="565,130,675,157"/>
+<area shape="rect" id="node9" title=" " alt="" coords="273,123,429,164"/>
+<area shape="rect" id="node10" href="$classpni_1_1image__channel__info.html" title="image channel information class" alt="" coords="5,130,168,157"/>
+</map>

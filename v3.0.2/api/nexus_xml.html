@@ -1,0 +1,167 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeXus XML functions &#8212; libpninexus 3.0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Utility functions and classes" href="nexus_utils.html" />
+    <link rel="prev" title="Algorithms" href="nexus_algorithm.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_utils.html" title="Utility functions and classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_algorithm.html" title="Algorithms"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NeXus XML functions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nexus-xml-functions">
+<span id="nexus-api-xml"></span><h1>NeXus XML functions<a class="headerlink" href="#nexus-xml-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nexus-xml-create-from-file">
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::xml::create_from_file()</span></code><a class="headerlink" href="#nexus-xml-create-from-file" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE">
+<span id="_CPPv3N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE"></span><span id="_CPPv2N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE"></span><span id="pni::nexus::xml::create_from_file__hdf5::node::NodeCR.boost::filesystem::pathCR"></span><span class="target" id="namespacepni_1_1nexus_1_1xml_1a280b3d08f9f1eeb0dd95a8c435a1cc43"></span>PNINEXUS_EXPORT void <code class="sig-prename descclassname">pni::nexus::xml<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">create_from_file</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>parent</em>, <em class="property">const</em> boost::filesystem::path &amp;<em>xml_file</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus3xml16create_from_fileERKN4hdf54node4NodeERKN5boost10filesystem4pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create NeXus objects from an XML file </p>
+<p>Reads the content of an XML file and creates NeXus objects below a parent object.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent object </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xml_file</span></code>: reference to the path of the XML file </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="nexus-xml-create-from-string">
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::xml::create_from_string()</span></code><a class="headerlink" href="#nexus-xml-create-from-string" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE">
+<span id="_CPPv3N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE"></span><span id="_CPPv2N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE"></span><span id="pni::nexus::xml::create_from_string__hdf5::node::NodeCR.ssCR"></span><span class="target" id="namespacepni_1_1nexus_1_1xml_1aa63a377cb85ec2af3cba78987f20b9dc"></span>PNINEXUS_EXPORT void <code class="sig-prename descclassname">pni::nexus::xml<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">create_from_string</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Node &amp;<em>parent</em>, <em class="property">const</em> std::string &amp;<em>xml_data</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus3xml18create_from_stringERKN4hdf54node4NodeERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create NeXus objects from XML data </p>
+<p>Reads XML data from a string and creates NeXus objects from it below a parent object.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent object </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xml_data</span></code>: reference to the data string </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NeXus XML functions</a><ul>
+<li><a class="reference internal" href="#nexus-xml-create-from-file"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::xml::create_from_file()</span></code></a></li>
+<li><a class="reference internal" href="#nexus-xml-create-from-string"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::xml::create_from_string()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_algorithm.html"
+                        title="previous chapter">Algorithms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_utils.html"
+                        title="next chapter">Utility functions and classes</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_utils.html" title="Utility functions and classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_algorithm.html" title="Algorithms"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NeXus XML functions</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
