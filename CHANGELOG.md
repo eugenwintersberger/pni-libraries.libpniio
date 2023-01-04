@@ -1,5 +1,10 @@
 # ChangeLog
 
+## 3.0.2 - 2021-01-04
+- fixes for windows added ([#195](https://github.com/pni-libraries/libpniio/pull/195))
+- windows tests added ([#195](https://github.com/pni-libraries/libpniio/pull/195))
+- technical release for libh5cpp v0.5.2 (https://github.com/ess-dmsc/h5cpp/issues/616)
+
 ## 3.0.1 - 2022-05-24
 - technical release for libh5cpp v0.5.1 (https://github.com/ess-dmsc/h5cpp/issues/602)
 
