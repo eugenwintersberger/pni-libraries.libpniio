@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PNI NeXus Library
-   &#160;<span id="projectnumber">3.0.0</span>
+   &#160;<span id="projectnumber">3.0.2</span>
    </div>
    <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
@@ -102,17 +102,24 @@ $(document).ready(function(){initNavTree('value__parser_8hpp_source.html',''); i
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a0bbd77fde44eb0fe1d3c0ecb88c542cd">   57</a></span>&#160;        <a class="code" href="classpni_1_1parser.html">parser&lt;pni::float64&gt;</a>   <a class="code" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a0bbd77fde44eb0fe1d3c0ecb88c542cd">_float_parser</a>;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a8ff516427cb46f399d30922a1c71ca0a">   62</a></span>&#160;        <a class="code" href="classpni_1_1parser.html">parser&lt;pni::complex64&gt;</a> <a class="code" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a8ff516427cb46f399d30922a1c71ca0a">_complex_parser</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a50148cb01066d90e2b8012920e821f9c">   64</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="classpni_1_1value.html">result_type</a> = <a class="code" href="classpni_1_1value.html">pni::value</a>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a6fae3c80b19dcff0aa8b089668ca62f7">   66</a></span>&#160;        <a class="code" href="classpni_1_1value.html">result_type</a> <a class="code" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a6fae3c80b19dcff0aa8b089668ca62f7">operator()</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;data) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    };</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#pragma warning(push)</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#pragma warning(disable: 4251)</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a8ff516427cb46f399d30922a1c71ca0a">   66</a></span>&#160;        <a class="code" href="classpni_1_1parser.html">parser&lt;pni::complex64&gt;</a> <a class="code" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a8ff516427cb46f399d30922a1c71ca0a">_complex_parser</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#pragma warning(pop)</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a50148cb01066d90e2b8012920e821f9c">   71</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="classpni_1_1value.html">result_type</a> = <a class="code" href="classpni_1_1value.html">pni::value</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a6fae3c80b19dcff0aa8b089668ca62f7">   73</a></span>&#160;        <a class="code" href="classpni_1_1value.html">result_type</a> <a class="code" href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a6fae3c80b19dcff0aa8b089668ca62f7">operator()</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;data) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    };</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
 <div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1value_01_4_html_a0bbd77fde44eb0fe1d3c0ecb88c542cd"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a0bbd77fde44eb0fe1d3c0ecb88c542cd">pni::parser&lt; pni::value &gt;::_float_parser</a></div><div class="ttdeci">parser&lt; pni::float64 &gt; _float_parser</div><div class="ttdef"><b>Definition:</b> value_parser.hpp:57</div></div>
 <div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1value_01_4_html_a6fae3c80b19dcff0aa8b089668ca62f7"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a6fae3c80b19dcff0aa8b089668ca62f7">pni::parser&lt; pni::value &gt;::operator()</a></div><div class="ttdeci">result_type operator()(const pni::string &amp;data) const</div></div>
-<div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1value_01_4_html_a8ff516427cb46f399d30922a1c71ca0a"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a8ff516427cb46f399d30922a1c71ca0a">pni::parser&lt; pni::value &gt;::_complex_parser</a></div><div class="ttdeci">parser&lt; pni::complex64 &gt; _complex_parser</div><div class="ttdef"><b>Definition:</b> value_parser.hpp:62</div></div>
+<div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1value_01_4_html_a8ff516427cb46f399d30922a1c71ca0a"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1value_01_4.html#a8ff516427cb46f399d30922a1c71ca0a">pni::parser&lt; pni::value &gt;::_complex_parser</a></div><div class="ttdeci">parser&lt; pni::complex64 &gt; _complex_parser</div><div class="ttdef"><b>Definition:</b> value_parser.hpp:66</div></div>
 <div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1value_01_4_html_ac9c4984ab2d42d9c272121f80fdd9d50"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1value_01_4.html#ac9c4984ab2d42d9c272121f80fdd9d50">pni::parser&lt; pni::value &gt;::_int_parser</a></div><div class="ttdeci">parser&lt; pni::int64 &gt; _int_parser</div><div class="ttdef"><b>Definition:</b> value_parser.hpp:52</div></div>
 <div class="ttc" id="aclasspni_1_1parser_html"><div class="ttname"><a href="classpni_1_1parser.html">pni::parser</a></div><div class="ttdoc">parser for primitive types</div><div class="ttdef"><b>Definition:</b> parsers/parser.hpp:70</div></div>
 <div class="ttc" id="aclasspni_1_1value_html"><div class="ttname"><a href="classpni_1_1value.html">pni::value</a></div><div class="ttdoc">type erasure for POD data</div><div class="ttdef"><b>Definition:</b> value.hpp:49</div></div>
@@ -127,7 +134,7 @@ $(document).ready(function(){initNavTree('value__parser_8hpp_source.html',''); i
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_26da42604563804b6a08a5e543cb7dd5.html">parsers</a></li><li class="navelem"><a class="el" href="value__parser_8hpp.html">value_parser.hpp</a></li>
-    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed Jan 4 2023 10:55:05 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

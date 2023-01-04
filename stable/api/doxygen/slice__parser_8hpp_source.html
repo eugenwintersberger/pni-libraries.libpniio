@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PNI NeXus Library
-   &#160;<span id="projectnumber">3.0.0</span>
+   &#160;<span id="projectnumber">3.0.2</span>
    </div>
    <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
@@ -97,17 +97,24 @@ $(document).ready(function(){initNavTree('slice__parser_8hpp_source.html',''); i
 <div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html">   30</a></span>&#160;    <span class="keyword">class </span><a class="code" href="windows_8hpp.html#abcc7ce29ca8863e31e7945d1905a72f6">PNINEXUS_EXPORT</a> <a class="code" href="classpni_1_1parser.html">parser</a>&lt;<a class="code" href="namespacepni.html">pni</a>::<a class="code" href="classpni_1_1slice.html">slice</a>&gt;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">   36</a></span>&#160;        boost::regex <a class="code" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">_regexpr</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a69c1275733f26a600ab8f3f2c9a7c3b6">   38</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="classpni_1_1slice.html">result_type</a> = <a class="code" href="classpni_1_1slice.html">pni::slice</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a5e307220ee1a7599e2216f2a72872842">   40</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a5e307220ee1a7599e2216f2a72872842">parser</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a070e97c502d7916517a6edd847ec4f70">   42</a></span>&#160;        <a class="code" href="classpni_1_1slice.html">result_type</a> <a class="code" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a070e97c502d7916517a6edd847ec4f70">operator()</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;input) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#pragma warning(push)</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#pragma warning(disable: 4251)</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">   40</a></span>&#160;        boost::regex <a class="code" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">_regexpr</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#pragma warning(pop)</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a69c1275733f26a600ab8f3f2c9a7c3b6">   45</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="classpni_1_1slice.html">result_type</a> = <a class="code" href="classpni_1_1slice.html">pni::slice</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a5e307220ee1a7599e2216f2a72872842">   47</a></span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a5e307220ee1a7599e2216f2a72872842">parser</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a070e97c502d7916517a6edd847ec4f70">   49</a></span>&#160;        <a class="code" href="classpni_1_1slice.html">result_type</a> <a class="code" href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a070e97c502d7916517a6edd847ec4f70">operator()</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;input) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    };</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
 <div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1slice_01_4_html_a070e97c502d7916517a6edd847ec4f70"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a070e97c502d7916517a6edd847ec4f70">pni::parser&lt; pni::slice &gt;::operator()</a></div><div class="ttdeci">result_type operator()(const pni::string &amp;input) const</div></div>
-<div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1slice_01_4_html_a11a5bf00efb835a82ae6e6c1f8766c9f"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">pni::parser&lt; pni::slice &gt;::_regexpr</a></div><div class="ttdeci">boost::regex _regexpr</div><div class="ttdef"><b>Definition:</b> slice_parser.hpp:36</div></div>
+<div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1slice_01_4_html_a11a5bf00efb835a82ae6e6c1f8766c9f"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a11a5bf00efb835a82ae6e6c1f8766c9f">pni::parser&lt; pni::slice &gt;::_regexpr</a></div><div class="ttdeci">boost::regex _regexpr</div><div class="ttdef"><b>Definition:</b> slice_parser.hpp:40</div></div>
 <div class="ttc" id="aclasspni_1_1parser_3_01pni_1_1slice_01_4_html_a5e307220ee1a7599e2216f2a72872842"><div class="ttname"><a href="classpni_1_1parser_3_01pni_1_1slice_01_4.html#a5e307220ee1a7599e2216f2a72872842">pni::parser&lt; pni::slice &gt;::parser</a></div><div class="ttdeci">parser()</div></div>
 <div class="ttc" id="aclasspni_1_1parser_html"><div class="ttname"><a href="classpni_1_1parser.html">pni::parser</a></div><div class="ttdoc">parser for primitive types</div><div class="ttdef"><b>Definition:</b> parsers/parser.hpp:70</div></div>
 <div class="ttc" id="aclasspni_1_1slice_html"><div class="ttname"><a href="classpni_1_1slice.html">pni::slice</a></div><div class="ttdoc">index slice</div><div class="ttdef"><b>Definition:</b> slice.hpp:50</div></div>
@@ -121,7 +128,7 @@ $(document).ready(function(){initNavTree('slice__parser_8hpp_source.html',''); i
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_26da42604563804b6a08a5e543cb7dd5.html">parsers</a></li><li class="navelem"><a class="el" href="slice__parser_8hpp.html">slice_parser.hpp</a></li>
-    <li class="footer">Generated on Thu May 5 2022 14:48:19 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Wed Jan 4 2023 10:55:05 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
