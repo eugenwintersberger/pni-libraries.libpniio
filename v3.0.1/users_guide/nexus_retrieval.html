@@ -1,0 +1,165 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retrieving objects &#8212; libpninexus 3.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NeXus path’s: pni::nexus::Path" href="nexus_path.html" />
+    <link rel="prev" title="Creating objects" href="nexus_groups.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_path.html" title="NeXus path’s: pni::nexus::Path"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_groups.html" title="Creating objects"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Retrieving objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="retrieving-objects">
+<h1>Retrieving objects<a class="headerlink" href="#retrieving-objects" title="Permalink to this headline">¶</a></h1>
+<p>Objects (instances of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::node::Node</span></code>) within an HDF5 file are
+addressed by a path (instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">hdf5::Path</span></code>) which is a list
+of link names one has to follow to ultimately end up at the requested object.</p>
+<p>In the NeXus world, additionally to the name of a link, we also can search
+for objects  by their type or base class. This introduces a new kind of
+path: the <em>NeXus path</em> represented by the <a class="reference internal" href="../api/nexus_path.html#_CPPv4N3pni5nexus4PathE" title="pni::nexus::Path"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a>.
+A NeXus path allows to augument every link name with a particular base class
+type. So for instance, the HDF5 path to the <code class="docutils literal notranslate"><span class="pre">data</span></code> field in a detector group
+would read</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">/entry/instrument/detector/data</span></code></p>
+</div></blockquote>
+<p>the NeXus path would look like this</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">/entry:NXentry/instrument:NXinstrument/detector:NXdetector/data</span></code></p>
+</div></blockquote>
+<p>where the string after the <code class="docutils literal notranslate"><span class="pre">:</span></code> denotes the base class type of the particular
+group. Clearly we cannot add a type to a dataset name (like <code class="docutils literal notranslate"><span class="pre">data</span></code> here).
+In particular, the NeXus standard demands that there is only on instance
+of <code class="docutils literal notranslate"><span class="pre">NXinstrument</span></code> in an entry group. Thus, we could reduce the above path to</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">/entry:NXentry/:NXinstrument/detector:NXdetector/data</span></code></p>
+</div></blockquote>
+<p>and still would be able to uniquely address the requested data field.
+Furthermore, if there is only one detector available we could further reduce
+the path to</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">/entry:NXentry/:NXinstrument/:NXdetector/data</span></code></p>
+</div></blockquote>
+<p>The advantage of this path scheme is that the path becomes independent on
+the particular name of, for instance, the detector group. In some sense
+a NeXus path will ask for objects of a particular properties rather than
+for a particular name.
+However, this ability also has some disadvantage: a NeXus path does not
+necessarily address an object uniquely. Take the above example: if there is more
+than one detector in the instrument group from the above path we could not
+tell which detector group should be selected. However, as will be shown later,
+this property of a NeXus path can be exploited to our advantage.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nexus_path.html">NeXus path’s: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexus_search.html">Searching for objects</a></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_groups.html"
+                        title="previous chapter">Creating objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_path.html"
+                        title="next chapter">NeXus path’s: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_path.html" title="NeXus path’s: pni::nexus::Path"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_groups.html" title="Creating objects"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Retrieving objects</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

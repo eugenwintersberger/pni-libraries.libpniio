@@ -1,0 +1,263 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Factory classes &#8212; libpninexus 3.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Path classes and functions" href="nexus_path.html" />
+    <link rel="prev" title="File handling functions" href="nexus_file.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_path.html" title="Path classes and functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_file.html" title="File handling functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Factory classes</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="factory-classes">
+<h1>Factory classes<a class="headerlink" href="#factory-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pni-baseclassfactory">
+<h2><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::BaseClassFactory</span></code><a class="headerlink" href="#pni-baseclassfactory" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus16BaseClassFactoryE">
+<span id="_CPPv3N3pni5nexus16BaseClassFactoryE"></span><span id="_CPPv2N3pni5nexus16BaseClassFactoryE"></span><span id="pni::nexus::BaseClassFactory"></span><span class="target" id="classpni_1_1nexus_1_1BaseClassFactory"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">BaseClassFactory</code><a class="headerlink" href="#_CPPv4N3pni5nexus16BaseClassFactoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>base class factory </p>
+<p>Factory class for base classes. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus16BaseClassFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKNSt6stringERKN4hdf58property16LinkCreationListERKN4hdf58property17GroupCreationListERKN4hdf58property15GroupAccessListE">
+<span id="_CPPv3N3pni5nexus16BaseClassFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKNSt6stringERKN4hdf58property16LinkCreationListERKN4hdf58property17GroupCreationListERKN4hdf58property15GroupAccessListE"></span><span id="_CPPv2N3pni5nexus16BaseClassFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKNSt6stringERKN4hdf58property16LinkCreationListERKN4hdf58property17GroupCreationListERKN4hdf58property15GroupAccessListE"></span><span id="pni::nexus::BaseClassFactory::create__hdf5::node::GroupCR.hdf5::PathCR.ssCR.hdf5::property::LinkCreationListCR.hdf5::property::GroupCreationListCR.hdf5::property::GroupAccessListCR"></span><span class="target" id="classpni_1_1nexus_1_1BaseClassFactory_1a208c62321e08925ae7cd3eeb85475a78"></span>hdf5::node::Group <code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Group &amp;<em>parent</em>, <em class="property">const</em> hdf5::Path &amp;<em>path</em>, <em class="property">const</em> std::string &amp;<em>class_name</em>, <em class="property">const</em> hdf5::property::LinkCreationList &amp;<em>lcpl</em> = hdf5::property::LinkCreationList(), <em class="property">const</em> hdf5::property::GroupCreationList &amp;<em>gcpl</em> = hdf5::property::GroupCreationList(), <em class="property">const</em> hdf5::property::GroupAccessList &amp;<em>gapl</em> = hdf5::property::GroupAccessList()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus16BaseClassFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKNSt6stringERKN4hdf58property16LinkCreationListERKN4hdf58property17GroupCreationListERKN4hdf58property15GroupAccessListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create a new base class </p>
+<p>Create a new HDF5 group which satisfies the requirements of a base class. The function checks if the name of the group compiles with the NeXus standard.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an instance of hdf5::node::Group </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent group on which to create the base class </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: reference to the path to the base class </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">class_name</span></code>: reference to the class name of the base class </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lcpl</span></code>: optional reference to a link creation property list </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gcpl</span></code>: optional reference to a group creation property list </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gapl</span></code>: optional reference to a group access property list </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pni-fieldfactory">
+<h2><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::FieldFactory</span></code><a class="headerlink" href="#pni-fieldfactory" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus12FieldFactoryE">
+<span id="_CPPv3N3pni5nexus12FieldFactoryE"></span><span id="_CPPv2N3pni5nexus12FieldFactoryE"></span><span id="pni::nexus::FieldFactory"></span><span class="target" id="classpni_1_1nexus_1_1FieldFactory"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">FieldFactory</code><a class="headerlink" href="#_CPPv4N3pni5nexus12FieldFactoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>factory class for fields </p>
+<p>This factory class provides two static factory functions creating HDF5 datasets which comply to the NeXus rules. In particular these functions take care that the name of the dataset is compatible with the NeXus naming rules. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace9DataspaceERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE">
+<span id="_CPPv3N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace9DataspaceERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE"></span><span id="_CPPv2N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace9DataspaceERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE"></span><span id="pni::nexus::FieldFactory::create__hdf5::node::GroupCR.hdf5::PathCR.hdf5::datatype::DatatypeCR.hdf5::dataspace::DataspaceCR.hdf5::property::LinkCreationListCR.hdf5::property::DatasetCreationListCR.hdf5::property::DatasetAccessListCR"></span><span class="target" id="classpni_1_1nexus_1_1FieldFactory_1a2b69702862fd627dea0d7c658f6721e8"></span>hdf5::node::Dataset <code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Group &amp;<em>parent</em>, <em class="property">const</em> hdf5::Path &amp;<em>path</em>, <em class="property">const</em> hdf5::datatype::Datatype &amp;<em>type</em>, <em class="property">const</em> hdf5::dataspace::Dataspace &amp;<em>space</em>, <em class="property">const</em> hdf5::property::LinkCreationList &amp;<em>lcpl</em> = hdf5::property::LinkCreationList(), <em class="property">const</em> hdf5::property::DatasetCreationList &amp;<em>dcpl</em> = hdf5::property::DatasetCreationList(), <em class="property">const</em> hdf5::property::DatasetAccessList &amp;<em>acpl</em> = hdf5::property::DatasetAccessList()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace9DataspaceERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create a dataset </p>
+<p>Forwards all arguments to the hdf5::node::Dataset constructor after checking if the name of the field complies to the NeXus naming conventions. If this is not the case std::runtime_error is thrown.</p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent group </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: reference to the path of the new field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: reference to the data type of the new field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">space</span></code>: reference to the data space of the new field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lcpl</span></code>: optional reference to a link creation property list </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dcpl</span></code>: optional reference to a dataset creation property list </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acpl</span></code>: optional reference to a dataset access property list </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace6SimpleERKN4hdf510DimensionsERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE">
+<span id="_CPPv3N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace6SimpleERKN4hdf510DimensionsERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE"></span><span id="_CPPv2N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace6SimpleERKN4hdf510DimensionsERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE"></span><span id="pni::nexus::FieldFactory::create__hdf5::node::GroupCR.hdf5::PathCR.hdf5::datatype::DatatypeCR.hdf5::dataspace::SimpleCR.hdf5::DimensionsCR.hdf5::property::LinkCreationListCR.hdf5::property::DatasetCreationListCR.hdf5::property::DatasetAccessListCR"></span><span class="target" id="classpni_1_1nexus_1_1FieldFactory_1ab025c34c9e2f08aefd7aaa5db57a0089"></span>hdf5::node::Dataset <code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="property">const</em> hdf5::node::Group &amp;<em>parent</em>, <em class="property">const</em> hdf5::Path &amp;<em>path</em>, <em class="property">const</em> hdf5::datatype::Datatype &amp;<em>type</em>, <em class="property">const</em> hdf5::dataspace::Simple &amp;<em>space</em>, <em class="property">const</em> hdf5::Dimensions &amp;<em>chunk_shape</em>, <em class="property">const</em> hdf5::property::LinkCreationList &amp;<em>lcpl</em> = hdf5::property::LinkCreationList(), <em class="property">const</em> hdf5::property::DatasetCreationList &amp;<em>dcpl</em> = hdf5::property::DatasetCreationList(), <em class="property">const</em> hdf5::property::DatasetAccessList &amp;<em>acpl</em> = hdf5::property::DatasetAccessList()<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus12FieldFactory6createERKN4hdf54node5GroupERKN4hdf54PathERKN4hdf58datatype8DatatypeERKN4hdf59dataspace6SimpleERKN4hdf510DimensionsERKN4hdf58property16LinkCreationListERKN4hdf58property19DatasetCreationListERKN4hdf58property17DatasetAccessListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create a chunked dataset </p>
+<p><dl class="simple">
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: reference to the parent group </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: reference to the new path of the field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: reference to the data type of the field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">space</span></code>: reference to the data space of the field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chunk_shape</span></code>: reference to the chunk shape of the field </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lcpl</span></code>: optional reference to a link creation property list </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dcpl</span></code>: optional reference to a dataset creation property list </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acpl</span></code>: optional reference to a dataset access property list </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pni-datatypefactory">
+<h2><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::DatatypeFactory</span></code><a class="headerlink" href="#pni-datatypefactory" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5nexus15DatatypeFactoryE">
+<span id="_CPPv3N3pni5nexus15DatatypeFactoryE"></span><span id="_CPPv2N3pni5nexus15DatatypeFactoryE"></span><span id="pni::nexus::DatatypeFactory"></span><span class="target" id="classpni_1_1nexus_1_1DatatypeFactory"></span><em class="property">class </em><code class="sig-prename descclassname">pni::nexus<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">DatatypeFactory</code><a class="headerlink" href="#_CPPv4N3pni5nexus15DatatypeFactoryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>creates HDF5 datatypes from type_id_t values </p>
+<p>This service class provides a static method constructing HDF5 datatypes from type_id_t enumerations. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5nexus15DatatypeFactory6createEN3pni9type_id_tE">
+<span id="_CPPv3N3pni5nexus15DatatypeFactory6createEN3pni9type_id_tE"></span><span id="_CPPv2N3pni5nexus15DatatypeFactory6createEN3pni9type_id_tE"></span><span id="pni::nexus::DatatypeFactory::create__pni::type_id_t"></span><span class="target" id="classpni_1_1nexus_1_1DatatypeFactory_1ae31ab8aff27794cf464162848769c8c9"></span>hdf5::datatype::Datatype <code class="sig-name descname">create</code><span class="sig-paren">(</span>pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus15DatatypeFactory6createEN3pni9type_id_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create HDF5 datatype from type ID </p>
+<p>Create a new HDF5 datatype from a given type ID.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>new instance of an HDF5 datatype </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: in case of a failure </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: type ID for which to create a new datatype </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Factory classes</a><ul>
+<li><a class="reference internal" href="#pni-baseclassfactory"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::BaseClassFactory</span></code></a></li>
+<li><a class="reference internal" href="#pni-fieldfactory"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::FieldFactory</span></code></a></li>
+<li><a class="reference internal" href="#pni-datatypefactory"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::DatatypeFactory</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_file.html"
+                        title="previous chapter">File handling functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_path.html"
+                        title="next chapter">Path classes and functions</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_path.html" title="Path classes and functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_file.html" title="File handling functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Factory classes</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

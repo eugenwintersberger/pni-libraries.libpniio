@@ -1,0 +1,212 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XML support &#8212; libpninexus 3.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PNI core" href="core.html" />
+    <link rel="prev" title="Searching for objects" href="nexus_search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="core.html" title="PNI core"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_search.html" title="Searching for objects"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus support</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">XML support</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xml-support">
+<h1>XML support<a class="headerlink" href="#xml-support" title="Permalink to this headline">¶</a></h1>
+<p>NeXus files can grow quite complex it would be rather tedious to express
+the structure of such a file entirely in code.
+<em>libpninexus</em> provides a way to create NeXus structures from XML. Like HDF5,
+XML structures data in a tree like hierarchy, making it the perfekt ASCII
+representation for a NeXus file.</p>
+<div class="section" id="generating-objects">
+<h2>Generating objects<a class="headerlink" href="#generating-objects" title="Permalink to this headline">¶</a></h2>
+<p>The XML content can come from two sources</p>
+<ul class="simple">
+<li><p>a file</p></li>
+<li><p>or from a string.</p></li>
+</ul>
+<p>Using the XML interface is rather simple. Consider that we have the structure
+of the file expressed as XML and stored in a file <code class="file docutils literal notranslate"><span class="pre">file_structure.xml</span></code>
+using this is simply</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">root_group</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="n">root</span><span class="p">();</span>
+
+<span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;file_structure.xml&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Alternatively you could use XML content from a string</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">instrument</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">get_node</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;/entry/instrument&quot;</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">detector_struct</span> <span class="o">=</span> <span class="n">create_detector_structure</span><span class="p">();</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_string</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="n">detector_struct</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As can be seen from this example the XML data must not contain the entire
+file structure. Instead it would be possible to provide separate XML files
+with different components of the file.
+Consider here for instance the following files</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 54%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>file</p></th>
+<th class="head"><p>content description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">basic_file.xml</span></code></p></td>
+<td><p>the basic file structure</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="file docutils literal notranslate"><span class="pre">detector_1d.xml</span></code></p></td>
+<td><p>structure for a 1d detector</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="file docutils literal notranslate"><span class="pre">detector_2d.xml</span></code></p></td>
+<td><p>structure for a 2d detector</p></td>
+</tr>
+</tbody>
+</table>
+<p>Code which uses this setup could look like this</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">hdf5</span><span class="o">::</span><span class="n">file</span><span class="o">::</span><span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="p">...</span> <span class="p">;</span>
+<span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">root_group</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="n">root</span><span class="p">();</span>
+
+<span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;basic_file.xml&quot;</span><span class="p">);</span>
+<span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Group</span> <span class="n">instrument</span> <span class="o">=</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">get_node</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;/entry/instrument&quot;</span><span class="p">);</span>
+
+<span class="k">switch</span><span class="p">(</span><span class="n">detector_setup</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="k">case</span> <span class="n">DetectorType</span><span class="o">::</span><span class="nl">LINEAR</span><span class="p">:</span>
+      <span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="s">&quot;detector_1d.xml&quot;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+   <span class="k">case</span> <span class="n">DetectorType</span><span class="o">::</span><span class="nl">AREA</span><span class="p">:</span>
+      <span class="n">nexus</span><span class="o">::</span><span class="n">xml</span><span class="o">::</span><span class="n">create_from_file</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span><span class="s">&quot;detector_2d.xml&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It should be mentioned that currently <em>libpninexus</em> does not use a validating
+parser which makes error detection rather difficult.</p>
+</div>
+<div class="section" id="nexus-xml-tags">
+<h2>NeXus XML tags<a class="headerlink" href="#nexus-xml-tags" title="Permalink to this headline">¶</a></h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Currently the entire content is described in the NeXus serialization
+documentation. Either need a link here or we have to provide a
+copy in this documentation.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">XML support</a><ul>
+<li><a class="reference internal" href="#generating-objects">Generating objects</a></li>
+<li><a class="reference internal" href="#nexus-xml-tags">NeXus XML tags</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_search.html"
+                        title="previous chapter">Searching for objects</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="core.html"
+                        title="next chapter">PNI core</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="core.html" title="PNI core"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_search.html" title="Searching for objects"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">XML support</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
