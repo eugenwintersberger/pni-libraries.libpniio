@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(standard_field_construction)
 
 BOOST_AUTO_TEST_CASE(standard_field_invalid_name)
 {
-  BOOST_CHECK_THROW((nexus::FieldFactory::create(root_group,"Data",type,scalar_space)),std::runtime_error);
+  BOOST_CHECK_THROW((nexus::FieldFactory::create(root_group,"$Data",type,scalar_space)),std::runtime_error);
   BOOST_CHECK_THROW((nexus::FieldFactory::create(root_group,"sample data",type,scalar_space)),std::runtime_error);
 }
 
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(chunked_field_construction)
 
 BOOST_AUTO_TEST_CASE(chunked_field_invalid_name)
 {
-  BOOST_CHECK_THROW((nexus::FieldFactory::create(root_group,"Data",type,simple_space,{1,1024,1024})),std::runtime_error);
+  BOOST_CHECK_THROW((nexus::FieldFactory::create(root_group,"$Data",type,simple_space,{1,1024,1024})),std::runtime_error);
   BOOST_CHECK_THROW((nexus::FieldFactory::create(root_group,"sample data",type,simple_space,{1,1024,1024})),std::runtime_error);
 }
 

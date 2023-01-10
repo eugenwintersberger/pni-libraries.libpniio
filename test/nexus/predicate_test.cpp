@@ -134,13 +134,14 @@ BOOST_AUTO_TEST_CASE(test_valid_names)
   BOOST_CHECK(check("temperature"));
   BOOST_CHECK(check("log"));
   BOOST_CHECK(check("sample_temperature"));
+  BOOST_CHECK(check("Sample"));
+  BOOST_CHECK(check("SILX_trigger_counter"));
 }
 
 BOOST_AUTO_TEST_CASE(test_invalid_names)
 {
   nexus::IsValidNeXusName check;
   BOOST_CHECK(!check("sample temperature"));
-  BOOST_CHECK(!check("Sample"));
   BOOST_CHECK(!check(" Hello"));
   BOOST_CHECK(!check("sample$temperature"));
 }
