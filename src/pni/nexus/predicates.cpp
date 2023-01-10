@@ -85,7 +85,7 @@ IsData::IsData():
 
 
 IsValidNeXusName::IsValidNeXusName():
-    name_regex_("[a-z_][a-z\\d_]*")
+    name_regex_("^[a-zA-Z0-9_]([a-zA-Z0-9_.]*[a-zA-Z0-9_])?$")
 {}
 
 bool IsValidNeXusName::operator()(const std::string &name) const
