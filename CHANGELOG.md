@@ -1,5 +1,8 @@
 # ChangeLog
 
+## 3.0.3 - 2021-01-11
+- relax checks for NeXus names to camel notation ([#199](https://github.com/pni-libraries/libpniio/pull/199))
+
 ## 3.0.2 - 2021-01-04
 - fixes for windows added ([#195](https://github.com/pni-libraries/libpniio/pull/195))
 - windows tests added ([#195](https://github.com/pni-libraries/libpniio/pull/195))
