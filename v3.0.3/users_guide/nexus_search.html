@@ -1,0 +1,267 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Searching for objects &#8212; libpninexus 3.0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="XML support" href="nexus_xml.html" />
+    <link rel="prev" title="NeXus path’s: pni::nexus::Path" href="nexus_path.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_xml.html" title="XML support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus_path.html" title="NeXus path’s: pni::nexus::Path"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="nexus_retrieval.html" accesskey="U">Retrieving objects</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Searching for objects</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="searching-for-objects">
+<h1>Searching for objects<a class="headerlink" href="#searching-for-objects" title="Permalink to this headline">¶</a></h1>
+<p>One of the most important tasks for an application when dealing with NeXus files
+is to look for specific objects below a particular group. Such searches would
+include</p>
+<ul class="simple">
+<li><p>search for all detectors used during a particular experiment</p></li>
+<li><p>search for all entries (top level elements) in a given file</p></li>
+<li><p>look for all datasets (fields) with particular properties</p></li>
+</ul>
+<p>and many more. Of course it would be possible to simply use the iterator
+interface provided by <em>h5cpp</em> along with STL algorithms to do the job and
+there is nothing wrong in doing so. However, <em>libpninexus</em> provides some
+convenience functions and classes to make the task easier.</p>
+<div class="section" id="search-with-path">
+<h2>Search with path<a class="headerlink" href="#search-with-path" title="Permalink to this headline">¶</a></h2>
+<p>When the search criteria can be expressed in terms of a NeXus path the
+simplest approach would be to use the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">get_objects()</span></code> function.
+As a NeXus path can also reference attributes its return value is an instance
+of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">PathObjectList</span></code> which is a list of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">PathObject</span></code>.
+The latter one is a wrapper class which can store all three types of
+HDF5 objects a NeXus path can reference: groups, datasets and attributes.
+Luckily there is an implicit conversion operator which allows the conversion
+of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">PathObjectList</span></code> to any other list type provided by <em>libpninexus</em>
+relevant to NeXus files</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="o">::</span><span class="n">Group</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">root_group</span><span class="p">.</span><span class="n">nodes</span><span class="p">[</span><span class="s">&quot;run_001&quot;</span><span class="p">];</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">GroupList</span> <span class="n">detectors</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">get_objects</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="s">&quot;:NXinstrument/:NXdetector&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>An other application would be to look for all entries in a file</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="o">::</span><span class="n">GroupList</span> <span class="n">entries</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">get_objects</span><span class="p">(</span><span class="n">root_group</span><span class="p">,</span><span class="s">&quot;:NXentry&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Though using path search is quite comfortable there is one word of
+caution when you are concerned about performance. Under the hood
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">get_objects()</span></code> performs a recursive search. So if the object trees
+in the file grow large this may can cause some severe performance penalty.</p>
+<p>However, in most cases this is not critical and thus the simplicity of
+implementation outweighs this performance penalty.</p>
+</div>
+</div>
+<div class="section" id="search-with-predicates">
+<h2>Search with predicates<a class="headerlink" href="#search-with-predicates" title="Permalink to this headline">¶</a></h2>
+<p>To search for all detectors in a run using predicates we could use the
+following approach</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="o">::</span><span class="n">Group</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">root_group</span><span class="p">.</span><span class="n">nodes</span><span class="p">[</span><span class="s">&quot;run_001&quot;</span><span class="p">];</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">GroupList</span> <span class="n">detectors</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">search</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="n">nexus</span><span class="o">::</span><span class="n">IsDetector</span><span class="p">(),</span><span class="nb">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The last argument of the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">search()</span></code> function determines whether or not
+a recursive search below the <code class="docutils literal notranslate"><span class="pre">entry</span></code> element will be made.</p>
+<p>In principle everything that can be done with <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">get_objects()</span></code> and
+a NeXus path can also be done with predicates. However, the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">NodePredicate</span></code>
+allows also some more fine grained search. Consider the case where we
+want to find all 1D data elements below a particular entry which stores
+more than one entry (this would be a reasonable thing to do if we
+are searching for plotable data outside of the <em>NXdata</em> group).</p>
+<p>We would first implement a custom predicate</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Is1dDataset</span> <span class="o">:</span> <span class="k">public</span> <span class="n">NodePredicate</span>
+<span class="p">{</span>
+   <span class="k">public</span><span class="o">:</span>
+
+   <span class="k">virtual</span> <span class="kt">bool</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Node</span> <span class="o">&amp;</span><span class="n">node</span><span class="p">)</span> <span class="k">const</span>
+   <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Type</span><span class="o">::</span><span class="n">Dataset</span><span class="p">)</span>
+      <span class="p">{</span>
+         <span class="n">hdf5</span><span class="o">::</span><span class="n">node</span><span class="o">::</span><span class="n">Dataset</span> <span class="n">dataset</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+         <span class="n">hdf5</span><span class="o">::</span><span class="n">Dimensions</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="n">get_dimensions</span><span class="p">(</span><span class="n">dataset</span><span class="p">);</span>
+
+         <span class="k">return</span> <span class="n">dimensions</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">==</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>with this predicate the search would simply be</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="o">::</span><span class="n">Group</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">root_group</span><span class="p">.</span><span class="n">nodes</span><span class="p">[</span><span class="s">&quot;run_001&quot;</span><span class="p">];</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">DatasetList</span> <span class="n">datasets_1d</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">search</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="n">Is1dDataset</span><span class="p">(),</span><span class="nb">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Because looking for base classes is such a common taks <em>libpninexus</em> provides
+a set of predefined predicates dedicated to this purpose.
+The fundamental predicate type to look for base classes is
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::IsBaseClass</span></code>.
+If you want to know just want to identify those groups which are a base class
+you could use</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="o">::</span><span class="n">Group</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">root_group</span><span class="p">.</span><span class="n">nodes</span><span class="p">[</span><span class="s">&quot;run_001&quot;</span><span class="p">];</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">GroupList</span> <span class="n">base_classes</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">search</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="n">IsBaseClass</span><span class="p">(),</span><span class="nb">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To look for a specific base class you could use</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">nexus</span><span class="o">::</span><span class="n">Group</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">root_group</span><span class="p">.</span><span class="n">nodes</span><span class="p">[</span><span class="s">&quot;run_001&quot;</span><span class="p">];</span>
+<span class="n">nexus</span><span class="o">::</span><span class="n">GroupList</span> <span class="n">base_classes</span> <span class="o">=</span> <span class="n">nexus</span><span class="o">::</span><span class="n">search</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="n">IsBaseClass</span><span class="p">(</span><span class="s">&quot;NXattenuator&quot;</span><span class="p">),</span><span class="nb">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For some of the most common base classes there are specialized versions of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">nexus::IsBaseClass</span></code>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>predicate</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsTransformation</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXtransformation</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsEntry</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXentry</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsSubentry</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXsubentry</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsDetector</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXdetector</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsInstrument</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXinstrument</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsSample</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXsample</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">IsData</span></code></p></td>
+<td><p>returns <em>true</em> for <em>NXdata</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Searching for objects</a><ul>
+<li><a class="reference internal" href="#search-with-path">Search with path</a></li>
+<li><a class="reference internal" href="#search-with-predicates">Search with predicates</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nexus_path.html"
+                        title="previous chapter">NeXus path’s: <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::nexus::Path</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_xml.html"
+                        title="next chapter">XML support</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_xml.html" title="XML support"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus_path.html" title="NeXus path’s: pni::nexus::Path"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus support</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="nexus_retrieval.html" >Retrieving objects</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Searching for objects</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

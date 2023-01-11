@@ -1,0 +1,14 @@
+<map id="pni::fio_reader" name="pni::fio_reader">
+<area shape="rect" id="node1" title="FIO data reader." alt="" coords="1319,239,1423,266"/>
+<area shape="rect" id="node2" href="$classpni_1_1spreadsheet__reader.html" title="base class for spreadsheet reader" alt="" coords="1108,161,1269,187"/>
+<area shape="rect" id="node3" href="$classpni_1_1data__reader.html" title="base class for data readers" alt="" coords="455,102,569,129"/>
+<area shape="rect" id="node4" title=" " alt="" coords="183,5,322,47"/>
+<area shape="rect" id="node5" title=" " alt="" coords="213,206,293,233"/>
+<area shape="rect" id="node8" href="$classpni_1_1column__info.html" title="Spreadsheet column information." alt="" coords="453,154,571,181"/>
+<area shape="rect" id="node10" title=" " alt="" coords="619,305,765,347"/>
+<area shape="rect" id="node11" title=" " alt="" coords="789,232,971,273"/>
+<area shape="rect" id="node12" title=" " alt="" coords="429,267,595,294"/>
+<area shape="rect" id="node6" title=" " alt="" coords="5,199,132,240"/>
+<area shape="rect" id="node7" title=" " alt="" coords="799,153,961,195"/>
+<area shape="rect" id="node9" title=" " alt="" coords="181,71,324,98"/>
+</map>

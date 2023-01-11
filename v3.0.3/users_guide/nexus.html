@@ -1,0 +1,148 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeXus support &#8212; libpninexus 3.0.3 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A basic introduction to Nexus" href="nexus_introduction.html" />
+    <link rel="prev" title="Reading binary image data" href="image.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_introduction.html" title="A basic introduction to Nexus"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="image.html" title="Reading binary image data"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Users guide</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NeXus support</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nexus-support">
+<h1>NeXus support<a class="headerlink" href="#nexus-support" title="Permalink to this headline">¶</a></h1>
+<p>Most synchrotron radiation facilities have agreed upon a new standard file
+format used by all facilities. Though developing such a common standard
+would cause quite some effort there are several advantages such a
+standard file format would have</p>
+<ul class="simple">
+<li><p>data could be easily exchanged between different laboratories</p></li>
+<li><p>authors of analysis software could focus on their real work instead of
+spending their time in supporting all kinds of file formats.</p></li>
+</ul>
+<p>The development of a common file format comprises basically two aspects</p>
+<ul class="simple">
+<li><p>the physical file format - the way how bits and bytes are written to disk
+and how to read them back (this is also where performance considerations
+have to be taken into account)</p></li>
+<li><p>the logical organization of the data an the semantics of keywords.</p></li>
+</ul>
+<p>At the time of writing these lines, though not without critics, the majority
+of facilities has agreed upon <a class="reference external" href="http://www.nexusformat.org/">NeXus</a> file format.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nexus_introduction.html">A basic introduction to Nexus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexus_files.html">Working with files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexus_groups.html">Creating objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexus_retrieval.html">Retrieving objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nexus_xml.html">XML support</a></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="image.html"
+                        title="previous chapter">Reading binary image data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nexus_introduction.html"
+                        title="next chapter">A basic introduction to Nexus</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_introduction.html" title="A basic introduction to Nexus"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="image.html" title="Reading binary image data"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">NeXus support</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
