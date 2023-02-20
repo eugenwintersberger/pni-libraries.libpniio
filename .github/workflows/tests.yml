@@ -56,6 +56,7 @@ jobs:
       - name: Append documentation for the latest release version
         if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
         run: |
+             docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
              docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
@@ -82,6 +83,7 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
         run: |
              echo Version: ${{ steps.extract_docver.outputs.docver }}
+             docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
              docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git checkout gh-pages && git pull"
