@@ -1,7 +1,7 @@
 # ChangeLog
 
 ## 3.0.4 - 2023-02-20
-- fix for finding boost library ([#199](https://github.com/pni-libraries/libpniio/pull/202))
+- fix for finding boost library ([#202](https://github.com/pni-libraries/libpniio/pull/202))
 
 ## 3.0.3 - 2023-01-11
 - relax checks for NeXus names to camel notation ([#199](https://github.com/pni-libraries/libpniio/pull/199))
