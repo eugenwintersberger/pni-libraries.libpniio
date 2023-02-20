@@ -1,9 +1,12 @@
 # ChangeLog
 
-## 3.0.3 - 2021-01-11
+## 3.0.4 - 2023-02-20
+- fix for finding boost library ([#199](https://github.com/pni-libraries/libpniio/pull/202))
+
+## 3.0.3 - 2023-01-11
 - relax checks for NeXus names to camel notation ([#199](https://github.com/pni-libraries/libpniio/pull/199))
 
-## 3.0.2 - 2021-01-04
+## 3.0.2 - 2023-01-04
 - fixes for windows added ([#195](https://github.com/pni-libraries/libpniio/pull/195))
 - windows tests added ([#195](https://github.com/pni-libraries/libpniio/pull/195))
 - technical release for libh5cpp v0.5.2 (https://github.com/ess-dmsc/h5cpp/issues/616)
