@@ -1,0 +1,860 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Type erasures &#8212; libpninexus 3.0.4 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Multidimensional array API" href="core_mdarray.html" />
+    <link rel="prev" title="Data types and type management" href="core_type.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="core_mdarray.html" title="Multidimensional array API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="core_type.html" title="Data types and type management"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="core.html" accesskey="U">PNI core API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Type erasures</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="type-erasures">
+<h1>Type erasures<a class="headerlink" href="#type-erasures" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pni-value">
+<h2><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::value</span></code></a><a class="headerlink" href="#pni-value" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5valueE">
+<span id="_CPPv3N3pni5valueE"></span><span id="_CPPv2N3pni5valueE"></span><span id="pni::value"></span><span class="target" id="classpni_1_1value"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">value</code><a class="headerlink" href="#_CPPv4N3pni5valueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>type erasure for POD data </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5value5valueEv">
+<span id="_CPPv3N3pni5value5valueEv"></span><span id="_CPPv2N3pni5value5valueEv"></span><span id="pni::value::value"></span><span class="target" id="classpni_1_1value_1a6a3a318a90fb26786762c778a2e808e3"></span><code class="sig-name descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5value5valueEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3pni5value5valueE10PrimitiveT">
+<span id="_CPPv3I00EN3pni5value5valueE10PrimitiveT"></span><span id="_CPPv2I00EN3pni5value5valueE10PrimitiveT"></span>template&lt;typename <code class="sig-name descname">PrimitiveT</code>, typename = <em class="property">typename</em> enable_primitive&lt;<a class="reference internal" href="#_CPPv4I00EN3pni5value5valueE10PrimitiveT" title="pni::value::value::PrimitiveT">PrimitiveT</a>&gt;::type&gt;<br /><span class="target" id="classpni_1_1value_1a6e9a4d2ed3f0ef4d4136e10820f6088b"></span><code class="sig-name descname">value</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3pni5value5valueE10PrimitiveT" title="pni::value::value::PrimitiveT">PrimitiveT</a> <em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni5value5valueE10PrimitiveT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>template constructor from value </p>
+<p>This constructor accepts all primitive types from libpninexus.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PrimitiveT</span></code>: primitive type </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: value to store in the type erasure </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5value5valueERK5value">
+<span id="_CPPv3N3pni5value5valueERK5value"></span><span id="_CPPv2N3pni5value5valueERK5value"></span><span id="pni::value::value__valueCR"></span><span class="target" id="classpni_1_1value_1a10dd58758d691c0392fb5b9bbfca08b5"></span><code class="sig-name descname">value</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5value5valueERK5value" title="pni::value::value">value</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5value5valueERK5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5value5valueERR5value">
+<span id="_CPPv3N3pni5value5valueERR5value"></span><span id="_CPPv2N3pni5value5valueERR5value"></span><span id="pni::value::value__valueRR"></span><span class="target" id="classpni_1_1value_1a403ebd5af0f5784170be857040887ed3"></span><code class="sig-name descname">value</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni5value5valueERR5value" title="pni::value::value">value</a> &amp;&amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5value5valueERR5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni5valueaSER5valueRK6ValueT">
+<span id="_CPPv3I0EN3pni5valueaSERK6ValueT"></span><span id="_CPPv2I0EN3pni5valueaSERK6ValueT"></span>template&lt;typename <code class="sig-name descname">ValueT</code>&gt;<br /><span class="target" id="classpni_1_1value_1ad523726e622fd66c1be11bc078ab3ed4"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni5valueaSER5valueRK6ValueT" title="pni::value::operator=::ValueT">ValueT</a> &amp;<em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni5valueaSER5valueRK6ValueT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy assignment from value </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of value </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: reference to the new value </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5valueaSERK5value">
+<span id="_CPPv3N3pni5valueaSERK5value"></span><span id="_CPPv2N3pni5valueaSERK5value"></span><span id="pni::value::assign-operator__valueCR"></span><span class="target" id="classpni_1_1value_1a502a8af466be90751a50a37b5824a0a8"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5valueaSERK5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy assignment </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5valueaSERR5value">
+<span id="_CPPv3N3pni5valueaSERR5value"></span><span id="_CPPv2N3pni5valueaSERR5value"></span><span id="pni::value::assign-operator__valueRR"></span><span class="target" id="classpni_1_1value_1aaea2e1d758a5c88d6f82594b9cc4e5cc"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;&amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5valueaSERR5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move assignment operator </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5valueaSERK9value_ref">
+<span id="_CPPv3N3pni5valueaSERK9value_ref"></span><span id="_CPPv2N3pni5valueaSERK9value_ref"></span><span id="pni::value::assign-operator__value_refCR"></span><span class="target" id="classpni_1_1value_1a01da54e11e885537469fbd6959fe5f1b"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> &amp;<em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5valueaSERK9value_ref" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy construction from a value reference </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0ENK3pni5value2asE7TargetTv">
+<span id="_CPPv3I0ENK3pni5value2asEv"></span><span id="_CPPv2I0ENK3pni5value2asEv"></span>template&lt;typename <code class="sig-name descname">TargetT</code>&gt;<br /><span class="target" id="classpni_1_1value_1a9ab1a69c7befabbfa7d3047281161f8e"></span><a class="reference internal" href="#_CPPv4I0ENK3pni5value2asE7TargetTv" title="pni::value::as::TargetT">TargetT</a> <code class="sig-name descname">as</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni5value2asE7TargetTv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get the stored value </p>
+<p>Return the stored value as type TargetT. If the value instance has not been initialized before an exception is thrown. In addition, if the data type passed as a template parameter does not fit the type used to store the data an exception will be thrown.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>value of type TargetT </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">memory_not_allocate_error</span></code>: if value is uninitialized </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if TargetT does not match the original data type </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1range__error"><span class="std std-ref"><span class="pre">range_error</span></span></a></code>: if the value stored does not fit into the requested type. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5value7type_idEv">
+<span id="_CPPv3NK3pni5value7type_idEv"></span><span id="_CPPv2NK3pni5value7type_idEv"></span><span id="pni::value::type_idC"></span><span class="target" id="classpni_1_1value_1ac1fe84cb69a13d05c675109ef5f0dbbe"></span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-name descname">type_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5value7type_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get type id </p>
+<p>Returns the ID of the stored data type.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type ID. </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__not__allocated__error"><span class="std std-ref"><span class="pre">memory_not_allocated_error</span></span></a></code>: if value is not initialized </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni10make_valueE9type_id_t">
+<span id="_CPPv3N3pni10make_valueE9type_id_t"></span><span id="_CPPv2N3pni10make_valueE9type_id_t"></span><span id="pni::make_value__type_id_t"></span><span class="target" id="namespacepni_1a05f80e9a3461926f85c082425d23e34c"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">make_value</code><span class="sig-paren">(</span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10make_valueE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create value </p>
+<p>Create a value instance for a particular type. Here the type is entirely determined by its type ID.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of value holding data of type tid </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if the type ID is now known </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: type ID of the requested type </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni7type_idERK5value">
+<span id="_CPPv3N3pni7type_idERK5value"></span><span id="_CPPv2N3pni7type_idERK5value"></span><span id="pni::type_id__valueCR"></span><span class="target" id="namespacepni_1ab1e20eb9ab4a6d4d22e70b58392a918c"></span>PNINEXUS_EXPORT <a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<em>rv</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni7type_idERK5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get type ID </p>
+<p>Overload of type_id to obtain the type ID of the element stored in the type erasure.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type ID of the erased type </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rv</span></code>: reference to value </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="pni-value-ref">
+<h2><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::value_ref</span></code></a><a class="headerlink" href="#pni-value-ref" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni9value_refE">
+<span id="_CPPv3N3pni9value_refE"></span><span id="_CPPv2N3pni9value_refE"></span><span id="pni::value_ref"></span><span class="target" id="classpni_1_1value__ref"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">value_ref</code><a class="headerlink" href="#_CPPv4N3pni9value_refE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>type erasure for references to POD data </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni9value_ref9value_refEv">
+<span id="_CPPv3N3pni9value_ref9value_refEv"></span><span id="_CPPv2N3pni9value_ref9value_refEv"></span><span id="pni::value_ref::value_ref"></span><span class="target" id="classpni_1_1value__ref_1a168b45a40456f06215701db706901b48"></span><code class="sig-name descname">value_ref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9value_ref9value_refEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni9value_ref9value_refENSt17reference_wrapperI6ValueTEE">
+<span id="_CPPv3I0EN3pni9value_ref9value_refENSt17reference_wrapperI6ValueTEE"></span><span id="_CPPv2I0EN3pni9value_ref9value_refENSt17reference_wrapperI6ValueTEE"></span>template&lt;typename <code class="sig-name descname">ValueT</code>&gt;<br /><span class="target" id="classpni_1_1value__ref_1abffe5f37463dc0675a06c7bc2dd439da"></span><code class="sig-name descname">value_ref</code><span class="sig-paren">(</span>std::reference_wrapper&lt;<a class="reference internal" href="#_CPPv4I0EN3pni9value_ref9value_refENSt17reference_wrapperI6ValueTEE" title="pni::value_ref::value_ref::ValueT">ValueT</a>&gt; <em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni9value_ref9value_refENSt17reference_wrapperI6ValueTEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>template constructor from value </p>
+<p>Constructs a reference to a variable of type ValueT. </p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">float32</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">100.</span><span class="p">;</span>
+<span class="n">value_ref</span> <span class="n">v</span><span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">ref</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+</pre></div>
+</div>
+ ! <dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ValueT</span></code>: type of the value to which the reference shall be created </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: reference to the value </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni9value_ref9value_refERK9value_ref">
+<span id="_CPPv3N3pni9value_ref9value_refERK9value_ref"></span><span id="_CPPv2N3pni9value_ref9value_refERK9value_ref"></span><span id="pni::value_ref::value_ref__value_refCR"></span><span class="target" id="classpni_1_1value__ref_1a927907eaae7054a829ef09d1b5a3268b"></span><code class="sig-name descname">value_ref</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni9value_ref9value_refERK9value_ref" title="pni::value_ref::value_ref">value_ref</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9value_ref9value_refERK9value_ref" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni9value_refaSER9value_refRK6ValueT">
+<span id="_CPPv3I0EN3pni9value_refaSERK6ValueT"></span><span id="_CPPv2I0EN3pni9value_refaSERK6ValueT"></span>template&lt;typename <code class="sig-name descname">ValueT</code>&gt;<br /><span class="target" id="classpni_1_1value__ref_1afec668e233c2609ffef81c09fe8fadef"></span><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni9value_refaSER9value_refRK6ValueT" title="pni::value_ref::operator=::ValueT">ValueT</a> &amp;<em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni9value_refaSER9value_refRK6ValueT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>assign value to the variable </p>
+<p>Assign a value of type ValueT to the target of the reference. If ValueT differs from the original type of the target the data will be converted.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of value </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__not__allocated__error"><span class="std std-ref"><span class="pre">memory_not_allocated_error</span></span></a></code>: if the reference is not initialized </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if conversion is not possible </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1range__error"><span class="std std-ref"><span class="pre">range_error</span></span></a></code>: if the value does not fit into the target type.</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: reference to the new value </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni9value_refaSERK5value">
+<span id="_CPPv3N3pni9value_refaSERK5value"></span><span id="_CPPv2N3pni9value_refaSERK5value"></span><span id="pni::value_ref::assign-operator__valueCR"></span><span class="target" id="classpni_1_1value__ref_1a0fbdf5c68447cefc728344d708214352"></span><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> &amp;<em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9value_refaSERK5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>assignment from a value </p>
+<p>In this case the value stored in v will be assigned to the variable refered to by this instance of <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a>. If the data types do not match a type conversion takes place if necessary.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to this instance </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">memory_not_allocated</span></code>: if the reference is not initialized </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if the type of v and the reference to not match </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1range__error"><span class="std std-ref"><span class="pre">range_error</span></span></a></code>: if the value of v does not fit in the type of the variable referenced by this instance of <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a>.</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: value instance </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni9value_refaSERK9value_ref">
+<span id="_CPPv3N3pni9value_refaSERK9value_ref"></span><span id="_CPPv2N3pni9value_refaSERK9value_ref"></span><span id="pni::value_ref::assign-operator__value_refCR"></span><span class="target" id="classpni_1_1value__ref_1a899dfdf8c3ec10b2808e551efc7cdbd9"></span><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni9value_refaSERK9value_ref" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy assignment </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni9value_refcv5valueEv">
+<span id="_CPPv3NK3pni9value_refcv5valueEv"></span><span id="_CPPv2NK3pni9value_refcv5valueEv"></span><span id="pni::value_ref::castto-value-operatorC"></span><span class="target" id="classpni_1_1value__ref_1a8d741753e2e25ab2797bea49df0d4d89"></span><code class="sig-name descname">operator value</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9value_refcv5valueEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>conversion operator </p>
+<p>This operator is used to convert a reference to a value type erasure. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0ENK3pni9value_ref2asE7ReturnTv">
+<span id="_CPPv3I0ENK3pni9value_ref2asEv"></span><span id="_CPPv2I0ENK3pni9value_ref2asEv"></span>template&lt;typename <code class="sig-name descname">ReturnT</code>&gt;<br /><span class="target" id="classpni_1_1value__ref_1a949d95b73c7b481a44710bf843262aba"></span><a class="reference internal" href="#_CPPv4I0ENK3pni9value_ref2asE7ReturnTv" title="pni::value_ref::as::ReturnT">ReturnT</a> <code class="sig-name descname">as</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni9value_ref2asE7ReturnTv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get the referenced value </p>
+<p>Returns the value of the variable the <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> instance points to. If the type requested by the user via the template parameter ReturnT is different from the type of the variable <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> points to the data will be converted if possible. If the conversion fails or is not possible an exception will be thrown.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>value of type ReturnT </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__not__allocated__error"><span class="std std-ref"><span class="pre">memory_not_allocated_error</span></span></a></code>: if value is uninitialized </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if data cannot be converted to ReturnT </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1range__error"><span class="std std-ref"><span class="pre">range_error</span></span></a></code>: if data does not fit into the range of ReturnT </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni9value_ref7type_idEv">
+<span id="_CPPv3NK3pni9value_ref7type_idEv"></span><span id="_CPPv2NK3pni9value_ref7type_idEv"></span><span id="pni::value_ref::type_idC"></span><span class="target" id="classpni_1_1value__ref_1a3028d2f472da301d2476f78859b3a668"></span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-name descname">type_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni9value_ref7type_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get type id </p>
+<p>Returns the ID of the stored data type.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type ID. </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__not__allocated__error"><span class="std std-ref"><span class="pre">memory_not_allocated_error</span></span></a></code>: if value is not initialized </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<div class="section" id="id1">
+<h3>Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni8to_valueERK9value_ref">
+<span id="_CPPv3N3pni8to_valueERK9value_ref"></span><span id="_CPPv2N3pni8to_valueERK9value_ref"></span><span id="pni::to_value__value_refCR"></span><span class="target" id="namespacepni_1a6c717ca89e487ad64a06d46c5a66b7cc"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">to_value</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> &amp;<em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8to_valueERK9value_ref" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>conversion function to value </p>
+<p>This function extracts the value stored in the variable referenced by <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> and stores it in a new instance of value.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of value with the content of <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1memory__not__allocated__error"><span class="std std-ref"><span class="pre">memory_not_allocated_error</span></span></a></code>: if the reference is not set </p></li>
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if the type of the variable referenced by <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> is unknown</p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: reference to <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="pni-array">
+<h2><a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::array</span></code></a><a class="headerlink" href="#pni-array" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt id="_CPPv4N3pni5arrayE">
+<span id="_CPPv3N3pni5arrayE"></span><span id="_CPPv2N3pni5arrayE"></span><span id="pni::array"></span><span class="target" id="classpni_1_1array"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">array</code><a class="headerlink" href="#_CPPv4N3pni5arrayE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>type erasure array types </p>
+<p>This type erasure can hold all kind of array types provides by libpninexus. It takes entire ownership over the array it holds. The construction is fairly easy</p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="n">a</span> <span class="o">=</span> <span class="n">array_type</span><span class="p">::</span><span class="n">create</span><span class="p">({</span><span class="mi">104</span><span class="p">,</span><span class="mi">200</span><span class="p">});</span>
+</pre></div>
+</div>
+ ! as the array_type instance is a temporary move construction will be used.</p>
+<p>Alternatively, copy construction can be done with</p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">data</span> <span class="o">=</span> <span class="n">array_type</span><span class="p">::</span><span class="n">create</span><span class="p">({</span><span class="mi">104</span><span class="p">,</span><span class="mi">200</span><span class="p">});</span>
+<span class="n">array</span> <span class="n">a</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+</pre></div>
+</div>
+ ! in which case the copy constructor is used to copy the array’s data. It is clear that in this latter case the two objects are entirely decoupled. Changing a value in a will not influence the original instance data.</p>
+<p>Like any other array in libpninexus an instance of array can be considered as a one dimensional container providing linear access to the data stored in it by means of iterators, the [] operator, and the <a class="reference internal" href="#classpni_1_1array_1ab87d4f0b2281284664e16c9e5e9a338e"><span class="std std-ref">at()</span></a> method. Like standard C++ container only the latter method ensures index checking. See code examples at the various member functions for more detail about the methods. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="cpp type">
+<dt id="_CPPv4N3pni5array10value_typeE">
+<span id="_CPPv3N3pni5array10value_typeE"></span><span id="_CPPv2N3pni5array10value_typeE"></span><span id="pni::array::value_type"></span><span class="target" id="classpni_1_1array_1af9abc723ec4e31ab18e10e089823ad71"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> <code class="sig-name descname">value_type</code><a class="headerlink" href="#_CPPv4N3pni5array10value_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>value type of the array </p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3pni5array8iteratorE">
+<span id="_CPPv3N3pni5array8iteratorE"></span><span id="_CPPv2N3pni5array8iteratorE"></span><span id="pni::array::iterator"></span><span class="target" id="classpni_1_1array_1aaaed69fa44a5ecb471f2ffde566e57ba"></span><em class="property">typedef </em>array_iterator&lt;0&gt; <code class="sig-name descname">iterator</code><a class="headerlink" href="#_CPPv4N3pni5array8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read/write iterator </p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3pni5array14const_iteratorE">
+<span id="_CPPv3N3pni5array14const_iteratorE"></span><span id="_CPPv2N3pni5array14const_iteratorE"></span><span id="pni::array::const_iterator"></span><span class="target" id="classpni_1_1array_1ace50d9c6fb7ec93edb815d182f590732"></span><em class="property">typedef </em>array_iterator&lt;1&gt; <code class="sig-name descname">const_iterator</code><a class="headerlink" href="#_CPPv4N3pni5array14const_iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>read only iterator </p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3pni5array13element_indexE">
+<span id="_CPPv3N3pni5array13element_indexE"></span><span id="_CPPv2N3pni5array13element_indexE"></span><span id="pni::array::element_index"></span><span class="target" id="classpni_1_1array_1aa73952e1258e77f579f95676e9c67494"></span><em class="property">typedef </em>array_holder_interface::element_index <code class="sig-name descname">element_index</code><a class="headerlink" href="#_CPPv4N3pni5array13element_indexE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>element index type </p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3pni5array10view_indexE">
+<span id="_CPPv3N3pni5array10view_indexE"></span><span id="_CPPv2N3pni5array10view_indexE"></span><span id="pni::array::view_index"></span><span class="target" id="classpni_1_1array_1a108d6d3c9117244864d1451fa1494a1b"></span><em class="property">typedef </em>array_holder_interface::view_index <code class="sig-name descname">view_index</code><a class="headerlink" href="#_CPPv4N3pni5array10view_indexE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>view index type </p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N3pni5array9size_typeE">
+<span id="_CPPv3N3pni5array9size_typeE"></span><span id="_CPPv2N3pni5array9size_typeE"></span><span id="pni::array::size_type"></span><span class="target" id="classpni_1_1array_1a14d9c7c5a8727b585144374e8dd01fe0"></span><em class="property">typedef </em>size_t <code class="sig-name descname">size_type</code><a class="headerlink" href="#_CPPv4N3pni5array9size_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>type used for array size </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array5arrayEv">
+<span id="_CPPv3N3pni5array5arrayEv"></span><span id="_CPPv2N3pni5array5arrayEv"></span><span id="pni::array::array"></span><span class="target" id="classpni_1_1array_1a5fa2cdc7259dc8cef15590fe4e4ce57e"></span><code class="sig-name descname">array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array5arrayEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>default constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3pni5array5arrayERK7ObjectT">
+<span id="_CPPv3I00EN3pni5array5arrayERK7ObjectT"></span><span id="_CPPv2I00EN3pni5array5arrayERK7ObjectT"></span>template&lt;typename <code class="sig-name descname">ObjectT</code>, typename = <em class="property">typename</em> std::enable_if&lt;!std::is_same&lt;<a class="reference internal" href="#_CPPv4I00EN3pni5array5arrayERK7ObjectT" title="pni::array::array">array</a>, <em class="property">typename</em> std::remove_reference&lt;<a class="reference internal" href="#_CPPv4I00EN3pni5array5arrayERK7ObjectT" title="pni::array::array::ObjectT">ObjectT</a>&gt;::type&gt;::value&gt;::type&gt;<br /><span class="target" id="classpni_1_1array_1a701f2b2a3462d0be27c70e2948b8ad1f"></span><code class="sig-name descname">array</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni5array5arrayERK7ObjectT" title="pni::array::array::ObjectT">ObjectT</a> &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni5array5arrayERK7ObjectT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy original object </p>
+<p>This constructor creates a type erasure by copying the original data to the internal object. This constructor is called in a situation as this one</p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array_type</span> <span class="n">data</span><span class="p">;</span>
+<span class="o">....</span>
+<span class="n">array</span> <span class="n">a</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+ ! the content of the original array data is copied to the internal array of type array_type encapsulated by the type erasure.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ObjectT</span></code>: type of the object. </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: const reference to the original object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3pni5array5arrayERR7ObjectT">
+<span id="_CPPv3I00EN3pni5array5arrayERR7ObjectT"></span><span id="_CPPv2I00EN3pni5array5arrayERR7ObjectT"></span>template&lt;typename <code class="sig-name descname">ObjectT</code>, typename = <em class="property">typename</em> std::enable_if&lt;!std::is_same&lt;<a class="reference internal" href="#_CPPv4I00EN3pni5array5arrayERR7ObjectT" title="pni::array::array">array</a>, <em class="property">typename</em> std::remove_reference&lt;<a class="reference internal" href="#_CPPv4I00EN3pni5array5arrayERR7ObjectT" title="pni::array::array::ObjectT">ObjectT</a>&gt;::type&gt;::value&gt;::type&gt;<br /><span class="target" id="classpni_1_1array_1acd0e78e7a95608f7f03d291c54107de0"></span><code class="sig-name descname">array</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN3pni5array5arrayERR7ObjectT" title="pni::array::array::ObjectT">ObjectT</a> &amp;&amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni5array5arrayERR7ObjectT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move original object </p>
+<p>Constructor moves the original object to the type erasure</p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="n">a</span> <span class="o">=</span> <span class="n">DArray</span><span class="o">&lt;</span><span class="n">UInt16</span><span class="o">&gt;</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">1024</span><span class="p">});</span>
+</pre></div>
+</div>
+ ! <dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ObjectT</span></code>: original type </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: rvalue reference to the original object </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array5arrayERK5array">
+<span id="_CPPv3N3pni5array5arrayERK5array"></span><span id="_CPPv2N3pni5array5arrayERK5array"></span><span id="pni::array::array__arrayCR"></span><span class="target" id="classpni_1_1array_1af37673a3f6b836f3ce956d8a3ba4e830"></span><code class="sig-name descname">array</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5array5arrayERK5array" title="pni::array::array">array</a> &amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array5arrayERK5array" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array5arrayERR5array">
+<span id="_CPPv3N3pni5array5arrayERR5array"></span><span id="_CPPv2N3pni5array5arrayERR5array"></span><span id="pni::array::array__arrayRR"></span><span class="target" id="classpni_1_1array_1ab757c420ad87a724850ebbd2ea43e5eb"></span><code class="sig-name descname">array</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni5array5arrayERR5array" title="pni::array::array">array</a> &amp;&amp;<em>e</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array5arrayERR5array" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move constructor </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5arrayaSERK5array">
+<span id="_CPPv3N3pni5arrayaSERK5array"></span><span id="_CPPv2N3pni5arrayaSERK5array"></span><span id="pni::array::assign-operator__arrayCR"></span><span class="target" id="classpni_1_1array_1ae9b26fa0b0c9fd5a3ee8ea3c1ed10c0a"></span><a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> &amp;<em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5arrayaSERK5array" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>copy assignment operator </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5arrayaSERR5array">
+<span id="_CPPv3N3pni5arrayaSERR5array"></span><span id="_CPPv2N3pni5arrayaSERR5array"></span><span id="pni::array::assign-operator__arrayRR"></span><span class="target" id="classpni_1_1array_1a9a700bd20c728f8f6a892ffc13eb2559"></span><a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> &amp;&amp;<em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5arrayaSERR5array" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>move assignment operator </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array7type_idEv">
+<span id="_CPPv3NK3pni5array7type_idEv"></span><span id="_CPPv2NK3pni5array7type_idEv"></span><span id="pni::array::type_idC"></span><span class="target" id="classpni_1_1array_1a640fe8e4889535456df6108311538729"></span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-name descname">type_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array7type_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get type id </p>
+<p>Return the type id of the data held by an instance of array. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>type id. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array4rankEv">
+<span id="_CPPv3NK3pni5array4rankEv"></span><span id="_CPPv2NK3pni5array4rankEv"></span><span id="pni::array::rankC"></span><span class="target" id="classpni_1_1array_1a3e065e61657456aa902f231a50b3e578"></span>size_t <code class="sig-name descname">rank</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array4rankEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return rank of array </p>
+<p>Return the number of dimensions the multidimensional array spans. In the case of a scalar the return value of this method is 0.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of dimensions </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array5shapeEv">
+<span id="_CPPv3NK3pni5array5shapeEv"></span><span id="_CPPv2NK3pni5array5shapeEv"></span><span id="pni::array::shapeC"></span><span class="target" id="classpni_1_1array_1ad6809972a9672e5db858a3d692bc53c3"></span>shape_t <code class="sig-name descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array5shapeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return shape </p>
+<p>Return the number of elements along each dimension of the array as an instance of shape_t. In the case of a scalar value the return value is empty (size=0).</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>shape of the array </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0ENK3pni5array5shapeE10ContainerTv">
+<span id="_CPPv3I0ENK3pni5array5shapeEv"></span><span id="_CPPv2I0ENK3pni5array5shapeEv"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1array_1a5ef96cecf38fc3c39c0b625f6e022e2c"></span><a class="reference internal" href="#_CPPv4I0ENK3pni5array5shapeE10ContainerTv" title="pni::array::shape::ContainerT">ContainerT</a> <code class="sig-name descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni5array5shapeE10ContainerTv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return shape in an arbitrary container </p>
+<p>Return the number of dimensions along each dimension as a container type specified by the user. </p>
+<p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auto</span> <span class="n">s</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="nb">list</span><span class="o">&lt;</span><span class="n">size_t</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+ ! If the wrapped type is a scalar an empty instance of ContainerT is returned.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of ContainerT </p>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array4sizeEv">
+<span id="_CPPv3NK3pni5array4sizeEv"></span><span id="_CPPv2NK3pni5array4sizeEv"></span><span id="pni::array::sizeC"></span><span class="target" id="classpni_1_1array_1ae1ec8583a1e261cdfe1828e640ee1637"></span>size_t <code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return number of elements </p>
+<p>Returns the total number of elements stored in the array. In the case of a scalar the size is 1.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>number of elements </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5arrayixE6size_t">
+<span id="_CPPv3NK3pni5arrayixE6size_t"></span><span id="_CPPv2NK3pni5arrayixE6size_t"></span><span id="pni::array::subscript-operator__sC"></span><span class="target" id="classpni_1_1array_1a394b5bb13500853969d3fe936262ce37"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> <code class="sig-name descname">operator[]</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5arrayixE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get value at index i </p>
+<p>This operator returns the content of the element with linear index i as an instance of value by which one cannot alter the data stored in the array. This operator performs no index checking.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>value holding the content of element i </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: linear index of the element </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array2atE6size_t">
+<span id="_CPPv3NK3pni5array2atE6size_t"></span><span id="_CPPv2NK3pni5array2atE6size_t"></span><span id="pni::array::at__sC"></span><span class="target" id="classpni_1_1array_1ab87d4f0b2281284664e16c9e5e9a338e"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> <code class="sig-name descname">at</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array2atE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get value at index i </p>
+<p>Return the content of the array at linear index i as an instance of value (thus only read only access). This method performs index checking.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>element at index i as instance of value </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IndexError</span></code>: if i exceeds the size of the array </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: linear index of the element </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5arrayixE6size_t">
+<span id="_CPPv3N3pni5arrayixE6size_t"></span><span id="_CPPv2N3pni5arrayixE6size_t"></span><span id="pni::array::subscript-operator__s"></span><span class="target" id="classpni_1_1array_1a444f0029dd39874e75bd80027e8290d7"></span><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> <code class="sig-name descname">operator[]</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5arrayixE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get a reference to index i </p>
+<p>Return a reference to the element at linear index i. The reference is provided as an instance of <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> via which the content of the array can be altered. This operator performs no index checking.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>reference to element i </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code>: linear index i </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array2atE6size_t">
+<span id="_CPPv3N3pni5array2atE6size_t"></span><span id="_CPPv2N3pni5array2atE6size_t"></span><span id="pni::array::at__s"></span><span class="target" id="classpni_1_1array_1adc5317cbf4352900640dd7c83521ec3c"></span><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> <code class="sig-name descname">at</code><span class="sig-paren">(</span>size_t <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array2atE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get element at index i </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5arrayclERK13element_index">
+<span id="_CPPv3N3pni5arrayclERK13element_index"></span><span id="_CPPv2N3pni5arrayclERK13element_index"></span><span id="pni::array::call-operator__element_indexCR"></span><span class="target" id="classpni_1_1array_1a694793a57ef6afd5a0e73c8efb164ddc"></span><a class="reference internal" href="#_CPPv4N3pni9value_refE" title="pni::value_ref">value_ref</a> <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5array13element_indexE" title="pni::array::element_index">element_index</a> &amp;<em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5arrayclERK13element_index" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get reference to element </p>
+<p>Returns a reference to an array element. The reference is represented by an instance of <a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p><a class="reference internal" href="#classpni_1_1value__ref"><span class="std std-ref">value_ref</span></a> with reference to the element </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: the index of the element </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5arrayclERK13element_index">
+<span id="_CPPv3NK3pni5arrayclERK13element_index"></span><span id="_CPPv2NK3pni5arrayclERK13element_index"></span><span id="pni::array::call-operator__element_indexCRC"></span><span class="target" id="classpni_1_1array_1a991b2ef51f4de805a8987888a8db6a5d"></span><a class="reference internal" href="#_CPPv4N3pni5valueE" title="pni::value">value</a> <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5array13element_indexE" title="pni::array::element_index">element_index</a> &amp;<em>index</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5arrayclERK13element_index" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get element value </p>
+<p>Returns the value of an element as an instance of value.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the value as an instance of value </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: the element index </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array9type_nameEv">
+<span id="_CPPv3NK3pni5array9type_nameEv"></span><span id="_CPPv2NK3pni5array9type_nameEv"></span><span id="pni::array::type_nameC"></span><span class="target" id="classpni_1_1array_1a3452e131f39a464f1ee5f78c63077eff"></span>string <code class="sig-name descname">type_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array9type_nameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>return the type name </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array5beginEv">
+<span id="_CPPv3N3pni5array5beginEv"></span><span id="_CPPv2N3pni5array5beginEv"></span><span id="pni::array::begin"></span><span class="target" id="classpni_1_1array_1a838c1472d6650e07034692b2dbdf62bd"></span><a class="reference internal" href="#_CPPv4N3pni5array8iteratorE" title="pni::array::iterator">iterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get iterator to first element </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array3endEv">
+<span id="_CPPv3N3pni5array3endEv"></span><span id="_CPPv2N3pni5array3endEv"></span><span id="pni::array::end"></span><span class="target" id="classpni_1_1array_1ab71d02a8189b78132e48453f2839d5cc"></span><a class="reference internal" href="#_CPPv4N3pni5array8iteratorE" title="pni::array::iterator">iterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get iterator to last+1 element </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array5beginEv">
+<span id="_CPPv3NK3pni5array5beginEv"></span><span id="_CPPv2NK3pni5array5beginEv"></span><span id="pni::array::beginC"></span><span class="target" id="classpni_1_1array_1a4fe2f93d4dd65b39e1961fc00f7afbf4"></span><a class="reference internal" href="#_CPPv4N3pni5array14const_iteratorE" title="pni::array::const_iterator">const_iterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get const iterator to first element </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array3endEv">
+<span id="_CPPv3NK3pni5array3endEv"></span><span id="_CPPv2NK3pni5array3endEv"></span><span id="pni::array::endC"></span><span class="target" id="classpni_1_1array_1a5f766b3538acd309c7efd7a721815327"></span><a class="reference internal" href="#_CPPv4N3pni5array14const_iteratorE" title="pni::array::const_iterator">const_iterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get const iterator to last+1 element </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK3pni5array4dataEv">
+<span id="_CPPv3NK3pni5array4dataEv"></span><span id="_CPPv2NK3pni5array4dataEv"></span><span id="pni::array::dataC"></span><span class="target" id="classpni_1_1array_1ac1ceb9347517650a73664de5b7d198cf"></span><em class="property">const</em> void *<code class="sig-name descname">data</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni5array4dataEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get const pointer to data </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni5array4dataEv">
+<span id="_CPPv3N3pni5array4dataEv"></span><span id="_CPPv2N3pni5array4dataEv"></span><span id="pni::array::data"></span><span class="target" id="classpni_1_1array_1aeb8667df73e1ea06941ef337cb32e0f6"></span>void *<code class="sig-name descname">data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5array4dataEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get pointer to data </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<div class="section" id="id2">
+<h3>Functions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="cpp function">
+<dt id="_CPPv4I00EN3pni10make_arrayE5arrayRK6ShapeT">
+<span id="_CPPv3I00EN3pni10make_arrayERK6ShapeT"></span><span id="_CPPv2I00EN3pni10make_arrayERK6ShapeT"></span>template&lt;typename <code class="sig-name descname">ElementT</code>, typename <code class="sig-name descname">ShapeT</code>&gt;<br /><span class="target" id="namespacepni_1ac427a052c509018e0f067b7c9dd226d6"></span><a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">make_array</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN3pni10make_arrayE5arrayRK6ShapeT" title="pni::make_array::ShapeT">ShapeT</a> &amp;<em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN3pni10make_arrayE5arrayRK6ShapeT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create an array </p>
+<p>Create an array of a particular shape and type. The type is determined at compile time via a template parameters. The underlying mdarray specialization is dynamic_array.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of array </p>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ElementT</span></code>: data type of the elements </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ShapeT</span></code>: shape type </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">shape</span></code>: number of elements along each dimension </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN3pni10make_arrayE5array9type_id_tRK10ContainerT">
+<span id="_CPPv3I0EN3pni10make_arrayE9type_id_tRK10ContainerT"></span><span id="_CPPv2I0EN3pni10make_arrayE9type_id_tRK10ContainerT"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="namespacepni_1a2325f4650bec5fe449645a794567ce88"></span><a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">make_array</code><span class="sig-paren">(</span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni10make_arrayE5array9type_id_tRK10ContainerT" title="pni::make_array::ContainerT">ContainerT</a> &amp;<em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni10make_arrayE5array9type_id_tRK10ContainerT" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create array </p>
+<p>Create an array of a particular type and shape. The type is determined by an argument and thus can be set at runtime.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>instance of array </p>
+</dd>
+<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1type__error"><span class="std std-ref"><span class="pre">type_error</span></span></a></code>: if the passed data type cannot be handled </p></li>
+</ul>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type for the shape </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: type id for the array </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shape</span></code>: number of elements along each dimension </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N3pni7type_idERK5array">
+<span id="_CPPv3N3pni7type_idERK5array"></span><span id="_CPPv2N3pni7type_idERK5array"></span><span id="pni::type_id__arrayCR"></span><span class="target" id="namespacepni_1aee71063a252b0a6236cc7c62f5c1bf25"></span>PNINEXUS_EXPORT <a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni5arrayE" title="pni::array">array</a> &amp;<em>a</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni7type_idERK5array" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get type id </p>
+<p>Get the type ID of the array stored in an array type erasure.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the type ID </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: reference to the array </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Type erasures</a><ul>
+<li><a class="reference internal" href="#pni-value"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::value</span></code></a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pni-value-ref"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::value_ref</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pni-array"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::array</span></code></a><ul>
+<li><a class="reference internal" href="#id2">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="core_type.html"
+                        title="previous chapter">Data types and type management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="core_mdarray.html"
+                        title="next chapter">Multidimensional array API</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="core_mdarray.html" title="Multidimensional array API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="core_type.html" title="Data types and type management"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="core.html" >PNI core API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Type erasures</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

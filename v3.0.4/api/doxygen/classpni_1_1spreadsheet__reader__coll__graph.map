@@ -1,0 +1,10 @@
+<map id="pni::spreadsheet_reader" name="pni::spreadsheet_reader">
+<area shape="rect" id="node1" title="base class for spreadsheet reader" alt="" coords="95,393,257,420"/>
+<area shape="rect" id="node2" href="$classpni_1_1data__reader.html" title="base class for data readers" alt="" coords="87,200,201,227"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,96,144,137"/>
+<area shape="rect" id="node4" title=" " alt="" coords="168,103,248,130"/>
+<area shape="rect" id="node7" href="$classpni_1_1column__info.html" title="Spreadsheet column information." alt="" coords="225,200,343,227"/>
+<area shape="rect" id="node5" title=" " alt="" coords="145,5,271,47"/>
+<area shape="rect" id="node6" title=" " alt="" coords="197,289,360,331"/>
+<area shape="rect" id="node8" title=" " alt="" coords="273,103,415,130"/>
+</map>

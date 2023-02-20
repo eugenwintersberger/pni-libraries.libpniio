@@ -1,0 +1,295 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The low-level ASCII interface &#8212; libpninexus 3.0.4 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spreadsheet like ASCII files" href="ascii_spreadsheet.html" />
+    <link rel="prev" title="Reading ASCII data" href="ascii.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="Spreadsheet like ASCII files"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ascii.html" title="Reading ASCII data"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="ascii.html" accesskey="U">Reading ASCII data</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The low-level ASCII interface</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-low-level-ascii-interface">
+<h1>The low-level ASCII interface<a class="headerlink" href="#the-low-level-ascii-interface" title="Permalink to this headline">¶</a></h1>
+<p>At the very bottom of the ASCII IO interface are</p>
+<ul class="simple">
+<li><p><em>parsers</em> reading ASCII data from a stream</p></li>
+<li><p>and <em>formatters</em> which can be used to write ASCII data to a stream</p></li>
+</ul>
+<div class="section" id="parsers">
+<h2>Parsers<a class="headerlink" href="#parsers" title="Permalink to this headline">¶</a></h2>
+<p>The major job of this interface is to provided save number parsing. It supports
+all primitive data types provided by <em>libpninexus</em> along with instances of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::vector</span></code> of such types.</p>
+<p>At the heart of the parser API is the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a> class
+template. It takes one template parameter which is the primitive or container
+type to parse. To use the parser API just include <code class="file docutils literal notranslate"><span class="pre">pni/parsers.hpp</span></code> in
+your source file.</p>
+<div class="section" id="parsing-primitive-scalars">
+<h3>Parsing primitive scalars<a class="headerlink" href="#parsing-primitive-scalars" title="Permalink to this headline">¶</a></h3>
+<p>A very simple example would be something like this</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/parsers.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="n">Float64Parser</span> <span class="o">=</span> <span class="n">pni</span><span class="o">::</span><span class="n">parser</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Float64Parser</span> <span class="n">p</span><span class="p">;</span>
+
+    <span class="n">float64</span> <span class="n">data</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="s">&quot;1.234&quot;</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This example should be rather self explaining.
+When used with scalar values the parser template provides only a default
+constructor. No additional information is required to configure the
+parser code.</p>
+<p>Besides primitive types the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a> template can also be
+used with the <a class="reference internal" href="../api/core_type_erasure.html#_CPPv4N3pni5valueE" title="pni::value"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::value</span></code></a> type erasure. In this case the
+resulting parser matches either a</p>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">pni::int64</span></code></p></li>
+<li><p>or a <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">pni::float64</span></code></p></li>
+<li><p>or a <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">pni::complex64</span></code> type.</p></li>
+</ul>
+</div>
+<div class="section" id="parsing-a-vector-of-primitives">
+<h3>Parsing a vector of primitives<a class="headerlink" href="#parsing-a-vector-of-primitives" title="Permalink to this headline">¶</a></h3>
+<p>Besides single scalars the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a> template can also be
+used with <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::vector</span></code> based containers where the element type
+should be one of the primitive types or a value.
+For this purpose a specialization of the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a> template
+of the form</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ElementT</span><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">parser</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">ElementT</span><span class="o">&gt;&gt;</span> <span class="p">{...};</span>
+</pre></div>
+</div>
+<p>is provided. A particularly interesting choice as an element is the
+<a class="reference internal" href="../api/core_type_erasure.html#_CPPv4N3pni5valueE" title="pni::value"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::value</span></code></a> type erasure as it allows to parse a series of
+inhomogeneous types. The following program</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/parsers.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="n">Record</span>       <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span> <span class="n">RecordParser</span> <span class="o">=</span> <span class="n">pni</span><span class="o">::</span><span class="n">parser</span><span class="o">&lt;</span><span class="n">Record</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">RecordParser</span> <span class="n">p</span><span class="p">;</span>
+    <span class="n">Record</span> <span class="n">record</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="s">&quot;1.234  12 1+I3.4&quot;</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">v</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">v</span><span class="p">.</span><span class="n">type_id</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>would produce this output</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>FLOAT64
+INT64
+COMPLEX64
+</pre></div>
+</div>
+<p>When using the default constructor of the <a class="reference internal" href="../api/ascii_parsers.html#_CPPv4I0EN3pni6parserE" title="pni::parser"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::parser</span></code></a>
+template with a container type the individual elements are considered to be
+separated by at least one blank. There are three more constructors
+allowing you to customize the behavior for the container parser.</p>
+<p>The first allows to use a custom delimiter symbol</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RecordParser</span> <span class="nf">parser</span><span class="p">(</span><span class="sc">&#39;,&#39;</span><span class="p">);</span> <span class="c1">// set , as an element delimiter</span>
+<span class="n">Record</span> <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="s">&quot;1.234,12 , 1+I3.4&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>It is important to note that the delimiter symbol can be surrounded by an
+arbitrary number of blanks.
+The second constructor provides the constructor with additional
+start and stop symbols.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RecordParser</span> <span class="nf">parser</span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="p">,</span><span class="sc">&#39;]&#39;</span><span class="p">);</span>
+<span class="n">Record</span> <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="s">&quot;[1.234 12  1+I3.4]&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>However, the elements in the string are now again separated only by blanks.
+Full customization of the parser is provided by the third constructor which
+allows the user to provide not only start and stop symbols but also a custom
+delimiter symbol</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">RecordParser</span> <span class="n">parser</span><span class="p">(</span><span class="sc">&#39;[&#39;</span><span class="p">,</span><span class="sc">&#39;]&#39;</span><span class="p">,</span><span class="sc">&#39;;&#39;</span><span class="p">);</span>
+<span class="n">Record</span> <span class="n">data</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="s">&quot;[1.234;12 ; 1+I3.4]&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="formatters">
+<h2>Formatters<a class="headerlink" href="#formatters" title="Permalink to this headline">¶</a></h2>
+<p>Formatters perform literally the inverse operation of parsers. They write
+data to a stream. Like for parsers the major concern here was to write
+numeric data without loss of precision to a stream.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is a common error when writing numbers in ASCII format to use the
+wrong precision. In the best case only  0 are written which is usually
+recognized rather early during software development. However, also truncations
+and thus loss of precision can occur which sometimes can lead to hard
+to recognize and thus difficult to debug bugs.</p>
+<p>Thus, the formatter functions provided by <em>libpninexus</em> usually write numeric
+data with the maximum precision to avoid such issues.</p>
+</div>
+<p>Formatters are currently implemented as functions returning a string
+with the formatted output. You can use
+them after including <code class="file docutils literal notranslate"><span class="pre">pni/formatters.hpp</span></code> in your source code.</p>
+<p>For scalar data their usage is rather simple</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">uint8</span> <span class="n">number</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The format function takes care that the number if converted to a string
+without loss of precision.</p>
+<p>As for parsers, there are also overloaded formatters for containers like
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::vector</span></code>. In this case the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">format()</span></code> function
+takes an optional second argument which is a reference to
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::container_io_config</span></code>. This class controls how such
+container data is written to disk.
+Taking the record example from the above parser section we could do
+something like this</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//using a ; as a separator between record elements</span>
+<span class="n">pni</span><span class="o">::</span><span class="n">container_io_config</span> <span class="n">config</span><span class="p">(</span><span class="sc">&#39;;&#39;</span><span class="p">);</span>
+
+<span class="n">Record</span> <span class="n">record</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">,</span><span class="n">config</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The low-level ASCII interface</a><ul>
+<li><a class="reference internal" href="#parsers">Parsers</a><ul>
+<li><a class="reference internal" href="#parsing-primitive-scalars">Parsing primitive scalars</a></li>
+<li><a class="reference internal" href="#parsing-a-vector-of-primitives">Parsing a vector of primitives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#formatters">Formatters</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ascii.html"
+                        title="previous chapter">Reading ASCII data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ascii_spreadsheet.html"
+                        title="next chapter">Spreadsheet like ASCII files</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ascii_spreadsheet.html" title="Spreadsheet like ASCII files"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ascii.html" title="Reading ASCII data"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="legacy.html" >Legacy formats</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="ascii.html" >Reading ASCII data</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">The low-level ASCII interface</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
