@@ -27,10 +27,10 @@ jobs:
       - name: Run the docker
         run: docker run --name build -i -d -v"$PWD:/home/p00user/src" build
 
-      - name: Run Ninja
+      - name: Cmake config
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "mkdir ../build && cd ../build && cmake -G Ninja -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
+        run: docker  exec build /bin/bash -c "git config --global --add safe.directory /home/p00user/src && mkdir ../build && cd ../build && cmake -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
         # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all
