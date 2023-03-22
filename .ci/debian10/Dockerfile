@@ -28,7 +28,6 @@ RUN pip3 install gitpython
 
 # add p00user
 RUN useradd -rm -d /home/p00user -s /bin/bash p00user
-RUN mkdir -p /home/p00user/src
-RUN chmod +777 /home/p00user/src
 USER p00user
+RUN mkdir -p /home/p00user/src
 WORKDIR /home/p00user/src
