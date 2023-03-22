@@ -17,7 +17,7 @@ RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
 RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.5.2-dev libh5cpp0.5.2
 
 RUN apt-get clean
-RUN pip3 install conan
+RUN pip3 install conan==1.59.0
 RUN pip3 install gitpython
 
 # RUN conan remote remove conan-center

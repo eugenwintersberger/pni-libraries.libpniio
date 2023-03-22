@@ -127,7 +127,7 @@ jobs:
             # libc++   # not supported yet
         ]
         image: [
-            "conanio/gcc11-ubuntu16.04",
+            "conanio/gcc11-ubuntu16.04:1.59.0",
             # "conanio/clang13-ubuntu16.04"
         ]
     runs-on: ubuntu-20.04
@@ -182,7 +182,7 @@ jobs:
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade conan
+          pip install --upgrade conan==1.59.0
       - name: build h5cpp
         run: |
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
