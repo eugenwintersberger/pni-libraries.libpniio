@@ -27,7 +27,10 @@ RUN pip3 install gitpython
 # RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
 
 # add p00user
-RUN useradd -rm -d /home/p00user -s /bin/bash p00user
+RUN groupadd -gid 1001 p00user
+    && useradd -uid 1001 -gid 1001 -rm -d /home/p00user -s /bin/bash p00user
 USER p00user
 RUN mkdir -p /home/p00user/src
+    && chown -R 1001:1001 /home/p00user
+    && chown -R 1001:1001 /home/p00user/src
 WORKDIR /home/p00user/src
