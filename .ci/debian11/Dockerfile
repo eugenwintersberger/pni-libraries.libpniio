@@ -17,14 +17,8 @@ RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
 RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.5.2-dev libh5cpp0.5.2
 
 RUN apt-get clean
-RUN pip3 install conan==1.59.0
 RUN pip3 install jinja2==3.0.3
 RUN pip3 install gitpython
-
-# RUN conan remote remove conan-center
-RUN conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
-RUN conan remote add conan-center https://conan.bintray.com
-RUN conan remote add conan-transit https://conan-transit.bintray.com
 
 # # install latest h5cpp
 # RUN mkdir -p /opt/h5cpp
@@ -32,6 +26,7 @@ RUN conan remote add conan-transit https://conan-transit.bintray.com
 # RUN cd /h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && mkdir build
 # RUN cd /h5cpp-src/build && cmake -DCMAKE_INSTALL_PREFIX=/opt/h5cpp -DCMAKE_BUILD_TYPE=Release -DH5CPP_CONAN=DISABLE -DH5CPP_DISABLE_TESTS=True  ../h5cpp && make install -j4
 
-RUN conan user
-RUN mkdir /src
-WORKDIR /src
+# add p00user
+RUN useradd -rm -d /home/p00user -s /bin/bash p00user
+USER p00user
+WORKDIR /home/p00user
