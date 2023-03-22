@@ -30,7 +30,7 @@ jobs:
       - name: Run Ninja
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "mkdir ../build && cd ../build && cmake -G Ninja -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
+        run: docker  exec build /bin/bash -c "mkdir ../build && cd ../build && cmake -G Ninja -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
         # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all
@@ -54,7 +54,8 @@ jobs:
         run: docker  exec build /bin/bash -c "cd ../build && cmake --build ../src --target check --config $BUILDTYPE -- -j3"
 
       - name: Append documentation for the latest release version
-        if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        # if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: matrix.os == 'debian11'
         run: |
              docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"

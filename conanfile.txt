@@ -1,5 +1,5 @@
 [requires]
-boost/1.69.0
+boost/1.81.0
 hdf5/1.12.2
 zlib/1.2.11
 bzip2/1.0.8
