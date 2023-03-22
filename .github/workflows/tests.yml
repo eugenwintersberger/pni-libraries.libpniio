@@ -127,7 +127,7 @@ jobs:
             # libc++   # not supported yet
         ]
         image: [
-            "conanio/gcc11-ubuntu16.04",
+            "conanio/gcc11-ubuntu16.04:1.59.0",
             # "conanio/clang13-ubuntu16.04"
         ]
     runs-on: ubuntu-20.04
