@@ -25,7 +25,7 @@ jobs:
         run: docker build -t build .ci/${OS}
 
       - name: Run the docker
-        run: docker run --name build -i -d -v"$PWD:/home/p00user/src"  -u "$(id -u)":"$(id -g)" build
+        run: docker run --name build -i -d -v"$PWD:/home/p00user/src"  build
 
       - name: Cmake config
         env:
