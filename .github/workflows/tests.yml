@@ -30,7 +30,7 @@ jobs:
       - name: Cmake config
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "git config --global --add safe.directory /home/p00user/src && mkdir ../build && cd ../build && cmake -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
+        run: docker  exec build /bin/bash -c "mkdir ../build && cd ../build && cmake -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
         # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all
@@ -54,10 +54,9 @@ jobs:
         run: docker  exec build /bin/bash -c "cd ../build && cmake --build . --target check --config $BUILDTYPE -- -j3"
 
       - name: Append documentation for the latest release version
-        if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: (! startsWith(github.ref, 'refs/heads/docs_')) && matrix.buildtype == 'Release' && matrix.os == 'debian11'
         run: |
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
-             docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
              docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git clean -fd && git checkout gh-pages && git pull"
@@ -83,7 +82,6 @@ jobs:
         run: |
              echo Version: ${{ steps.extract_docver.outputs.docver }}
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
-             docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
              docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git clean -fd && git checkout gh-pages && git pull"
