@@ -57,6 +57,7 @@ jobs:
         # if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
         if: matrix.os == 'debian11'
         run: |
+             docker exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
              docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
