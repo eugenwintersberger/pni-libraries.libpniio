@@ -59,17 +59,13 @@ jobs:
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-             docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git clean -fd && git checkout gh-pages && git pull"
+             docker  exec build /bin/bash -c "git fetch && git clean -fd && git checkout gh-pages && git pull"
              docker  exec build /bin/bash -c "mkdir -p ./latest && shopt -u dotglob && rm -rf ./latest/*"
              docker  exec build /bin/bash -c "mv -f ../build/doc/build/html/* ./latest/"
              docker  exec build /bin/bash -c "mv -f ../build/doc/api/html ./latest/api/doxygen"
              docker  exec build /bin/bash -c "mv -f ../build/doc/index.html ./"
              docker  exec build /bin/bash -c "mv -f ../build/doc/_config.yml ./"
-             docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\; "
              docker  exec build /bin/bash -c "rm -rf ./latest/_sources"
-             docker  exec build /bin/bash -c "rm -rf ../build"
 
       - name: Extract the code version from the branch name
         if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
@@ -84,16 +80,12 @@ jobs:
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-             docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git clean -fd && git checkout gh-pages && git pull"
+             docker  exec build /bin/bash -c "git fetch && git clean -fd && git checkout gh-pages && git pull"
              docker  exec build /bin/bash -c "mkdir -p ./${{ steps.extract_docver.outputs.docver }}"
              docker  exec build /bin/bash -c "shopt -u dotglob && rm -rf ./${{ steps.extract_docver.outputs.docver }}/* "
              docker  exec build /bin/bash -c "mv -f ../build/doc/build/html/* ./${{ steps.extract_docver.outputs.docver }}/"
              docker  exec build /bin/bash -c "mv -f ../build/doc/api/html ./${{ steps.extract_docver.outputs.docver }}/api/doxygen"
-             docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\;"
-             docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\;"
              docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
-             docker  exec build /bin/bash -c "rm -rf ../build"
 
       - name: Deploy documentation
         if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
