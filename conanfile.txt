@@ -10,10 +10,10 @@ doxygen/1.9.4
 hdf5/1.12.2
 
 [generators]
-cmake_paths
-cmake_find_package
-virtualbuildenv
-virtualrunenv
+CMakeToolchain
+CMakeDeps
+VirtualBuildEnv
+VirtualRunEnv
 
 [options]
 boost/*:shared=True
