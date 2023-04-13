@@ -146,11 +146,9 @@ jobs:
           conan remove -c zlib/*
           conan install h5cpp ${CONAN_ARGS} \
             --output-folder h5cpp-build \
-            --lockfile conan.lock \
             --build missing \
             --update
           conan h5cpp-build h5cpp  ${CONAN_ARGS} \
-            --lockfile conan.lock \
             --output-folder build
           cd h5cpp-build
           make install -j4 && cd ../../          
@@ -171,11 +169,9 @@ jobs:
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
           conan install . ${CONAN_ARGS} \
             --output-folder build \
-            --lockfile conan.lock \
             --build missing \
             --update
           conan build .  ${CONAN_ARGS} \
-            --lockfile conan.lock \
             --output-folder build
           # make check CTEST_OUTPUT_ON_FAILURE=TRUE -j4
 
