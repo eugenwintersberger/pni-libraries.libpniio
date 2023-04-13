@@ -144,12 +144,12 @@ jobs:
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
           conan profile detect
           conan remove -c zlib/*
-          conan install ../h5cpp-src ${CONAN_ARGS} \
+          conan install h5cpp ${CONAN_ARGS} \
             --output-folder h5cpp-build \
             --lockfile conan.lock \
             --build missing \
             --update
-          conan h5cpp-build ../h5cpp-src  ${CONAN_ARGS} \
+          conan h5cpp-build h5cpp  ${CONAN_ARGS} \
             --lockfile conan.lock \
             --output-folder build
           cd h5cpp-build
