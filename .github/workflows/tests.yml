@@ -100,8 +100,7 @@ jobs:
       - name: Stop the docker
         run: docker container stop build
 
-  conan:
-    strategy:
+  conan:    strategy:
       matrix:
         shared: [
           shared,
