@@ -137,7 +137,7 @@ jobs:
       - name: build h5cpp
         run: |
           CONAN_ARGS=" \
-            -o with_boost=TRUE \
+            -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
             -o hdf5/*:shared=${PNINEXUS_SHARED}"
@@ -161,7 +161,7 @@ jobs:
       - name: run tests
         run: |
           CONAN_ARGS=" \
-            -o with_boost=TRUE \
+            -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
             -o hdf5/*:shared=${PNINEXUS_SHARED}"
