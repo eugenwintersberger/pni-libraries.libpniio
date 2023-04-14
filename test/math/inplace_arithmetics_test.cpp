@@ -31,6 +31,7 @@
 #pragma GCC diagnostic pop
 #endif
 #include <boost/current_function.hpp>
+#include <boost/math/special_functions/math_fwd.hpp>
 #include <pni/algorithms/math/inplace_arithmetics.hpp>
 
 #include "array_types.hpp"
