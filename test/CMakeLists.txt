@@ -18,7 +18,7 @@ target_include_directories(test_common PRIVATE ${Boost_INCLUDE_DIRS} ${PROJECT_S
 
 
 add_executable(parser_complex_test EXCLUDE_FROM_ALL parser_complex_test.cpp)
-target_link_libraries(parser_complex_test pninexus h5cpp::h5cpp boost::math)
+target_link_libraries(parser_complex_test pninexus h5cpp::h5cpp)
 
 #
 # build test program for the random number generator

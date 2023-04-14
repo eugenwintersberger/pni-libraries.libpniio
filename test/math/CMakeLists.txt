@@ -16,7 +16,7 @@ add_executable(math_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_commo
 add_executable(random_ranges EXCLUDE_FROM_ALL random_ranges.cpp)
 add_dependencies(check math_test random_ranges)
 
-target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
+target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework Boost::math)
 
 target_link_libraries(random_ranges pninexus h5cpp::h5cpp)
 
