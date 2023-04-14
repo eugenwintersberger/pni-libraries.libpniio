@@ -45,10 +45,10 @@ namespace math{
     //utility funtion template to check for the finiteness of a 
     //comples value. This is only the case if real and imaginary part 
     //are finite.
-    template<typename GeneralT> bool isfinite(std::complex<GeneralT> v)
+    template<typename GeneralT> bool isinf(std::complex<GeneralT> v)
     {
 
-        return isfinite(v.real()) && isfinite(v.imag());
+        return isinf(v.real()) || isinf(v.imag());
     }
 }
 }
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i) 
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"+"<<f.rhs_scalar
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i) 
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"+"<<f.rhs[i]
@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i) 
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"-"<<f.rhs_scalar
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i) 
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"-"<<f.rhs[i]
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
     
         for(size_t i=0;i<f.lhs.size();++i)
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"/"<<f.rhs_scalar
@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i)
         {
-            if(!std::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"/"<<f.rhs[i]
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
         
         for(size_t i=0;i<f.lhs.size();++i)
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"*"<<f.rhs_scalar
@@ -244,7 +244,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i)
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if((boost::math::isinf)(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"*"<<f.rhs[i]
