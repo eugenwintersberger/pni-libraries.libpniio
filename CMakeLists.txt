@@ -98,7 +98,6 @@ include(utilities)
 find_package(Boost 1.40 COMPONENTS system
                                    regex
                                    date_time
-				   math
                                    unit_test_framework
                                    filesystem REQUIRED)
 include(${EXTRA_MODULES_DIR}/CompilerConfig.cmake)
