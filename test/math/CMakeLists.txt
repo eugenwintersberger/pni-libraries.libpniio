@@ -17,6 +17,7 @@ add_executable(random_ranges EXCLUDE_FROM_ALL random_ranges.cpp)
 add_dependencies(check math_test random_ranges)
 
 if(TARGET Boost::math)
+  find_package(Boost 1.60 COMPONENTS unit_test_framework math)
   target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework Boost::math)
 else()
   target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
