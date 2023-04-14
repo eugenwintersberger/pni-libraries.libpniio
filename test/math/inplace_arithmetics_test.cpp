@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_SUITE(inplace_arithmetics_test)
 
         for(size_t i=0;i<f.lhs.size();++i)
         {
-            if(!boost::math::isfinite(f.lhs[i]))
+            if(!std::isfinite(f.lhs[i]))
             {
                 BOOST_TEST_MESSAGE( "Infinite result "<<f.lhs[i]<<" from "<<
                                     f.lhs_orig[i]<<"/"<<f.rhs[i]
