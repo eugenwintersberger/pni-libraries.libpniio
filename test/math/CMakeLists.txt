@@ -5,6 +5,7 @@ set(SOURCES add_operator_test.cpp
             mult_operator_test.cpp
             sub_operator_test.cpp
     )
+set(CMAKE_CXX_STANDARD 14)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
@@ -16,7 +17,11 @@ add_executable(math_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_commo
 add_executable(random_ranges EXCLUDE_FROM_ALL random_ranges.cpp)
 add_dependencies(check math_test random_ranges)
 
-target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
+if(WIN32)
+  target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
+else()
+  target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework m)
+endif()
 
 target_link_libraries(random_ranges pninexus h5cpp::h5cpp)
 
