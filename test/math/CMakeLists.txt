@@ -5,6 +5,7 @@ set(SOURCES add_operator_test.cpp
             mult_operator_test.cpp
             sub_operator_test.cpp
     )
+set(CMAKE_CXX_STANDARD 14)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
@@ -19,7 +20,7 @@ add_dependencies(check math_test random_ranges)
 if(TARGET Boost::math)
   find_package(Boost 1.60 COMPONENTS unit_test_framework math)
   find_library(MATH_LIBRARY m)
-  target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework Boost::math ${MATH_LIBRARY})
+  target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework Boost::math ${MATH_LIBRARY} m)
 else()
   target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 endif()
