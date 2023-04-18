@@ -95,7 +95,7 @@ include(utilities)
 #---------------------------------------------------------------------------------
 # compiler and library configuration
 #---------------------------------------------------------------------------------
-find_package(Boost 1.40 COMPONENTS system
+find_package(Boost 1.60 COMPONENTS system
                                    regex
                                    date_time
                                    unit_test_framework
