@@ -30,7 +30,7 @@ jobs:
       - name: Cmake config
         env:
           BUILDTYPE: ${{ matrix.buildtype }}
-        run: docker  exec build /bin/bash -c "git config --global --add safe.directory /home/p00user/src && mkdir ../build && cd ../build && cmake -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
+        run: docker  exec build /bin/bash -c "mkdir ../build && cd ../build && cmake -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE ../src"
         # run: docker  exec build /bin/bash -c "cd build && cmake -G Ninja -Dh5cpp_DIR=/opt/h5cpp/lib/cmake/h5cpp-0.5 -DPNINEXUS_CONAN=DISABLE -DCMAKE_BUILD_TYPE=$BUILDTYPE .."
 
       - name: Build all
@@ -54,23 +54,18 @@ jobs:
         run: docker  exec build /bin/bash -c "cd ../build && cmake --build . --target check --config $BUILDTYPE -- -j3"
 
       - name: Append documentation for the latest release version
-        if: github.ref == 'refs/heads/develop' && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: (! startsWith(github.ref, 'refs/heads/docs_')) && matrix.buildtype == 'Release' && matrix.os == 'debian11'
         run: |
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
-             docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-             docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git clean -fd && git checkout gh-pages && git pull"
+             docker  exec build /bin/bash -c "git fetch && git clean -fd && git checkout gh-pages && git pull"
              docker  exec build /bin/bash -c "mkdir -p ./latest && shopt -u dotglob && rm -rf ./latest/*"
              docker  exec build /bin/bash -c "mv -f ../build/doc/build/html/* ./latest/"
              docker  exec build /bin/bash -c "mv -f ../build/doc/api/html ./latest/api/doxygen"
              docker  exec build /bin/bash -c "mv -f ../build/doc/index.html ./"
              docker  exec build /bin/bash -c "mv -f ../build/doc/_config.yml ./"
-             docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\; "
              docker  exec build /bin/bash -c "rm -rf ./latest/_sources"
-             docker  exec build /bin/bash -c "rm -rf ../build"
 
       - name: Extract the code version from the branch name
         if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
@@ -83,19 +78,14 @@ jobs:
         run: |
              echo Version: ${{ steps.extract_docver.outputs.docver }}
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
-             docker  exec build /bin/bash -c "git config --global --add safe.directory '*'"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
              docker  exec build /bin/bash -c "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
-             docker  exec build /bin/bash -c "git fetch && rm -rf cmake && git clean -fd && git checkout gh-pages && git pull"
+             docker  exec build /bin/bash -c "git fetch && git clean -fd && git checkout gh-pages && git pull"
              docker  exec build /bin/bash -c "mkdir -p ./${{ steps.extract_docver.outputs.docver }}"
              docker  exec build /bin/bash -c "shopt -u dotglob && rm -rf ./${{ steps.extract_docver.outputs.docver }}/* "
              docker  exec build /bin/bash -c "mv -f ../build/doc/build/html/* ./${{ steps.extract_docver.outputs.docver }}/"
              docker  exec build /bin/bash -c "mv -f ../build/doc/api/html ./${{ steps.extract_docver.outputs.docver }}/api/doxygen"
-             docker  exec build /bin/bash -c "find ./ -type d -name \"CMakeFiles\" -prune -exec rm -rf {} \\;"
-             docker  exec build /bin/bash -c "find ./ -name \"Makefile\" -exec rm -rf {} \\; "
-             docker  exec build /bin/bash -c "find ./ -name \"*.cmake\" -exec rm -rf {} \\;"
              docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
-             docker  exec build /bin/bash -c "rm -rf ../build"
 
       - name: Deploy documentation
         if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
@@ -125,10 +115,8 @@ jobs:
             # libc++   # not supported yet
         ]
         image: [
-            # "conanio/gcc11-ubuntu16.04:1.59.0",
             "conanio/gcc11-ubuntu16.04:2.0.2",
-            # "conanio/gcc11-ubuntu16.04",
-            # "conanio/clang13-ubuntu16.04"
+            # "conanio/clang13-ubuntu16.04:2.0.2"
         ]
     runs-on: ubuntu-20.04
     container:
@@ -178,6 +166,11 @@ jobs:
           conan build . ${CONAN_ARGS}  --output-folder build
       - name: run tests
         run: |
+          CONAN_ARGS=" \
+            -o with_boost=True \
+            -o with_mpi=${PNINEXUS_WITH_MPI} \
+            -o shared=${PNINEXUS_SHARED} \
+            -o hdf5/*:shared=${PNINEXUS_SHARED}"
           cd build
           make check CTEST_OUTPUT_ON_FAILURE=TRUE  
   windows-2019:
