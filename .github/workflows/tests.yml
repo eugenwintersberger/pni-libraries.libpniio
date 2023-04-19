@@ -172,7 +172,7 @@ jobs:
             -o shared=${PNINEXUS_SHARED} \
             -o hdf5/*:shared=${PNINEXUS_SHARED}"
           cd build
-          make check CTEST_OUTPUT_ON_FAILURE=TRUE  
+          make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
   windows-2019:
     strategy:
       matrix:
@@ -203,7 +203,7 @@ jobs:
             -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
-            -o install_prefix=/usr/local/ \
+            -o install_prefix=\"D:\\a\\libpninexus\\libpninexus\\h5cpp-src\\h5cppbin\" \
             -o *:shared=${PNINEXUS_SHARED} \
             -o hdf5/*:shared=${PNINEXUS_SHARED}"            
           conan profile detect
@@ -233,7 +233,8 @@ jobs:
           # copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
           .\conanbuildenv-release-x86_64.ps1
           .\conanrunenv-release-x86_64.ps1
-          ctest --extra-verbose --no-tests=error --output-on-failure
+          make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
+          # ctest --extra-verbose --no-tests=error --output-on-failure
           # ls bin
           # cmake --build . --verbose --target check --config RELEASE
         shell: pwsh
