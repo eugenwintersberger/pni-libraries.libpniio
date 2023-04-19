@@ -190,6 +190,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Add MSVC to PATH
         uses: ilammy/msvc-dev-cmd@v1
+      - name: Set environment variables
+        run: |
+            bash .github/workflows/set_env_vars.sh \
+              ${{ matrix.shared }} \
+              ${{ matrix.mpi }}
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip

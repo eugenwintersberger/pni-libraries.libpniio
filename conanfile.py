@@ -38,7 +38,6 @@ class PNINeXusConan(ConanFile):
 
     def requirements(self):
         self.requires("hdf5/1.14.0")
-        self.requires("libiconv/1.17")
         self.requires("zlib/1.2.13")
         self.requires("szip/2.1.1")
         self.requires("bzip2/1.0.8")
