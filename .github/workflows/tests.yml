@@ -197,7 +197,7 @@ jobs:
       - name: build h5cpp
         run: |
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && cd h5cpp && git checkout -b installprefix origin/installprefix && cd .. && mkdir h5cpp-build
-          CONAN_ARGS=" \
+          $ENV:CONAN_ARGS=" \
             -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
@@ -214,7 +214,7 @@ jobs:
           cd ../../
       - name: build pninexus
         run: |
-          CONAN_ARGS=" \
+          $ENV:CONAN_ARGS=" \
             -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
