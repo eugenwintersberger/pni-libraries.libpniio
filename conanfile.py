@@ -44,6 +44,8 @@ class PNINeXusConan(ConanFile):
         self.requires("zlib/1.2.13")
         self.requires("szip/2.1.1")
         self.requires("bzip2/1.0.8")
+        self.requires("doxygen/1.9.4")
+
 
         if self.options.get_safe("with_boost", False):
             if self.settings.os == "Windows":
@@ -63,7 +65,7 @@ class PNINeXusConan(ConanFile):
             with run_env.apply():
                 variables = {
                     "PNINEXUS_CONAN": "MANUAL",
-                    "PNINEXUS_WITH_MPI": 
+                    "PNINEXUS_WITH_MPI":
                     self.options.get_safe("with_mpi", False),
                     "PNINEXUS_WITH_BOOST":
                     self.options.get_safe("with_boost", False)}
