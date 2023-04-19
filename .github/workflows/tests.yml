@@ -190,13 +190,13 @@ jobs:
       - name: Set environment variables
       - name: Set environment variables
         run: |
-            bash .github/workflows/set_env_vars.sh \
-              "shared" "serial"
+            bash .github/workflows/set_env_vars.sh "shared" "serial"
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade conan==2.0.2
-          CONAN_ARGS="-o with_boost=True \
+          CONAN_ARGS=" \
+            -o with_boost=True \
             -o shared=${PNINEXUS_SHARED} \
             -o install_prefix=D\:\\a\\libpninexus\\libpninexus\\h5cpp-src\\h5cppbin \
             -o *:shared=${PNINEXUS_SHARED}"
