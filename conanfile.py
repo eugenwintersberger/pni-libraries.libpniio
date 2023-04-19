@@ -25,7 +25,6 @@ class PNINeXusConan(ConanFile):
     }
 
     def build_requirements(self):
-        self.build_requires("catch2/3.3.2")
         self.build_requires("ninja/1.10.2")
         self.build_requires("zlib/1.2.13")
 
@@ -39,12 +38,11 @@ class PNINeXusConan(ConanFile):
 
     def requirements(self):
         self.requires("hdf5/1.14.0")
-        self.requires("catch2/3.3.2")
         self.requires("libiconv/1.17")
         self.requires("zlib/1.2.13")
         self.requires("szip/2.1.1")
         self.requires("bzip2/1.0.8")
-        self.requires("doxygen/1.9.4")
+        # self.requires("doxygen/1.9.4")
 
 
         if self.options.get_safe("with_boost", False):
@@ -65,6 +63,7 @@ class PNINeXusConan(ConanFile):
             with run_env.apply():
                 variables = {
                     "PNINEXUS_CONAN": "MANUAL",
+                    "PNINEXUS_BUILD_DOC": False,
                     "PNINEXUS_WITH_MPI":
                     self.options.get_safe("with_mpi", False),
                     "PNINEXUS_WITH_BOOST":
