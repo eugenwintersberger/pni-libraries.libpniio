@@ -170,6 +170,7 @@ jobs:
             -o shared=${PNINEXUS_SHARED} \
             -o *:shared=${PNINEXUS_SHARED}"
           cd build
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
           make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
   windows-2022:
     strategy:
@@ -210,7 +211,7 @@ jobs:
           conan install h5cpp ${CONAN_ARGS} --output-folder h5cpp-build --build missing --update
           conan build h5cpp ${CONAN_ARGS} --output-folder h5cpp-build
           cd  h5cpp-build
-          make install
+          # make install
           cd ../../
       - name: build pninexus
         run: |
@@ -225,12 +226,12 @@ jobs:
       - name: run tests
         run: |
           cd build
-          .\activate_run.ps1
-          # copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
+          # .\activate_run.ps1
+          copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
+          ls bin
           .\conanbuildenv-release-x86_64.ps1
           .\conanrunenv-release-x86_64.ps1
-          make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
+          cmake --build . --verbose --target check --config RELEASE
+          # make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
           # ctest --extra-verbose --no-tests=error --output-on-failure
-          # ls bin
-          # cmake --build . --verbose --target check --config RELEASE
         shell: pwsh
