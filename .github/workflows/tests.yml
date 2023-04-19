@@ -171,7 +171,7 @@ jobs:
             -o *:shared=${PNINEXUS_SHARED}"
           cd build
           make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
-  windows-2019:
+  windows-2022:
     strategy:
       matrix:
         shared: [
@@ -181,7 +181,7 @@ jobs:
         mpi: [
         # mpi,   # not supported yet
         serial]
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: check cmake
         run: |
