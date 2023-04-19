@@ -190,7 +190,7 @@ jobs:
       - name: Set environment variables
         run: |
             bash .github/workflows/set_env_vars.sh \
-              ${{ matrix.shared }} \
+              "shared" \
               "serial"
       - name: Install and configure conan
         run: |
