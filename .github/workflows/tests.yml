@@ -188,7 +188,6 @@ jobs:
       - name: Add MSVC to PATH
         uses: ilammy/msvc-dev-cmd@v1
       - name: Set environment variables
-      - name: Set environment variables
         run: |
             bash .github/workflows/set_env_vars.sh "shared" "serial"
       - name: Install and configure conan
