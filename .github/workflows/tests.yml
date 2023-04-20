@@ -176,14 +176,14 @@ jobs:
   #         cd build
   #         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   #         make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
-  windows-2019:
+  windows-2022:
     strategy:
       matrix:
         shared: [
           "shared",
           # "static"  # not supported yet
         ]
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: check cmake
         run: |
