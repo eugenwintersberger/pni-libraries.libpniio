@@ -176,14 +176,14 @@ jobs:
   #         cd build
   #         export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   #         make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
-  windows-2022:
+  windows-2019:
     strategy:
       matrix:
         shared: [
           "shared",
           # "static"  # not supported yet
         ]
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
       - name: check cmake
         run: |
@@ -229,7 +229,6 @@ jobs:
       - name: run tests
         run: |
           cd build
-          dir C:\Users\runneradmin\.conan2\p\boostca263672df2b0\p\lib\
           copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
           .\conanbuild.bat
           .\conanrun.bat
