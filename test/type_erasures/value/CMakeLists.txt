@@ -25,7 +25,7 @@ set_boost_test_definitions(SOURCES "testing the value type erasure")
 
 add_executable(value_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
 
-target_link_libraries(value_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
+target_link_libraries(value_test pninexus h5cpp::h5cpp Boost::unit_test_framework Boost::filesystem)
 add_dependencies(check value_test)
 
 

@@ -9,7 +9,7 @@ set(SOURCES container_utils_array_test.cpp
 set_boost_test_definitions(SOURCES "testing utilty code")
 
 add_executable(utils_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
-target_link_libraries(utils_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
+target_link_libraries(utils_test pninexus h5cpp::h5cpp Boost::unit_test_framework Boost::filesystem)
 add_dependencies(check utils_test)
 
 
