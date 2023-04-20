@@ -63,17 +63,12 @@ class PNINeXusConan(ConanFile):
                 variables = {
                     "PNINEXUS_CONAN": "MANUAL",
                     "PNINEXUS_BUILD_DOC": False,
+                    # "PNINEXUS_WITH_BOOST":
+                    # self.options.get_safe("with_boost", False),
                     "PNINEXUS_WITH_MPI":
-                    self.options.get_safe("with_mpi", False),
-                    "PNINEXUS_WITH_BOOST":
-                    self.options.get_safe("with_boost", False)}
-                # if self.settings.os == "Windows":
-                #     variables["h5cpp_DIR"] = \
-                #         "D:/a/libpninexus/libpninexus/h5cpp-src/" \
-                #             "h5cpp-build/../h5cppbin/lib/cmake/h5cpp-0.5"
+                    self.options.get_safe("with_mpi", False)
+                }
                 insprefix = self.options.get_safe("install_prefix", None)
-                self.output.info("PATH:  %s\%s \n" % (
-                    insprefix, "lib\cmake\h5cpp-0.5"))
                 if insprefix:
                     variables["CMAKE_INSTALL_PREFIX"] = insprefix
                     variables["h5cpp_DIR"] = "%s/%s" % (
