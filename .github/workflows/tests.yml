@@ -206,7 +206,7 @@ jobs:
           CONAN_ARGS=" \
             -o with_boost=True \
             -o shared=${PNINEXUS_SHARED} \
-            -o install_prefix=D\:\\a\\libpninexus\\libpninexus\\h5cpp-src\\h5cppbin \
+            -o install_prefix=D:/a/libpninexus/libpninexus/h5cpp-src/h5cppbin \
             -o *:shared=${PNINEXUS_SHARED}"
           conan profile detect
           conan remove -c zlib/*
@@ -222,7 +222,7 @@ jobs:
           CONAN_ARGS=" \
             -o with_boost=True \
             -o shared=${PNINEXUS_SHARED} \
-            -o install_prefix=D\:\\a\\libpninexus\\libpninexus\\h5cpp-src\\h5cppbin \
+            -o install_prefix=D:/a/libpninexus/libpninexus/h5cpp-src/h5cppbin \
             -o *:shared=${PNINEXUS_SHARED}"
           conan install . ${CONAN_ARGS}  --output-folder build   --build missing  --update
           conan build . ${CONAN_ARGS}  --output-folder build

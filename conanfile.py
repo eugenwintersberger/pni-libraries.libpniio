@@ -76,11 +76,7 @@ class PNINeXusConan(ConanFile):
                     insprefix, "lib\cmake\h5cpp-0.5"))
                 if insprefix:
                     variables["CMAKE_INSTALL_PREFIX"] = insprefix
-                    if self.settings.os == "Windows":
-                        variables["h5cpp_DIR"] = "%s\%s" % (
-                            insprefix, "lib\cmake\h5cpp-0.5")
-                    else:
-                        variables["h5cpp_DIR"] = "%s/%s" % (
-                            insprefix, "lib/cmake/h5cpp-0.5")
+                    variables["h5cpp_DIR"] = "%s/%s" % (
+                        insprefix, "lib/cmake/h5cpp-0.5")
                 cmake.configure(variables=variables)
                 cmake.build()
