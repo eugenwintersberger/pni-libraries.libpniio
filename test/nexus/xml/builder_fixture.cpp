@@ -22,9 +22,10 @@
 //
 
 #include "builder_fixture.hpp"
+#include <h5cpp/core/filesystem.hpp>
 
-BuilderFixture::BuilderFixture(const boost::filesystem::path &nexus_file,
-                               const boost::filesystem::path &xml_file)
+BuilderFixture::BuilderFixture(const fs::path &nexus_file,
+                               const fs::path &xml_file)
 {
   using namespace pni;
   using pni::type_id_t;
