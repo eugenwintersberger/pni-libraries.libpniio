@@ -13,8 +13,6 @@ set_boost_test_definitions(SOURCES "testing the array type erasure")
 
 add_executable(array_test EXCLUDE_FROM_ALL ${SOURCES} $<TARGET_OBJECTS:test_common>)
 target_link_libraries(array_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
-target_compile_definitions(array_test PRIVATE
-    BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE="testing the array base class")
 add_dependencies(check array_test)
 
 add_boost_logging_test("type_erasure_test:array" array_test
