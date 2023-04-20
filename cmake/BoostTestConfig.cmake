@@ -60,5 +60,5 @@ macro(set_boost_test_definitions source_list mod_description)
     list(GET ${source_list} 0 FIRST_SOURCE_FILE)
     message(STATUS "First source file is ${FIRST_SOURCE_FILE}")
     set_source_files_properties(${FIRST_SOURCE_FILE} PROPERTIES
-                                COMPILE_DEFINITIONS "BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=${mod_description}")
+                                COMPILE_DEFINITIONS "BOOST_ALL_NO_LIB; BOOST_TEST_DYN_LINK; BOOST_TEST_MODULE=${mod_description}")
 endmacro()
