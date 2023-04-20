@@ -26,7 +26,7 @@
 #include <pni/parsers.hpp>
 #include <pni/formatters.hpp>
 #include <pni/container_io_config.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include <iostream>
 #include <fstream>
 
@@ -36,7 +36,7 @@ using Record = std::vector<value>;
 using RecordParser = parser<Record>;
 using Table = std::vector<Record>;
 
-Table read_table(const boost::filesystem::path &file_path)
+Table read_table(const fs::path &file_path)
 {
   std::ifstream stream(file_path.string());
   RecordParser parser;
@@ -54,7 +54,7 @@ Table read_table(const boost::filesystem::path &file_path)
 
 int main(int argc,char **argv)
 {
-  boost::filesystem::path input_file;
+  fs::path input_file;
 
   if(argc<=1)
   {

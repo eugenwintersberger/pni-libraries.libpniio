@@ -38,7 +38,6 @@ class PNINeXusConan(ConanFile):
 
     def requirements(self):
         self.requires("hdf5/1.14.0")
-        self.requires("libiconv/1.17")
         self.requires("zlib/1.2.13")
         self.requires("szip/2.1.1")
         self.requires("bzip2/1.0.8")
@@ -64,18 +63,15 @@ class PNINeXusConan(ConanFile):
                 variables = {
                     "PNINEXUS_CONAN": "MANUAL",
                     "PNINEXUS_BUILD_DOC": False,
+                    # "PNINEXUS_WITH_BOOST":
+                    # self.options.get_safe("with_boost", False),
                     "PNINEXUS_WITH_MPI":
-                    self.options.get_safe("with_mpi", False),
-                    "PNINEXUS_WITH_BOOST":
-                    self.options.get_safe("with_boost", False)}
+                    self.options.get_safe("with_mpi", False)
+                }
                 insprefix = self.options.get_safe("install_prefix", None)
                 if insprefix:
                     variables["CMAKE_INSTALL_PREFIX"] = insprefix
-                    if self.settings.os == "Windows":
-                        variables["h5cpp_DIR"] = "%s/%s" % (
-                            insprefix, "lib/cmake/h5cpp-0.5")
-                    else:
-                        variables["h5cpp_DIR"] = "%s\%s" % (
-                            insprefix, "lib\cmake\h5cpp-0.5")
+                    variables["h5cpp_DIR"] = "%s/%s" % (
+                        insprefix, "lib/cmake/h5cpp-0.5")
                 cmake.configure(variables=variables)
                 cmake.build()

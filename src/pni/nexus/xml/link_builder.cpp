@@ -23,6 +23,7 @@
 
 #include <pni/nexus/xml/link_builder.hpp>
 #include <pni/nexus/path/path.hpp>
+#include <h5cpp/core/filesystem.hpp>
 
 namespace pni {
 namespace nexus {
@@ -41,7 +42,7 @@ void LinkBuilder::build(const hdf5::node::Node &parent) const
   if(link_target.has_filename())
   {
     //create an external link
-    boost::filesystem::path file_path = link_target.filename();
+    fs::path file_path = link_target.filename();
     hdf5::Path target_path(link_target);
 
     hdf5::node::link(file_path,target_path,link_parent,link_name);

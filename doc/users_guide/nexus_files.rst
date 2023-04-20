@@ -121,7 +121,7 @@ check use the :cpp:func:`is_nexus_file`
 
 .. code-block:: cpp
 
-   boost::filesystem::path file_path = ...;
+   fs::path file_path = ...;
    
    if(!nexus::is_nexus_file(file_path))
    {

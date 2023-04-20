@@ -96,7 +96,8 @@ find_package(Boost 1.60 COMPONENTS system
                                    regex
                                    date_time
                                    unit_test_framework
-                                   filesystem REQUIRED)
+                                   filesystem
+				   REQUIRED)
 include(${EXTRA_MODULES_DIR}/CompilerConfig.cmake)
 include(${EXTRA_MODULES_DIR}/MPIConfig.cmake)
 include(${EXTRA_MODULES_DIR}/HDF5LibraryConfig.cmake)

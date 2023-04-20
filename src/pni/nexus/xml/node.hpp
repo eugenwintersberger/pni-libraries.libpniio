@@ -25,7 +25,7 @@
 
 #include <pni/types.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include <pni/windows.hpp>
 #include <pni/parsers.hpp>
 
@@ -89,7 +89,7 @@ class PNINEXUS_EXPORT Node : public boost::property_tree::ptree
     //! @param path the path to the file from which to read data
     //! @return node instance
     //!
-    static Node from_file(const boost::filesystem::path &path);
+    static Node from_file(const fs::path &path);
 
     //!
     //! @brief get attribute node

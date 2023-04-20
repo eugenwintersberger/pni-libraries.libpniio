@@ -20,7 +20,7 @@
 
 #include <pni/types.hpp>
 #include <h5cpp/hdf5.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include <vector>
 
 //!
@@ -32,7 +32,7 @@
 //! 
 struct BaseFixture
 {
-    boost::filesystem::path filename;    //!< name of the file created
+    fs::path filename;    //!< name of the file created
     hdf5::file::File file;  //!< file instancen
     hdf5::node::Group root; //!< root group instance
 
@@ -43,6 +43,6 @@ struct BaseFixture
     //! \param open_existing decide whether to create a new file or open
     //!                      an existing one
     //! 
-    BaseFixture(const boost::filesystem::path &fname,bool open_existing=false);
+    BaseFixture(const fs::path &fname,bool open_existing=false);
     virtual ~BaseFixture();
 };
