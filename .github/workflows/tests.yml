@@ -230,7 +230,9 @@ jobs:
         run: |
           cd build
           copy ..\h5cpp-src\h5cppbin\bin\h5cpp.dll .\bin\
-          .\conanbuild.bat
-          .\conanrun.bat
+          # .\conanbuild.bat
+          # .\conanrun.bat
+          .\conanbuildenv-release-x86_64.ps1
+          .\conanrunenv-release-x86_64.ps1
           cmake --build . --verbose --target check --config RELEASE
         shell: pwsh

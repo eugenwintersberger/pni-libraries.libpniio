@@ -3,13 +3,13 @@
 #include <pni/nexus.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <algorithm>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 
 
 using namespace pni;
 
 
-void write_data(const boost::filesystem::path &file_path,size_t np,size_t nx,size_t ny)
+void write_data(const fs::path &file_path,size_t np,size_t nx,size_t ny)
 {
     auto frame = dynamic_array<uint32>::create(shape_t{nx,ny});
 

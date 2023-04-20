@@ -23,13 +23,13 @@
 #pragma once
 
 #include <h5cpp/hdf5.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include "thread_ex1.hpp"
 
 class Writer
 {
   private:
-    boost::filesystem::path _filename;
+    fs::path _filename;
     StringIOQueue          &_queue;
     hdf5::file::File        _file;
     hdf5::node::Dataset     _data;
@@ -43,7 +43,7 @@ class Writer
     //method creating the initial structure of the log
     void _init_log();
   public:
-    Writer(const boost::filesystem::path &fname,StringIOQueue &q):
+    Writer(const fs::path &fname,StringIOQueue &q):
       _filename(fname),
       _queue(q),
       _file(),

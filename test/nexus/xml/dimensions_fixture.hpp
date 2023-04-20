@@ -23,14 +23,14 @@
 #pragma once
 
 #include <pni/nexus/xml/node.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include "xml_base_fixture.hpp"
 
 struct DimensionsFixture : XMLBaseFixture
 {
     virtual ~DimensionsFixture();
 
-    void read_file(const boost::filesystem::path &filename);
+   void read_file(const fs::path &filename);
 
     
 };

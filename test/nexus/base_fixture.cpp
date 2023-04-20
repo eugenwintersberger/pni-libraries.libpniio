@@ -22,7 +22,7 @@
 
 
 //-----------------------------------------------------------------------------
-BaseFixture::BaseFixture(const boost::filesystem::path &fname,bool open_existing):
+BaseFixture::BaseFixture(const fs::path &fname,bool open_existing):
     filename(fname),
     file(),
     root()
