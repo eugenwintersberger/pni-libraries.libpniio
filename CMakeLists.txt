@@ -6,7 +6,6 @@ project(pninexus
 	)
 include(CTest)
 
-
 # =============================================================================
 # set library package and SOName. As this is partly a header only library the
 # package version and the SOName coincide as header libraries can be considered
@@ -40,9 +39,9 @@ option(PNINEXUS_BUILD_DOC "build document" ON)
 
 set(PNINEXUS_CONAN "AUTO" CACHE STRING "conan options AUTO (conan must be in path), MANUAL (expects conanbuildinfo.cmake in build directory) or DISABLE")
 set(PNINEXUS_CONAN_PROFILE "default" CACHE STRING "Name of conan profile to use, uses default by default")
-set(PNINEXUS_CONAN_FILE "conanfile.txt" CACHE STRING "The conanfile to use for the build")
 
 if(${PNINEXUS_CONAN} MATCHES "AUTO")
+  set(PNINEXUS_CONAN_FILE "conanfile.txt" CACHE STRING "The conanfile to use for the build")
   include(${EXTRA_MODULES_DIR}/ConanSetup.cmake)
   conan_cmake_run(CONANFILE ${PNINEXUS_CONAN_FILE}
       PROFILE ${PNINEXUS_CONAN_PROFILE}
@@ -58,13 +57,11 @@ elseif(${PNINEXUS_CONAN} MATCHES "MANUAL")
   if(EXISTS "${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
     include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
     conan_basic_setup(NO_OUTPUT_DIRS KEEP_RPATHS)
-    if(PNINEXUS_LOCAL_MODULES)
-      list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
-    else()
-      list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR})
-    endif()
+  endif()
+  if(PNINEXUS_LOCAL_MODULES)
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
   else()
-    message(FATAL_ERROR "PNINEXUS_CONAN set to MANUAL but no file named conanbuildinfo.cmake found in build directory")
+    list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR})
   endif()
 elseif(NOT ${PNINEXUS_CONAN} MATCHES "DISABLE")
   message(FATAL_ERROR "Unrecognised option for PNINEXUS_CONAN (${PNINEXUS_CONAN}), use AUTO, MANUAL or DISABLE")
@@ -99,7 +96,8 @@ find_package(Boost 1.60 COMPONENTS system
                                    regex
                                    date_time
                                    unit_test_framework
-                                   filesystem REQUIRED)
+                                   filesystem
+				   REQUIRED)
 include(${EXTRA_MODULES_DIR}/CompilerConfig.cmake)
 include(${EXTRA_MODULES_DIR}/MPIConfig.cmake)
 include(${EXTRA_MODULES_DIR}/HDF5LibraryConfig.cmake)
@@ -158,4 +156,5 @@ add_subdirectory("src")
 if(PNINEXUS_BUILD_DOC)
   add_subdirectory("doc")
 endif()
+enable_testing()
 add_subdirectory("test")

@@ -41,7 +41,7 @@ namespace nexus {
 //! @param path reference to the path of a particular file system object
 //! @return true if the reference object is a NeXus file, flase otherwise
 //!
-PNINEXUS_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
+PNINEXUS_EXPORT bool is_nexus_file(const fs::path &path);
 
 //!
 //! @brief create a new NeXus file
@@ -68,13 +68,13 @@ PNINEXUS_EXPORT bool is_nexus_file(const boost::filesystem::path &path);
 //! @return instance of hdf5::file::File
 //!
 PNINEXUS_EXPORT
-hdf5::file::File create_file(const boost::filesystem::path &path,
+hdf5::file::File create_file(const fs::path &path,
                              hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::Exclusive,
                              const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
                              const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 PNINEXUS_EXPORT
-hdf5::file::File create_file(const boost::filesystem::path &path,
+hdf5::file::File create_file(const fs::path &path,
                              hdf5::file::AccessFlagsBase flags,
                              const hdf5::property::FileCreationList &fcpl = hdf5::property::FileCreationList(),
                              const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
@@ -95,12 +95,12 @@ hdf5::file::File create_file(const boost::filesystem::path &path,
 //! @return instance of hdf5::file::File
 //!
 PNINEXUS_EXPORT
-hdf5::file::File open_file(const boost::filesystem::path &path,
+hdf5::file::File open_file(const fs::path &path,
                       hdf5::file::AccessFlags flags = hdf5::file::AccessFlags::ReadOnly,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 
 PNINEXUS_EXPORT
-hdf5::file::File open_file(const boost::filesystem::path &path,
+hdf5::file::File open_file(const fs::path &path,
                       hdf5::file::AccessFlagsBase flags,
                       const hdf5::property::FileAccessList &fapl = hdf5::property::FileAccessList());
 

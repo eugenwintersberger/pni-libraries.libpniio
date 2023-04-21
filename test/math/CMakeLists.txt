@@ -20,7 +20,7 @@ add_dependencies(check math_test random_ranges)
 if(WIN32)
   target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework)
 else()
-  target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework m)
+  target_link_libraries(math_test pninexus h5cpp::h5cpp Boost::unit_test_framework  m)
 endif()
 
 target_link_libraries(random_ranges pninexus h5cpp::h5cpp)

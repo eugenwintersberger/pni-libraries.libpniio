@@ -30,7 +30,7 @@ namespace pni {
 namespace nexus {
 namespace xml {
 
-void create_from_file(const hdf5::node::Node &parent,const boost::filesystem::path &xml_file)
+void create_from_file(const hdf5::node::Node &parent,const fs::path &xml_file)
 {
   //first we have to build the node data
   Node xml_node = Node::from_file(xml_file);

@@ -45,7 +45,6 @@ target_link_libraries(parser_complex_test pninexus h5cpp::h5cpp)
 #                        rand_gen 
 #                        environment_test)
 
-
 add_subdirectory(parser_test)
 add_subdirectory(reader_test)
 add_subdirectory(formatter_test)
@@ -56,6 +55,7 @@ add_subdirectory(regressions)
 add_subdirectory(index_maps)
 add_subdirectory(types)
 add_subdirectory(arrays)
+
 add_subdirectory(utils_test)
 add_subdirectory(type_erasures)
 # add_subdirectory(config)

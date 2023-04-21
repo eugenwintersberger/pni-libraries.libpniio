@@ -26,7 +26,7 @@
 #include <pni/types.hpp>
 #include <list>
 #include <pni/windows.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include <h5cpp/hdf5.hpp>
 
 namespace pni{
@@ -99,7 +99,7 @@ class PNINEXUS_EXPORT Path
     //! \param groups a list of elements for the object path
     //! \param attr the optional name of an attribute
     //!
-    Path(const boost::filesystem::path &file,
+    Path(const fs::path &file,
          const ElementList &groups,
          const pni::string &attr);
 
@@ -177,13 +177,13 @@ class PNINEXUS_EXPORT Path
     //!
     //! \brief return the filename
     //!
-    boost::filesystem::path filename() const noexcept;
+    fs::path filename() const noexcept;
 
     //----------------------------------------------------------------
     //!
     //! \brief set the filename
     //!
-    void filename(const boost::filesystem::path &file);
+    void filename(const fs::path &file);
 
     //-----------------------------------------------------------------
     //!

@@ -27,15 +27,15 @@
 #include <pni/nexus/xml/node.hpp>
 #include <pni/nexus/xml/object_builder.hpp>
 #include <pni/nexus/algorithms.hpp>
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 
 struct BuilderFixture
 {
     hdf5::file::File file;
     hdf5::node::Group root_group;
 
-    BuilderFixture(const boost::filesystem::path &nexus_file,
-                   const boost::filesystem::path &xml_file);
+    BuilderFixture(const fs::path &nexus_file,
+                   const fs::path &xml_file);
 
     virtual ~BuilderFixture();
 };

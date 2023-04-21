@@ -60,7 +60,7 @@ RegressionIssue33::RegressionIssue33()
   nxfile = nexus::create_file("RegressionIssue33.nxs",hdf5::file::AccessFlags::Truncate);
   root_group = nxfile.root();
 
-  boost::filesystem::path ext_file("RegressionIssue33_data.nxs");
+  fs::path ext_file("RegressionIssue33_data.nxs");
   hdf5::Path target_path("/data");
   hdf5::node::link(ext_file,target_path,root_group,hdf5::Path("external_data"));
 }
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(test_get_parent)
   hdf5::node::Dataset dataset = root_group.nodes["external_data"];
   BOOST_CHECK(dataset.link().path() == hdf5::Path("/external_data"));
   hdf5::node::LinkTarget target = dataset.link().target();
-  BOOST_CHECK(target.file_path() == boost::filesystem::path("RegressionIssue33_data.nxs"));
+  BOOST_CHECK(target.file_path() == fs::path("RegressionIssue33_data.nxs"));
   BOOST_CHECK(target.object_path() == hdf5::Path("/data"));
   BOOST_CHECK(dataset.link().parent().link().path() == hdf5::Path("/"));
 }

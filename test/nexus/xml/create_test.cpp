@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(from_simple_structure)
 {
   using hdf5::node::get_node;
   using hdf5::node::Type;
-  boost::filesystem::path file = "create/simple_structure.xml";
+  fs::path file = "create/simple_structure.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
   BOOST_CHECK(get_node(root_group,"/scan_1").type() == Type::Group);
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(from_simple_structure)
 BOOST_AUTO_TEST_CASE(from_simple_structure_with_data)
 {
   using hdf5::node::get_node;
-  boost::filesystem::path file = "create/simple_structure_with_data.xml";
+  fs::path file = "create/simple_structure_with_data.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
   dataset = get_node(root_group,"/scan_1/experiment_description");
@@ -69,14 +69,14 @@ BOOST_AUTO_TEST_CASE(from_simple_structure_with_data)
 
 BOOST_AUTO_TEST_CASE(from_detector_with_transformation)
 {
-  boost::filesystem::path file = "create/detector_with_transformation.xml";
+  fs::path file = "create/detector_with_transformation.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 }
 
 BOOST_AUTO_TEST_CASE(detector_master_data_file)
 {
-  boost::filesystem::path xml_master_file = "create/detector_master_file.xml";
-  boost::filesystem::path xml_data_file = "create/detector_data_file.xml";
+  fs::path xml_master_file = "create/detector_master_file.xml";
+  fs::path xml_data_file = "create/detector_data_file.xml";
 
   hdf5::file::File master_file = hdf5::file::create("detector_master_file.nxs",
                                                     hdf5::file::AccessFlags::Truncate);
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(from_detector_link)
 {
   using hdf5::node::get_node;
   using hdf5::node::Type;
-  boost::filesystem::path file = "create/detector_link.xml";
+  fs::path file = "create/detector_link.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
   BOOST_CHECK(get_node(root_group,"/entry").type() == Type::Group);
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(from_duplicate_field)
 {
   using hdf5::node::get_node;
   using hdf5::node::Type;
-  boost::filesystem::path file = "create/duplicated_field.xml";
+  fs::path file = "create/duplicated_field.xml";
   BOOST_CHECK_THROW(xml::create_from_file(root_group,file), std::runtime_error);
 
 }
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(from_duplicate_group)
 {
   using hdf5::node::get_node;
   using hdf5::node::Type;
-  boost::filesystem::path file = "create/duplicated_group.xml";
+  fs::path file = "create/duplicated_group.xml";
   BOOST_CHECK_THROW(xml::create_from_file(root_group,file), std::runtime_error);
 
 }

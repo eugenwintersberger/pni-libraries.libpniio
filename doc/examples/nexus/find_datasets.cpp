@@ -62,7 +62,7 @@ int main(int argc,char **argv)
   //
   // handle command line arguments
   //
-  boost::filesystem::path xml_file;
+  fs::path xml_file;
   if(argc<=1)
   {
     std::cerr<<"You have to provide a path to an XML file!"<<std::endl;

@@ -22,7 +22,7 @@
 //
 #pragma once
 
-#include <boost/filesystem.hpp>
+#include <h5cpp/core/filesystem.hpp>
 #include <h5cpp/hdf5.hpp>
 #include <pni/windows.hpp>
 
@@ -40,7 +40,7 @@ namespace xml {
 //! @param parent reference to the parent object
 //! @param xml_file reference to the path of the XML file
 //!
-PNINEXUS_EXPORT void create_from_file(const hdf5::node::Node &parent,const boost::filesystem::path &xml_file);
+PNINEXUS_EXPORT void create_from_file(const hdf5::node::Node &parent,const fs::path &xml_file);
 
 
 //!

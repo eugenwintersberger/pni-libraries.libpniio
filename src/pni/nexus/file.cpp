@@ -24,6 +24,7 @@
 #include <pni/nexus/file.hpp>
 #include <pni/nexus/version.hpp>
 #include <pni/nexus/date_time.hpp>
+#include <h5cpp/core/filesystem.hpp>
 
 #include <sstream>
 #include <stdexcept>
@@ -57,14 +58,14 @@ namespace pni {
 namespace nexus {
 
 
-file::File create_file(const filesystem::path &path,file::AccessFlags flags,
+file::File create_file(const fs::path &path,file::AccessFlags flags,
                         const property::FileCreationList &fcpl,
                         const property::FileAccessList &fapl)
 {
   return create_file(path,static_cast<file::AccessFlagsBase>(flags),fcpl,fapl);
 }
 
-file::File create_file(const filesystem::path &path,
+file::File create_file(const fs::path &path,
                         file::AccessFlagsBase flags,
                         const property::FileCreationList &fcpl,
                         const property::FileAccessList &fapl)
@@ -118,7 +119,7 @@ file::File create_file(const filesystem::path &path,
   return nexus_file;
 }
 
-bool is_nexus_file(const filesystem::path &path)
+bool is_nexus_file(const fs::path &path)
 {
   if(!file::is_hdf5_file(path))
   {
@@ -150,7 +151,7 @@ bool is_nexus_file(const filesystem::path &path)
   return base_class == "NXroot";
 }
 
-file::File open_file(const filesystem::path &path,
+file::File open_file(const fs::path &path,
                       file::AccessFlags flags,
                       const property::FileAccessList &fapl)
 {
@@ -158,7 +159,7 @@ file::File open_file(const filesystem::path &path,
 }
 
 
-file::File open_file(const filesystem::path &path,
+file::File open_file(const fs::path &path,
                 file::AccessFlagsBase flags,
                 const property::FileAccessList &fapl)
 {

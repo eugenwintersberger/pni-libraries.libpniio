@@ -88,7 +88,7 @@ Path::operator hdf5::Path()
 }
 
 //-------------------------------------------------------------------------
-Path::Path(const boost::filesystem::path &file,
+Path::Path(const fs::path &file,
            const Path::ElementList &objects,
            const std::string &attr):
     _file_name(file.string()),
@@ -124,13 +124,13 @@ bool Path::has_attribute() const noexcept
 }
     
 //-------------------------------------------------------------------------
-boost::filesystem::path Path::filename() const noexcept
+fs::path Path::filename() const noexcept
 {
   return _file_name;
 }
     
 //-------------------------------------------------------------------------
-void Path::filename(const boost::filesystem::path &file)
+void Path::filename(const fs::path &file)
 {
   _file_name = file.string();
 }

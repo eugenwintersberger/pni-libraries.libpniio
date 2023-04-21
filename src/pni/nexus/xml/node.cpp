@@ -81,7 +81,7 @@ Node Node::from_string(const std::string &s)
 }
 
 //-------------------------------------------------------------------------
-Node Node::from_file(const boost::filesystem::path &path)
+Node Node::from_file(const fs::path &path)
 {
   std::ifstream stream(path.string());
   if(!stream.is_open())
