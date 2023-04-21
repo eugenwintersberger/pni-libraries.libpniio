@@ -51,7 +51,7 @@ and for Ubuntu (Jammy)
 
    $ wget http://repos.pni-hdri.de/jammy-pni-hdri.list
 
-The packages are also available for Debian Buster, Stretch and Ubuntu Kinetic, Focal, Bionic.
+The packages are also available for Debian Buster and Ubuntu Lunar, Focal.
 
 Once you have downloaded the file use
 
@@ -64,7 +64,7 @@ to update your package list and
 
 .. code-block:: bash
 
-   $ apt-get install libpninexus3.0.4 libpninexus3.0.4-dev libpninexus3.0.4-doc
+   $ apt-get install libpninexus3.1.0 libpninexus3.1.0-dev libpninexus3.1.0-doc
 
 to install the library. Dependencies will be resolved automatically so you can
 start with working right after the installation has finished.

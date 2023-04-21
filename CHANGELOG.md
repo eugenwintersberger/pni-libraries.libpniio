@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 3.1.0 - 2023-04-24
+- fs::filesystem from h5cpp used ([#212](https://github.com/pni-libraries/libpniio/pull/212))
+- support for conan 2 added ([#212](https://github.com/pni-libraries/libpniio/pull/212))
+- tests updated ([#208](https://github.com/pni-libraries/libpniio/pull/208) and [#211](https://github.com/pni-libraries/libpniio/pull/211))
+- technical release for h5cpp 0.6.0 (https://github.com/ess-dmsc/h5cpp/issues/631)
+
 ## 3.0.4 - 2023-02-20
 - fix for finding boost library ([#202](https://github.com/pni-libraries/libpniio/pull/202))
 
