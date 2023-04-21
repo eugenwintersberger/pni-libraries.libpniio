@@ -1,8 +1,8 @@
 var file_8hpp =
 [
-    [ "create_file", "file_8hpp.html#a2a032cbb94b97ffb3302f62debac02c8", null ],
-    [ "create_file", "file_8hpp.html#a3dbde8f8e4e9b248ea767908c7575db3", null ],
-    [ "is_nexus_file", "file_8hpp.html#aa7ddab0f5780d992cdb7e17c917ce66e", null ],
-    [ "open_file", "file_8hpp.html#a3b744dfacfd85d78992c8d6139096862", null ],
-    [ "open_file", "file_8hpp.html#a1a2646598bfe133fb97addffc3aefb1f", null ]
+    [ "create_file", "file_8hpp.html#af7f1aaafb4ba9cb50d3257e94fe25513", null ],
+    [ "create_file", "file_8hpp.html#ad5352da116a5fb4ddcb09b6d47056653", null ],
+    [ "is_nexus_file", "file_8hpp.html#a0e13c4e39479d8a6e3c5cb50001725ea", null ],
+    [ "open_file", "file_8hpp.html#a8797fbc7b7eccda61c91432c6404776a", null ],
+    [ "open_file", "file_8hpp.html#abda7b3287eeedcdcf188257091d1b56d", null ]
 ];

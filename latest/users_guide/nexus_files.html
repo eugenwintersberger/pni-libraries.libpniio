@@ -115,7 +115,7 @@ data manipulations. To open a file for reading and writing use</p>
 of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">hdf5::file::File()</span></code>. The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code> does
 not check whether or not is a valid NeXus file. In order to perform that
 check use the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">is_nexus_file()</span></code></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span> <span class="n">file_path</span> <span class="o">=</span> <span class="p">...;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span><span class="o">::</span><span class="n">path</span> <span class="n">file_path</span> <span class="o">=</span> <span class="p">...;</span>
 
 <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">nexus</span><span class="o">::</span><span class="n">is_nexus_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">))</span>
 <span class="p">{</span>
