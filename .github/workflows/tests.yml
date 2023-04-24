@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [debian11, debian10, debian9, ubuntu22.10, ubuntu22.04, ubuntu20.04]
+        os: [debian11, debian10, ubuntu22.10, ubuntu22.04, ubuntu20.04]
         buildtype: [Debug, Release]
 
     steps:
