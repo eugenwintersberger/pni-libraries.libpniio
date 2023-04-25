@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PNI NeXus Library
-   &#160;<span id="projectnumber">3.0.4</span>
+   &#160;<span id="projectnumber">3.1.0</span>
    </div>
    <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="types_8hpp.html">pni/types.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;boost/property_tree/ptree.hpp&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;boost/filesystem.hpp&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;h5cpp/core/filesystem.hpp&gt;</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="windows_8hpp.html">pni/windows.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="parsers_8hpp.html">pni/parsers.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//-------------------------------------------------------------------------</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1xml_1_1Node.html#a8a6d8e417adff4ac5450ad05ba133a7d">   79</a></span>&#160;<span class="comment"></span>    <span class="keyword">static</span> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html">Node</a> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html#a8a6d8e417adff4ac5450ad05ba133a7d">from_string</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">std::string</a> &amp;s);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1xml_1_1Node.html#ae5a30c222f10d88bb5d5a0b5b1f2bcd2">   92</a></span>&#160;    <span class="keyword">static</span> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html">Node</a> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html#ae5a30c222f10d88bb5d5a0b5b1f2bcd2">from_file</a>(<span class="keyword">const</span> boost::filesystem::path &amp;path);</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1xml_1_1Node.html#a1e4c5a33c1b4a80f60b597d341af6b6e">   92</a></span>&#160;    <span class="keyword">static</span> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html">Node</a> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html#a1e4c5a33c1b4a80f60b597d341af6b6e">from_file</a>(<span class="keyword">const</span> fs::path &amp;path);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 <div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1xml_1_1Node.html#a51f60731b3d928e5c315f3b5952cc701">  104</a></span>&#160;    <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html">Node</a> <a class="code" href="classpni_1_1nexus_1_1xml_1_1Node.html#a51f60731b3d928e5c315f3b5952cc701">attribute</a>(<span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">std::string</a> &amp;name) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
@@ -154,6 +154,7 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;} <span class="comment">// namespace pni</span></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html">pni::nexus::xml::Node</a></div><div class="ttdoc">alias for ptree</div><div class="ttdef"><b>Definition:</b> node.hpp:47</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_a0ed896690b06e2638939238b9607d1c1"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#a0ed896690b06e2638939238b9607d1c1">pni::nexus::xml::Node::attribute_path</a></div><div class="ttdeci">static std::string attribute_path(const std::string &amp;attribute_name)</div><div class="ttdoc">create an attribute path</div></div>
+<div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_a1e4c5a33c1b4a80f60b597d341af6b6e"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#a1e4c5a33c1b4a80f60b597d341af6b6e">pni::nexus::xml::Node::from_file</a></div><div class="ttdeci">static Node from_file(const fs::path &amp;path)</div><div class="ttdoc">create xml node from file</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_a51f60731b3d928e5c315f3b5952cc701"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#a51f60731b3d928e5c315f3b5952cc701">pni::nexus::xml::Node::attribute</a></div><div class="ttdeci">Node attribute(const std::string &amp;name) const</div><div class="ttdoc">get attribute node</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_a808113f06c1ceddd1aaf65848af81843"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#a808113f06c1ceddd1aaf65848af81843">pni::nexus::xml::Node::Node</a></div><div class="ttdeci">Node(const boost::property_tree::ptree &amp;ptree)</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_a877572a70ef08e21a3a161aa65ebe52a"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#a877572a70ef08e21a3a161aa65ebe52a">pni::nexus::xml::Node::has_attribute</a></div><div class="ttdeci">bool has_attribute(const std::string &amp;name) const</div><div class="ttdoc">check for attribute existence</div></div>
@@ -161,7 +162,6 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_aba4d65262187fb72a74384c835d1426f"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#aba4d65262187fb72a74384c835d1426f">pni::nexus::xml::Node::str_data</a></div><div class="ttdeci">std::string str_data() const</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_acfd90a20ef665cd1c2fcac6fccd7a981"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#acfd90a20ef665cd1c2fcac6fccd7a981">pni::nexus::xml::Node::Node</a></div><div class="ttdeci">Node()</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_ad80a8cf8b94b1ba485e3a3f66a008978"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#ad80a8cf8b94b1ba485e3a3f66a008978">pni::nexus::xml::Node::data</a></div><div class="ttdeci">DataT data() const</div><div class="ttdef"><b>Definition:</b> node.hpp:137</div></div>
-<div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_ae5a30c222f10d88bb5d5a0b5b1f2bcd2"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#ae5a30c222f10d88bb5d5a0b5b1f2bcd2">pni::nexus::xml::Node::from_file</a></div><div class="ttdeci">static Node from_file(const boost::filesystem::path &amp;path)</div><div class="ttdoc">create xml node from file</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_af5bcd01bffde679f164c9af6571f1661"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#af5bcd01bffde679f164c9af6571f1661">pni::nexus::xml::Node::name</a></div><div class="ttdeci">std::string name() const</div><div class="ttdoc">get name of a node</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1xml_1_1Node_html_afe357d8d9f36522ff76465eea3842bbe"><div class="ttname"><a href="classpni_1_1nexus_1_1xml_1_1Node.html#afe357d8d9f36522ff76465eea3842bbe">pni::nexus::xml::Node::data</a></div><div class="ttdeci">void data(const std::string &amp;cdata)</div></div>
 <div class="ttc" id="aclasspni_1_1parser_html"><div class="ttname"><a href="classpni_1_1parser.html">pni::parser</a></div><div class="ttdoc">parser for primitive types</div><div class="ttdef"><b>Definition:</b> parsers/parser.hpp:70</div></div>
@@ -177,8 +177,8 @@ $(document).ready(function(){initNavTree('node_8hpp_source.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_ed8c5bfd5a3964be977e59a07de61950.html">nexus</a></li><li class="navelem"><a class="el" href="dir_7e29aa6c392f81dd647a56f011407aa4.html">xml</a></li><li class="navelem"><a class="el" href="node_8hpp.html">node.hpp</a></li>
-    <li class="footer">Generated on Mon Feb 20 2023 13:36:36 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_98cdb10f369f6a3b9149e010b312bf5d.html">src</a></li><li class="navelem"><a class="el" href="dir_308d2fe158cc62fb27aba06ee3956e03.html">pni</a></li><li class="navelem"><a class="el" href="dir_b0c8f3c61a72628827e4fffe6a828ddb.html">nexus</a></li><li class="navelem"><a class="el" href="dir_a7c14242f0d8d7e2d3cc4e6302bc6386.html">xml</a></li><li class="navelem"><a class="el" href="node_8hpp.html">node.hpp</a></li>
+    <li class="footer">Generated on Tue Apr 25 2023 09:07:28 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

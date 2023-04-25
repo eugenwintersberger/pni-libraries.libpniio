@@ -24,7 +24,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">PNI NeXus Library
-   &#160;<span id="projectnumber">3.0.4</span>
+   &#160;<span id="projectnumber">3.1.0</span>
    </div>
    <div id="projectbrief">NeXus library for Photon Neutron Ion Science</div>
   </td>
@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('path_2path_8hpp_source.html',''); init
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="types_8hpp.html">pni/types.hpp</a>&gt;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;list&gt;</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="windows_8hpp.html">pni/windows.hpp</a>&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;boost/filesystem.hpp&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;h5cpp/core/filesystem.hpp&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;h5cpp/hdf5.hpp&gt;</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepni.html">pni</a>{</div>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('path_2path_8hpp_source.html',''); init
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">//===============constructors and destructor=======================</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#a30849f8c4b52bf62b7426fb14fb2ded4">   93</a></span>&#160;<span class="comment"></span>    <a class="code" href="classpni_1_1nexus_1_1Path.html#a30849f8c4b52bf62b7426fb14fb2ded4">Path</a>();</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">//-----------------------------------------------------------------</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#ab9ff06fa68b7e67a4c7e1a28f5c4fb54">  102</a></span>&#160;<span class="comment"></span>    <a class="code" href="classpni_1_1nexus_1_1Path.html#ab9ff06fa68b7e67a4c7e1a28f5c4fb54">Path</a>(<span class="keyword">const</span> boost::filesystem::path &amp;file,</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#a9dd3c4b3636d47e18877c082f17e1af0">  102</a></span>&#160;<span class="comment"></span>    <a class="code" href="classpni_1_1nexus_1_1Path.html#a9dd3c4b3636d47e18877c082f17e1af0">Path</a>(<span class="keyword">const</span> fs::path &amp;file,</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;         <span class="keyword">const</span> <a class="code" href="classpni_1_1nexus_1_1Path.html#ae20610a5d9686a5ac81c7031df7514fc">ElementList</a> &amp;groups,</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;         <span class="keyword">const</span> <a class="code" href="group__type__classes.html#gae86d1ac54b7b94227f4e32f2129bb534">pni::string</a> &amp;attr);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
@@ -143,10 +143,10 @@ $(document).ready(function(){initNavTree('path_2path_8hpp_source.html',''); init
 <div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#ad62393e40088a377fc55f130c7995df5">  174</a></span>&#160;<span class="comment"></span>    <span class="keywordtype">bool</span> has_attribute() const noexcept;</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="comment">//-----------------------------------------------------------------</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#ac811b479074fdba7bd2589221310a50a">  180</a></span>&#160;<span class="comment"></span>    boost::filesystem::path filename() const noexcept;</div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#aa7e838ea6d77f1ff529a03ba6f31cb7e">  180</a></span>&#160;<span class="comment"></span>    fs::path filename() const noexcept;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="comment">//----------------------------------------------------------------</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#a8a62a9890a7ff9d39ebcfef7be77e8df">  186</a></span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> filename(const boost::filesystem::path &amp;file);</div>
+<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#a5ab6d52b47584c6df7e8cc5ba3585e7f">  186</a></span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> filename(const fs::path &amp;file);</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="comment">//-----------------------------------------------------------------</span></div>
 <div class="line"><a name="l00192"></a><span class="lineno"><a class="line" href="classpni_1_1nexus_1_1Path.html#abcf3edfe18573cb134a28c8c460a9406">  192</a></span>&#160;<span class="comment"></span>    std::<span class="keywordtype">string</span> attribute() const noexcept;</div>
@@ -206,10 +206,10 @@ $(document).ready(function(){initNavTree('path_2path_8hpp_source.html',''); init
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_a7c715c4f5ea7f53b537308c5c96753d9"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#a7c715c4f5ea7f53b537308c5c96753d9">pni::nexus::Path::ConstElementIterator</a></div><div class="ttdeci">ElementList::const_iterator ConstElementIterator</div><div class="ttdoc">const iterator over elements</div><div class="ttdef"><b>Definition:</b> path/path.hpp:72</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_a83e6a3bfb8b48770d5ef0bf1dcb8ca53"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#a83e6a3bfb8b48770d5ef0bf1dcb8ca53">pni::nexus::Path::begin</a></div><div class="ttdeci">ElementIterator begin()</div><div class="ttdoc">get iterator to first element</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_a9d30c1da7edb6d4636db92518160bb1b"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#a9d30c1da7edb6d4636db92518160bb1b">pni::nexus::Path::from_string</a></div><div class="ttdeci">static Path from_string(const std::string &amp;input)</div><div class="ttdoc">create path from string</div></div>
+<div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_a9dd3c4b3636d47e18877c082f17e1af0"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#a9dd3c4b3636d47e18877c082f17e1af0">pni::nexus::Path::Path</a></div><div class="ttdeci">Path(const fs::path &amp;file, const ElementList &amp;groups, const pni::string &amp;attr)</div><div class="ttdoc">constructor</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_aacac204e3dc6033d00a17e27ab79041d"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#aacac204e3dc6033d00a17e27ab79041d">pni::nexus::Path::_elements</a></div><div class="ttdeci">ElementList _elements</div><div class="ttdoc">list of groups</div><div class="ttdef"><b>Definition:</b> path/path.hpp:83</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_aad60cf09b1843b5c665cc4399b51a289"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#aad60cf09b1843b5c665cc4399b51a289">pni::nexus::Path::_file_name</a></div><div class="ttdeci">pni::string _file_name</div><div class="ttdoc">name of the file</div><div class="ttdef"><b>Definition:</b> path/path.hpp:79</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_ab9118148258d1ebeb06538094bce5668"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#ab9118148258d1ebeb06538094bce5668">pni::nexus::Path::Element</a></div><div class="ttdeci">std::pair&lt; pni::string, pni::string &gt; Element</div><div class="ttdoc">object element (groupname:class)</div><div class="ttdef"><b>Definition:</b> path/path.hpp:66</div></div>
-<div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_ab9ff06fa68b7e67a4c7e1a28f5c4fb54"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#ab9ff06fa68b7e67a4c7e1a28f5c4fb54">pni::nexus::Path::Path</a></div><div class="ttdeci">Path(const boost::filesystem::path &amp;file, const ElementList &amp;groups, const pni::string &amp;attr)</div><div class="ttdoc">constructor</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_abe6629ffa15af73ee5179eaac98c78f5"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#abe6629ffa15af73ee5179eaac98c78f5">pni::nexus::Path::ElementIterator</a></div><div class="ttdeci">ElementList::iterator ElementIterator</div><div class="ttdoc">iterator over elements</div><div class="ttdef"><b>Definition:</b> path/path.hpp:70</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_ac1a3578f959ddfbab25e5ecf16b1d116"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#ac1a3578f959ddfbab25e5ecf16b1d116">pni::nexus::Path::Path</a></div><div class="ttdeci">Path(const hdf5::Path &amp;path)</div><div class="ttdoc">constructor</div></div>
 <div class="ttc" id="aclasspni_1_1nexus_1_1Path_html_ad1962bf4bc02a21cbea484e687382ca8"><div class="ttname"><a href="classpni_1_1nexus_1_1Path.html#ad1962bf4bc02a21cbea484e687382ca8">pni::nexus::Path::end</a></div><div class="ttdeci">ElementIterator end()</div><div class="ttdoc">get iterator to last+1 element</div></div>
@@ -225,8 +225,8 @@ $(document).ready(function(){initNavTree('path_2path_8hpp_source.html',''); init
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1b44cbd788b81fa5231932b5373691d8.html">pni</a></li><li class="navelem"><a class="el" href="dir_ed8c5bfd5a3964be977e59a07de61950.html">nexus</a></li><li class="navelem"><a class="el" href="dir_0b821cc5b36a5b6b68f1a2de64d9f1a6.html">path</a></li><li class="navelem"><a class="el" href="path_2path_8hpp.html">path.hpp</a></li>
-    <li class="footer">Generated on Mon Feb 20 2023 13:36:36 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_98cdb10f369f6a3b9149e010b312bf5d.html">src</a></li><li class="navelem"><a class="el" href="dir_308d2fe158cc62fb27aba06ee3956e03.html">pni</a></li><li class="navelem"><a class="el" href="dir_b0c8f3c61a72628827e4fffe6a828ddb.html">nexus</a></li><li class="navelem"><a class="el" href="dir_e13b9492d780de6c4c57bb636f9829b4.html">path</a></li><li class="navelem"><a class="el" href="path_2path_8hpp.html">path.hpp</a></li>
+    <li class="footer">Generated on Tue Apr 25 2023 09:07:28 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
