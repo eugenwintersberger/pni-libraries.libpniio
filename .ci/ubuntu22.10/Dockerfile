@@ -14,7 +14,7 @@ RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq d
 RUN /bin/bash -c 'echo "Europe/Berlin" > /etc/timezone'
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y install cmake g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
 RUN apt-get -qq update && apt-get -qq -y install libhdf5-dev
-RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.5.2-dev libh5cpp0.5.2
+RUN apt-get -qq update && apt-get -qq -y install libh5cpp0.6.0-dev libh5cpp0.6.0
 
 RUN apt-get clean
 
