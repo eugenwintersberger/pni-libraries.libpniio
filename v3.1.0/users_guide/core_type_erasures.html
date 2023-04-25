@@ -1,0 +1,854 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Type erasures &#8212; libpninexus 3.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API documentation" href="../api/index.html" />
+    <link rel="prev" title="Multidimensional arrays" href="core_arrays.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../api/index.html" title="API documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="core_arrays.html" title="Multidimensional arrays"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="core.html" accesskey="U">PNI core</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Type erasures</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="type-erasures">
+<span id="id1"></span><h1>Type erasures<a class="headerlink" href="#type-erasures" title="Permalink to this headline">¶</a></h1>
+<p>Templates are powerful tools as they allow the compiler to perform all kinds of
+optimizations.In addition they help to avoid virtual functions in classes and
+thus increase performance by avoiding call indirection through the virtual
+functions table. However, there are two major obstacles with templates</p>
+<ul class="simple">
+<li><p>template expansion virtually always leas to code generation and this could lead to large binaries which might be a problem on small hardware architectures</p></li>
+<li><p>template libraries and the applications which are using them are harder to maintain.</p></li>
+</ul>
+<p>The last point may requires a bit of explanation. The reason why system
+administrators are not very happy with programs based on template libraries is
+that the latter ones are distributed as source code.
+Consequently whenever a bug is fixed in the library all programs depending
+on the code required recompilation. For programs using binary libraries only the
+library has to be updated. This is obviously much easier than recompiling
+all the programs depending on a library.</p>
+<p>A reasonable solution for this problem is the use of type erasures.
+<em>libpninexus</em> provides three different type erasures</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>class</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code></p></td>
+<td><p>stores a single scalar value of a POD type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code></p></td>
+<td><p>stores the reference to an instance of a POD type</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>stores a multidimensional array type</p></td>
+</tr>
+</tbody>
+</table>
+<p>To use type erasures include the <code class="file docutils literal notranslate"><span class="pre">/pni/type_erasures.hpp</span></code> at the
+top of your source file.</p>
+<div class="section" id="the-value-type-erasures">
+<h2>The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type erasures<a class="headerlink" href="#the-value-type-erasures" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="construction">
+<h3>Construction<a class="headerlink" href="#construction" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type erasure stores the value of a single primitive type.
+Whenever an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> is constructed memory is allocated
+large enough to store the value of a particular type.</p>
+<p><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> provides a default constructor. The instance produced by the
+default constructor holds a value of type <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">none</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">v</span><span class="p">.</span><span class="n">type_id</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">//output NONE</span>
+</pre></div>
+</div>
+<p>Though there is not too much one can do with such a type it has the nice
+advantage that one can default construct an instance of type <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>.
+In addition a copy and a move constructor is provided. All these constructors
+are implicit.</p>
+<p>The more interesting constructors are explicit. An instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>
+can be constructed either from a variable from a particular type or from a
+literal as shown in this next example</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//explicit construction from a variable</span>
+<span class="n">int32</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="n">value</span> <span class="nf">v1</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">v1</span><span class="p">.</span><span class="n">type_id</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">//output INT32</span>
+
+<span class="c1">//explicit construction from a literal</span>
+<span class="n">value</span> <span class="nf">v2</span><span class="p">(</span><span class="mf">3.4212</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">v2</span><span class="p">.</span><span class="n">type_id</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">//output FLOAT64</span>
+
+<span class="c1">//copy construction</span>
+<span class="n">value</span> <span class="n">v3</span> <span class="o">=</span> <span class="n">v1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>As mentioned earlier in this section, whenever an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>
+is constructed, memory is allocated to store the quantity that should be
+hidden in the type erasure. The default constructor would allocate memory for a
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">none</span></code> type with which one can do nothing useful.
+A typical application for type erasures would be to store primitive values
+of different type in a container and we would like to make the decision
+which type to use at runtime.
+For this purpose one could define a vector type like this</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">value_vector</span> <span class="o">=</span>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>However, how would one initialize an instance of this vector? It would not make
+too much sense to use the default constructor (as we cannot pass type
+information). The solution to this problem is the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">make_value()</span></code> function
+which comes in two flavors. The first, as shown in the next code snippet, takes
+a type ID as a single argument and returns an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> of the
+requested type.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">type_id_t</span><span class="o">&gt;</span>  <span class="n">ids</span> <span class="o">=</span> <span class="n">get_ids</span><span class="p">();</span>
+<span class="n">value_vector</span> <span class="n">values</span><span class="p">;</span>
+
+<span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">id</span><span class="p">:</span> <span class="n">ids</span><span class="p">)</span>
+    <span class="n">values</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">make_value</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>In addition there is a function template which serves the same purpose</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="n">make_value</span><span class="o">&lt;</span><span class="n">uint32</span><span class="o">&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Here the type is determined by the template parameter of the function template.</p>
+</div>
+<div class="section" id="assignment">
+<h3>Assignment<a class="headerlink" href="#assignment" title="Permalink to this headline">¶</a></h3>
+<p>Copy and move assignment are provided by the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> between two of its
+instances. In both situations the type of the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> instance on the
+left handside of the operator changes (this is obvious).
+Move and copy assignment have the expected semantics.</p>
+<p>The more interesting situation appears with assigning new values to an instance
+of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>. As memory is only allocated during creation (or copy
+assignment) assigning a new value does not create a new instance of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> but rather tries to perform a type conversion between the
+instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> on the LHS of the operator and the value on the LHS.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="n">make_value</span><span class="o">&lt;</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">//creates a value for a float32 value</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">uint16</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">//converts uint16 value to a float32 value</span>
+</pre></div>
+</div>
+<p>The type conversion follows the same rules as described in the section about
+type conversion earlier in this manual (in fact it uses this functionality).
+Consequently</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="n">make_value</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span><span class="p">();</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">complex32</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span> <span class="c1">//throws type_error</span>
+</pre></div>
+</div>
+<p>will throw a <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">type_error</span></code> exception as a complex number cannot be
+converted to a single float value.</p>
+</div>
+<div class="section" id="retrieving-data">
+<h3>Retrieving data<a class="headerlink" href="#retrieving-data" title="Permalink to this headline">¶</a></h3>
+<p>Retrieving data from an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> is done via the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">as()</span></code>
+template method like this</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="p">....;</span>
+
+<span class="k">auto</span> <span class="n">data</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">as</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The template parameter of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">as()</span></code> determines the data type as which the data
+should be retrieved. Like for value assignment the method performs a type
+conversion if necessary and throws <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">type_error</span></code> or <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">range_error</span></code>
+exceptions if the conversion is not possible or the numeric range of the
+requested type is too small.</p>
+<p>Information about the type of the data stored in the:cpp:class:<cite>value</cite> instance
+can be obtained by means of the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">type_id</span></code> method.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="n">v</span><span class="p">.</span><span class="n">type_id</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-value-ref-type-erasure">
+<h2>The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> type erasure<a class="headerlink" href="#the-value-ref-type-erasure" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type encapsulates data of an arbitrary type and has full
+ownership of the data. Sometimes it is more feasible to only store a reference
+to an already existing data item of a primitive type. If the reference
+should be copyable the default approach towards this problem would be to use
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::reference_wrapper</span></code>. Unfortunately, this template includes the
+full type information – which is what we want to get rid of when using
+a type erasure.
+<em>libpninexus</em> for this purpose provides the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> erasure. It stores
+a reference to an existing data item and hides all the type information.
+Though <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> behaves quite similar to <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> there are some
+subtle differences originating from its nature as a reference type. Thus it
+is highly recommended to read this section carefully if you are planing to
+use <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code>.</p>
+<div class="section" id="id2">
+<h3>Construction<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Like <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>, <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> is default constructible</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value_ref</span> <span class="n">vref</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>allowing it to be used in STL containers. However, unlike <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> the default
+constructed reference points to nowhere. Every access to any of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code>’s methods will throw <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">memory_not_allocated_error</span></code>
+for a default constructed instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code>. The preferred way of
+how to initialize <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> is by passing an instance of
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::reference_wrapper</span></code> to it</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">float64</span> <span class="n">data</span><span class="p">;</span>
+<span class="n">value_ref</span> <span class="nf">data_ref</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">data</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>In addition <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> is copy constructible.</p>
+</div>
+<div class="section" id="id3">
+<h3>Assignment<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The most difficult operation with <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> is assignment. It really
+depends on the right handside of the assignment operator what happens.
+One can do copy assignment</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">float32</span> <span class="n">temperature</span><span class="p">;</span>
+<span class="n">uint32</span>  <span class="n">counter</span><span class="p">;</span>
+<span class="n">value_ref</span> <span class="nf">v1</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">temperature</span><span class="p">));</span> <span class="c1">//reference to temperature</span>
+<span class="n">value_ref</span> <span class="nf">v2</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">counter</span><span class="p">));</span>     <span class="c1">//reference to counter</span>
+
+<span class="n">v1</span> <span class="o">=</span> <span class="n">v2</span><span class="p">;</span> <span class="c1">//now v1 is a reference to counter too</span>
+</pre></div>
+</div>
+<p>which has the same semantics as the copy assignment for
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">std::reference_wrapper</span></code> where the reference is copied.</p>
+<p>Another possibility is to assign the value of a primitive type to an
+instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code>. In this case two things are taking place</p>
+<ul class="simple">
+<li><p>the value is converted to the type of the data item the instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> references</p></li>
+<li><p>the converted value is assigned to the referenced data item</p></li>
+</ul>
+<p>Consider this example</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">float32</span> <span class="n">temperature</span><span class="p">;</span>
+<span class="n">value_ref</span> <span class="nf">temp_ref</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">temperature</span><span class="p">));</span>
+
+<span class="n">temp_ref</span> <span class="o">=</span> <span class="n">uint16</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this example the value 12 of type <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">uint16</span></code> is first converted to
+a <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">float32</span></code> value. This new float value is then assigned to the variable
+<code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">temperature</span></code>. As always with type conversions exceptions will be
+thrown if the conversion fails.</p>
+<p>One can also change the variable an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> references
+with</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value_ref</span> <span class="n">ref</span> <span class="o">=</span> <span class="p">....;</span>    <span class="c1">//reference to some data item</span>
+<span class="n">complex64</span> <span class="n">refractive_index</span> <span class="o">=</span> <span class="p">...;</span>
+
+<span class="c1">//now reference points to refractive_index</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">ref</span><span class="p">(</span><span class="n">refractive_index</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally a value from a <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> instance can be assigned with</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="n">v</span> <span class="o">=</span> <span class="n">int32</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">value_ref</span> <span class="n">ref</span> <span class="o">=</span> <span class="p">....;</span>
+
+<span class="n">ref</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>in which case type conversion from the internal type of <code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">v</span></code> to the internal
+type of <code class="xref cpp cpp-var docutils literal notranslate"><span class="pre">ref</span></code> occurs. Exceptions are thrown if the type conversion fails.</p>
+</div>
+<div class="section" id="id4">
+<h3>Retrieving data<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Data retrieval for <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> works exactly the same way as for
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>. The type provides a template method <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">as()</span></code> which can be
+used to get a copy of the data stored in the item referenced as an instance
+of a type determined by the template parameter.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">value_ref</span> <span class="n">ref</span> <span class="o">=</span> <span class="p">....;</span>
+
+<span class="k">auto</span> <span class="n">data</span> <span class="o">=</span> <span class="n">ref</span><span class="p">.</span><span class="n">as</span><span class="o">&lt;</span><span class="n">uint32</span><span class="o">&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Again, type conversion takes place from the original type of the referenced
+data item to the type requested by the user via the template parameter.
+Finally, as <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code>, <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> provides a
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">type_id()</span></code> member
+function which returns the type ID of the referenced data item.</p>
+</div>
+</div>
+<div class="section" id="type-erasures-for-arrays">
+<h2>Type erasures for arrays<a class="headerlink" href="#type-erasures-for-arrays" title="Permalink to this headline">¶</a></h2>
+<p>As <em>libpninexus</em> provides a virtually indefinite number of array types via its
+<code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code> template the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array</span></code> type erasure is maybe one of the most
+important ones. Like the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type erasure it will take over full
+ownership of the array stored in it.</p>
+<p>A good introduction into the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array</span></code> type erasure is this particular version
+of the array inquiry  example from the previous chapter on arrays.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure3.cpp</span></code> for full code</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/arrays.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/type_erasures.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+
+<span class="c1">//some usefull type definitions</span>
+<span class="k">typedef</span> <span class="n">dynamic_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="o">&gt;</span> <span class="n">darray_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">static_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="o">&gt;</span> <span class="n">sarray_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">fixed_dim_array</span><span class="o">&lt;</span><span class="n">float64</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span> <span class="n">farray_type</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">show_info</span><span class="p">(</span><span class="k">const</span> <span class="n">array</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Data type: &quot;</span><span class="o">&lt;&lt;</span><span class="n">type_id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Rank     : &quot;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="p">.</span><span class="n">rank</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Shape    : (&quot;</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">s</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">shape</span><span class="o">&lt;</span><span class="n">shape_t</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">n</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">n</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;)&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Size     : &quot;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">a1</span> <span class="o">=</span> <span class="n">darray_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">});</span>
+    <span class="k">auto</span> <span class="n">a2</span> <span class="o">=</span> <span class="n">farray_type</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="n">shape_t</span><span class="p">{</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2048</span><span class="p">});</span>
+    <span class="n">sarray_type</span> <span class="n">a3</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;--------------------------------&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">show_info</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">a1</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="s">&quot;--------------------------------&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">show_info</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">a2</span><span class="p">));</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="s">&quot;--------------------------------&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">show_info</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">a3</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>In the previous version, where <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">show_info()</span></code> was a template function a new
+version of <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">show_info()</span></code> would have been created for each of the three array
+types used in this example. By using the type erasure only a single version of
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">show_info()</span></code> is required which reduces the total code size of the binary.</p>
+<p>The current implementation of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array</span></code> is rather limited in comparison
+to the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code> template. Multidimensional access is not provided and only
+forward iteration is implemented. In addition there is now <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array_ref</span></code>
+type erasure which only keeps a reference to an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">mdarray</span></code>.</p>
+<p>The iterators themselves have a subtle speciality. They do not provide a
+<cite>-&gt;</cite> operator. This has a rather simple reason. While all other interators
+return a pointer to a particular data element in a container the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array</span></code>
+iterators cannot do this (they do no hold any type information). Instead they
+return an instance of <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> for constant or <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> for
+read/write iterators. In order to keep the semantics of the <cite>-&gt;</cite> operator we
+would have to return <cite>*value</cite> or <cite>*value_ref</cite> from the <cite>-&gt;</cite>
+operator. However, this is not possible as these objects are just temporaries
+and would be destroyed once the operator function has returned.
+However, this is only a small inconvenience as it has no influence on the
+STL compliance of the iterator.
+One can still use the <em>for-each</em> construction</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="nf">a</span><span class="p">(...);</span>
+
+<span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">x</span><span class="p">:</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and all STL algorithms with a <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">array</span></code> type erasure.</p>
+</div>
+<div class="section" id="an-example-reading-tabular-ascii-data">
+<h2>An example: reading tabular ASCII data<a class="headerlink" href="#an-example-reading-tabular-ascii-data" title="Permalink to this headline">¶</a></h2>
+<p>In this final section a typical use-case for a type erasure will be discussed.
+One problem that regularly pops up is to read tabular ASCII data.
+For this example a very simple file format has been used. The file
+<code class="file docutils literal notranslate"><span class="pre">record.dat</span></code>
+has the following content</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>11  -123.23  (-1.,0.23)
+13  -12.343  (12.23,-0.2)
+16  134.12   (1.23,-12.23)
+</pre></div>
+</div>
+<p>While the elements of the first two columns are integer and float respectively,
+the third column holds complex numbers. The task is simple: read the values from
+the file without losing information. This means that we do not want to truncate
+values (for instance float to integer) or do inappropriate type conversions (for
+instance convert everything to the complex type) which may add rounding errors.</p>
+<p>There are several ways how to approach this problem. The most straight forward
+one would be to create a <cite>struct</cite> with an integer, a float, and a complex
+element. However, this approach is rather static. If a column will be added or
+removed or only the order of the columns is changed we have to alter the code.</p>
+<p>In this example a different path has been taken. Each individual line is
+represented by a record type which consists of a vector whose elements are
+instances of the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type erasure.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/types.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;pni/type_erasures.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;boost/spirit/include/qi.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;boost/spirit/include/phoenix.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">pni</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">spirit</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">int32</span>                    <span class="n">int_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">float64</span>                  <span class="n">float_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">complex64</span>                <span class="n">complex_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span>       <span class="n">record_type</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">record_type</span><span class="o">&gt;</span> <span class="n">table_type</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The entire table is again a vector with <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">record_type</span></code> as element type.
+In addition we have defined a special type to store complex numbers
+(<code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">complex_type</span></code>).</p>
+<div class="section" id="defining-the-parsers">
+<h3>Defining the parsers<a class="headerlink" href="#defining-the-parsers" title="Permalink to this headline">¶</a></h3>
+<p>One of the key elements for this example is to use the <em>boost::spirit</em>
+parser framework. We define three parsers</p>
+<ul class="simple">
+<li><p>one for the <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">complex_type</span></code></p></li>
+<li><p>one for a value which can parser integer, double, and complex numbers</p></li>
+<li><p>and one for the entire record.</p></li>
+</ul>
+<p>The <em>boost::spirit</em> framwork is indeed rather complex and requires a deep
+understanding of some of the additional boost libraries like <em>fusion</em> and
+<em>phoenix</em>. However, as we will see, it is worth to become familiar with them
+as will be shown here.</p>
+<p>In this next snippet the definition of the complex number parser is shown.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">complex_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span>
+<span class="p">{</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">complex_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">complex_rule</span><span class="p">;</span>
+
+    <span class="n">complex_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">complex_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">complex_rule</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">fusion</span><span class="p">;</span>
+        <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">phoenix</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">_1</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">_2</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">double_</span><span class="p">;</span>
+        
+        <span class="n">complex_rule</span> <span class="o">=</span> <span class="p">(</span><span class="sc">&#39;(&#39;</span><span class="o">&gt;&gt;</span><span class="n">double_</span><span class="o">&gt;&gt;</span><span class="sc">&#39;,&#39;</span><span class="o">&gt;&gt;</span><span class="n">double_</span><span class="o">&gt;&gt;</span><span class="sc">&#39;)&#39;</span><span class="p">)</span>
+                        <span class="p">[</span><span class="n">_val</span> <span class="o">=</span> <span class="n">construct</span><span class="o">&lt;</span><span class="n">complex_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_1</span><span class="p">,</span><span class="n">_2</span><span class="p">)];</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>We assume complex numbers to be stored as tuples of the form <em>(real
+part,imaginary part)</em>. As we can see in the above example the complex type is
+assembled from the two double values matched in the rule. The next parser
+required is the value parser. This parser matches either an integer, a double,
+or a complex value. It is a good example how to reuse already existing
+parser in <em>boost::spirit</em>.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">value_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span>
+<span class="p">{</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">value_rule</span><span class="p">;</span>
+
+    <span class="n">complex_parser</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="o">&gt;</span> <span class="n">complex_</span><span class="p">;</span>
+
+    <span class="n">value_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">value_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">value_rule</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">fusion</span><span class="p">;</span>
+        <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">phoenix</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">_1</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">char_</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">int_</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">double_</span><span class="p">;</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">_val</span><span class="p">;</span>
+
+        <span class="n">value_rule</span> <span class="o">=</span> <span class="p">(</span>
+                     <span class="p">(</span><span class="n">int_</span> <span class="o">&gt;&gt;</span> <span class="o">!</span><span class="p">(</span><span class="n">char_</span><span class="p">(</span><span class="sc">&#39;.&#39;</span><span class="p">)</span><span class="o">|</span><span class="n">char_</span><span class="p">(</span><span class="sc">&#39;e&#39;</span><span class="p">)))[</span><span class="n">_val</span> <span class="o">=</span>
+                     <span class="n">construct</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_1</span><span class="p">)]</span>
+                     <span class="o">||</span> 
+                     <span class="n">double_</span><span class="p">[</span><span class="n">_val</span> <span class="o">=</span> <span class="n">construct</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_1</span><span class="p">)]</span>
+                     <span class="o">||</span>
+                     <span class="n">complex_</span><span class="p">[</span><span class="n">_val</span> <span class="o">=</span> <span class="n">construct</span><span class="o">&lt;</span><span class="n">pni</span><span class="o">::</span><span class="n">value</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_1</span><span class="p">)]</span>
+                     <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Finally we need a parser for the entire record. This is rather simple as
+<em>boost::spirit</em> provides a special syntax for parsers who store their
+results in containers.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">IteratorT</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">record_parser</span> <span class="o">:</span> <span class="k">public</span> <span class="n">qi</span><span class="o">::</span><span class="n">grammar</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span>
+<span class="p">{</span>
+    <span class="n">qi</span><span class="o">::</span><span class="n">rule</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="p">,</span><span class="n">record_type</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">record_rule</span><span class="p">;</span>
+
+    <span class="n">value_parser</span><span class="o">&lt;</span><span class="n">IteratorT</span><span class="o">&gt;</span> <span class="n">value_</span><span class="p">;</span>
+
+    <span class="n">record_parser</span><span class="p">()</span> <span class="o">:</span> <span class="n">record_parser</span><span class="o">::</span><span class="n">base_type</span><span class="p">(</span><span class="n">record_rule</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">using</span> <span class="n">qi</span><span class="o">::</span><span class="n">blank</span><span class="p">;</span>
+
+        <span class="n">record_rule</span> <span class="o">=</span> <span class="n">value_</span> <span class="o">%</span> <span class="p">(</span><span class="o">*</span><span class="n">blank</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="the-main-program">
+<h3>The main program<a class="headerlink" href="#the-main-program" title="Permalink to this headline">¶</a></h3>
+<p>The main program is rather simple</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>195
+196
+197
+198
+199
+200
+201
+202
+203</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">char</span> <span class="o">**</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;File: record.dat&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">file_to_stream</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span><span class="s">&quot;record.dat&quot;</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="s">&quot;File: record2.dat&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="n">file_to_stream</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span><span class="s">&quot;record2.dat&quot;</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Not all the code will be explained as it is only those parts which are of
+interest for the <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type erasure.
+The program can be divided into two parts:</p>
+<ul class="simple">
+<li><p>reading the data (in line 132)</p></li>
+<li><p>and writing it back to standard output (in line 148)</p></li>
+</ul>
+<p>As the latter one is rather trivial we will only consider the reading part in
+this document. The output of the main function is</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>INT32
+FLOAT64
+COMPLEX32
+11      -123.23 (-1,0.23)
+13      -12.343 (12.23,-0.2)
+16      134.12  (1.23,-12.23)
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-reading-sequence">
+<h3>The reading sequence<a class="headerlink" href="#the-reading-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The entry point for the read sequence is the <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">read_table()</span></code> function.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">table_type</span> <span class="nf">read_table</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span> <span class="o">&amp;</span><span class="n">stream</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">table_type</span> <span class="n">table</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">line</span><span class="p">;</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">stream</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">getline</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="n">line</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">line</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
+            <span class="n">table</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">parse_record</span><span class="p">(</span><span class="n">line</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">table</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The logic of this function is rather straight forward. Individual lines are
+written from the input stream until <em>EOF</em> and passed on to the
+<code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">parse_record()</span></code> function which returns an instance of <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">record_type</span></code>.
+Each record is appended to the table.</p>
+<p>The <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">parse_record()</span></code> function is where all the magic happens</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">see <code class="file docutils literal notranslate"><span class="pre">examples/core/type_erasure_record.cpp</span></code> for full code</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">record_type</span> <span class="nf">parse_record</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">line</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">typedef</span> <span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">iterator_type</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">record_parser</span><span class="o">&lt;</span><span class="n">iterator_type</span><span class="o">&gt;</span> <span class="n">parser_type</span><span class="p">;</span>
+
+    <span class="n">parser_type</span> <span class="n">parser</span><span class="p">;</span>
+    <span class="n">record_type</span> <span class="n">record</span><span class="p">;</span>
+
+    <span class="n">qi</span><span class="o">::</span><span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">line</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">parser</span><span class="p">,</span><span class="n">record</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">record</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>The definition of this function pretty much demonstrates the power of the
+<em>boost::spirit</em> library. All the nasty parsing work is done by the code
+provided by <em>boost::spirit</em>. The only thing left to do is provide iterators
+to the beginning and end of the line.</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Type erasures</a><ul>
+<li><a class="reference internal" href="#the-value-type-erasures">The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value</span></code> type erasures</a><ul>
+<li><a class="reference internal" href="#construction">Construction</a></li>
+<li><a class="reference internal" href="#assignment">Assignment</a></li>
+<li><a class="reference internal" href="#retrieving-data">Retrieving data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-value-ref-type-erasure">The <code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">value_ref</span></code> type erasure</a><ul>
+<li><a class="reference internal" href="#id2">Construction</a></li>
+<li><a class="reference internal" href="#id3">Assignment</a></li>
+<li><a class="reference internal" href="#id4">Retrieving data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#type-erasures-for-arrays">Type erasures for arrays</a></li>
+<li><a class="reference internal" href="#an-example-reading-tabular-ascii-data">An example: reading tabular ASCII data</a><ul>
+<li><a class="reference internal" href="#defining-the-parsers">Defining the parsers</a></li>
+<li><a class="reference internal" href="#the-main-program">The main program</a></li>
+<li><a class="reference internal" href="#the-reading-sequence">The reading sequence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="core_arrays.html"
+                        title="previous chapter">Multidimensional arrays</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api/index.html"
+                        title="next chapter">API documentation</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.1.0/index.html">v3.1.0</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../api/index.html" title="API documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="core_arrays.html" title="Multidimensional arrays"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="core.html" >PNI core</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Type erasures</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
