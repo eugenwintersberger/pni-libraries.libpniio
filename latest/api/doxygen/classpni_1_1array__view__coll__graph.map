@@ -1,6 +1,6 @@
 <map id="pni::array_view&lt; ArrayT &gt;" name="pni::array_view&lt; ArrayT &gt;">
-<area shape="rect" id="node1" title="provides a view on a part of an array" alt="" coords="584,49,756,76"/>
-<area shape="rect" id="node2" href="$classpni_1_1array__selection.html" title="selection from a multidimensional array" alt="" coords="291,49,426,76"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,19,148,45"/>
-<area shape="rect" id="node4" href="$classpni_1_1index__map.html" title=" " alt="" coords="245,100,472,156"/>
+<area shape="rect" id="node1" title="provides a view on a part of an array" alt="" coords="644,48,839,75"/>
+<area shape="rect" id="node2" href="$classpni_1_1array__selection.html" title="selection from a multidimensional array" alt="" coords="321,48,471,75"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,51,164,77"/>
+<area shape="rect" id="node4" href="$classpni_1_1index__map.html" title=" " alt="" coords="267,99,525,155"/>
 </map>

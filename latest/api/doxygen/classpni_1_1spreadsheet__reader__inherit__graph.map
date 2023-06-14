@@ -1,5 +1,5 @@
 <map id="pni::spreadsheet_reader" name="pni::spreadsheet_reader">
-<area shape="rect" id="node1" title="base class for spreadsheet reader" alt="" coords="5,80,167,107"/>
-<area shape="rect" id="node3" href="$classpni_1_1fio__reader.html" title="FIO data reader." alt="" coords="34,155,138,181"/>
-<area shape="rect" id="node2" href="$classpni_1_1data__reader.html" title="base class for data readers" alt="" coords="29,5,143,32"/>
+<area shape="rect" id="node1" title="base class for spreadsheet reader" alt="" coords="5,80,184,107"/>
+<area shape="rect" id="node3" href="$classpni_1_1fio__reader.html" title="FIO data reader." alt="" coords="37,155,152,181"/>
+<area shape="rect" id="node2" href="$classpni_1_1data__reader.html" title="base class for data readers" alt="" coords="31,5,159,32"/>
 </map>

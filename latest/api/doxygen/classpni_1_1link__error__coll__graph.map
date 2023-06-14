@@ -1,9 +1,9 @@
 <map id="pni::link_error" name="pni::link_error">
-<area shape="rect" id="node1" title="link error" alt="" coords="97,484,197,511"/>
-<area shape="rect" id="node2" href="$classpni_1_1exception.html" title="Exceptions base class." alt="" coords="95,408,198,435"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,311,109,338"/>
-<area shape="rect" id="node4" title=" " alt="" coords="185,304,343,345"/>
-<area shape="rect" id="node5" href="$classpni_1_1exception__record.html" title="exception record" alt="" coords="187,200,333,227"/>
-<area shape="rect" id="node6" title=" " alt="" coords="128,96,208,123"/>
-<area shape="rect" id="node7" title=" " alt="" coords="105,5,231,47"/>
+<area shape="rect" id="node1" title="link error" alt="" coords="101,484,213,511"/>
+<area shape="rect" id="node2" href="$classpni_1_1exception.html" title="Exceptions base class." alt="" coords="100,408,215,435"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,311,120,338"/>
+<area shape="rect" id="node4" title=" " alt="" coords="135,96,222,123"/>
+<area shape="rect" id="node7" href="$classpni_1_1exception__record.html" title="exception record" alt="" coords="199,200,361,227"/>
+<area shape="rect" id="node5" title=" " alt="" coords="109,5,248,47"/>
+<area shape="rect" id="node6" title=" " alt="" coords="195,304,373,345"/>
 </map>

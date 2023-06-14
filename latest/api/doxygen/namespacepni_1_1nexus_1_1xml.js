@@ -2,10 +2,10 @@ var namespacepni_1_1nexus_1_1xml =
 [
     [ "AttributeBuilder", "classpni_1_1nexus_1_1xml_1_1AttributeBuilder.html", "classpni_1_1nexus_1_1xml_1_1AttributeBuilder" ],
     [ "BuilderFactory", "classpni_1_1nexus_1_1xml_1_1BuilderFactory.html", "classpni_1_1nexus_1_1xml_1_1BuilderFactory" ],
-    [ "DataWriter", "classpni_1_1nexus_1_1xml_1_1DataWriter.html", "classpni_1_1nexus_1_1xml_1_1DataWriter" ],
     [ "DatasetCreationListBuilder", "classpni_1_1nexus_1_1xml_1_1DatasetCreationListBuilder.html", "classpni_1_1nexus_1_1xml_1_1DatasetCreationListBuilder" ],
     [ "DataspaceBuilder", "classpni_1_1nexus_1_1xml_1_1DataspaceBuilder.html", "classpni_1_1nexus_1_1xml_1_1DataspaceBuilder" ],
     [ "DatatypeBuilder", "classpni_1_1nexus_1_1xml_1_1DatatypeBuilder.html", "classpni_1_1nexus_1_1xml_1_1DatatypeBuilder" ],
+    [ "DataWriter", "classpni_1_1nexus_1_1xml_1_1DataWriter.html", "classpni_1_1nexus_1_1xml_1_1DataWriter" ],
     [ "DimensionNodeHandler", "classpni_1_1nexus_1_1xml_1_1DimensionNodeHandler.html", "classpni_1_1nexus_1_1xml_1_1DimensionNodeHandler" ],
     [ "FieldBuilder", "classpni_1_1nexus_1_1xml_1_1FieldBuilder.html", "classpni_1_1nexus_1_1xml_1_1FieldBuilder" ],
     [ "GroupBuilder", "classpni_1_1nexus_1_1xml_1_1GroupBuilder.html", "classpni_1_1nexus_1_1xml_1_1GroupBuilder" ],
@@ -18,5 +18,5 @@ var namespacepni_1_1nexus_1_1xml =
     [ "create_from_file", "namespacepni_1_1nexus_1_1xml.html#a179e16378b05b9a442b1d81326c4c63c", null ],
     [ "create_from_string", "namespacepni_1_1nexus_1_1xml.html#aa63a377cb85ec2af3cba78987f20b9dc", null ],
     [ "operator<", "namespacepni_1_1nexus_1_1xml.html#a313cb1b3408bea56a55e66d94840190d", null ],
-    [ "operator<<", "namespacepni_1_1nexus_1_1xml.html#a1d5d945e9941c32ef0c42c29a0bbaea3", null ]
+    [ "operator<<", "namespacepni_1_1nexus_1_1xml.html#a488ec7ba4991b5f3beeda8add82fb8cb", null ]
 ];

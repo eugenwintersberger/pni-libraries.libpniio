@@ -1,5 +1,5 @@
 <map id="pni::nexus::xml::FieldBuilder" name="pni::nexus::xml::FieldBuilder">
-<area shape="rect" id="node1" title=" " alt="" coords="11,155,197,181"/>
-<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="5,80,203,107"/>
-<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="20,5,188,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="11,155,218,181"/>
+<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="5,80,224,107"/>
+<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="22,5,207,32"/>
 </map>

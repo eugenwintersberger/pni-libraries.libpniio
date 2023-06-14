@@ -10,7 +10,7 @@ var classpni_1_1slice =
     [ "_check_stride", "classpni_1_1slice.html#a180d8ae5202353a600213fcfb76d5589", null ],
     [ "first", "classpni_1_1slice.html#ac4aae86327e36c598875d11177c35318", null ],
     [ "last", "classpni_1_1slice.html#a209e89248dfbd4a3d8afcd4aa68a460a", null ],
-    [ "operator=", "classpni_1_1slice.html#afdc9e36b23d4eaa8feb6bc1dffeb976d", null ],
+    [ "operator=", "classpni_1_1slice.html#aefe83d77688d42046786ac37ceec6540", null ],
     [ "stride", "classpni_1_1slice.html#a9c716ac36f1f2ad0f6b89c19639f84bc", null ],
     [ "_first", "classpni_1_1slice.html#a40be0f41c1a1d670a3b66c3e6b725992", null ],
     [ "_last", "classpni_1_1slice.html#a26db58b8f07e7e15172c15573b245ee3", null ],

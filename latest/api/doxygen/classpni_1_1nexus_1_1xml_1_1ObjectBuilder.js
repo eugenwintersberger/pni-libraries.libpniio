@@ -6,6 +6,6 @@ var classpni_1_1nexus_1_1xml_1_1ObjectBuilder =
     [ "ObjectBuilder", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a46b4c376edc0de39137cf84a6917e6d8", null ],
     [ "~ObjectBuilder", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a2913383bdacb9f10f22c033e133dc441", null ],
     [ "build", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a91c1904a8129e4955575017fb41d2215", null ],
-    [ "node", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a939e24a9e64eca48d1efdfdf3f85be41", null ],
+    [ "node", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#adea81bc22ff08a1d92a06189ff6d95db", null ],
     [ "xml_node_", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#ab403ede5e2e5e07df61e9483460e60eb", null ]
 ];

@@ -19,8 +19,8 @@ var classpni_1_1index__map =
     [ "max_elements", "classpni_1_1index__map.html#aefc6c5eab2ed30f1a217ee7c1eadbb74", null ],
     [ "offset", "classpni_1_1index__map.html#aa0b3d6aae142d00ee16c06b01672fd35", null ],
     [ "offset", "classpni_1_1index__map.html#af76ea569de21c4bc4611bdf8597174f0", null ],
-    [ "operator=", "classpni_1_1index__map.html#a44f7de6c94e65c388caf5c451a82f046", null ],
-    [ "operator=", "classpni_1_1index__map.html#a8f79ac20af545fc9e4b64a99d2af0355", null ],
+    [ "operator=", "classpni_1_1index__map.html#aa7360dc1a7849e55042ee9f95b3f9d32", null ],
+    [ "operator=", "classpni_1_1index__map.html#adaf0b272c88f60400140b2c4b0f4b1ab", null ],
     [ "rank", "classpni_1_1index__map.html#ae05109fdce1bef5e4352a74bea059e6a", null ],
     [ "size", "classpni_1_1index__map.html#acc7442c17e56458464e1761acb9d4ecc", null ],
     [ "_shape", "classpni_1_1index__map.html#aef938358c982bec7c1c862d75570d99a", null ]

@@ -1,10 +1,10 @@
 <map id="pni::nexus::xml::AttributeBuilder" name="pni::nexus::xml::AttributeBuilder">
-<area shape="rect" id="node1" title=" " alt="" coords="840,98,1008,139"/>
-<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="477,21,675,48"/>
-<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="193,5,361,32"/>
-<area shape="rect" id="node4" href="$classpni_1_1nexus_1_1xml_1_1Node.html" title="alias for ptree" alt="" coords="202,108,353,135"/>
-<area shape="rect" id="node6" href="$classpni_1_1nexus_1_1xml_1_1DataWriter.html" title=" " alt="" coords="485,72,667,99"/>
-<area shape="rect" id="node7" href="$classpni_1_1nexus_1_1xml_1_1DatatypeBuilder.html" title="builds datatypes from XML nodes" alt="" coords="490,123,662,165"/>
-<area shape="rect" id="node8" href="$classpni_1_1nexus_1_1xml_1_1DataspaceBuilder.html" title=" " alt="" coords="485,189,667,230"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,101,144,142"/>
+<area shape="rect" id="node1" title=" " alt="" coords="916,95,1103,137"/>
+<area shape="rect" id="node2" href="$classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html" title=" " alt="" coords="519,7,737,33"/>
+<area shape="rect" id="node3" href="$classpni_1_1nexus_1_1ObjectBuilder.html" title="a simple object builder interface" alt="" coords="209,5,395,32"/>
+<area shape="rect" id="node4" href="$classpni_1_1nexus_1_1xml_1_1Node.html" title="alias for ptree" alt="" coords="220,108,384,135"/>
+<area shape="rect" id="node6" href="$classpni_1_1nexus_1_1xml_1_1DatatypeBuilder.html" title="builds datatypes from XML nodes" alt="" coords="533,58,723,99"/>
+<area shape="rect" id="node7" href="$classpni_1_1nexus_1_1xml_1_1DataspaceBuilder.html" title=" " alt="" coords="529,123,727,165"/>
+<area shape="rect" id="node8" href="$classpni_1_1nexus_1_1xml_1_1DataWriter.html" title=" " alt="" coords="527,189,729,216"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,101,160,142"/>
 </map>

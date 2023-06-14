@@ -5,10 +5,10 @@ var classpni_1_1binary__t =
     [ "binary_t", "classpni_1_1binary__t.html#aa9967391d5804f2fd9bde460209234b1", null ],
     [ "binary_t", "classpni_1_1binary__t.html#a3ac008397b9a0641d9250455d25a7e38", null ],
     [ "operator NativeT", "classpni_1_1binary__t.html#af164ab5afbd4529b4139c9cdf3f863a0", null ],
-    [ "operator*=", "classpni_1_1binary__t.html#ab189a539e7b3724cd6b9c2ecef47fecf", null ],
-    [ "operator+=", "classpni_1_1binary__t.html#a60bf1f9414eda3e0eac7b062d049b93e", null ],
-    [ "operator-=", "classpni_1_1binary__t.html#ade034cd8dfe30760050032eab95422d9", null ],
-    [ "operator/=", "classpni_1_1binary__t.html#a9c2e115912a3cf05769c60909ec6111c", null ],
-    [ "operator=", "classpni_1_1binary__t.html#a47d638c36fadac41b615e8c4160a1734", null ],
+    [ "operator*=", "classpni_1_1binary__t.html#a909225e05227d564d80fa9abd92ef31c", null ],
+    [ "operator+=", "classpni_1_1binary__t.html#aefbedda11acd2cf21664e736b396bed5", null ],
+    [ "operator-=", "classpni_1_1binary__t.html#a1d216ce43785e144bf5ff69a0f8d051b", null ],
+    [ "operator/=", "classpni_1_1binary__t.html#ab46c5538c7f4de1e1ffc27abd3e52778", null ],
+    [ "operator=", "classpni_1_1binary__t.html#a1aa3093fb3ed23c5aa5704a7c69f6ffa", null ],
     [ "_value", "classpni_1_1binary__t.html#ab13b05fd837c841e7759306c0cdecee4", null ]
 ];
