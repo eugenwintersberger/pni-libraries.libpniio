@@ -79,15 +79,15 @@ $ chmod <span class="m">644</span> /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 <p>The return value of this command line should be <cite>OK</cite>.
 In a next step you have to add new package sources to your system. For this
 purpose go to <code class="file docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d</span></code> and download the sources file.
-For Debian (Bullseye) use</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget http://repos.pni-hdri.de/bullseye-pni-hdri.list
+For Debian (Bookworm) use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget http://repos.pni-hdri.de/bookworm-pni-hdri.list
 </pre></div>
 </div>
 <p>and for Ubuntu (Jammy)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ wget http://repos.pni-hdri.de/jammy-pni-hdri.list
 </pre></div>
 </div>
-<p>The packages are also available for Debian Buster and Ubuntu Lunar, Focal.</p>
+<p>The packages are also available for Debian Bookworm, Bullseye, Buster and Ubuntu Lunar, Jammy, Focal.</p>
 <p>Once you have downloaded the file use</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ apt-get update
 </pre></div>
