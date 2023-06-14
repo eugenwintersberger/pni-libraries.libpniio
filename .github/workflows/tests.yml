@@ -58,7 +58,7 @@ jobs:
         run: docker  exec build /bin/bash -c "cd ../build && cmake --build . --target check --config $BUILDTYPE -- -j3"
 
       - name: Append documentation for the latest release version
-        if: (! startsWith(github.ref, 'refs/heads/docs_')) && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: (! startsWith(github.ref, 'refs/heads/docs_')) && matrix.buildtype == 'Release' && matrix.os == 'debian12'
         run: |
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
              docker  exec build /bin/bash -c "git config --unset-all remote.origin.fetch"
@@ -72,13 +72,13 @@ jobs:
              docker  exec build /bin/bash -c "rm -rf ./latest/_sources"
 
       - name: Extract the code version from the branch name
-        if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian12'
         shell: bash
         run: echo "##[set-output name=docver;]$(echo ${GITHUB_REF#refs/heads/docs_})"
         id: extract_docver
 
       - name: Append documentation for the extracted release version
-        if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: startsWith(github.ref, 'refs/heads/docs_') && matrix.buildtype == 'Release' && matrix.os == 'debian12'
         run: |
              echo Version: ${{ steps.extract_docver.outputs.docver }}
              docker  exec  --user root build  /bin/bash -c "chown -R p00user /home/p00user/src"
@@ -92,7 +92,7 @@ jobs:
              docker  exec build /bin/bash -c "rm -rf ./${{ steps.extract_docver.outputs.docver }}/_sources"
 
       - name: Deploy documentation
-        if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian11'
+        if: (github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/docs_'))  && matrix.buildtype == 'Release' && matrix.os == 'debian12'
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
