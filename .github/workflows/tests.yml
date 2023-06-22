@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [debian11, debian10, debian9, ubuntu21.04, ubuntu20.04, ubuntu18.04]
+        os: [debian12, debian11, debian10, ubuntu22.04, ubuntu20.04]
         buildtype: [Debug, Release]
     steps:
       - uses: actions/checkout@v2
@@ -18,7 +18,7 @@ jobs:
           OS: ${{ matrix.os }}
         run: docker build -t build .ci/${OS}
       - name: Run the docker
-        run: docker run --name build -i -d -v"$PWD:/src" build
+        run: docker run --name build -i -d -v"$PWD:/home/p00user/src" build
       - name: Update git submodules
         run: bash -c "git submodule init && git submodule update --remote && mkdir build"
       - name: Run Ninja
