@@ -15,8 +15,12 @@ RUN chmod 644 /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 RUN cd /etc/apt/sources.list.d && wget http://repos.pni-hdri.de/bookworm-pni-hdri.list
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
 
-RUN apt-get -qq update && apt-get -qq -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras
-RUN apt-get -qq update && apt-get -qq -y install libpnicore1.1.1-dev libpnicore1.1.1 libh5cpp0.4.1-dev libh5cpp0.4.1 libhdf5-dev
+RUN apt-get -qq update && apt-get -y install cmake ninja-build python3-pip g++ doxygen python3-sphinx git
+RUN apt-get -qq update && apt-get -y  install  libboost-all-dev gfortran graphviz libcppunit-dev texlive
+RUN apt-get -qq update && apt-get -y  install  doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures
+RUN apt-get -qq update && apt-get -y  install  python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe 
+RUN apt-get -qq update && apt-get -y  install  texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras
+RUN apt-get -qq update && apt-get -y install libpnicore1.1.1-dev libpnicore1.1.1 libh5cpp0.4.1-dev libh5cpp0.4.1 libhdf5-dev
 
 # add p00user
 RUN useradd -rm -d /home/p00user -s /bin/bash p00user
