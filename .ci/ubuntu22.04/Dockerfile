@@ -4,7 +4,7 @@ MAINTAINER DESY, Jan Kotanski <jankotan@gmail.com>
 
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq install -y software-properties-common curl
 RUN curl http://repos.pni-hdri.de/debian_repo.pub.gpg | apt-key add -
-RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian jammy main" -y
+RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/ubuntu jammy main" -y
 RUN apt-get -qq update && export DEBIAN_FRONTEND=noninteractive && apt-get -qq -y dist-upgrade
 
 RUN /bin/bash -c 'echo "Europe/Berlin" > /etc/timezone'
