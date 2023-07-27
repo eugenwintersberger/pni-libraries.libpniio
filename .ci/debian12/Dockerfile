@@ -12,6 +12,8 @@ RUN chmod 644 /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 # RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian bookworm main" -y
 RUN cd /etc/apt/sources.list.d && wget http://repos.pni-hdri.de/bookworm-pni-hdri.list
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
+RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt autoremove  --yes default-jre openjdk-17-jre
+RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt install --yes default-jre
 RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends ca-certificates-java
 RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends openjdk-17-jre-headless
 
