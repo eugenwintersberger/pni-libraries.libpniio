@@ -12,7 +12,8 @@ RUN chmod 644 /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 # RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian bookworm main" -y
 RUN cd /etc/apt/sources.list.d && wget http://repos.pni-hdri.de/bookworm-pni-hdri.list
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
-RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends openjdk-17-jre-headless ca-certificates-java
+RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends ca-certificates-java
+RUN apt-get -qq update &&  DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends openjdk-17-jre-headless
 
 RUN apt-get -qq update && apt-get  -y install cmake g++ doxygen python3-sphinx git libboost-all-dev gfortran graphviz libcppunit-dev texlive doxygen pkg-config texlive-latex-extra texlive-latex-recommended texlive-pictures python3-pygments libhdf5-dev libgtest-dev lsb-release python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
 RUN apt-get -qq update && apt-get  -y install libhdf5-dev
