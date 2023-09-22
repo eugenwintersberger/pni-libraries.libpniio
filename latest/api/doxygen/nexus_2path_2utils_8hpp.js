@@ -1,6 +1,8 @@
 var nexus_2path_2utils_8hpp =
 [
+    [ "get_objects", "nexus_2path_2utils_8hpp.html#a325ebb2a906e824ec990c31106ef38b6", null ],
     [ "get_objects", "nexus_2path_2utils_8hpp.html#a6a618d6fc4651fe4365db6149cc84ec9", null ],
+    [ "get_objects", "nexus_2path_2utils_8hpp.html#a47f3cc3f263b5b5aba49b60a9eb97730", null ],
     [ "get_path", "nexus_2path_2utils_8hpp.html#aaf89ed2831ac7dc326239045b14d7afa", null ],
     [ "get_path", "nexus_2path_2utils_8hpp.html#a2d727e4c9478956ab202bef7cdb514f3", null ],
     [ "get_path", "nexus_2path_2utils_8hpp.html#a7fda8096aed1b6a944d194387d3f34cd", null ],

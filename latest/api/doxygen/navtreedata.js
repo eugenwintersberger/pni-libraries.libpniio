@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "PNI NeXus Library", "index.html", [
-    [ "PNI NeXus Library 3.1.0 Documentation", "index.html", [
+    [ "PNI NeXus Library 3.2 Documentation", "index.html", [
       [ "Introduction", "index.html#Introduction", null ],
       [ "Outlook - concurrent applications", "index.html#outlook", [
         [ "Thread safety", "index.html#ths", null ],
@@ -82,9 +82,9 @@ var NAVTREEINDEX =
 "classpni_1_1tiff__reader.html#a95e1a10a659a231808138edcf1d7977e",
 "exception__utils_8hpp_source.html",
 "namespacemembers_func_c.html",
-"namespacepni_1_1nexus_1_1parsers.html#ac69f435d4a4f826068c8eec47fc179f2",
-"structpni_1_1array__view__trait_3_01ArrayT_00_01true_01_4.html",
-"structpni_1_1map__utils_3_01static__index__map_3_01PolicyT_00_01TDimsN_8_8_8_01_4_01_4.html#a5ccf551feb8b57d61dd9ffd74e12aa40"
+"namespacepni_1_1nexus.html#afbb2b9e0c66313eb53dcf1441007a8fc",
+"structpni_1_1array__view__trait_3_01ArrayT_00_01false_01_4.html#a1aa58fb45d01d64bd19662882aac3f6a",
+"structpni_1_1map__utils.html#abe9afc0ee279f87b87d6668663db679d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
