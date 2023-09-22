@@ -31,7 +31,7 @@
 
 namespace pni{
 namespace nexus{
-        
+
 //!
 //! \ingroup nxpath_code
 //! \brief Nexus path class

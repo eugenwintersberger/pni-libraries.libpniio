@@ -58,6 +58,29 @@ BOOST_AUTO_TEST_CASE(search_for_entries)
   BOOST_CHECK(entries[2].link().path().name() == "scan_3");
 }
 
+BOOST_AUTO_TEST_CASE(search_for_entries_string)
+{
+  base = multi_entry.root();
+  nexus::PathObjectList result =
+    nexus::get_objects(base, std::string("/:NXentry"));
+  BOOST_CHECK(result.size() == 3);
+  nexus::GroupList entries = result;
+  BOOST_CHECK(entries[0].link().path().name() == "scan_1");
+  BOOST_CHECK(entries[1].link().path().name() == "scan_2");
+  BOOST_CHECK(entries[2].link().path().name() == "scan_3");
+}
+
+BOOST_AUTO_TEST_CASE(search_for_entries_char)
+{
+  base = multi_entry.root();
+  nexus::PathObjectList result = nexus::get_objects(base,"/:NXentry");
+  BOOST_CHECK(result.size() == 3);
+  nexus::GroupList entries = result;
+  BOOST_CHECK(entries[0].link().path().name() == "scan_1");
+  BOOST_CHECK(entries[1].link().path().name() == "scan_2");
+  BOOST_CHECK(entries[2].link().path().name() == "scan_3");
+}
+
 BOOST_AUTO_TEST_CASE(get_unresolvable_link)
 {
   base = multi_entry.root();

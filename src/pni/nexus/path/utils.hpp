@@ -430,7 +430,11 @@ PNINEXUS_EXPORT Path get_path(const hdf5::node::Link &link);
 //! @return a list of path objects
 //!
 PNINEXUS_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
-                                        const Path &path);
+					   const Path &path);
+PNINEXUS_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
+					   const std::string &str);
+PNINEXUS_EXPORT PathObjectList get_objects(const hdf5::node::Group &base,
+					   const char *str);
 
 //end of namespace
 } // namespace nexus
