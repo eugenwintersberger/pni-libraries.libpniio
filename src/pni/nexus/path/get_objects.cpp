@@ -89,7 +89,19 @@ class RelativePathMatcher
     Path base_path_;
 };
 
-PathObjectList get_objects(const hdf5::node::Group &base,const Path &path)
+PathObjectList get_objects(const hdf5::node::Group &base, const std::string &str)
+{
+  return get_objects(base,Path::from_string(str));
+}
+
+
+  PathObjectList get_objects(const hdf5::node::Group &base, const char *str)
+{
+  return get_objects(base,Path::from_string(std::string(str)));
+}
+
+
+PathObjectList get_objects(const hdf5::node::Group &base, const Path &path)
 {
   PathObjectList list;
 
