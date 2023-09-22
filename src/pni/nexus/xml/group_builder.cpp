@@ -41,14 +41,15 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
 
     //fetch the name for the group
     std::string name = group_node.name();
+
+    if((name.empty() || name == "/")  && parent.link().path().is_root())
+        return parent;
+
     if(name.empty())
     {
       throw value_error(PNINEXUS_EXCEPTION_RECORD,
               "XML group does not provide a name!");
     }
-
-    if(name == "/"  && parent.link().path().is_root())
-        return parent;
 
     try{
       const hdf5::node::Group & parent_group = dynamic_cast<const hdf5::node::Group &>(parent);
@@ -71,6 +72,13 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
     if(group_node.has_attribute("type"))
     {
         string gclass   = group_node.attribute("type").str_data();
+
+        group.attributes.create("NX_class",hdf5::datatype::create<std::string>(),
+                                           hdf5::dataspace::Scalar()).write(gclass);
+    }
+    else if(group_node.has_attribute("NX_class"))
+    {
+        string gclass = group_node.attribute("NX_class").str_data();
 
         group.attributes.create("NX_class",hdf5::datatype::create<std::string>(),
                                            hdf5::dataspace::Scalar()).write(gclass);
