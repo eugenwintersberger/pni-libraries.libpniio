@@ -71,28 +71,28 @@ BOOST_AUTO_TEST_CASE(test_abs_no_file_char)
   BOOST_CHECK(p.front().second == "NXroot");
 
   p = Path("/./:NXentry/:NXinstrument/");
-  // BOOST_CHECK(p.size() == 4);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  BOOST_CHECK(p.size() == 3);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path("/../:NXentry/:NXinstrument");
-  // BOOST_CHECK(p.size() == 4);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path("/../:NXentry/:NXinstrument");
+  BOOST_CHECK(p.size() == 4);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path("/.");
-  // BOOST_CHECK(p.size() == 2);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path("/.");
+  BOOST_CHECK(p.size() == 1);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path("/:NXroot");
-  // BOOST_CHECK(p.size() == 1);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path("/:NXroot");
+  BOOST_CHECK(p.size() == 1);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 }
 
 BOOST_AUTO_TEST_CASE(test_abs_no_file_string)
@@ -103,29 +103,29 @@ BOOST_AUTO_TEST_CASE(test_abs_no_file_string)
   BOOST_CHECK(p.front().first == "/");
   BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path(std::string("/./:NXentry/:NXinstrument/"));
-  // BOOST_CHECK(p.size() == 4);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path(std::string("/./:NXentry/:NXinstrument/"));
+  BOOST_CHECK(p.size() == 3);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path(std::string("/../:NXentry/:NXinstrument"));
-  // BOOST_CHECK(p.size() == 4);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path(std::string("/../:NXentry/:NXinstrument"));
+  BOOST_CHECK(p.size() == 4);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path(std::string("/."));
-  // BOOST_CHECK(p.size() == 2);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path(std::string("/."));
+  BOOST_CHECK(p.size() == 1);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 
-  // p = Path(std::string("/:NXroot"));
-  // BOOST_CHECK(p.size() == 1);
-  // BOOST_CHECK(is_absolute(p));
-  // BOOST_CHECK(p.front().first == "/");
-  // BOOST_CHECK(p.front().second == "NXroot");
+  p = Path(std::string("/:NXroot"));
+  BOOST_CHECK(p.size() == 1);
+  BOOST_CHECK(is_absolute(p));
+  BOOST_CHECK(p.front().first == "/");
+  BOOST_CHECK(p.front().second == "NXroot");
 }
 
 //-------------------------------------------------------------------------
