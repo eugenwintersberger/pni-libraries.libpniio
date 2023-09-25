@@ -38,6 +38,38 @@ Path::Path():
             _elements()
 {}
 
+Path::Path(const std::string &str):
+  _file_name(),
+  _attribute_name(),
+  _elements()
+{
+  *this = Path::from_string(str);
+  if(size()!=0)
+  {
+    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
+                                  [](const Element &element)
+                                  { return element.first == "."; });
+    if(new_pos!=_elements.end())
+      _elements.erase(new_pos);
+  }
+}
+
+Path::Path(const char *str):
+  _file_name(),
+  _attribute_name(),
+  _elements()
+{
+  *this = Path::from_string(std::string(str));
+  if(size()!=0)
+  {
+    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
+                                  [](const Element &element)
+                                  { return element.first == "."; });
+    if(new_pos!=_elements.end())
+      _elements.erase(new_pos);
+  }
+}
+  
 Path::Path(const hdf5::Path &path):
     _file_name(),
     _attribute_name(),
@@ -57,6 +89,25 @@ Path::Path(const hdf5::Path &path):
   }
 }
 
+// nexus::Path& operator=(const hdf5::Path &&hpath) noexcept;
+// {
+//   if (this != &hpath) {
+//     *a = *(hpathm.a);
+//   }
+//   return *this;
+// }
+
+
+// nexus::Path& nexus::Path::operator=(const hdf5::Path &hpath)
+// {
+//   auto np = nexus::Path(hpath);
+//   this->filename(np.filename());
+//   this->attribute(np.attribute());
+//   std::copy(np.begin(), np.end(), std::back_inserter(np._elements));
+//   return *this;
+// }
+
+  
 Path::operator hdf5::Path()
 {
   if(is_unique(*this))
