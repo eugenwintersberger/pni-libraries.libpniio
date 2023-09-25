@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE(test_abs_no_file_char_imp)
   BOOST_CHECK(p.front().first == "/");
   BOOST_CHECK(p.front().second == "NXroot");
 
-  p = Path("/../:NXentry/:NXinstrument");
+  p = "/../:NXentry/:NXinstrument";
   BOOST_CHECK(p.size() == 4);
   BOOST_CHECK(is_absolute(p));
   BOOST_CHECK(p.front().first == "/");
