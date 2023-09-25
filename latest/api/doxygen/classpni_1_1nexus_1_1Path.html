@@ -65,6 +65,7 @@ $(document).ready(function(){initNavTree('classpni_1_1nexus_1_1Path.html',''); i
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#related">Related Functions</a>  </div>
   <div class="headertitle"><div class="title">pni::nexus::Path Class Reference</div></div>
@@ -113,6 +114,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac1a3578f959ddfbab25e5ecf16b1d116"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1Path.html#ac1a3578f959ddfbab25e5ecf16b1d116">Path</a> (const hdf5::Path &amp;path)</td></tr>
 <tr class="memdesc:ac1a3578f959ddfbab25e5ecf16b1d116"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="classpni_1_1nexus_1_1Path.html#ac1a3578f959ddfbab25e5ecf16b1d116">More...</a><br /></td></tr>
 <tr class="separator:ac1a3578f959ddfbab25e5ecf16b1d116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25e6d6cb4eac7560c1a428695a712742"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1Path.html#a25e6d6cb4eac7560c1a428695a712742">Path</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a25e6d6cb4eac7560c1a428695a712742"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor  <a href="classpni_1_1nexus_1_1Path.html#a25e6d6cb4eac7560c1a428695a712742">More...</a><br /></td></tr>
+<tr class="separator:a25e6d6cb4eac7560c1a428695a712742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adec0357be105a25fc34cc016ff84c137"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1Path.html#adec0357be105a25fc34cc016ff84c137">Path</a> (const char *str)</td></tr>
+<tr class="separator:adec0357be105a25fc34cc016ff84c137"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49d013b95d8694b7e00a5fecf2b018a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1Path.html#a49d013b95d8694b7e00a5fecf2b018a6">operator hdf5::Path</a> ()</td></tr>
 <tr class="memdesc:a49d013b95d8694b7e00a5fecf2b018a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">conversion to an HDF5 path  <a href="classpni_1_1nexus_1_1Path.html#a49d013b95d8694b7e00a5fecf2b018a6">More...</a><br /></td></tr>
 <tr class="separator:a49d013b95d8694b7e00a5fecf2b018a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +182,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a5e9d1d05af8ab001bcd07248132bdb04"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1Path.html#a5e9d1d05af8ab001bcd07248132bdb04">to_string</a> (const <a class="el" href="classpni_1_1nexus_1_1Path.html">Path</a> &amp;p)</td></tr>
 <tr class="memdesc:a5e9d1d05af8ab001bcd07248132bdb04"><td class="mdescLeft">&#160;</td><td class="mdescRight">create string from path  <a href="classpni_1_1nexus_1_1Path.html#a5e9d1d05af8ab001bcd07248132bdb04">More...</a><br /></td></tr>
 <tr class="separator:a5e9d1d05af8ab001bcd07248132bdb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ae596ba319450d0be1a4026acea271095"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1Path.html#ae596ba319450d0be1a4026acea271095">remove_dots</a> ()</td></tr>
+<tr class="memdesc:ae596ba319450d0be1a4026acea271095"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove dots from the path  <a href="classpni_1_1nexus_1_1Path.html#ae596ba319450d0be1a4026acea271095">More...</a><br /></td></tr>
+<tr class="separator:ae596ba319450d0be1a4026acea271095"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -276,7 +288,7 @@ Related Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a30849f8c4b52bf62b7426fb14fb2ded4" name="a30849f8c4b52bf62b7426fb14fb2ded4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30849f8c4b52bf62b7426fb14fb2ded4">&#9670;&nbsp;</a></span>Path() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a30849f8c4b52bf62b7426fb14fb2ded4">&#9670;&nbsp;</a></span>Path() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -293,7 +305,7 @@ Related Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9dd3c4b3636d47e18877c082f17e1af0" name="a9dd3c4b3636d47e18877c082f17e1af0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9dd3c4b3636d47e18877c082f17e1af0">&#9670;&nbsp;</a></span>Path() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dd3c4b3636d47e18877c082f17e1af0">&#9670;&nbsp;</a></span>Path() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,10 +347,13 @@ Related Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac1a3578f959ddfbab25e5ecf16b1d116" name="ac1a3578f959ddfbab25e5ecf16b1d116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1a3578f959ddfbab25e5ecf16b1d116">&#9670;&nbsp;</a></span>Path() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1a3578f959ddfbab25e5ecf16b1d116">&#9670;&nbsp;</a></span>Path() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">pni::nexus::Path::Path </td>
@@ -348,6 +363,11 @@ Related Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p >Construct a NeXus path from an HDF5 path. This constructor is deliberately non-explicit. As an HDF5 path does not contain any file or attribute information only the element section of the path will be set.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -356,6 +376,43 @@ Related Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a25e6d6cb4eac7560c1a428695a712742" name="a25e6d6cb4eac7560c1a428695a712742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25e6d6cb4eac7560c1a428695a712742">&#9670;&nbsp;</a></span>Path() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pni::nexus::Path::Path </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Construct a path from a string. </p>
+
+</div>
+</div>
+<a id="adec0357be105a25fc34cc016ff84c137" name="adec0357be105a25fc34cc016ff84c137"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adec0357be105a25fc34cc016ff84c137">&#9670;&nbsp;</a></span>Path() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pni::nexus::Path::Path </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -768,6 +825,31 @@ Related Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae596ba319450d0be1a4026acea271095" name="ae596ba319450d0be1a4026acea271095"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae596ba319450d0be1a4026acea271095">&#9670;&nbsp;</a></span>remove_dots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pni::nexus::Path::remove_dots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af60c396e2281ffa9cc63a2378fab319f" name="af60c396e2281ffa9cc63a2378fab319f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af60c396e2281ffa9cc63a2378fab319f">&#9670;&nbsp;</a></span>size()</h2>
 
@@ -1128,7 +1210,7 @@ Related Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="namespacepni_1_1nexus.html">nexus</a></li><li class="navelem"><a class="el" href="classpni_1_1nexus_1_1Path.html">Path</a></li>
-    <li class="footer">Generated on Fri Sep 22 2023 13:05:51 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+    <li class="footer">Generated on Mon Sep 25 2023 15:01:13 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
   </ul>
 </div>
 </body>
