@@ -69,7 +69,7 @@ Path::Path(const char *str):
       _elements.erase(new_pos);
   }
 }
-  
+
 Path::Path(const hdf5::Path &path):
     _file_name(),
     _attribute_name(),
@@ -89,25 +89,7 @@ Path::Path(const hdf5::Path &path):
   }
 }
 
-// nexus::Path& operator=(const hdf5::Path &&hpath) noexcept;
-// {
-//   if (this != &hpath) {
-//     *a = *(hpathm.a);
-//   }
-//   return *this;
-// }
 
-
-// nexus::Path& nexus::Path::operator=(const hdf5::Path &hpath)
-// {
-//   auto np = nexus::Path(hpath);
-//   this->filename(np.filename());
-//   this->attribute(np.attribute());
-//   std::copy(np.begin(), np.end(), std::back_inserter(np._elements));
-//   return *this;
-// }
-
-  
 Path::operator hdf5::Path()
 {
   if(is_unique(*this))
@@ -161,7 +143,7 @@ std::string Path::to_string(const Path &p)
 
   return str_stream.str();
 }
-           
+
 //-------------------------------------------------------------------------
 bool Path::has_filename() const noexcept
 {
@@ -173,19 +155,19 @@ bool Path::has_attribute() const noexcept
 {
   return !_attribute_name.empty();
 }
-    
+
 //-------------------------------------------------------------------------
 fs::path Path::filename() const noexcept
 {
   return _file_name;
 }
-    
+
 //-------------------------------------------------------------------------
 void Path::filename(const fs::path &file)
 {
   _file_name = file.string();
 }
-    
+
 //-------------------------------------------------------------------------
 pni::string Path::attribute() const noexcept
 {
@@ -220,7 +202,7 @@ void Path::push_front(const Element &o)
 
   _elements.push_front(o);
 }
-    
+
 //-------------------------------------------------------------------------
 void Path::pop_front()
 {
