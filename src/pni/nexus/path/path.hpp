@@ -84,6 +84,13 @@ class PNINEXUS_EXPORT Path
 #ifdef _MSC_VER
 #pragma warning(default: 4251)
 #endif
+  protected:
+    //===============public member methods=============================
+    //!
+    //! \brief remove dots from the path
+    //!
+    void remove_dots();
+
 
   public:
     //===============constructors and destructor=======================

@@ -44,14 +44,7 @@ Path::Path(const std::string &str):
   _elements()
 {
   *this = Path::from_string(str);
-  if(size()!=0)
-  {
-    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
-                                  [](const Element &element)
-                                  { return element.first == "."; });
-    if(new_pos!=_elements.end())
-      _elements.erase(new_pos);
-  }
+  remove_dots();
 }
 
 Path::Path(const char *str):
@@ -60,14 +53,7 @@ Path::Path(const char *str):
   _elements()
 {
   *this = Path::from_string(std::string(str));
-  if(size()!=0)
-  {
-    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
-                                  [](const Element &element)
-                                  { return element.first == "."; });
-    if(new_pos!=_elements.end())
-      _elements.erase(new_pos);
-  }
+  remove_dots();
 }
 
 Path::Path(const hdf5::Path &path):
@@ -78,18 +64,9 @@ Path::Path(const hdf5::Path &path):
   //we simply use the string conversion here
   //remove potential . from the list
   *this = Path::from_string(static_cast<std::string>(path));
-
-  if(size()!=0)
-  {
-    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
-                                  [](const Element &element)
-                                  { return element.first == "."; });
-    if(new_pos!=_elements.end())
-      _elements.erase(new_pos);
-  }
+  remove_dots();
 }
-
-
+  
 Path::operator hdf5::Path()
 {
   if(is_unique(*this))
@@ -128,6 +105,19 @@ Path::Path(const fs::path &file,
     _attribute_name(attr),
     _elements(objects)
 {}
+
+//-------------------------------------------------------------------------
+void Path::remove_dots()
+{
+  if(size()!=0)
+  {
+    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
+                                  [](const Element &element)
+                                  { return element.first == "."; });
+    if(new_pos!=_elements.end())
+      _elements.erase(new_pos);
+  }
+}
 
 //-------------------------------------------------------------------------
 Path Path::from_string(const std::string &input)
