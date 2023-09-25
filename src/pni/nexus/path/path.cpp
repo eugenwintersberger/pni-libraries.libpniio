@@ -38,6 +38,24 @@ Path::Path():
             _elements()
 {}
 
+Path::Path(const std::string &str):
+  _file_name(),
+  _attribute_name(),
+  _elements()
+{
+  *this = Path::from_string(str);
+  remove_dots();
+}
+
+Path::Path(const char *str):
+  _file_name(),
+  _attribute_name(),
+  _elements()
+{
+  *this = Path::from_string(std::string(str));
+  remove_dots();
+}
+
 Path::Path(const hdf5::Path &path):
     _file_name(),
     _attribute_name(),
@@ -46,17 +64,9 @@ Path::Path(const hdf5::Path &path):
   //we simply use the string conversion here
   //remove potential . from the list
   *this = Path::from_string(static_cast<std::string>(path));
-
-  if(size()!=0)
-  {
-    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
-                                  [](const Element &element)
-                                  { return element.first == "."; });
-    if(new_pos!=_elements.end())
-      _elements.erase(new_pos);
-  }
+  remove_dots();
 }
-
+  
 Path::operator hdf5::Path()
 {
   if(is_unique(*this))
@@ -97,6 +107,19 @@ Path::Path(const fs::path &file,
 {}
 
 //-------------------------------------------------------------------------
+void Path::remove_dots()
+{
+  if(size()!=0)
+  {
+    auto new_pos = std::remove_if(_elements.begin(),_elements.end(),
+                                  [](const Element &element)
+                                  { return element.first == "."; });
+    if(new_pos!=_elements.end())
+      _elements.erase(new_pos);
+  }
+}
+
+//-------------------------------------------------------------------------
 Path Path::from_string(const std::string &input)
 {
   return parsers::parse_path(input);
@@ -110,7 +133,7 @@ std::string Path::to_string(const Path &p)
 
   return str_stream.str();
 }
-           
+
 //-------------------------------------------------------------------------
 bool Path::has_filename() const noexcept
 {
@@ -122,19 +145,19 @@ bool Path::has_attribute() const noexcept
 {
   return !_attribute_name.empty();
 }
-    
+
 //-------------------------------------------------------------------------
 fs::path Path::filename() const noexcept
 {
   return _file_name;
 }
-    
+
 //-------------------------------------------------------------------------
 void Path::filename(const fs::path &file)
 {
   _file_name = file.string();
 }
-    
+
 //-------------------------------------------------------------------------
 pni::string Path::attribute() const noexcept
 {
@@ -169,7 +192,7 @@ void Path::push_front(const Element &o)
 
   _elements.push_front(o);
 }
-    
+
 //-------------------------------------------------------------------------
 void Path::pop_front()
 {
