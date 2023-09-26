@@ -1,0 +1,31 @@
+<definition>
+  <!-- <group type="NXentry" name="$var.entryname#'scan'$var.serialno"> -->
+  <group type="NXentry" name="scan">
+    <group type="NXinstrument" name="instrument">
+      <group type="NXslit" name="slit1">
+        <group type="NXcollection" name="collection">
+          </group>
+        <group type="NXtransformations" name="transformations">
+	  <field units="mm" type="NX_FLOAT" name="right" transformation_type="translation">
+            <attribute type="NX_FLOAT64" name="vector">1 0 0<dimensions rank="1">
+                <dim value="3" index="1" />
+              </dimensions>
+              <strategy mode="INIT" />
+            </attribute>
+	    <strategy mode="INIT" />
+	    <!-- $datasources.exp_mot02 -->
+	  </field>
+	  <field units="mm" type="NX_FLOAT" name="left" transformation_type="translation">
+            <attribute type="NX_FLOAT64" name="vector">1 0 0<dimensions rank="1">
+                <dim value="3" index="1" />
+              </dimensions>
+              <strategy mode="INIT" />
+            </attribute>
+	    <strategy mode="INIT" />
+	    <!-- $datasources.exp_mot01 -->
+	  </field>
+          </group>
+        </group>
+    </group>
+  </group>
+</definition>

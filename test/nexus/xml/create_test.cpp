@@ -123,4 +123,25 @@ BOOST_AUTO_TEST_CASE(from_duplicate_group)
 
 }
 
+BOOST_AUTO_TEST_CASE(from_nxsdesigner_slit)
+{
+  using hdf5::node::get_node;
+  using hdf5::node::Type;
+  file = hdf5::file::create("CreateTest2.nxs",hdf5::file::AccessFlags::Truncate);
+  root_group = file.root();
+  fs::path file = "create/slit.xml";
+  BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
+
+  BOOST_CHECK(get_node(root_group,"/scan").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan/instrument").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan/instrument/slit1").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan/instrument/slit1/transformations/right").type() == Type::Dataset);
+  BOOST_CHECK(root_group.get_dataset(
+				     "/scan/instrument/slit1/transformations/right"
+				     ).datatype().get_class() == hdf5::datatype::Class::Float);
+  BOOST_CHECK(root_group.get_dataset(
+		       "/scan/instrument/slit1/transformations/right"
+				     ).attributes["vector"].dataspace().type() == hdf5::dataspace::Type::Simple);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
