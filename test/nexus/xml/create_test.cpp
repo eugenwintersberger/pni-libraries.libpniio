@@ -127,8 +127,6 @@ BOOST_AUTO_TEST_CASE(from_nxsdesigner_slit)
 {
   using hdf5::node::get_node;
   using hdf5::node::Type;
-  file = hdf5::file::create("CreateTest2.nxs",hdf5::file::AccessFlags::Truncate);
-  root_group = file.root();
   fs::path file = "create/slit.xml";
   BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
 
