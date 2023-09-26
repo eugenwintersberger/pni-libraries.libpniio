@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_SUITE(ConversionTest)
 BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_1)
 {
   hdf5::Path h5p = "/entry/instrument/detector/data";
-  nexus::Path nxp = h5p;
+  nexus::Path nxp = nexus::Path(h5p);
   BOOST_CHECK(nexus::Path::to_string(nxp) == "/entry/instrument/detector/data");
   BOOST_CHECK(nexus::is_absolute(nxp));
   BOOST_CHECK(nxp.size() == 5);
@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_1)
 BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_2)
 {
   hdf5::Path h5p = "entry/instrument";
-  nexus::Path nxp = h5p;
+  nexus::Path nxp = nexus::Path(h5p);
   BOOST_CHECK(nexus::Path::to_string(nxp) == "entry/instrument");
   BOOST_CHECK(nxp.size() == 2);
 }
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_2)
 BOOST_AUTO_TEST_CASE(from_hdf5_to_nexus_3)
 {
   hdf5::Path h5p = "/";
-  nexus::Path nxp = h5p;
+  nexus::Path nxp = nexus::Path(h5p);
   BOOST_CHECK(nexus::Path::to_string(nxp) == "/");
   BOOST_CHECK(nexus::is_absolute(nxp));
   BOOST_CHECK(nxp.size() == 1);

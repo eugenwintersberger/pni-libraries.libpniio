@@ -84,6 +84,13 @@ class PNINEXUS_EXPORT Path
 #ifdef _MSC_VER
 #pragma warning(default: 4251)
 #endif
+  protected:
+    //===============public member methods=============================
+    //!
+    //! \brief remove dots from the path
+    //!
+    void remove_dots();
+
 
   public:
     //===============constructors and destructor=======================
@@ -113,7 +120,15 @@ class PNINEXUS_EXPORT Path
     //!
     //! @param path reference to the original HDF5 path
     //!
-    Path(const hdf5::Path &path);
+    explicit Path(const hdf5::Path &path);
+
+    //!
+    //! \brief constructor
+    //!
+    //! Construct a path from a string.
+    //!
+    Path(const std::string &str);
+    Path(const char *str);
 
     //-----------------------------------------------------------------
     //!
