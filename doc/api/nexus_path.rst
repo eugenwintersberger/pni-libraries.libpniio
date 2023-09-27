@@ -79,6 +79,10 @@ Searching with Paths
 
 .. doxygenfunction:: pni::nexus::get_path(const hdf5::node::Node&)
 
-.. doxygenfunction:: pni::nexus::get_objects
+.. doxygenfunction:: pni::nexus::get_objects(const hdf5::node::Group &, const Path &)
+
+.. doxygenfunction:: pni::nexus::get_objects(const hdf5::node::Group &, const std::string &)
+
+.. doxygenfunction:: pni::nexus::get_objects(const hdf5::node::Group &, const char *)
 
 
