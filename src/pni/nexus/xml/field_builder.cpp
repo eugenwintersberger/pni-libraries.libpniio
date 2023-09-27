@@ -111,16 +111,14 @@ void FieldBuilder::build(const hdf5::node::Node &parent) const
   }
   hdf5::node::Dataset dataset(parent,field_name,datatype,dataspace,lcpl,dcpl);
 
-  if(node().has_attribute("long_name"))
-  {
-    dataset.attributes.create<std::string>("long_name")
-        .write(node().attribute("long_name").str_data());
-  }
+  const auto & attributes = node().get_child("<xmlattr>");
 
-  if(node().has_attribute("units"))
-  {
-    dataset.attributes.create<std::string>("units").
-        write(node().attribute("units").str_data());
+  for(const boost::property_tree::ptree::value_type &v: attributes){
+    auto name =  v.first.data();
+    if(strcmp(name, "name") == 0)
+      continue;
+    dataset.attributes.create<std::string>(name)
+        .write(node().attribute(name).str_data());
   }
 
   //need to handle data if available

@@ -14,6 +14,7 @@ set(SOURCES xml_test.cpp
 	      
 	      
 set(DATAFILES group_builder.xml
+              definition_builder.xml
               scalar_attribute_test.xml
               array_attribute_test.xml)
 

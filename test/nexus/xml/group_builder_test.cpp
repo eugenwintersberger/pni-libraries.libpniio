@@ -84,6 +84,24 @@ BOOST_AUTO_TEST_CASE(recursive_groups)
   BOOST_CHECK(nexus::IsData()(entry.nodes["data"]));
 }
 
+BOOST_AUTO_TEST_CASE(recursive_definition_groups)
+{
+  BOOST_CHECK_NO_THROW(xml_node = nexus::xml::Node::from_file("definition_builder.xml"));
+  BOOST_CHECK_NO_THROW(builder = nexus::xml::ObjectBuilder(xml_node));
+  BOOST_CHECK_NO_THROW(builder.build(root_group));
+
+  BOOST_CHECK(root_group.nodes.size() == 2);
+  node::Group entry = root_group.nodes["entry_1"];
+  BOOST_CHECK(nexus::IsEntry()(entry));
+  BOOST_CHECK(entry.nodes.size() == 3);
+  BOOST_CHECK(entry.nodes.exists("instrument"));
+  BOOST_CHECK(entry.nodes.exists("data"));
+  BOOST_CHECK(entry.nodes.exists("sample"));
+  BOOST_CHECK(nexus::IsInstrument()(entry.nodes["instrument"]));
+  BOOST_CHECK(nexus::IsSample()(entry.nodes["sample"]));
+  BOOST_CHECK(nexus::IsData()(entry.nodes["data"]));
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE_END()

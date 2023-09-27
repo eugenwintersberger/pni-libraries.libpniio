@@ -36,6 +36,8 @@ ObjectBuilder::UniquePointer BuilderFactory::create(const Node::value_type &elem
     return ObjectBuilder::UniquePointer(new FieldBuilder(element.second));
   else if(element.first == "group")
     return ObjectBuilder::UniquePointer(new GroupBuilder(element.second));
+  else if(element.first == "definition")
+    return ObjectBuilder::UniquePointer(new GroupBuilder(element.second));
   else if(element.first == "attribute")
     return ObjectBuilder::UniquePointer(new AttributeBuilder(element.second));
   else if(element.first == "link")
