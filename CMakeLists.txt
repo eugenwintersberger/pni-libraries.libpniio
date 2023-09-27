@@ -98,20 +98,17 @@ include(${EXTRA_MODULES_DIR}/MPIConfig.cmake)
 include(${EXTRA_MODULES_DIR}/HDF5LibraryConfig.cmake)
 include(${EXTRA_MODULES_DIR}/H5CPPLibraryConfig.cmake)
 
-# if (H5CPP_LIBRARIES MATCHES "hdf5::hdf5")
 if (H5CPP_LIBRARIES MATCHES "Boost::filesystem")
   set(PNINEXUS_USE_BOOST_FILESYSTEM ON)
 endif()
 
 if(PNINEXUS_USE_BOOST_FILESYSTEM MATCHES ON)
-  message("${H5CPP_LIBRARIES}" "LLLLLLIBS")
   find_package(Boost 1.60 COMPONENTS system
                                    regex
                                    date_time
                                    unit_test_framework
 				   REQUIRED)
 else()
-  message("NOOOBuilding static library:" "${H5CPP_LIBRARIES}" )
   find_package(Boost 1.60 COMPONENTS system
                                    regex
                                    date_time

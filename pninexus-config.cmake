@@ -6,6 +6,12 @@ endif()
 
 set(BOOST_COMPONENTS)
 
+if(PNINEXUS_USE_BOOST_FILESYSTEM MATCHES ON)
+  if(NOT TARGET Boost::filesystem)
+      list(APPEND BOOST_COMPONENTS filesystem)
+  endif()
+endif()
+
 if(NOT TARGET Boost::regex)
     list(APPEND BOOST_COMPONENTS regex)
 endif()
