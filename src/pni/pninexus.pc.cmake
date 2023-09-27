@@ -9,4 +9,4 @@ Version: @LIBRARY_VERSION@
 Cflags: -I${includedir} -I@HDF5_INCLUDE_DIRS@
 Requires: h5cpp
 Libs: -L${libdir} -lpninexus
-Libs.private:  -L@HDF5_LIBRARY_DIRS@ -lhdf5 -lhdf5_hl -lz -lboost_filesystem
+Libs.private:  -L@HDF5_LIBRARY_DIRS@ -lhdf5 -lhdf5_hl -lz -l@PNINEXUS_FILESYSTEM_LIB@
