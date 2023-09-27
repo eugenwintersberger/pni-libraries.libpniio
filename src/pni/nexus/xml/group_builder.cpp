@@ -69,21 +69,17 @@ hdf5::node::Group group_from_node(const hdf5::node::Group &parent,
 
     //if the tag has a type attribute add its value as an NX_class
     //attribute
-    if(group_node.has_attribute("type"))
-    {
-        string gclass   = group_node.attribute("type").str_data();
+    const auto & attributes = group_node.get_child("<xmlattr>");
 
-        group.attributes.create("NX_class",hdf5::datatype::create<std::string>(),
-                                           hdf5::dataspace::Scalar()).write(gclass);
+    for(const boost::property_tree::ptree::value_type &v: attributes){
+      auto name =  v.first.data();
+      if(strcmp(name, "type") == 0)
+	name = "NX_class";
+      else if(strcmp(name, "name") == 0)
+	continue;
+      group.attributes.create(name, hdf5::datatype::create<std::string>(),
+			      hdf5::dataspace::Scalar()).write(v.second.data());
     }
-    else if(group_node.has_attribute("NX_class"))
-    {
-        string gclass = group_node.attribute("NX_class").str_data();
-
-        group.attributes.create("NX_class",hdf5::datatype::create<std::string>(),
-                                           hdf5::dataspace::Scalar()).write(gclass);
-    }
-
     return group;
 }
 

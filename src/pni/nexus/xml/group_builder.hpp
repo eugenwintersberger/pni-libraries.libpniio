@@ -28,6 +28,7 @@ namespace pni {
 namespace nexus {
 namespace xml {
 
+
 class PNINEXUS_EXPORT GroupBuilder : public ObjectBuilder
 {
   public:
