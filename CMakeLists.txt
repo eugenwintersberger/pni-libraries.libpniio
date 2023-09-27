@@ -35,6 +35,7 @@ endif()
 option(PNINEXUS_LOCAL_MODULES "Build pninexus using cmake local modules first")
 option(PNINEXUS_BUILD_EXAMPLES "Include the examples in the project" OFF)
 option(PNINEXUS_BUILD_DOC "build document" ON)
+option(PNINEXUS_USE_BOOST_FILESYSTEM "use boost filesystem library" OFF)
 
 
 set(PNINEXUS_CONAN "AUTO" CACHE STRING "conan options AUTO (conan must be in path), MANUAL (expects conanbuildinfo.cmake in build directory) or DISABLE")
@@ -92,16 +93,32 @@ include(utilities)
 #---------------------------------------------------------------------------------
 # compiler and library configuration
 #---------------------------------------------------------------------------------
-find_package(Boost 1.60 COMPONENTS system
+include(${EXTRA_MODULES_DIR}/CompilerConfig.cmake)
+include(${EXTRA_MODULES_DIR}/MPIConfig.cmake)
+include(${EXTRA_MODULES_DIR}/HDF5LibraryConfig.cmake)
+include(${EXTRA_MODULES_DIR}/H5CPPLibraryConfig.cmake)
+
+# if (H5CPP_LIBRARIES MATCHES "hdf5::hdf5")
+if (H5CPP_LIBRARIES MATCHES "Boost::filesystem")
+  set(PNINEXUS_USE_BOOST_FILESYSTEM ON)
+endif()
+
+if(PNINEXUS_USE_BOOST_FILESYSTEM MATCHES ON)
+  message("${H5CPP_LIBRARIES}" "LLLLLLIBS")
+  find_package(Boost 1.60 COMPONENTS system
                                    regex
                                    date_time
                                    unit_test_framework
                                    filesystem
 				   REQUIRED)
-include(${EXTRA_MODULES_DIR}/CompilerConfig.cmake)
-include(${EXTRA_MODULES_DIR}/MPIConfig.cmake)
-include(${EXTRA_MODULES_DIR}/HDF5LibraryConfig.cmake)
-include(${EXTRA_MODULES_DIR}/H5CPPLibraryConfig.cmake)
+else()
+  message("NOOOBuilding static library:" "${H5CPP_LIBRARIES}" )
+  find_package(Boost 1.60 COMPONENTS system
+                                   regex
+                                   date_time
+                                   unit_test_framework
+				   REQUIRED)
+endif()
 
 if(PNINEXUS_BUILD_SHARED)
   pninexus_message(STATUS "Building shared library")
