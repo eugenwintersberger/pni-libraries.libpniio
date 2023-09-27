@@ -6,10 +6,6 @@ endif()
 
 set(BOOST_COMPONENTS)
 
-if(NOT TARGET Boost::filesystem)
-    list(APPEND BOOST_COMPONENTS filesystem)
-endif()
-
 if(NOT TARGET Boost::regex)
     list(APPEND BOOST_COMPONENTS regex)
 endif()
