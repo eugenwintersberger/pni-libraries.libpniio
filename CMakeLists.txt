@@ -109,7 +109,6 @@ if(PNINEXUS_USE_BOOST_FILESYSTEM MATCHES ON)
                                    regex
                                    date_time
                                    unit_test_framework
-                                   filesystem
 				   REQUIRED)
 else()
   message("NOOOBuilding static library:" "${H5CPP_LIBRARIES}" )
