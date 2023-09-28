@@ -1,0 +1,22 @@
+<definition>
+11;rgb:ffff/ffff/ffff<group type="NXentry" name="scan">
+    <group type="NXdata" name="data">
+      <field type="NX_UINT16" name="pilatus">
+        <dimensions rank="3">
+          <dim index="1" value="0"/>
+          <dim index="2" value="1024"/>
+          <dim index="3" value="512"/>
+        </dimensions>
+	<strategy>
+	  <filter name="shuffle" index="0" />
+	  <filter name="deflate" index="1" cd_values="4" />
+	  <filter name="nbit" index="2" />
+	  <filter name="szip" index="3" cd_values="1,16" />
+	  <!-- <filter name="scaleoffset" index="4" cd_values="2,2" /> -->
+	  <filter id="32001"   index="7" cd_values="0,0,0,0,4,0,0" />
+	  <filter id="32008"  name="bitshuffle" index="6" cd_values="0,2" />
+	</strategy>
+      </field>
+    </group>
+  </group>
+</definition>

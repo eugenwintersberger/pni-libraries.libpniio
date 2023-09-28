@@ -95,7 +95,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
    for(auto value: node){
      if(value.first == "filter"){
        unsigned int index =
-	 static_cast<unsigned int>(node.attribute("index").data<size_t>());
+	 static_cast<unsigned int>(Node(value.second).attribute("index").data<size_t>());
        if(maxindex < index)
 	 maxindex = index;
        index_parameters[index] = parameters_from_node(value.second);
@@ -104,12 +104,12 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 
    if(!index_parameters.empty()){
      for(unsigned int ind = 0; ind <= maxindex; ind++){
-       if(index_parameters.find(ind) == index_parameters.end()){
+       if(index_parameters.find(ind) != index_parameters.end()){
 
-	 unsigned int filter_id;
-	 std::string name;
-	 std::string str_cd_values;
-	 unsigned int availability;
+	 unsigned int filter_id = 0;
+	 std::string name{};
+	 std::string str_cd_values{};
+	 unsigned int availability = 0;
 
 	 std::tie(filter_id, name, str_cd_values, availability) =
 	   index_parameters[ind];
@@ -118,7 +118,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	   shuffle(dcpl);
 	 }
 	 else if(name == "deflate"){
-	   compression_rate = static_cast<long>(std::stoi(str_cd_values));
+	   compression_rate = static_cast<long>(std::stoul(str_cd_values));
 	   hdf5::filter::Deflate deflate(compression_rate);
 	   deflate(dcpl);
 	 }
@@ -133,12 +133,14 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	 else if(name == "szip"){
 	   std::vector<unsigned int> cd_values;
 	   get_cd_values(str_cd_values, cd_values);
-
+	   
 	   hdf5::filter::SZip szip;
-	   if(cd_values.size() >= 1)
-	     szip.option_mask(cd_values[0]);
-	   if(cd_values.size() >= 2)
+	   if(cd_values.size() >= 1) {
+	      szip.option_mask(cd_values[0]);
+	   }
+	   if(cd_values.size() >= 2){
 	     szip.pixels_per_block(cd_values[1]);
+	   }
 	   szip(dcpl);
 	 }
 	 else if(name == "scaleoffset"){
@@ -146,24 +148,26 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	   get_cd_values(str_cd_values, cd_values);
 
 	   hdf5::filter::ScaleOffset scaleoffset;
-	   if(cd_values.size() >= 1)
+	   if(cd_values.size() >= 1){
 	     scaleoffset.scale_type(static_cast<hdf5::filter::ScaleOffset::ScaleType>(cd_values[0]));
-	   if(cd_values.size() >= 2)
+	   }
+	   if(cd_values.size() >= 2) {
 	     scaleoffset.scale_factor(static_cast<int>(cd_values[1]));
+	   }
 	   scaleoffset(dcpl);
 	 }
-	 else {
+	 else if(filter_id > 0) {
 	   std::vector<unsigned int> cd_values;
-	    get_cd_values(str_cd_values, cd_values);
-	    hdf5::filter::ExternalFilter externalfilter(filter_id,
-							cd_values,
-							name);
-	    if(availability) {
-	      externalfilter(dcpl, static_cast<hdf5::filter::Availability>(availability));
-	    }
-	    else {
-	      externalfilter(dcpl);
-	    }
+	   get_cd_values(str_cd_values, cd_values);
+	   hdf5::filter::ExternalFilter externalfilter(filter_id,
+						       cd_values,
+						       name);
+	   if(availability) {
+	     externalfilter(dcpl, static_cast<hdf5::filter::Availability>(availability));
+	   }
+	   else {
+	     externalfilter(dcpl);
+	   }
 	 }
        }
      }
@@ -191,7 +195,7 @@ void DatasetCreationListBuilder::get_cd_values(const std::string text,
   while (ss.good()) {
     std::string sval;
     getline(ss, sval, ',');
-    cd_values.push_back(std::stoi(sval));
+    cd_values.push_back(std::stoul(sval));
   }  
 }
 
@@ -203,9 +207,9 @@ FilterParameters DatasetCreationListBuilder::parameters_from_node(const Node &no
   unsigned int availability = 0;
   std::string cd_values;
 
-  if(node.has_attribute("filter_id"))
+  if(node.has_attribute("id"))
     filter_id =
-      static_cast<unsigned int>(node.attribute("filter_id").data<size_t>());
+      static_cast<unsigned int>(node.attribute("id").data<size_t>());
   if(node.has_attribute("name"))
     name = node.attribute("name").data<std::string>();
   if(node.has_attribute("cd_values"))
