@@ -123,6 +123,74 @@ BOOST_AUTO_TEST_CASE(from_duplicate_group)
 
 }
 
+BOOST_AUTO_TEST_CASE(from_nxsdesigner_slit)
+{
+  using hdf5::node::get_node;
+  using hdf5::node::Type;
+  fs::path file = "create/slit.xml";
+  BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
+
+  BOOST_CHECK(get_node(root_group,"/scan").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan/instrument").type() == Type::Group);
+  BOOST_CHECK(get_node(root_group,"/scan/instrument/slit1").type() == Type::Group);
+
+  std::string sbuffer;
+  auto slit_group = get_node(root_group,"/scan/instrument/slit1");
+  BOOST_CHECK(slit_group.attributes.size() == 1ul);
+  auto as = slit_group.attributes["NX_class"];
+  BOOST_CHECK(as.dataspace().type() == hdf5::dataspace::Type::Scalar);
+  BOOST_CHECK(as.datatype().get_class() == hdf5::datatype::Class::String);
+  as.read(sbuffer);
+  BOOST_CHECK(sbuffer == std::string("NXslit"));
+
+  BOOST_CHECK(get_node(root_group,"/scan/instrument/slit1/transformations/right").type() == Type::Dataset);
+  BOOST_CHECK(get_node(root_group,"/scan/data/slit1_right").type() == Type::Dataset);
+  BOOST_CHECK(root_group.get_dataset(
+				     "/scan/instrument/slit1/transformations/right"
+				     ).datatype().get_class() == hdf5::datatype::Class::Float);
+  BOOST_CHECK(root_group.get_dataset(
+				      "/scan/instrument/slit1/transformations/right"
+				      ).attributes.size() == 4ul);
+
+  auto av = root_group.get_dataset(
+			     "/scan/instrument/slit1/transformations/right"
+			      ).attributes["vector"];
+  BOOST_CHECK(av.dataspace().type() == hdf5::dataspace::Type::Simple);
+  BOOST_CHECK(av.datatype().get_class() == hdf5::datatype::Class::Float);
+  hdf5::dataspace::Simple space(av.dataspace());
+  BOOST_CHECK(space.rank() == 1u);
+  BOOST_CHECK(space.current_dimensions()[0] == 3ul);
+  using AttributeData = std::vector<double>;
+  AttributeData buffer(3);
+  av.read(buffer);
+  AttributeData data = {1,0,0};
+  BOOST_CHECK(buffer == data);
+
+  auto au = root_group.get_dataset(
+			      "/scan/instrument/slit1/transformations/right"
+			      ).attributes["units"];
+  BOOST_CHECK(au.dataspace().type() == hdf5::dataspace::Type::Scalar);
+  BOOST_CHECK(au.datatype().get_class() == hdf5::datatype::Class::String);
+  au.read(sbuffer);
+  BOOST_CHECK(sbuffer == std::string("mm"));
+
+  auto at = root_group.get_dataset(
+			      "/scan/instrument/slit1/transformations/right"
+			      ).attributes["transformation_type"];
+  BOOST_CHECK(at.dataspace().type() == hdf5::dataspace::Type::Scalar);
+  BOOST_CHECK(at.datatype().get_class() == hdf5::datatype::Class::String);
+  at.read(sbuffer);
+  BOOST_CHECK(sbuffer == std::string("translation"));
+
+  auto ac = root_group.get_dataset(
+			      "/scan/instrument/slit1/transformations/right"
+			      ).attributes["type"];
+  BOOST_CHECK(ac.dataspace().type() == hdf5::dataspace::Type::Scalar);
+  BOOST_CHECK(ac.datatype().get_class() == hdf5::datatype::Class::String);
+  ac.read(sbuffer);
+  BOOST_CHECK(sbuffer == std::string("NX_FLOAT"));
+}
+
 BOOST_AUTO_TEST_CASE(add_filters)
 {
   using hdf5::node::get_node;
