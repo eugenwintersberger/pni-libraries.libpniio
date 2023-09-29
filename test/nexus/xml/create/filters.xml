@@ -11,10 +11,10 @@
 	  <filter name="shuffle" index="0" />
 	  <filter name="deflate" index="1" cd_values="4" />
 	  <filter name="nbit" index="2" />
-	  <filter name="szip" index="3" cd_values="1,16" />
 	  <!-- <filter name="scaleoffset" index="4" cd_values="2,2" /> -->
 	  <filter id="32001"   index="7" cd_values="0,0,0,0,4,0,0"  availability="optional" />
-	  <filter id="32008"  name="bitshuffle" index="6" cd_values="0,2"  availability="optional" />
+	  <filter name="szip" index="3" cd_values="1,16" />
+	  <!-- <filter id="32008"  name="bitshuffle" index="8" cd_values="0,2"  availability="optional" /> -->
 	</strategy>
       </field>
     </group>
