@@ -31,9 +31,9 @@ namespace nexus {
 namespace xml {
 
 using FilterParameters = std::tuple<unsigned int,   // filter_id
-					 std::string,    // name
-					 std::string,    // cd_values, int separated by comma
-					 unsigned int>;  // availability: mandatory=0, optional, optional=1
+				    std::string,    // name
+				    std::string,    // cd_values, int separated by comma
+    				    std::string>;  // availability: mandatory, optional
   
 using IndexFilterParametersMap = std::map<unsigned int,   // index,
 					  FilterParameters>;

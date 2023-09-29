@@ -81,15 +81,15 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
     if(use_compression)
     {
       if(use_shuffle)
-	{	
+	{
 	  hdf5::filter::Shuffle shuffle;
 	  shuffle(dcpl);
 	}
-      
+
       hdf5::filter::Deflate deflate(compression_rate);
       deflate(dcpl);
    }
-  
+
    IndexFilterParametersMap index_parameters;
    unsigned int maxindex = 0;
    for(auto value: node){
@@ -109,7 +109,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	 unsigned int filter_id = 0;
 	 std::string name{};
 	 std::string str_cd_values{};
-	 unsigned int availability = 0;
+	 std::string availability{};
 
 	 std::tie(filter_id, name, str_cd_values, availability) =
 	   index_parameters[ind];
@@ -133,7 +133,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	 else if(name == "szip"){
 	   std::vector<unsigned int> cd_values;
 	   get_cd_values(str_cd_values, cd_values);
-	   
+
 	   hdf5::filter::SZip szip;
 	   if(cd_values.size() >= 1) {
 	      szip.option_mask(cd_values[0]);
@@ -157,16 +157,20 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	   scaleoffset(dcpl);
 	 }
 	 else if(filter_id > 0) {
+	   auto avail = hdf5::filter::Availability::Mandatory;
+	   if(availability == "optional")
+	     avail = hdf5::filter::Availability::Optional;
+
 	   std::vector<unsigned int> cd_values;
 	   get_cd_values(str_cd_values, cd_values);
 	   hdf5::filter::ExternalFilter externalfilter(filter_id,
 						       cd_values,
 						       name);
-	   if(availability) {
-	     externalfilter(dcpl, static_cast<hdf5::filter::Availability>(availability));
+	   if(availability.empty()) {
+	     externalfilter(dcpl);
 	   }
 	   else {
-	     externalfilter(dcpl);
+	     externalfilter(dcpl, avail);
 	   }
 	 }
        }
@@ -174,7 +178,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
    }
   }
 }
-  
+
 hdf5::property::DatasetCreationList DatasetCreationListBuilder::build() const
 {
   using hdf5::property::DatasetCreationList;
@@ -191,21 +195,21 @@ void DatasetCreationListBuilder::get_cd_values(const std::string text,
 					std::vector<unsigned int> & cd_values) const
 {
   std::stringstream ss(text);
- 
+
   while (ss.good()) {
     std::string sval;
     getline(ss, sval, ',');
     cd_values.push_back(std::stoul(sval));
-  }  
+  }
 }
 
 //------------------------------------------------------------------------
 FilterParameters DatasetCreationListBuilder::parameters_from_node(const Node &node)
 {
   unsigned int filter_id = 0;
-  std::string name;
-  unsigned int availability = 0;
-  std::string cd_values;
+  std::string name{};
+  std::string  availability{};
+  std::string cd_values{};
 
   if(node.has_attribute("id"))
     filter_id =
@@ -215,8 +219,7 @@ FilterParameters DatasetCreationListBuilder::parameters_from_node(const Node &no
   if(node.has_attribute("cd_values"))
     cd_values = node.attribute("cd_values").data<std::string>();
   if(node.has_attribute("availability"))
-    availability =
-      static_cast<unsigned int>(node.attribute("availability").data<size_t>());
+    availability = node.attribute("availability").data<std::string>();
 
   return {filter_id, name, cd_values, availability};
 }
