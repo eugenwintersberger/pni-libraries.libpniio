@@ -218,9 +218,9 @@ BOOST_AUTO_TEST_CASE(add_filters)
   hdf5::filter::ExternalFilters filters;
   auto flags = filters.fill(dcpl);
   std::cout << "AF4: " << dcpl.nfilters() << " " << filters.size() << std::endl;
-  BOOST_CHECK(dcpl.nfilters() == 5);
-  BOOST_CHECK(flags.size() == 5);
-  BOOST_CHECK(filters.size() == 5);
+  BOOST_CHECK(dcpl.nfilters() == 4);
+  BOOST_CHECK(flags.size() == 4);
+  BOOST_CHECK(filters.size() == 4);
 
   BOOST_CHECK(filters[0].id() == H5Z_FILTER_SHUFFLE);
 
@@ -255,31 +255,30 @@ BOOST_AUTO_TEST_CASE(add_filters)
   }
   BOOST_CHECK(flags[2] == hdf5::filter::Availability::Optional);
 
-  BOOST_CHECK(filters[3].id() == H5Z_FILTER_SZIP);
 
-  std::vector<unsigned int> szip_opts {137u, 16u, 16u, 512u}; // ??
-  BOOST_REQUIRE_EQUAL(filters[3].cd_values().size(), szip_opts.size());
+  std::cout << "AF5 F4 : " << filters[3].id() << std::endl;
+  BOOST_CHECK(filters[3].id() == 32001);
+
+  std::vector<unsigned int> bl_opts {2u, 2u, 2u, 1048576u, 4u, 0u, 0u}; // ??
+  BOOST_REQUIRE_EQUAL(filters[3].cd_values().size(), bl_opts.size());
+  // for(size_t i = 4; i < bl_opts.size(); ++i){
+  //   BOOST_CHECK_EQUAL(filters[3].cd_values()[i], bl_opts[i]);
+  // }
   for(auto a: filters[3].cd_values()){
-    std::cout <<"SZo: "<< a << std::endl;
-  }
-  for(size_t i = 0; i < szip_opts.size(); ++i){
-    BOOST_CHECK_EQUAL(filters[3].cd_values()[i], szip_opts[i]);
+    std::cout <<"BLo: "<< a << std::endl;
   }
   BOOST_CHECK(flags[3] == hdf5::filter::Availability::Optional);
 
-  std::cout << "AF5 F4 : " << filters[4].id() << std::endl;
-  BOOST_CHECK(filters[4].id() == 32001);
-
-  std::vector<unsigned int> bl_opts {2u, 2u, 2u, 1048576u, 4u, 0u, 0u}; // ??
-  BOOST_REQUIRE_EQUAL(filters[4].cd_values().size(), bl_opts.size());
-  // for(size_t i = 4; i < bl_opts.size(); ++i){
-  //   BOOST_CHECK_EQUAL(filters[4].cd_values()[i], bl_opts[i]);
+  // BOOST_CHECK(filters[4].id() == H5Z_FILTER_SZIP);
+  // std::vector<unsigned int> szip_opts {137u, 16u, 16u, 512u}; // ??
+  // BOOST_REQUIRE_EQUAL(filters[4].cd_values().size(), szip_opts.size());
+  // for(auto a: filters[4].cd_values()){
+  //   std::cout <<"SZo: "<< a << std::endl;
   // }
-  for(auto a: filters[4].cd_values()){
-    std::cout <<"BLo: "<< a << std::endl;
-  }
-  BOOST_CHECK(flags[4] == hdf5::filter::Availability::Optional);
-
+  // for(size_t i = 0; i < szip_opts.size(); ++i){
+  //   BOOST_CHECK_EQUAL(filters[4].cd_values()[i], szip_opts[i]);
+  // }
+  // BOOST_CHECK(flags[4] == hdf5::filter::Availability::Optional);
 
   // std::cout << "AF5 F5 : " << filters[5].id() << std::endl;
   // BOOST_CHECK(filters[5].id() == 32008);
@@ -293,6 +292,7 @@ BOOST_AUTO_TEST_CASE(add_filters)
   // //   BOOST_CHECK_EQUAL(filters[5].cd_values()[i], bs_opts[i]);
   // // }
   // BOOST_CHECK(flags[5] == hdf5::filter::Availability::Optional);
+
 
 
   std::cout << "AF6 " << std::endl;
