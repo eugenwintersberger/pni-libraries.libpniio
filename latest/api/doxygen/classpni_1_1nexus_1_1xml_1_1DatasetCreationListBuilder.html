@@ -64,6 +64,7 @@ $(document).ready(function(){initNavTree('classpni_1_1nexus_1_1xml_1_1DatasetCre
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle"><div class="title">pni::nexus::xml::DatasetCreationListBuilder Class Reference</div></div>
 </div><!--header-->
@@ -99,6 +100,13 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:ad9acd74b13c143d3c743b38c02cb695b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5900bcde281c70ca9a04440bb365d7dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1xml_1_1DatasetCreationListBuilder.html#a5900bcde281c70ca9a04440bb365d7dc">set_chunking</a> (hdf5::property::DatasetCreationList &amp;dcpl) const</td></tr>
 <tr class="separator:a5900bcde281c70ca9a04440bb365d7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8ffdc332b6051618b66d30b9a6ada44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1xml_1_1DatasetCreationListBuilder.html#aa8ffdc332b6051618b66d30b9a6ada44">get_cd_values</a> (const std::string text, std::vector&lt; unsigned int &gt; &amp;cd_values) const</td></tr>
+<tr class="separator:aa8ffdc332b6051618b66d30b9a6ada44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a198827b6f30e2651c7a8c010de85e84f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespacepni_1_1nexus_1_1xml.html#ae1f59a0a7cc8221e4d6f436516a3e496">FilterParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpni_1_1nexus_1_1xml_1_1DatasetCreationListBuilder.html#a198827b6f30e2651c7a8c010de85e84f">parameters_from_node</a> (const <a class="el" href="classpni_1_1nexus_1_1xml_1_1Node.html">Node</a> &amp;node)</td></tr>
+<tr class="separator:a198827b6f30e2651c7a8c010de85e84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -191,6 +199,68 @@ Private Attributes</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8ffdc332b6051618b66d30b9a6ada44" name="aa8ffdc332b6051618b66d30b9a6ada44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8ffdc332b6051618b66d30b9a6ada44">&#9670;&nbsp;</a></span>get_cd_values()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pni::nexus::xml::DatasetCreationListBuilder::get_cd_values </td>
+          <td>(</td>
+          <td class="paramtype">const std::string&#160;</td>
+          <td class="paramname"><em>text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; unsigned int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>cd_values</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a198827b6f30e2651c7a8c010de85e84f" name="a198827b6f30e2651c7a8c010de85e84f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a198827b6f30e2651c7a8c010de85e84f">&#9670;&nbsp;</a></span>parameters_from_node()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespacepni_1_1nexus_1_1xml.html#ae1f59a0a7cc8221e4d6f436516a3e496">FilterParameters</a> pni::nexus::xml::DatasetCreationListBuilder::parameters_from_node </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classpni_1_1nexus_1_1xml_1_1Node.html">Node</a> &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -301,7 +371,7 @@ Private Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacepni.html">pni</a></li><li class="navelem"><a class="el" href="namespacepni_1_1nexus.html">nexus</a></li><li class="navelem"><a class="el" href="namespacepni_1_1nexus_1_1xml.html">xml</a></li><li class="navelem"><a class="el" href="classpni_1_1nexus_1_1xml_1_1DatasetCreationListBuilder.html">DatasetCreationListBuilder</a></li>
-    <li class="footer">Generated on Thu Sep 28 2023 07:44:13 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+    <li class="footer">Generated on Fri Sep 29 2023 13:45:16 for PNI NeXus Library by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
   </ul>
 </div>
 </body>

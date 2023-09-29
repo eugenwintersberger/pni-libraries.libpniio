@@ -12,6 +12,8 @@ var namespacepni_1_1nexus_1_1xml =
     [ "LinkBuilder", "classpni_1_1nexus_1_1xml_1_1LinkBuilder.html", "classpni_1_1nexus_1_1xml_1_1LinkBuilder" ],
     [ "Node", "classpni_1_1nexus_1_1xml_1_1Node.html", "classpni_1_1nexus_1_1xml_1_1Node" ],
     [ "ObjectBuilder", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html", "classpni_1_1nexus_1_1xml_1_1ObjectBuilder" ],
+    [ "FilterParameters", "namespacepni_1_1nexus_1_1xml.html#ae1f59a0a7cc8221e4d6f436516a3e496", null ],
+    [ "IndexFilterParametersMap", "namespacepni_1_1nexus_1_1xml.html#ac0246cdcbe06f34c5d4f2e15fddedd34", null ],
     [ "IndexValue", "namespacepni_1_1nexus_1_1xml.html#a430e5f78b4e027ee0102c85a5e3bd625", null ],
     [ "IndexValueVector", "namespacepni_1_1nexus_1_1xml.html#aa7c8ca54cde0c74a4f0111698acbc50a", null ],
     [ "ParserType", "namespacepni_1_1nexus_1_1xml.html#acb047cabe005550f0d337d30afe34e6e", null ],
