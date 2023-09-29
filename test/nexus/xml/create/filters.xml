@@ -1,5 +1,5 @@
 <definition>
-11;rgb:ffff/ffff/ffff<group type="NXentry" name="scan">
+<group type="NXentry" name="scan">
     <group type="NXdata" name="data">
       <field type="NX_UINT16" name="pilatus">
         <dimensions rank="3">
@@ -13,8 +13,8 @@
 	  <filter name="nbit" index="2" />
 	  <filter name="szip" index="3" cd_values="1,16" />
 	  <!-- <filter name="scaleoffset" index="4" cd_values="2,2" /> -->
-	  <filter id="32001"   index="7" cd_values="0,0,0,0,4,0,0" />
-	  <filter id="32008"  name="bitshuffle" index="6" cd_values="0,2" />
+	  <filter id="32001"   index="7" cd_values="0,0,0,0,4,0,0"  availability="1" />
+	  <filter id="32008"  name="bitshuffle" index="6" cd_values="0,2"  availability="1" />
 	</strategy>
       </field>
     </group>
