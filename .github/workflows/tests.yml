@@ -234,5 +234,5 @@ jobs:
           # .\conanrun.bat
           .\conanbuildenv-release-x86_64.ps1
           .\conanrunenv-release-x86_64.ps1
-          cmake --build . --verbose --target check --config RELEASE -- CTEST_OUTPUT_ON_FAILURE=TRUE
+          cmake --build . --verbose --target check --config RELEASE
         shell: pwsh
