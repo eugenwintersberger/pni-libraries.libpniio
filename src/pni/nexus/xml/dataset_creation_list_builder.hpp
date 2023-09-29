@@ -30,6 +30,15 @@ namespace pni {
 namespace nexus {
 namespace xml {
 
+using FilterParameters = std::tuple<unsigned int,   // filter_id
+				    std::string,    // name
+				    std::string,    // cd_values, int separated by comma
+    				    std::string>;  // availability: mandatory, optional
+  
+using IndexFilterParametersMap = std::map<unsigned int,   // index,
+					  FilterParameters>;
+
+  
 class DatasetCreationListBuilder
 {
   private:
@@ -38,6 +47,9 @@ class DatasetCreationListBuilder
 
     void set_compression(hdf5::property::DatasetCreationList &dcpl) const;
     void set_chunking(hdf5::property::DatasetCreationList &dcpl) const;
+    static FilterParameters parameters_from_node(const Node &node);
+    void get_cd_values(const std::string text,
+		       std::vector<unsigned int> & cd_values) const;
   public:
     DatasetCreationListBuilder() = default;
     DatasetCreationListBuilder(const DatasetCreationListBuilder &) = default;
