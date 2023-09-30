@@ -382,6 +382,44 @@ PNINEXUS_EXCEPTION_FORWARD(MemoryNotAllocatedError)
     //-------------------------------------------------------------------------
     //! 
     //! \ingroup error_classes
+    //! \brief filter not available error
+    //!
+    //! Raised in cases where the filter is not available.
+    //!
+    class PNINEXUS_EXPORT filter_not_available: public exception 
+    {
+        public:
+            //! default constructor
+            filter_not_available() : 
+                exception("filter_not_available") 
+            { }
+
+            //----------------------------------------------------------------
+            //! 
+            //! \brief constructor
+            //!
+            //! \param i exception_record of the initial occurrence of the 
+            //! error
+            //! \param d description of the exception
+            //!
+            explicit filter_not_available(const exception_record &i, 
+                                           const string &d) :
+                exception("filter_not_available",i,d) 
+            { }
+
+            //----------------------------------------------------------------
+            //! destructor
+            ~filter_not_available() throw() { }
+
+            //----------------------------------------------------------------
+            //! output operator
+            friend PNINEXUS_EXPORT std::ostream &
+                operator<<(std::ostream &o,const filter_not_available &e);
+    };
+
+    //-------------------------------------------------------------------------
+    //! 
+    //! \ingroup error_classes
     //! \brief Shape mismatch error
     //!
     //! Raised in cases where the Shape objects of two objects are not equal.
