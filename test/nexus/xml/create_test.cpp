@@ -290,18 +290,18 @@ BOOST_AUTO_TEST_CASE(add_filters)
   // BOOST_CHECK(flags[4] == hdf5::filter::Availability::Optional);
 
   if(bshuff_av){
-    std::cout << "AF5 F5 : " << filters[5].id() << std::endl;
-    BOOST_CHECK(filters[5].id() == 32008);
+    std::cout << "AF5 F5 : " << filters[4].id() << std::endl;
+    BOOST_CHECK(filters[4].id() == 32008);
 
     std::vector<unsigned int> bs_opts {0u, 3u, 2u, 0u, 0u};    // ??
-    BOOST_REQUIRE_EQUAL(filters[5].cd_values().size(), bs_opts.size());
-    for(auto a: filters[5].cd_values()){
+    BOOST_REQUIRE_EQUAL(filters[4].cd_values().size(), bs_opts.size());
+    for(auto a: filters[4].cd_values()){
       std::cout <<"BSo: "<< a << std::endl;
     }
     // for(size_t i = 1; i < 3; ++i){
-    //   BOOST_CHECK_EQUAL(filters[5].cd_values()[i], bs_opts[i]);
+    //   BOOST_CHECK_EQUAL(filters[4].cd_values()[i], bs_opts[i]);
     // }
-    BOOST_CHECK(flags[5] == hdf5::filter::Availability::Optional);
+    BOOST_CHECK(flags[4] == hdf5::filter::Availability::Optional);
   }
 
 

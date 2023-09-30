@@ -96,15 +96,17 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
    unsigned int index = 0;
    for(auto value: node){
      if(value.first == "filter"){
-       if(node.has_attribute("index")){
+       if(Node(value.second).has_attribute("index")){
 	 index =
 	   static_cast<unsigned int>(Node(value.second).attribute("index").data<size_t>());
+       }
+       else {
+	 index = 0;
        }
        if(maxindex < index) {
 	 maxindex = index;
        }
        index_parameters[index] = parameters_from_node(value.second);
-       index++;
      }
    }
    
@@ -123,7 +125,30 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	 if(availability == "optional")
 	   avail = hdf5::filter::Availability::Optional;
 	 
-	 if(name == "shuffle"){
+	 if(filter_id > 0) {
+	   if(hdf5::filter::is_filter_available(filter_id)){
+
+	       std::vector<unsigned int> cd_values;
+	       get_cd_values(str_cd_values, cd_values);
+	       hdf5::filter::ExternalFilter externalfilter(filter_id,
+							   cd_values,
+							   name);
+	       if(availability.empty()) {
+		 externalfilter(dcpl);
+	       }
+	       else {
+		 externalfilter(dcpl, avail);
+	       }
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	      std::stringstream ss;
+	      ss << "The '" << name << "' ("<< filter_id <<") filter not available";
+	      throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					 ss.str());
+	   }
+	       
+	 }
+	 else if(name == "shuffle"){
 	   if(hdf5::filter::is_filter_available(H5Z_FILTER_SHUFFLE)){
 	       hdf5::filter::Shuffle shuffle;
 	       shuffle(dcpl);
@@ -201,29 +226,6 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
 					"ScaleOffset filter not available");
 	   }
-	 }
-	 else if(filter_id > 0) {
-	   if(hdf5::filter::is_filter_available(filter_id)){
-
-	       std::vector<unsigned int> cd_values;
-	       get_cd_values(str_cd_values, cd_values);
-	       hdf5::filter::ExternalFilter externalfilter(filter_id,
-							   cd_values,
-							   name);
-	       if(availability.empty()) {
-		 externalfilter(dcpl);
-	       }
-	       else {
-		 externalfilter(dcpl, avail);
-	       }
-	     }
-	   else if(avail == hdf5::filter::Availability::Mandatory){
-	      std::stringstream ss;
-	      ss << "The '" << name << "' ("<< filter_id <<") filter not available";
-	      throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
-					 ss.str());
-	   }
-	       
 	 }
        }
      }
