@@ -109,7 +109,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
        index_parameters[index] = parameters_from_node(value.second);
      }
    }
-   
+
    if(!index_parameters.empty()){
      for(unsigned int ind = 0; ind <= maxindex; ind++){
        if(index_parameters.find(ind) != index_parameters.end()){
@@ -124,7 +124,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	 auto avail = hdf5::filter::Availability::Mandatory;
 	 if(availability == "optional")
 	   avail = hdf5::filter::Availability::Optional;
-	 
+
 	 if(filter_id > 0) {
 	   if(hdf5::filter::is_filter_available(filter_id)){
 
@@ -146,7 +146,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	      throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
 					 ss.str());
 	   }
-	       
+
 	 }
 	 else if(name == "shuffle"){
 	   if(hdf5::filter::is_filter_available(H5Z_FILTER_SHUFFLE)){
@@ -212,7 +212,7 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 	   if(hdf5::filter::is_filter_available(H5Z_FILTER_SCALEOFFSET)){
 	       std::vector<unsigned int> cd_values;
 	       get_cd_values(str_cd_values, cd_values);
-	       
+
 	       hdf5::filter::ScaleOffset scaleoffset;
 	       if(cd_values.size() >= 1){
 		 scaleoffset.scale_type(static_cast<hdf5::filter::ScaleOffset::ScaleType>(cd_values[0]));

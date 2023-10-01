@@ -290,18 +290,20 @@ BOOST_AUTO_TEST_CASE(add_filters)
   // BOOST_CHECK(flags[4] == hdf5::filter::Availability::Optional);
 
   if(bshuff_av){
-    std::cout << "AF5 F5 : " << filters[4].id() << std::endl;
-    BOOST_CHECK(filters[4].id() == 32008);
+    auto bind = 3u + unsigned(blosc_av);
+    
+    std::cout << "AF5 F5 : " << filters[bind].id() << std::endl;
+    BOOST_CHECK(filters[bind].id() == 32008);
 
     std::vector<unsigned int> bs_opts {0u, 3u, 2u, 0u, 0u};    // ??
-    BOOST_REQUIRE_EQUAL(filters[4].cd_values().size(), bs_opts.size());
-    for(auto a: filters[4].cd_values()){
+    BOOST_REQUIRE_EQUAL(filters[bind].cd_values().size(), bs_opts.size());
+    for(auto a: filters[bind].cd_values()){
       std::cout <<"BSo: "<< a << std::endl;
     }
     // for(size_t i = 1; i < 3; ++i){
-    //   BOOST_CHECK_EQUAL(filters[4].cd_values()[i], bs_opts[i]);
+    //   BOOST_CHECK_EQUAL(filters[bind].cd_values()[i], bs_opts[i]);
     // }
-    BOOST_CHECK(flags[4] == hdf5::filter::Availability::Optional);
+    BOOST_CHECK(flags[bind] == hdf5::filter::Availability::Optional);
   }
 
 
@@ -309,65 +311,73 @@ BOOST_AUTO_TEST_CASE(add_filters)
 
 }
 
-BOOST_AUTO_TEST_CASE(add_filters_mandatory, * boost::unit_test::precondition(are_filters_installed))
+// BOOST_AUTO_TEST_CASE(add_filters_mandatory, * boost::unit_test::precondition(are_filters_installed))
+// does not work on boost 1.67.0 (debian10)
+BOOST_AUTO_TEST_CASE(add_filters_mandatory)
 {
-  using hdf5::node::get_node;
-  using hdf5::node::Type;
-  fs::path file = "create/filters_mandatory.xml";
-  std::cout << "MF0" << std::endl;
-  BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
-  std::cout << "MF1" << std::endl;
+  if(hdf5::filter::is_filter_available(32008) && hdf5::filter::is_filter_available(32001)){
 
-  BOOST_CHECK(get_node(root_group,"/scan").type() == Type::Group);
-  BOOST_CHECK(get_node(root_group,"/scan/data").type() == Type::Group);
-  BOOST_CHECK(get_node(root_group,"/scan/data/lambda").type() == Type::Dataset);
-  hdf5::node::Dataset dataset = root_group.get_dataset("/scan/data/lambda");
-  std::cout << "MF2" << std::endl;
-  auto dcpl = dataset.creation_list();
-  std::cout << "MF3" << std::endl;
+    using hdf5::node::get_node;
+    using hdf5::node::Type;
+    fs::path file = "create/filters_mandatory.xml";
+    std::cout << "MF0" << std::endl;
+    BOOST_CHECK_NO_THROW(xml::create_from_file(root_group,file));
+    std::cout << "MF1" << std::endl;
 
-  hdf5::filter::ExternalFilters filters;
-  auto flags = filters.fill(dcpl);
-  std::cout << "MF4: " << dcpl.nfilters() << " " << filters.size() << std::endl;
-  BOOST_CHECK(dcpl.nfilters() == 2);
-  BOOST_CHECK(flags.size() == 2);
-  BOOST_CHECK(filters.size() == 2);
+    BOOST_CHECK(get_node(root_group,"/scan").type() == Type::Group);
+    BOOST_CHECK(get_node(root_group,"/scan/data").type() == Type::Group);
+    BOOST_CHECK(get_node(root_group,"/scan/data/lambda").type() == Type::Dataset);
+    hdf5::node::Dataset dataset = root_group.get_dataset("/scan/data/lambda");
+    std::cout << "MF2" << std::endl;
+    auto dcpl = dataset.creation_list();
+    std::cout << "MF3" << std::endl;
+
+    hdf5::filter::ExternalFilters filters;
+    auto flags = filters.fill(dcpl);
+    std::cout << "MF4: " << dcpl.nfilters() << " " << filters.size() << std::endl;
+    BOOST_CHECK(dcpl.nfilters() == 2);
+    BOOST_CHECK(flags.size() == 2);
+    BOOST_CHECK(filters.size() == 2);
 
 
-  std::cout << "MF5 F0 : " << filters[0].id() << std::endl;
-  BOOST_CHECK(filters[0].id() == 32008);
+    std::cout << "MF5 F0 : " << filters[0].id() << std::endl;
+    BOOST_CHECK(filters[0].id() == 32008);
 
-  std::vector<unsigned int> bs_opts {0u, 3u, 2u, 0u, 2u};    // ??
-  for(auto a: filters[0].cd_values()){
-    std::cout <<"BSm: "<< a << std::endl;
+    std::vector<unsigned int> bs_opts {0u, 3u, 2u, 0u, 2u};    // ??
+    for(auto a: filters[0].cd_values()){
+      std::cout <<"BSm: "<< a << std::endl;
+    }
+    BOOST_REQUIRE_EQUAL(filters[0].cd_values().size(), bs_opts.size());
+    for(size_t i = 1; i < 3; ++i){
+      BOOST_CHECK_EQUAL(filters[0].cd_values()[i], bs_opts[i]);
+    }
+    BOOST_CHECK(flags[0] == hdf5::filter::Availability::Mandatory);
+
+    std::cout << "MF5 F1 : " << filters[1].id() << std::endl;
+    BOOST_CHECK(filters[1].id() == 32001);
+
+    std::vector<unsigned int> bl_opts {2u, 2u, 2u, 1048576u, 4u, 0u, 0u}; // ??
+    BOOST_REQUIRE_EQUAL(filters[1].cd_values().size(), bl_opts.size());
+    for(auto a: filters[1].cd_values()){
+      std::cout <<"BLm: "<< a << std::endl;
+    }
+    for(size_t i = 4; i < bl_opts.size(); ++i){
+      BOOST_CHECK_EQUAL(filters[1].cd_values()[i], bl_opts[i]);
+    }
+    BOOST_CHECK(flags[0] == hdf5::filter::Availability::Mandatory);
+    std::cout << "MF6" << std::endl;
   }
-  BOOST_REQUIRE_EQUAL(filters[0].cd_values().size(), bs_opts.size());
-  for(size_t i = 1; i < 3; ++i){
-    BOOST_CHECK_EQUAL(filters[0].cd_values()[i], bs_opts[i]);
-  }
-  BOOST_CHECK(flags[0] == hdf5::filter::Availability::Mandatory);
-
-  std::cout << "MF5 F1 : " << filters[1].id() << std::endl;
-  BOOST_CHECK(filters[1].id() == 32001);
-
-  std::vector<unsigned int> bl_opts {2u, 2u, 2u, 1048576u, 4u, 0u, 0u}; // ??
-  BOOST_REQUIRE_EQUAL(filters[1].cd_values().size(), bl_opts.size());
-  for(auto a: filters[1].cd_values()){
-    std::cout <<"BLm: "<< a << std::endl;
-  }
-  for(size_t i = 4; i < bl_opts.size(); ++i){
-    BOOST_CHECK_EQUAL(filters[1].cd_values()[i], bl_opts[i]);
-  }
-  BOOST_CHECK(flags[0] == hdf5::filter::Availability::Mandatory);
-  std::cout << "MF6" << std::endl;
-
 }
 
-BOOST_AUTO_TEST_CASE(no_filters_mandatory, * boost::unit_test::precondition(are_filters_not_installed))
+//BOOST_AUTO_TEST_CASE(no_filters_mandatory, * boost::unit_test::precondition(are_filters_not_installed))
+// does not work on boost 1.67.0 (debian10)
+BOOST_AUTO_TEST_CASE(no_filters_mandatory)
 {
-  using hdf5::node::get_node;
-  using hdf5::node::Type;
-  fs::path file = "create/filters_mandatory.xml";
-  BOOST_CHECK_THROW(xml::create_from_file(root_group,file), pni::filter_not_available);
+  if( !(hdf5::filter::is_filter_available(32008) && hdf5::filter::is_filter_available(32001))){
+    using hdf5::node::get_node;
+    using hdf5::node::Type;
+    fs::path file = "create/filters_mandatory.xml";
+    BOOST_CHECK_THROW(xml::create_from_file(root_group,file), pni::filter_not_available);
+  }
 }
 BOOST_AUTO_TEST_SUITE_END()
