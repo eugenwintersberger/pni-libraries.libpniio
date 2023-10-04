@@ -25,6 +25,7 @@
 #include <pni/nexus/xml/dataset_creation_list_builder.hpp>
 #include <pni/nexus/xml/dimension_node_handler.hpp>
 #include <pni/parsers.hpp>
+#include <pni/error.hpp>
 #include <h5cpp/contrib/nexus/ebool.hpp>
 #include <iostream>
 #include <vector>
@@ -92,12 +93,19 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 
    IndexFilterParametersMap index_parameters;
    unsigned int maxindex = 0;
+   unsigned int index = 0;
    for(auto value: node){
      if(value.first == "filter"){
-       unsigned int index =
-	 static_cast<unsigned int>(Node(value.second).attribute("index").data<size_t>());
-       if(maxindex < index)
+       if(Node(value.second).has_attribute("index")){
+	 index =
+	   static_cast<unsigned int>(Node(value.second).attribute("index").data<size_t>());
+       }
+       else {
+	 index = 0;
+       }
+       if(maxindex < index) {
 	 maxindex = index;
+       }
        index_parameters[index] = parameters_from_node(value.second);
      }
    }
@@ -105,7 +113,6 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
    if(!index_parameters.empty()){
      for(unsigned int ind = 0; ind <= maxindex; ind++){
        if(index_parameters.find(ind) != index_parameters.end()){
-
 	 unsigned int filter_id = 0;
 	 std::string name{};
 	 std::string str_cd_values{};
@@ -113,64 +120,111 @@ void DatasetCreationListBuilder::set_compression(hdf5::property::DatasetCreation
 
 	 std::tie(filter_id, name, str_cd_values, availability) =
 	   index_parameters[ind];
-	 if(name == "shuffle"){
-	   hdf5::filter::Shuffle shuffle;
-	   shuffle(dcpl);
+
+	 auto avail = hdf5::filter::Availability::Mandatory;
+	 if(availability == "optional")
+	   avail = hdf5::filter::Availability::Optional;
+
+	 if(filter_id > 0) {
+	   if(hdf5::filter::is_filter_available(filter_id)){
+
+	       std::vector<unsigned int> cd_values;
+	       get_cd_values(str_cd_values, cd_values);
+	       hdf5::filter::ExternalFilter externalfilter(filter_id,
+							   cd_values,
+							   name);
+	       if(availability.empty()) {
+		 externalfilter(dcpl);
+	       }
+	       else {
+		 externalfilter(dcpl, avail);
+	       }
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	      std::stringstream ss;
+	      ss << "The '" << name << "' ("<< filter_id <<") filter not available";
+	      throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					 ss.str());
+	   }
+
+	 }
+	 else if(name == "shuffle"){
+	   if(hdf5::filter::is_filter_available(H5Z_FILTER_SHUFFLE)){
+	       hdf5::filter::Shuffle shuffle;
+	       shuffle(dcpl);
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					"Shuffle filter not available");
+	   }
 	 }
 	 else if(name == "deflate"){
-	   compression_rate = static_cast<long>(std::stoul(str_cd_values));
-	   hdf5::filter::Deflate deflate(compression_rate);
-	   deflate(dcpl);
+	   if(hdf5::filter::is_filter_available(H5Z_FILTER_DEFLATE)){
+	       compression_rate = static_cast<long>(std::stoul(str_cd_values));
+	       hdf5::filter::Deflate deflate(compression_rate);
+	       deflate(dcpl);
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					"Deflate filter not available");
+	   }
 	 }
 	 else if(name == "nbit"){
-	   hdf5::filter::NBit nbit;
-	   nbit(dcpl);
+	   if(hdf5::filter::is_filter_available(H5Z_FILTER_NBIT)){
+	       hdf5::filter::NBit nbit;
+	       nbit(dcpl);
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					"NBit filter not available");
+	   }
 	 }
 	 else if(name == "fletcher32"){
-	   hdf5::filter::Fletcher32 fletcher32;
-	   fletcher32(dcpl);
+	   if(hdf5::filter::is_filter_available(H5Z_FILTER_FLETCHER32)){
+	       hdf5::filter::Fletcher32 fletcher32;
+	       fletcher32(dcpl);
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					"Fletcher32 filter not available");
+	   }
 	 }
 	 else if(name == "szip"){
-	   std::vector<unsigned int> cd_values;
-	   get_cd_values(str_cd_values, cd_values);
+	   if(hdf5::filter::is_filter_available(H5Z_FILTER_SZIP)){
+	       std::vector<unsigned int> cd_values;
+	       get_cd_values(str_cd_values, cd_values);
 
-	   hdf5::filter::SZip szip;
-	   if(cd_values.size() >= 1) {
-	      szip.option_mask(cd_values[0]);
+	       hdf5::filter::SZip szip;
+	       if(cd_values.size() >= 1) {
+		 szip.option_mask(cd_values[0]);
+	       }
+	       if(cd_values.size() >= 2){
+		 szip.pixels_per_block(cd_values[1]);
+	       }
+	       szip(dcpl);
 	   }
-	   if(cd_values.size() >= 2){
-	     szip.pixels_per_block(cd_values[1]);
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					"SZip filter not available");
 	   }
-	   szip(dcpl);
 	 }
 	 else if(name == "scaleoffset"){
-	   std::vector<unsigned int> cd_values;
-	   get_cd_values(str_cd_values, cd_values);
+	   if(hdf5::filter::is_filter_available(H5Z_FILTER_SCALEOFFSET)){
+	       std::vector<unsigned int> cd_values;
+	       get_cd_values(str_cd_values, cd_values);
 
-	   hdf5::filter::ScaleOffset scaleoffset;
-	   if(cd_values.size() >= 1){
-	     scaleoffset.scale_type(static_cast<hdf5::filter::ScaleOffset::ScaleType>(cd_values[0]));
-	   }
-	   if(cd_values.size() >= 2) {
-	     scaleoffset.scale_factor(static_cast<int>(cd_values[1]));
-	   }
-	   scaleoffset(dcpl);
-	 }
-	 else if(filter_id > 0) {
-	   auto avail = hdf5::filter::Availability::Mandatory;
-	   if(availability == "optional")
-	     avail = hdf5::filter::Availability::Optional;
-
-	   std::vector<unsigned int> cd_values;
-	   get_cd_values(str_cd_values, cd_values);
-	   hdf5::filter::ExternalFilter externalfilter(filter_id,
-						       cd_values,
-						       name);
-	   if(availability.empty()) {
-	     externalfilter(dcpl);
-	   }
-	   else {
-	     externalfilter(dcpl, avail);
+	       hdf5::filter::ScaleOffset scaleoffset;
+	       if(cd_values.size() >= 1){
+		 scaleoffset.scale_type(static_cast<hdf5::filter::ScaleOffset::ScaleType>(cd_values[0]));
+	       }
+	       if(cd_values.size() >= 2) {
+		 scaleoffset.scale_factor(static_cast<int>(cd_values[1]));
+	       }
+	       scaleoffset(dcpl);
+	     }
+	   else if(avail == hdf5::filter::Availability::Mandatory){
+	     throw filter_not_available(PNINEXUS_EXCEPTION_RECORD,
+					"ScaleOffset filter not available");
 	   }
 	 }
        }

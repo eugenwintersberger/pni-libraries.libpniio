@@ -107,6 +107,11 @@ namespace pni{
     }
 
     //--------------------------------------------------------------------------
+    std::ostream &operator<<(std::ostream &o,const filter_not_available &e)
+    {
+        return e.print(o);
+    }
+    //--------------------------------------------------------------------------
     std::ostream &operator<<(std::ostream &o,const shape_mismatch_error &e)
     {
         return e.print(o);

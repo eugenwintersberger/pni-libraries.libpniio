@@ -23,6 +23,7 @@
 #pragma once
 
 #include <h5cpp/hdf5.hpp>
+#include <pni/windows.hpp>
 
 
 namespace pni {
@@ -33,7 +34,7 @@ namespace nexus {
 //!
 //! This is the basic interface for every Nexus object builder
 //!
-class ObjectBuilder
+class PNINEXUS_EXPORT ObjectBuilder
 {
   public:
     virtual ~ObjectBuilder();
