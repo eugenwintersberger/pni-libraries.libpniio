@@ -58,6 +58,7 @@ var namespacepni =
     [ "exception", "classpni_1_1exception.html", "classpni_1_1exception" ],
     [ "exception_record", "classpni_1_1exception__record.html", "classpni_1_1exception__record" ],
     [ "file_error", "classpni_1_1file__error.html", "classpni_1_1file__error" ],
+    [ "filter_not_available", "classpni_1_1filter__not__available.html", "classpni_1_1filter__not__available" ],
     [ "fio_reader", "classpni_1_1fio__reader.html", "classpni_1_1fio__reader" ],
     [ "format_config", "classpni_1_1format__config.html", "classpni_1_1format__config" ],
     [ "format_str", "structpni_1_1format__str.html", null ],

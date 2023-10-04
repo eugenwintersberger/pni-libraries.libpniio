@@ -72,6 +72,7 @@ var hierarchy =
         [ "pni::cli_help_request", "classpni_1_1cli__help__request.html", null ],
         [ "pni::cli_option_error", "classpni_1_1cli__option__error.html", null ],
         [ "pni::file_error", "classpni_1_1file__error.html", null ],
+        [ "pni::filter_not_available", "classpni_1_1filter__not__available.html", null ],
         [ "pni::index_error", "classpni_1_1index__error.html", null ],
         [ "pni::invalid_object_error", "classpni_1_1invalid__object__error.html", null ],
         [ "pni::io_error", "classpni_1_1io__error.html", null ],

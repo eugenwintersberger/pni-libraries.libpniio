@@ -4,6 +4,7 @@ var error_2exceptions_8hpp =
     [ "pni::exception", "classpni_1_1exception.html", "classpni_1_1exception" ],
     [ "pni::memory_allocation_error", "classpni_1_1memory__allocation__error.html", "classpni_1_1memory__allocation__error" ],
     [ "pni::memory_not_allocated_error", "classpni_1_1memory__not__allocated__error.html", "classpni_1_1memory__not__allocated__error" ],
+    [ "pni::filter_not_available", "classpni_1_1filter__not__available.html", "classpni_1_1filter__not__available" ],
     [ "pni::shape_mismatch_error", "classpni_1_1shape__mismatch__error.html", "classpni_1_1shape__mismatch__error" ],
     [ "pni::size_mismatch_error", "classpni_1_1size__mismatch__error.html", "classpni_1_1size__mismatch__error" ],
     [ "pni::index_error", "classpni_1_1index__error.html", "classpni_1_1index__error" ],
