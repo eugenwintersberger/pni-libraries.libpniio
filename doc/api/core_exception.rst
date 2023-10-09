@@ -53,6 +53,7 @@ denote different failure situations.
 
 .. doxygenclass:: pni::cli_error
 
+.. doxygenclass:: pni::filter_not_available
 
 Macros
 ======
