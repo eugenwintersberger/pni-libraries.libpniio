@@ -16,7 +16,6 @@ set(RST_SOURCES index.rst
                 ascii.rst
                 ascii_spreadsheet.rst
                 image.rst
-		core.rst
 		core_types.rst
 		core_arrays.rst
 		core_type_erasures.rst

@@ -33,7 +33,6 @@ set(RST_FILES index.rst
               ascii_parsers.rst
               ascii_spreadsheet.rst
               image.rst
-	      core.rst
               core_type.rst
               core_exception.rst
               core_type_erasure.rst

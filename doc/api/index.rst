@@ -12,4 +12,7 @@ Follow this link to the Doxygen-generated `API reference <./doxygen/index.html>`
    ascii.rst
    image.rst
    nexus.rst
-   core.rst
+   core_type.rst
+   core_type_erasure.rst
+   core_mdarray.rst
+   core_exception.rst
