@@ -10,4 +10,6 @@ Users guide
    usage
    legacy
    nexus
-   core
+   core_types
+   core_arrays
+   core_type_erasures

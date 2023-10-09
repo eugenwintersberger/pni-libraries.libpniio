@@ -1,6 +1,6 @@
 CPPFLAGS=-g -O0 -std=c++11 -fno-deduce-init-list -Wall -Wextra -pedantic \
-		 $(shell pkg-config --cflags pnicore) 
-LDFLAGS=$(shell pkg-config --libs pnicore)
+		 $(shell pkg-config --cflags pninexus) 
+LDFLAGS=$(shell pkg-config --libs pninexus)
 
 PRGS=array_arithmetic1 array_arithmetic2 array_arithmetic3 array_create \
 	 array_inquery array_linear_access array_multiindex array_stl \
