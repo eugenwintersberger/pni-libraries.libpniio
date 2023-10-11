@@ -5,8 +5,8 @@
 - checks if filter is installed added ([#231](https://github.com/pni-libraries/libpniio/pull/231))
 - a filter tag added ([#229](https://github.com/pni-libraries/libpniio/pull/229))
 - xml from nxsdesigner readable by xml builder ([#227](https://github.com/pni-libraries/libpniio/pull/227))
-- string and char arumenets added to Path constructor ([#226](https://github.com/pni-libraries/libpniio/pull/226))
-- string and char arumenets added to get_object ([#224](https://github.com/pni-libraries/libpniio/pull/224))
+- string and char arguments added to Path constructor ([#226](https://github.com/pni-libraries/libpniio/pull/226))
+- string and char arguments added to get_object ([#224](https://github.com/pni-libraries/libpniio/pull/224))
 
 ## 3.1.0 - 2023-04-24
 - fs::filesystem from h5cpp used ([#212](https://github.com/pni-libraries/libpniio/pull/212))
