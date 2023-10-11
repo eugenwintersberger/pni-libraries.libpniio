@@ -1,0 +1,215 @@
+
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>File handling functions &#8212; libpninexus 3.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Factory classes" href="nexus_factories.html" />
+    <link rel="prev" title="NeXus API" href="nexus.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="nexus_factories.html" title="Factory classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" accesskey="U">NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">File handling functions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="file-handling-functions">
+<span id="nexus-api-file"></span><h1>File handling functions<a class="headerlink" href="#file-handling-functions" title="Permalink to this heading">¶</a></h1>
+<section id="nexus-is-nexus-file">
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::is_nexus_file()</span></code><a class="headerlink" href="#nexus-is-nexus-file" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus13is_nexus_fileERKN2fs4pathE">
+<span id="_CPPv3N3pni5nexus13is_nexus_fileERKN2fs4pathE"></span><span id="_CPPv2N3pni5nexus13is_nexus_fileERKN2fs4pathE"></span><span id="pni::nexus::is_nexus_file__fs::pathCR"></span><span class="target" id="namespacepni_1_1nexus_1a0e13c4e39479d8a6e3c5cb50001725ea"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_nexus_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus13is_nexus_fileERKN2fs4pathE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>checks if a file is a NeXus file </p>
+<p>Predicate function checking if the given path references a NeXus file. For this to be true the path has to first refer to an HDF5 file. If this is the case the file will be opened and checked for the attributes required by the NeXus standard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – reference to the path of a particular file system object </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if the reference object is a NeXus file, flase otherwise </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="nexus-create-file">
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::create_file()</span></code><a class="headerlink" href="#nexus-create-file" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus11create_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property16FileCreationListERKN4hdf58property14FileAccessListE">
+<span id="_CPPv3N3pni5nexus11create_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property16FileCreationListERKN4hdf58property14FileAccessListE"></span><span id="_CPPv2N3pni5nexus11create_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property16FileCreationListERKN4hdf58property14FileAccessListE"></span><span id="pni::nexus::create_file__fs::pathCR.hdf5::file::AccessFlags.hdf5::property::FileCreationListCR.hdf5::property::FileAccessListCR"></span><span class="target" id="namespacepni_1_1nexus_1af7f1aaafb4ba9cb50d3257e94fe25513"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">File</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">create_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span>, <span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AccessFlags</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">flags</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AccessFlags</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Exclusive</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileCreationList</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fcpl</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileCreationList</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileAccessList</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fapl</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileAccessList</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus11create_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property16FileCreationListERKN4hdf58property14FileAccessListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create a new NeXus file </p>
+<p>This function is basically an enhancement of the standard hdf5::file::create function. In addition of creating a new HDF5 file it also adds all the attributes to the root group of the file required by the NeXus standard. The arguments are the same as for hdf5::file::create.</p>
+<p>The only mandatory argument is the path to the new file. By default, an exception will be thrown if the file already exists in order to prohibit the user from accidentally overwriting an existing file. To change this behavior the AccessFlags must be passed as a second argument. References to file creation and file access property lists can be passed as third and fourth argument.</p>
+<p>For more detailed information see the h5cpp documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">std</span><span class="p">::</span><span class="n">runtime_error</span></span></span> – in case of a failure</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>path</strong> – reference to the path ot the new file </p></li>
+<li><p><strong>flags</strong> – access flags for the new file </p></li>
+<li><p><strong>fcpl</strong> – reference to a file creation property list </p></li>
+<li><p><strong>fapl</strong> – reference to a file access property list </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>instance of hdf5::file::File </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="nexus-open-file">
+<h2><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code><a class="headerlink" href="#nexus-open-file" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni5nexus9open_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property14FileAccessListE">
+<span id="_CPPv3N3pni5nexus9open_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property14FileAccessListE"></span><span id="_CPPv2N3pni5nexus9open_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property14FileAccessListE"></span><span id="pni::nexus::open_file__fs::pathCR.hdf5::file::AccessFlags.hdf5::property::FileAccessListCR"></span><span class="target" id="namespacepni_1_1nexus_1a8797fbc7b7eccda61c91432c6404776a"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">File</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">nexus</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">open_file</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">fs</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">path</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span>, <span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AccessFlags</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">flags</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AccessFlags</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ReadOnly</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileAccessList</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fapl</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">hdf5</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">property</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">FileAccessList</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni5nexus9open_fileERKN2fs4pathEN4hdf54file11AccessFlagsERKN4hdf58property14FileAccessListE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>open an existing NeXus file </p>
+<p>Function opening an existing NeXus file. This functions checks whether or not a file is a valid NeXus file. If this is not the case an exception will be thrown. In order to open a file without this check just use the hdf5::file::open function from the h5cpp library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">std</span><span class="p">::</span><span class="n">runtime_error</span></span></span> – in case of a failure</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>path</strong> – reference to the file’s path </p></li>
+<li><p><strong>flags</strong> – access flags for the file </p></li>
+<li><p><strong>fapl</strong> – reference to the file access property list </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>instance of hdf5::file::File </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">File handling functions</a><ul>
+<li><a class="reference internal" href="#nexus-is-nexus-file"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::is_nexus_file()</span></code></a></li>
+<li><a class="reference internal" href="#nexus-create-file"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::create_file()</span></code></a></li>
+<li><a class="reference internal" href="#nexus-open-file"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">nexus::open_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="nexus.html"
+                          title="previous chapter">NeXus API</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="nexus_factories.html"
+                          title="next chapter">Factory classes</a></p>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.2.0/index.html">v3.2.0</a></li>
+      <li><a class="reference external" href="../index/../../v3.1.0/index.html">v3.1.0</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="nexus_factories.html" title="Factory classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nexus.html" title="NeXus API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="nexus.html" >NeXus API</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">File handling functions</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

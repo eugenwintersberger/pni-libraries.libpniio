@@ -1,0 +1,8 @@
+<map id="pni::data_reader" name="pni::data_reader">
+<area shape="rect" id="node1" title="base class for data readers" alt="" coords="211,5,339,32"/>
+<area shape="rect" id="node2" href="$classpni_1_1image__reader.html" title="base class for image readers" alt="" coords="113,80,253,107"/>
+<area shape="rect" id="node5" href="$classpni_1_1spreadsheet__reader.html" title="base class for spreadsheet reader" alt="" coords="278,80,457,107"/>
+<area shape="rect" id="node3" href="$classpni_1_1cbf__reader.html" title="base clase for CBF readers" alt="" coords="5,155,124,181"/>
+<area shape="rect" id="node4" href="$classpni_1_1tiff__reader.html" title="TIFF file reader." alt="" coords="147,155,265,181"/>
+<area shape="rect" id="node6" href="$classpni_1_1fio__reader.html" title="FIO data reader." alt="" coords="310,155,425,181"/>
+</map>

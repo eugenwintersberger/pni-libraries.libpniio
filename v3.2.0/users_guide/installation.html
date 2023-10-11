@@ -1,0 +1,280 @@
+
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Installation &#8212; libpninexus 3.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using the library" href="usage.html" />
+    <link rel="prev" title="A general introduction to libpninexus" href="introduction.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Using the library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="A general introduction to libpninexus"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Users guide</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<p>Before you building <cite>libpninexus</cite> from sources one should first check if
+pre-built binary packages are available. Building the library from the sources
+requires a certain level of expertise which not all users posess.
+As
+<cite>libpninexus</cite> is mostly a template library only a few non performance critical
+components have to be compiled. Therefore, custom builds of the libraries
+binaries are not necessary in order to get optimum performance.</p>
+<section id="installing-pre-built-binary-packages">
+<h2>Installing pre-built binary packages<a class="headerlink" href="#installing-pre-built-binary-packages" title="Permalink to this heading">¶</a></h2>
+<p>Binary packages are currently available for the following platforms</p>
+<ul class="simple">
+<li><p>Debian/GNU Linux</p></li>
+<li><p>Ubuntu Linux</p></li>
+</ul>
+<section id="debian-and-ubuntu-users">
+<h3>Debian and Ubuntu users<a class="headerlink" href="#debian-and-ubuntu-users" title="Permalink to this heading">¶</a></h3>
+<p>As Debian and Ubuntu are closely related the installation is quite similar.
+The packages are provided by a special Debian repository. To work on the
+package sources you need to login as <cite>root</cite> user. Use <strong class="command">su</strong> or
+<strong class="command">sudo su</strong> on Debian and Ubuntu respectively.
+The first task is to add the GPG key of the HDRI repository to your local
+keyring</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://repos.pni-hdri.de/debian_repo.pub.gpg<span class="w">  </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--no-default-keyring<span class="w"> </span>--keyring<span class="w"> </span>gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg<span class="w"> </span>--import
+$<span class="w"> </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
+</pre></div>
+</div>
+<p>The return value of this command line should be <cite>OK</cite>.
+In a next step you have to add new package sources to your system. For this
+purpose go to <code class="file docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d</span></code> and download the sources file.
+For Debian (Bookworm) use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>wget<span class="w"> </span>http://repos.pni-hdri.de/bookworm-pni-hdri.list
+</pre></div>
+</div>
+<p>and for Ubuntu (Jammy)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>wget<span class="w"> </span>http://repos.pni-hdri.de/jammy-pni-hdri.list
+</pre></div>
+</div>
+<p>The packages are also available for Debian Bookworm, Bullseye, Buster and Ubuntu Lunar, Jammy, Focal.</p>
+<p>Once you have downloaded the file use</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apt-get<span class="w"> </span>update
+</pre></div>
+</div>
+<p>to update your package list and</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>libpninexus3.2.0<span class="w"> </span>libpninexus3.2.0-dev<span class="w"> </span>libpninexus3.2.0-doc
+</pre></div>
+</div>
+<p>to install the library. Dependencies will be resolved automatically so you can
+start with working right after the installation has finished.</p>
+</section>
+</section>
+<section id="install-from-sources">
+<h2>Install from sources<a class="headerlink" href="#install-from-sources" title="Permalink to this heading">¶</a></h2>
+<p>If your OS platform or a particular Linux distribution is currently not
+supported you have to build <cite>libpninexus</cite> from its sources. As this process
+usually requires some expert knowledge keep be prepared to get your hands dirty.</p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h3>
+<p>For a successful build some requirements must be satisfied</p>
+<ul class="simple">
+<li><p><cite>h5cpp</cite> &gt;= 0.5.0</p></li>
+<li><dl class="simple">
+<dt><cite>gcc</cite> &gt;= 4.7 – since version 1.0.0 <cite>libpninexus</cite> requires a mostly C++11</dt><dd><p>compliant compiler. For the gcc familiy this is 4.7 and upwards</p>
+</dd>
+</dl>
+</li>
+<li><p><cite>BOOST</cite> &gt;= 1.60</p></li>
+<li><p><cite>doxygen</cite> cite{web:doxygen} – used to build the API documentation</p></li>
+<li><p><cite>cmake</cite> cite{web:cmake} $&gt;=$ 3.10 – the build software used by the <cite>libpninexus</cite></p></li>
+<li><p><cite>pkg-config</cite> cite{web:pkgconfig} – program to manage libraries</p></li>
+</ul>
+</section>
+<section id="building-the-code">
+<h3>Building the code<a class="headerlink" href="#building-the-code" title="Permalink to this heading">¶</a></h3>
+<p>The sources can be obtained directly from the Git repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pni-libraries/libpninexus.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>libpninexus
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+</pre></div>
+</div>
+<p>which will result in a new directory named <code class="file docutils literal notranslate"><span class="pre">libpninexus</span></code>. As we use
+<strong class="command">cmake</strong> for
+building the library, out of place builds are recommended. For this purpose
+create a new directory where the code will be built and change to this directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>mkdir<span class="w"> </span>libpninexus-build
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>libpninexus-build
+</pre></div>
+</div>
+<p>Now call <strong class="command">cmake</strong> with a path to the original source directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DPNINEXUS_CONAN<span class="o">=</span>DISABLE<span class="w"> </span>../libpninexus
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">H5CPP</span><span class="o">=</span>/opt/pni/lib/cmake/h5cpp-0.5.0
+$<span class="w"> </span>cmake<span class="w"> </span>-Dh5cpp_DIR<span class="o">=</span><span class="nv">$H5CPP</span><span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/pni<span class="w"> </span>-DPNINEXUS_CONAN<span class="o">=</span>DISABLE<span class="w"> </span>../libpninexus
+</pre></div>
+</div>
+<p>if <cite>h5cpp</cite> is installed in the non-standard directory.</p>
+<p>A subsequent <strong class="command">make</strong> finally build the library</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make
+</pre></div>
+</div>
+<p>This may take a while. Actually building the library is quite fast as
+<cite>libpninexus</cite> is mostly a template, and thus header-only, library.
+However, building the test suite is rather time consuming.</p>
+</section>
+<section id="testing-the-build">
+<h3>Testing the build<a class="headerlink" href="#testing-the-build" title="Permalink to this heading">¶</a></h3>
+<p>Once the build has finished you should definitely run the tests.
+<cite>libpninexus</cite> uses the <strong class="command">ctest</strong> facility of <strong class="command">cmake</strong>. To build
+and run the tests just type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>check
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>Installation<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<p>If the build has passed the test suite <cite>libpninexus</cite> can be installed from within
+the build directory with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>By default the installation prefix is <code class="file docutils literal notranslate"><span class="pre">/usr/local</span></code>. If another prefix should
+be used the <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> variable must be set when running
+<strong class="command">cmake</strong> with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>cmake<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/opt/pni<span class="w"> </span>-DPNINEXUS_CONAN<span class="o">=</span>DISABLE<span class="w"> </span>../libpninexus
+</pre></div>
+</div>
+<p>which causes the installation prefix to be <code class="file docutils literal notranslate"><span class="pre">/opt/pni</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#installing-pre-built-binary-packages">Installing pre-built binary packages</a><ul>
+<li><a class="reference internal" href="#debian-and-ubuntu-users">Debian and Ubuntu users</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-from-sources">Install from sources</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#building-the-code">Building the code</a></li>
+<li><a class="reference internal" href="#testing-the-build">Testing the build</a></li>
+<li><a class="reference internal" href="#id1">Installation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="introduction.html"
+                          title="previous chapter">A general introduction to <em>libpninexus</em></a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="usage.html"
+                          title="next chapter">Using the library</a></p>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script><p>
+  <h3 class='versions'>Versions</h3>
+  <p>
+    <ul>
+      <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
+      <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
+      
+      <li><a class="reference external" href="../index/../../v3.2.0/index.html">v3.2.0</a></li>
+      <li><a class="reference external" href="../index/../../v3.1.0/index.html">v3.1.0</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.2/index.html">v3.0.2</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.1/index.html">v3.0.1</a></li>
+      <li><a class="reference external" href="../index/../../v3.0.0/index.html">v3.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v2.0.0/index.html">v2.0.0</a></li>
+      <li><a class="reference external" href="../index/../../v1.3.2/index.html">v1.3.2</a></li>
+      <li><a class="reference external" href="../index/../../v1.2.10/index.html">v1.2.10</a></li>
+      
+    </ul>
+  </p>
+</p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Using the library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="A general introduction to libpninexus"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Users guide</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DESY, Eugen Wintersberger.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>
