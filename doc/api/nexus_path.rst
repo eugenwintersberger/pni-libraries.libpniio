@@ -52,13 +52,13 @@ NeXus path objects
 ==================
 
 :cpp:class:`pni::nexus::PathObject`
----------------------------------------
+-----------------------------------
 
 .. doxygenclass:: pni::nexus::PathObject
    :members:
    
-:cpp:class:`pni::nexus::nexus::PathObjectList`
---------------------------------------------------
+:cpp:class:`pni::nexus::PathObjectList`
+---------------------------------------
    
 .. doxygenclass:: pni::nexus::PathObjectList
    :members:
