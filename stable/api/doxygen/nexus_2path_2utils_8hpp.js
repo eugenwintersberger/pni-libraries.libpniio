@@ -1,6 +1,8 @@
 var nexus_2path_2utils_8hpp =
 [
+    [ "get_objects", "nexus_2path_2utils_8hpp.html#a325ebb2a906e824ec990c31106ef38b6", null ],
     [ "get_objects", "nexus_2path_2utils_8hpp.html#a6a618d6fc4651fe4365db6149cc84ec9", null ],
+    [ "get_objects", "nexus_2path_2utils_8hpp.html#a47f3cc3f263b5b5aba49b60a9eb97730", null ],
     [ "get_path", "nexus_2path_2utils_8hpp.html#aaf89ed2831ac7dc326239045b14d7afa", null ],
     [ "get_path", "nexus_2path_2utils_8hpp.html#a2d727e4c9478956ab202bef7cdb514f3", null ],
     [ "get_path", "nexus_2path_2utils_8hpp.html#a7fda8096aed1b6a944d194387d3f34cd", null ],
@@ -18,7 +20,7 @@ var nexus_2path_2utils_8hpp =
     [ "match", "nexus_2path_2utils_8hpp.html#adc43efa5660e2cd86b08384e0123bdb6", null ],
     [ "match", "nexus_2path_2utils_8hpp.html#a519f2263bb82f3573dd0446e57c5a699", null ],
     [ "object_element", "nexus_2path_2utils_8hpp.html#a688dba09805b57a6d336975ea281d8c1", null ],
-    [ "operator<<", "nexus_2path_2utils_8hpp.html#a65591fc9061941ae0bd8e70cfa4cadef", null ],
+    [ "operator<<", "nexus_2path_2utils_8hpp.html#af5e32ca4ecc992cba451cf0a94117bf1", null ],
     [ "operator==", "nexus_2path_2utils_8hpp.html#a3e4567c77d736c92cc87d63b10ed10b4", null ],
     [ "split_last", "nexus_2path_2utils_8hpp.html#accff93a2c43068768891f1f7089a9737", null ],
     [ "split_path", "nexus_2path_2utils_8hpp.html#a7d1c7dbcc49e59fa1659b25d9db6da14", null ]

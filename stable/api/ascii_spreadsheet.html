@@ -2,19 +2,21 @@
 
 <!doctype html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ASCII spreadsheet API &#8212; libpninexus 3.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>ASCII spreadsheet API &#8212; libpninexus 3.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,7 +39,7 @@
         <li class="right" >
           <a href="ascii_parsers.html" title="ASCII parsers"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="ascii.html" accesskey="U">ASCII IO API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">ASCII spreadsheet API</a></li> 
@@ -49,395 +51,404 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ascii-spreadsheet-api">
-<span id="id1"></span><h1>ASCII spreadsheet API<a class="headerlink" href="#ascii-spreadsheet-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="pni-spreadsheet-reader">
-<h2><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::spreadsheet_reader</span></code></a><a class="headerlink" href="#pni-spreadsheet-reader" title="Permalink to this headline">¶</a></h2>
+  <section id="ascii-spreadsheet-api">
+<span id="id1"></span><h1>ASCII spreadsheet API<a class="headerlink" href="#ascii-spreadsheet-api" title="Permalink to this heading">¶</a></h1>
+<section id="pni-spreadsheet-reader">
+<h2><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::spreadsheet_reader</span></code></a><a class="headerlink" href="#pni-spreadsheet-reader" title="Permalink to this heading">¶</a></h2>
 <dl class="cpp class">
-<dt id="_CPPv4N3pni18spreadsheet_readerE">
-<span id="_CPPv3N3pni18spreadsheet_readerE"></span><span id="_CPPv2N3pni18spreadsheet_readerE"></span><span id="pni::spreadsheet_reader"></span><span class="target" id="classpni_1_1spreadsheet__reader"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">spreadsheet_reader</code> : <em class="property">public</em> pni::data_reader<a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readerE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_readerE">
+<span id="_CPPv3N3pni18spreadsheet_readerE"></span><span id="_CPPv2N3pni18spreadsheet_readerE"></span><span id="pni::spreadsheet_reader"></span><span class="target" id="classpni_1_1spreadsheet__reader"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">spreadsheet_reader</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">data_reader</span></span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readerE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>base class for spreadsheet reader </p>
 <p>This class is the basement for all readers dealing with spreadsheet like data files. Most of the ASCII formats written following this storage convention. </p>
 <p>Subclassed by <a class="reference internal" href="#classpni_1_1fio__reader"><span class="std std-ref">pni::fio_reader</span></a></p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
 <dl class="cpp type">
-<dt id="_CPPv4N3pni18spreadsheet_reader8iteratorE">
-<span id="_CPPv3N3pni18spreadsheet_reader8iteratorE"></span><span id="_CPPv2N3pni18spreadsheet_reader8iteratorE"></span><span id="pni::spreadsheet_reader::iterator"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ac824fe3b3a79e91cabe58d7278629571"></span><em class="property">typedef </em>std::vector&lt;<a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info">column_info</a>&gt;::iterator <code class="sig-name descname">iterator</code><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_reader8iteratorE">
+<span id="_CPPv3N3pni18spreadsheet_reader8iteratorE"></span><span id="_CPPv2N3pni18spreadsheet_reader8iteratorE"></span><span id="pni::spreadsheet_reader::iterator"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ac824fe3b3a79e91cabe58d7278629571"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">iterator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">iterator</span></span></span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader8iteratorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>iterator type </p>
 </dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4N3pni18spreadsheet_reader14const_iteratorE">
-<span id="_CPPv3N3pni18spreadsheet_reader14const_iteratorE"></span><span id="_CPPv2N3pni18spreadsheet_reader14const_iteratorE"></span><span id="pni::spreadsheet_reader::const_iterator"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a7b7937cda39a76d2ad23703cf9b58053"></span><em class="property">typedef </em>std::vector&lt;<a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info">column_info</a>&gt;::const_iterator <code class="sig-name descname">const_iterator</code><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader14const_iteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_reader14const_iteratorE">
+<span id="_CPPv3N3pni18spreadsheet_reader14const_iteratorE"></span><span id="_CPPv2N3pni18spreadsheet_reader14const_iteratorE"></span><span id="pni::spreadsheet_reader::const_iterator"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a7b7937cda39a76d2ad23703cf9b58053"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">const_iterator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">const_iterator</span></span></span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader14const_iteratorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>const iterator type </p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni18spreadsheet_readerD0Ev">
-<span id="_CPPv3N3pni18spreadsheet_readerD0Ev"></span><span id="_CPPv2N3pni18spreadsheet_readerD0Ev"></span><span id="pni::spreadsheet_reader::~spreadsheet_reader"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a894dfb69dadb34e7f2af5b8d649675f4"></span><code class="sig-name descname">~spreadsheet_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_readerD0Ev">
+<span id="_CPPv3N3pni18spreadsheet_readerD0Ev"></span><span id="_CPPv2N3pni18spreadsheet_readerD0Ev"></span><span id="pni::spreadsheet_reader::~spreadsheet_reader"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a894dfb69dadb34e7f2af5b8d649675f4"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~spreadsheet_reader</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>destructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni18spreadsheet_readeraSERK18spreadsheet_reader">
-<span id="_CPPv3N3pni18spreadsheet_readeraSERK18spreadsheet_reader"></span><span id="_CPPv2N3pni18spreadsheet_readeraSERK18spreadsheet_reader"></span><span id="pni::spreadsheet_reader::assign-operator__spreadsheet_readerCR"></span><span class="target" id="classpni_1_1spreadsheet__reader_1aa900f7360d50378e587eea4fae8d4181"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader">spreadsheet_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader">spreadsheet_reader</a>&amp;<span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readeraSERK18spreadsheet_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_readeraSERK18spreadsheet_reader">
+<span id="_CPPv3N3pni18spreadsheet_readeraSERK18spreadsheet_reader"></span><span id="_CPPv2N3pni18spreadsheet_readeraSERK18spreadsheet_reader"></span><span id="pni::spreadsheet_reader::assign-operator__spreadsheet_readerCR"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ad471d4c84c82e715336b6079da71a794"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><span class="n"><span class="pre">spreadsheet_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><span class="n"><span class="pre">spreadsheet_reader</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readeraSERK18spreadsheet_reader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy assignment operator is deleted </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni18spreadsheet_readeraSERR18spreadsheet_reader">
-<span id="_CPPv3N3pni18spreadsheet_readeraSERR18spreadsheet_reader"></span><span id="_CPPv2N3pni18spreadsheet_readeraSERR18spreadsheet_reader"></span><span id="pni::spreadsheet_reader::assign-operator__spreadsheet_readerRR"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a77362b1b832744de7f3e98c824113040"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader">spreadsheet_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader">spreadsheet_reader</a> &amp;&amp;<em>r</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readeraSERR18spreadsheet_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_readeraSERR18spreadsheet_reader">
+<span id="_CPPv3N3pni18spreadsheet_readeraSERR18spreadsheet_reader"></span><span id="_CPPv2N3pni18spreadsheet_readeraSERR18spreadsheet_reader"></span><span id="pni::spreadsheet_reader::assign-operator__spreadsheet_readerRR"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a153acbb41c32faa8c0ef7e4a10537169"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><span class="n"><span class="pre">spreadsheet_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><span class="n"><span class="pre">spreadsheet_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_readeraSERR18spreadsheet_reader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>move assignment operator </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni18spreadsheet_reader8ncolumnsEv">
-<span id="_CPPv3NK3pni18spreadsheet_reader8ncolumnsEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader8ncolumnsEv"></span><span id="pni::spreadsheet_reader::ncolumnsC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ad595dac600072d3393379b05466aa004"></span>size_t <code class="sig-name descname">ncolumns</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader8ncolumnsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni18spreadsheet_reader8ncolumnsEv">
+<span id="_CPPv3NK3pni18spreadsheet_reader8ncolumnsEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader8ncolumnsEv"></span><span id="pni::spreadsheet_reader::ncolumnsC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ad595dac600072d3393379b05466aa004"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ncolumns</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader8ncolumnsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get column number </p>
-<p>Returns the number of columns. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>number of columns </p>
+<p>Returns the number of columns. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of columns </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni18spreadsheet_reader8nrecordsEv">
-<span id="_CPPv3NK3pni18spreadsheet_reader8nrecordsEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader8nrecordsEv"></span><span id="pni::spreadsheet_reader::nrecordsC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a478b93d217dbd6e9b5bb9305eaf3d287"></span>size_t <code class="sig-name descname">nrecords</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader8nrecordsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni18spreadsheet_reader8nrecordsEv">
+<span id="_CPPv3NK3pni18spreadsheet_reader8nrecordsEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader8nrecordsEv"></span><span id="pni::spreadsheet_reader::nrecordsC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a478b93d217dbd6e9b5bb9305eaf3d287"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nrecords</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader8nrecordsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get record number </p>
-<p>Return the number of records in the spreadsheet. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>number of records </p>
+<p>Return the number of records in the spreadsheet. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of records </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni18spreadsheet_reader5beginEv">
-<span id="_CPPv3N3pni18spreadsheet_reader5beginEv"></span><span id="_CPPv2N3pni18spreadsheet_reader5beginEv"></span><span id="pni::spreadsheet_reader::begin"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ab62401710186b765810fc6f215a5f56d"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader8iteratorE" title="pni::spreadsheet_reader::iterator">iterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_reader5beginEv">
+<span id="_CPPv3N3pni18spreadsheet_reader5beginEv"></span><span id="_CPPv2N3pni18spreadsheet_reader5beginEv"></span><span id="pni::spreadsheet_reader::begin"></span><span class="target" id="classpni_1_1spreadsheet__reader_1ab62401710186b765810fc6f215a5f56d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader8iteratorE" title="pni::spreadsheet_reader::iterator"><span class="n"><span class="pre">iterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader5beginEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get iterator to first column </p>
-<p>Return an iterator pointing to the first column in the file. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>iterator </p>
+<p>Return an iterator pointing to the first column in the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterator </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni18spreadsheet_reader5beginEv">
-<span id="_CPPv3NK3pni18spreadsheet_reader5beginEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader5beginEv"></span><span id="pni::spreadsheet_reader::beginC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a307de8763576e347b01a61ee94464711"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader14const_iteratorE" title="pni::spreadsheet_reader::const_iterator">const_iterator</a> <code class="sig-name descname">begin</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni18spreadsheet_reader5beginEv">
+<span id="_CPPv3NK3pni18spreadsheet_reader5beginEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader5beginEv"></span><span id="pni::spreadsheet_reader::beginC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a307de8763576e347b01a61ee94464711"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader14const_iteratorE" title="pni::spreadsheet_reader::const_iterator"><span class="n"><span class="pre">const_iterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader5beginEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get const first iterator </p>
-<p>Return a const iterator to the first column in the file. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>const iterator </p>
+<p>Return a const iterator to the first column in the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>const iterator </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni18spreadsheet_reader3endEv">
-<span id="_CPPv3N3pni18spreadsheet_reader3endEv"></span><span id="_CPPv2N3pni18spreadsheet_reader3endEv"></span><span id="pni::spreadsheet_reader::end"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a4c3dbafff83257d564d1c3af68f0c6da"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader8iteratorE" title="pni::spreadsheet_reader::iterator">iterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni18spreadsheet_reader3endEv">
+<span id="_CPPv3N3pni18spreadsheet_reader3endEv"></span><span id="_CPPv2N3pni18spreadsheet_reader3endEv"></span><span id="pni::spreadsheet_reader::end"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a4c3dbafff83257d564d1c3af68f0c6da"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader8iteratorE" title="pni::spreadsheet_reader::iterator"><span class="n"><span class="pre">iterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni18spreadsheet_reader3endEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get last iterator </p>
-<p>Return an iterator to the last column in the file. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>iterator </p>
+<p>Return an iterator to the last column in the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterator </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni18spreadsheet_reader3endEv">
-<span id="_CPPv3NK3pni18spreadsheet_reader3endEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader3endEv"></span><span id="pni::spreadsheet_reader::endC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a556044e3b9da8b4929a4b8f79cb2348c"></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader14const_iteratorE" title="pni::spreadsheet_reader::const_iterator">const_iterator</a> <code class="sig-name descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni18spreadsheet_reader3endEv">
+<span id="_CPPv3NK3pni18spreadsheet_reader3endEv"></span><span id="_CPPv2NK3pni18spreadsheet_reader3endEv"></span><span id="pni::spreadsheet_reader::endC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a556044e3b9da8b4929a4b8f79cb2348c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_reader14const_iteratorE" title="pni::spreadsheet_reader::const_iterator"><span class="n"><span class="pre">const_iterator</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader3endEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get const last iterator </p>
 <p>Returns a const iterator to the last column in the file.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>const iterator </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>const iterator </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE">
-<span id="_CPPv3NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE"></span><span id="_CPPv2NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE"></span><span id="pni::spreadsheet_reader::has_column__pni::stringCRC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1afba8a6adce1543f2852532f9b037a2db"></span>bool <code class="sig-name descname">has_column</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE">
+<span id="_CPPv3NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE"></span><span id="_CPPv2NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE"></span><span id="pni::spreadsheet_reader::has_column__pni::stringCRC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1afba8a6adce1543f2852532f9b037a2db"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">has_column</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader10has_columnERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>checks if a particular column exists </p>
 <p>Returns true if the spreadsheet contains a column of the requested name and false otherwise.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if column exists, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> – of the column </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: of the column </p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if column exists, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE">
-<span id="_CPPv3NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE"></span><span id="_CPPv2NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE"></span><span id="pni::spreadsheet_reader::column_index__pni::stringCRC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a0ef27db7feb7ca8990fd16a37d50d16e"></span>size_t <code class="sig-name descname">column_index</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE">
+<span id="_CPPv3NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE"></span><span id="_CPPv2NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE"></span><span id="pni::spreadsheet_reader::column_index__pni::stringCRC"></span><span class="target" id="classpni_1_1spreadsheet__reader_1a0ef27db7feb7ca8990fd16a37d50d16e"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">column_index</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni18spreadsheet_reader12column_indexERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get column index </p>
-<p>Get the index of a particular column. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>numeric index </p>
+<p>Get the index of a particular column. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni9key_errorE" title="pni::key_error"><span class="n">key_error</span></a></span></span> – if the column does not exist </p>
 </dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1key__error"><span class="std std-ref"><span class="pre">key_error</span></span></a></code>: if the column does not exist </p></li>
-</ul>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>name</strong> – name of the column </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: name of the column </p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numeric index </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="pni-column-info">
-<h2><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::column_info</span></code></a><a class="headerlink" href="#pni-column-info" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pni-column-info">
+<h2><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::column_info</span></code></a><a class="headerlink" href="#pni-column-info" title="Permalink to this heading">¶</a></h2>
 <dl class="cpp class">
-<dt id="_CPPv4N3pni11column_infoE">
-<span id="_CPPv3N3pni11column_infoE"></span><span id="_CPPv2N3pni11column_infoE"></span><span id="pni::column_info"></span><span class="target" id="classpni_1_1column__info"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">column_info</code><a class="headerlink" href="#_CPPv4N3pni11column_infoE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_infoE">
+<span id="_CPPv3N3pni11column_infoE"></span><span id="_CPPv2N3pni11column_infoE"></span><span id="pni::column_info"></span><span class="target" id="classpni_1_1column__info"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">column_info</span></span></span><a class="headerlink" href="#_CPPv4N3pni11column_infoE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Spreadsheet column information. </p>
 <p>This class holds the basic information about a column stored in a spreadsheet. This includes the following parameters: the name of the column, its TypeID and the shape of each cell. The latter parameter allows even the storage of multidimensional data in such a structure. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_info11column_infoEv">
-<span id="_CPPv3N3pni11column_info11column_infoEv"></span><span id="_CPPv2N3pni11column_info11column_infoEv"></span><span id="pni::column_info::column_info"></span><span class="target" id="classpni_1_1column__info_1aa6ad0b3d3faed9ca2c7f16b9b6f71094"></span><code class="sig-name descname">column_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_info11column_infoEv">
+<span id="_CPPv3N3pni11column_info11column_infoEv"></span><span id="_CPPv2N3pni11column_info11column_infoEv"></span><span id="pni::column_info::column_info"></span><span class="target" id="classpni_1_1column__info_1aa6ad0b3d3faed9ca2c7f16b9b6f71094"></span><span class="sig-name descname"><span class="n"><span class="pre">column_info</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_info11column_infoERK11column_info">
-<span id="_CPPv3N3pni11column_info11column_infoERK11column_info"></span><span id="_CPPv2N3pni11column_info11column_infoERK11column_info"></span><span id="pni::column_info::column_info__column_infoCR"></span><span class="target" id="classpni_1_1column__info_1a357ef9fd6fc61bcde72745592232f02d"></span><code class="sig-name descname">column_info</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni11column_info11column_infoERK11column_info" title="pni::column_info::column_info">column_info</a> &amp;<em>ci</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoERK11column_info" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_info11column_infoERK11column_info">
+<span id="_CPPv3N3pni11column_info11column_infoERK11column_info"></span><span id="_CPPv2N3pni11column_info11column_infoERK11column_info"></span><span id="pni::column_info::column_info__column_infoCR"></span><span class="target" id="classpni_1_1column__info_1a357ef9fd6fc61bcde72745592232f02d"></span><span class="sig-name descname"><span class="n"><span class="pre">column_info</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni11column_info11column_infoERK11column_info" title="pni::column_info::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ci</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoERK11column_info" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_info11column_infoERR11column_info">
-<span id="_CPPv3N3pni11column_info11column_infoERR11column_info"></span><span id="_CPPv2N3pni11column_info11column_infoERR11column_info"></span><span id="pni::column_info::column_info__column_infoRR"></span><span class="target" id="classpni_1_1column__info_1a5fb23e84308822e711ba1bc2d8c3d08b"></span><code class="sig-name descname">column_info</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni11column_info11column_infoERR11column_info" title="pni::column_info::column_info">column_info</a> &amp;&amp;<em>ci</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoERR11column_info" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_info11column_infoERR11column_info">
+<span id="_CPPv3N3pni11column_info11column_infoERR11column_info"></span><span id="_CPPv2N3pni11column_info11column_infoERR11column_info"></span><span id="pni::column_info::column_info__column_infoRR"></span><span class="target" id="classpni_1_1column__info_1a5fb23e84308822e711ba1bc2d8c3d08b"></span><span class="sig-name descname"><span class="n"><span class="pre">column_info</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni11column_info11column_infoERR11column_info" title="pni::column_info::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ci</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoERR11column_info" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>move constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE">
-<span id="_CPPv3N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE"></span><span id="_CPPv2N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE"></span><span id="pni::column_info::column_info__pni::stringCR.pni::type_id_t.std::vector:s:CR"></span><span class="target" id="classpni_1_1column__info_1adf20e9bf910ff6c7e8b1ca731c18867e"></span><code class="sig-name descname">column_info</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>n</em>, pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em>, <em class="property">const</em> std::vector&lt;size_t&gt; &amp;<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE">
+<span id="_CPPv3N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE"></span><span id="_CPPv2N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE"></span><span id="pni::column_info::column_info__pni::stringCR.pni::type_id_t.std::vector:s:CR"></span><span class="target" id="classpni_1_1column__info_1adf20e9bf910ff6c7e8b1ca731c18867e"></span><span class="sig-name descname"><span class="n"><span class="pre">column_info</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span>, <span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tid</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_info11column_infoERKN3pni6stringEN3pni9type_id_tERKNSt6vectorI6size_tEE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 <p>A column can hold a scalar or a multidimensional data entry. In the former case the type id is that of the element stored in the latter case it is the id of a single element in the array stored in each column element.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the column </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: ID of the type stored in the column </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: shape of the column </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – name of the column </p></li>
+<li><p><strong>tid</strong> – ID of the type stored in the column </p></li>
+<li><p><strong>s</strong> – shape of the column </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_infoD0Ev">
-<span id="_CPPv3N3pni11column_infoD0Ev"></span><span id="_CPPv2N3pni11column_infoD0Ev"></span><span id="pni::column_info::~column_info"></span><span class="target" id="classpni_1_1column__info_1af3538dd17069ce962147f70dba2aee1a"></span><code class="sig-name descname">~column_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_infoD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_infoD0Ev">
+<span id="_CPPv3N3pni11column_infoD0Ev"></span><span id="_CPPv2N3pni11column_infoD0Ev"></span><span id="pni::column_info::~column_info"></span><span class="target" id="classpni_1_1column__info_1af3538dd17069ce962147f70dba2aee1a"></span><span class="sig-name descname"><span class="n"><span class="pre">~column_info</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_infoD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>destructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_infoaSERK11column_info">
-<span id="_CPPv3N3pni11column_infoaSERK11column_info"></span><span id="_CPPv2N3pni11column_infoaSERK11column_info"></span><span id="pni::column_info::assign-operator__column_infoCR"></span><span class="target" id="classpni_1_1column__info_1ab057110f62283f00c0d87dc191aad4aa"></span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info">column_info</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info">column_info</a> &amp;<em>ci</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_infoaSERK11column_info" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_infoaSERK11column_info">
+<span id="_CPPv3N3pni11column_infoaSERK11column_info"></span><span id="_CPPv2N3pni11column_infoaSERK11column_info"></span><span id="pni::column_info::assign-operator__column_infoCR"></span><span class="target" id="classpni_1_1column__info_1a84aec32843dbdef369d47c5b927b9263"></span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ci</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_infoaSERK11column_info" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy assignment operator </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni11column_infoaSERR11column_info">
-<span id="_CPPv3N3pni11column_infoaSERR11column_info"></span><span id="_CPPv2N3pni11column_infoaSERR11column_info"></span><span id="pni::column_info::assign-operator__column_infoRR"></span><span class="target" id="classpni_1_1column__info_1af489432ddf5146062471eec49b2cdb36"></span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info">column_info</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info">column_info</a> &amp;&amp;<em>ci</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_infoaSERR11column_info" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni11column_infoaSERR11column_info">
+<span id="_CPPv3N3pni11column_infoaSERR11column_info"></span><span id="_CPPv2N3pni11column_infoaSERR11column_info"></span><span id="pni::column_info::assign-operator__column_infoRR"></span><span class="target" id="classpni_1_1column__info_1a5734e2f8810885be6251236affdcb8be"></span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni11column_infoE" title="pni::column_info"><span class="n"><span class="pre">column_info</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ci</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni11column_infoaSERR11column_info" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>move assignment operator </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni11column_info5shapeEv">
-<span id="_CPPv3NK3pni11column_info5shapeEv"></span><span id="_CPPv2NK3pni11column_info5shapeEv"></span><span id="pni::column_info::shapeC"></span><span class="target" id="classpni_1_1column__info_1a5bcb5ff6c5ee4f1371e2f9a7c3583973"></span><em class="property">const</em> std::vector&lt;size_t&gt; &amp;<code class="sig-name descname">shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni11column_info5shapeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni11column_info5shapeEv">
+<span id="_CPPv3NK3pni11column_info5shapeEv"></span><span id="_CPPv2NK3pni11column_info5shapeEv"></span><span id="pni::column_info::shapeC"></span><span class="target" id="classpni_1_1column__info_1a4814939fc3021496359913cd6c53f0a6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">shape</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni11column_info5shapeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get cell shape </p>
-<p>Returns the shape object from a column. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>shape object. </p>
+<p>Returns the shape object from a column. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>shape object. </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni11column_info7type_idEv">
-<span id="_CPPv3NK3pni11column_info7type_idEv"></span><span id="_CPPv2NK3pni11column_info7type_idEv"></span><span id="pni::column_info::type_idC"></span><span class="target" id="classpni_1_1column__info_1a094c5cd97557549433c5385a5ce5528a"></span>pni::<a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-name descname">type_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni11column_info7type_idEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni11column_info7type_idEv">
+<span id="_CPPv3NK3pni11column_info7type_idEv"></span><span id="_CPPv2NK3pni11column_info7type_idEv"></span><span id="pni::column_info::type_idC"></span><span class="target" id="classpni_1_1column__info_1a094c5cd97557549433c5385a5ce5528a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="core_type.html#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type_id</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni11column_info7type_idEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get cells type ID </p>
-<p>Return the TypeID of the column if available. This is only valid for systems where type information is stored in the file (like for FIO). <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>type id of the column data </p>
+<p>Return the TypeID of the column if available. This is only valid for systems where type information is stored in the file (like for FIO). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>type id of the column data </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni11column_info4nameEv">
-<span id="_CPPv3NK3pni11column_info4nameEv"></span><span id="_CPPv2NK3pni11column_info4nameEv"></span><span id="pni::column_info::nameC"></span><span class="target" id="classpni_1_1column__info_1a596214588b48114b89e1a8f8a64d08ef"></span>pni::string <code class="sig-name descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni11column_info4nameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni11column_info4nameEv">
+<span id="_CPPv3NK3pni11column_info4nameEv"></span><span id="_CPPv2NK3pni11column_info4nameEv"></span><span id="pni::column_info::nameC"></span><span class="target" id="classpni_1_1column__info_1a596214588b48114b89e1a8f8a64d08ef"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni11column_info4nameEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get name </p>
-<p>Return the name of the column. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>name </p>
+<p>Return the name of the column. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>name </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="pni-fio-reader">
-<h2><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::fio_reader</span></code></a><a class="headerlink" href="#pni-fio-reader" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pni-fio-reader">
+<h2><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::fio_reader</span></code></a><a class="headerlink" href="#pni-fio-reader" title="Permalink to this heading">¶</a></h2>
 <dl class="cpp class">
-<dt id="_CPPv4N3pni10fio_readerE">
-<span id="_CPPv3N3pni10fio_readerE"></span><span id="_CPPv2N3pni10fio_readerE"></span><span id="pni::fio_reader"></span><span class="target" id="classpni_1_1fio__reader"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">fio_reader</code> : <em class="property">public</em> pni::<a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader">spreadsheet_reader</a><a class="headerlink" href="#_CPPv4N3pni10fio_readerE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_readerE">
+<span id="_CPPv3N3pni10fio_readerE"></span><span id="_CPPv2N3pni10fio_readerE"></span><span id="pni::fio_reader"></span><span class="target" id="classpni_1_1fio__reader"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fio_reader</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N3pni18spreadsheet_readerE" title="pni::spreadsheet_reader"><span class="n"><span class="pre">spreadsheet_reader</span></span></a><a class="headerlink" href="#_CPPv4N3pni10fio_readerE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>FIO data reader. </p>
 <p>FIO files are written by ONLINE a data acquisition and experiment control software used at DESY. FIO files are basically ACII files where data is stored in columns. Thus such files correspond to the family of spreadsheet style files. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_reader10fio_readerEv">
-<span id="_CPPv3N3pni10fio_reader10fio_readerEv"></span><span id="_CPPv2N3pni10fio_reader10fio_readerEv"></span><span id="pni::fio_reader::fio_reader"></span><span class="target" id="classpni_1_1fio__reader_1ad9ba3a78535e6224abc4d25106755c1e"></span><code class="sig-name descname">fio_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_reader10fio_readerEv">
+<span id="_CPPv3N3pni10fio_reader10fio_readerEv"></span><span id="_CPPv2N3pni10fio_reader10fio_readerEv"></span><span id="pni::fio_reader::fio_reader"></span><span class="target" id="classpni_1_1fio__reader_1ad9ba3a78535e6224abc4d25106755c1e"></span><span class="sig-name descname"><span class="n"><span class="pre">fio_reader</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_reader10fio_readerERK10fio_reader">
-<span id="_CPPv3N3pni10fio_reader10fio_readerERK10fio_reader"></span><span id="_CPPv2N3pni10fio_reader10fio_readerERK10fio_reader"></span><span id="pni::fio_reader::fio_reader__fio_readerCR"></span><span class="target" id="classpni_1_1fio__reader_1a11fb397afc44439953d4c0e34005c826"></span><code class="sig-name descname">fio_reader</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10fio_reader10fio_readerERK10fio_reader" title="pni::fio_reader::fio_reader">fio_reader</a> &amp;<em>r</em><span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerERK10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_reader10fio_readerERK10fio_reader">
+<span id="_CPPv3N3pni10fio_reader10fio_readerERK10fio_reader"></span><span id="_CPPv2N3pni10fio_reader10fio_readerERK10fio_reader"></span><span id="pni::fio_reader::fio_reader__fio_readerCR"></span><span class="target" id="classpni_1_1fio__reader_1a11fb397afc44439953d4c0e34005c826"></span><span class="sig-name descname"><span class="n"><span class="pre">fio_reader</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni10fio_reader10fio_readerERK10fio_reader" title="pni::fio_reader::fio_reader"><span class="n"><span class="pre">fio_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerERK10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy construction is deleted </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_reader10fio_readerERR10fio_reader">
-<span id="_CPPv3N3pni10fio_reader10fio_readerERR10fio_reader"></span><span id="_CPPv2N3pni10fio_reader10fio_readerERR10fio_reader"></span><span id="pni::fio_reader::fio_reader__fio_readerRR"></span><span class="target" id="classpni_1_1fio__reader_1a394a4bbc294c2c039c7298e8beb60f1a"></span><code class="sig-name descname">fio_reader</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10fio_reader10fio_readerERR10fio_reader" title="pni::fio_reader::fio_reader">fio_reader</a> &amp;&amp;<em>r</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerERR10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_reader10fio_readerERR10fio_reader">
+<span id="_CPPv3N3pni10fio_reader10fio_readerERR10fio_reader"></span><span id="_CPPv2N3pni10fio_reader10fio_readerERR10fio_reader"></span><span id="pni::fio_reader::fio_reader__fio_readerRR"></span><span class="target" id="classpni_1_1fio__reader_1a394a4bbc294c2c039c7298e8beb60f1a"></span><span class="sig-name descname"><span class="n"><span class="pre">fio_reader</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10fio_reader10fio_readerERR10fio_reader" title="pni::fio_reader::fio_reader"><span class="n"><span class="pre">fio_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerERR10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>move constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_reader10fio_readerERKN3pni6stringE">
-<span id="_CPPv3N3pni10fio_reader10fio_readerERKN3pni6stringE"></span><span id="_CPPv2N3pni10fio_reader10fio_readerERKN3pni6stringE"></span><span id="pni::fio_reader::fio_reader__pni::stringCR"></span><span class="target" id="classpni_1_1fio__reader_1a96553eef5cb9bc99745a4f0f7cf8768e"></span><code class="sig-name descname">fio_reader</code><span class="sig-paren">(</span><em class="property">const</em> pni::string &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_reader10fio_readerERKN3pni6stringE">
+<span id="_CPPv3N3pni10fio_reader10fio_readerERKN3pni6stringE"></span><span id="_CPPv2N3pni10fio_reader10fio_readerERKN3pni6stringE"></span><span id="pni::fio_reader::fio_reader__pni::stringCR"></span><span class="target" id="classpni_1_1fio__reader_1a96553eef5cb9bc99745a4f0f7cf8768e"></span><span class="sig-name descname"><span class="n"><span class="pre">fio_reader</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10fio_reader10fio_readerERKN3pni6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>standard constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_readerD0Ev">
-<span id="_CPPv3N3pni10fio_readerD0Ev"></span><span id="_CPPv2N3pni10fio_readerD0Ev"></span><span id="pni::fio_reader::~fio_reader"></span><span class="target" id="classpni_1_1fio__reader_1a43e5325c6d0132905768c4baff5dd6b6"></span><code class="sig-name descname">~fio_reader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10fio_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_readerD0Ev">
+<span id="_CPPv3N3pni10fio_readerD0Ev"></span><span id="_CPPv2N3pni10fio_readerD0Ev"></span><span id="pni::fio_reader::~fio_reader"></span><span class="target" id="classpni_1_1fio__reader_1a43e5325c6d0132905768c4baff5dd6b6"></span><span class="sig-name descname"><span class="n"><span class="pre">~fio_reader</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10fio_readerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>destructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_readeraSERK10fio_reader">
-<span id="_CPPv3N3pni10fio_readeraSERK10fio_reader"></span><span id="_CPPv2N3pni10fio_readeraSERK10fio_reader"></span><span id="pni::fio_reader::assign-operator__fio_readerCR"></span><span class="target" id="classpni_1_1fio__reader_1a62f275f730682b768237d0b73fb44a3c"></span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader">fio_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader">fio_reader</a> &amp;<em>r</em><span class="sig-paren">)</span> = delete<a class="headerlink" href="#_CPPv4N3pni10fio_readeraSERK10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_readeraSERK10fio_reader">
+<span id="_CPPv3N3pni10fio_readeraSERK10fio_reader"></span><span id="_CPPv2N3pni10fio_readeraSERK10fio_reader"></span><span id="pni::fio_reader::assign-operator__fio_readerCR"></span><span class="target" id="classpni_1_1fio__reader_1a778925947b83d0a02358c635c7f551bc"></span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><span class="n"><span class="pre">fio_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><span class="n"><span class="pre">fio_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N3pni10fio_readeraSERK10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy assignment is deleted </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10fio_readeraSERR10fio_reader">
-<span id="_CPPv3N3pni10fio_readeraSERR10fio_reader"></span><span id="_CPPv2N3pni10fio_readeraSERR10fio_reader"></span><span id="pni::fio_reader::assign-operator__fio_readerRR"></span><span class="target" id="classpni_1_1fio__reader_1a86d57dfd7dc2f2c7c8f16156d9deb5bd"></span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader">fio_reader</a> &amp;<code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader">fio_reader</a> &amp;&amp;<em>r</em><span class="sig-paren">)</span> = default<a class="headerlink" href="#_CPPv4N3pni10fio_readeraSERR10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10fio_readeraSERR10fio_reader">
+<span id="_CPPv3N3pni10fio_readeraSERR10fio_reader"></span><span id="_CPPv2N3pni10fio_readeraSERR10fio_reader"></span><span id="pni::fio_reader::assign-operator__fio_readerRR"></span><span class="target" id="classpni_1_1fio__reader_1ae828a3c9bb4bca1d366164a154a22dc0"></span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><span class="n"><span class="pre">fio_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni10fio_readerE" title="pni::fio_reader"><span class="n"><span class="pre">fio_reader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">r</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N3pni10fio_readeraSERR10fio_reader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>move assignemnt operator </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni10fio_reader11nparametersEv">
-<span id="_CPPv3NK3pni10fio_reader11nparametersEv"></span><span id="_CPPv2NK3pni10fio_reader11nparametersEv"></span><span id="pni::fio_reader::nparametersC"></span><span class="target" id="classpni_1_1fio__reader_1adeaa6e878a1cc63ff72ffd07610399ea"></span>size_t <code class="sig-name descname">nparameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10fio_reader11nparametersEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni10fio_reader11nparametersEv">
+<span id="_CPPv3NK3pni10fio_reader11nparametersEv"></span><span id="_CPPv2NK3pni10fio_reader11nparametersEv"></span><span id="pni::fio_reader::nparametersC"></span><span class="target" id="classpni_1_1fio__reader_1adeaa6e878a1cc63ff72ffd07610399ea"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nparameters</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni10fio_reader11nparametersEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get number of parameters </p>
-<p>Return the number of parameters stored in the file. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>number of parameters </p>
+<p>Return the number of parameters stored in the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of parameters </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni10fio_reader15parameter_namesEv">
-<span id="_CPPv3NK3pni10fio_reader15parameter_namesEv"></span><span id="_CPPv2NK3pni10fio_reader15parameter_namesEv"></span><span id="pni::fio_reader::parameter_namesC"></span><span class="target" id="classpni_1_1fio__reader_1a8a96c6efdb340c4215f5ca6c70a7d1ca"></span>std::vector&lt;std::string&gt; <code class="sig-name descname">parameter_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni10fio_reader15parameter_namesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni10fio_reader15parameter_namesEv">
+<span id="_CPPv3NK3pni10fio_reader15parameter_namesEv"></span><span id="_CPPv2NK3pni10fio_reader15parameter_namesEv"></span><span id="pni::fio_reader::parameter_namesC"></span><span class="target" id="classpni_1_1fio__reader_1ad23adfac427b7daa38acdcf0bf6fc42b"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parameter_names</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni10fio_reader15parameter_namesEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get parameter names </p>
-<p>Returns a vector of Strings holding the parameter names stored in the file. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>parameter names </p>
+<p>Returns a vector of Strings holding the parameter names stored in the file. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameter names </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE">
-<span id="_CPPv3I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span>template&lt;typename <code class="sig-name descname">ElementT</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1ad85fc61cf5ec66ed10b399ec27879869"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE" title="pni::fio_reader::parameter::ElementT">ElementT</a> <code class="sig-name descname">parameter</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>name</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE">
+<span id="_CPPv3I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader9parameterERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ElementT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpni_1_1fio__reader_1ad85fc61cf5ec66ed10b399ec27879869"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE" title="pni::fio_reader::parameter::ElementT"><span class="n"><span class="pre">ElementT</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parameter</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader9parameterE8ElementTRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get parameter by name </p>
-<p>Return the value of a parameter stored in the FIO file by name. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>parameter value as type ElementT </p>
+<p>Return the value of a parameter stored in the FIO file by name. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">key_errror</span></span></span> – if parameter name does not exist </p>
 </dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">key_errror</span></code>: if parameter name does not exist </p></li>
-</ul>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>name</strong> – parameter name </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: parameter name </p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>parameter value as type ElementT </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE">
-<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringE"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1a0ba048f74b1c52677bacaa8216d33116"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE" title="pni::fio_reader::column::ContainerT">ContainerT</a> <code class="sig-name descname">column</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>n</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE">
+<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringE"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ContainerT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpni_1_1fio__reader_1a0ba048f74b1c52677bacaa8216d33116"></span><a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE" title="pni::fio_reader::column::ContainerT"><span class="n"><span class="pre">ContainerT</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">column</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnE10ContainerTRKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get single column </p>
-<p>Returns a single column and stores the data into an array object. If the column name does not exist an exception is thrown. <dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>instance of ArrayT holding the data. </p>
-</dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1key__error"><span class="std std-ref"><span class="pre">key_error</span></span></a></code>: if column does not exist </p></li>
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1file__error"><span class="std std-ref"><span class="pre">file_error</span></span></a></code>: if EOF is reached before end of data </p></li>
+<p>Returns a single column and stores the data into an array object. If the column name does not exist an exception is thrown. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni9key_errorE" title="pni::key_error"><span class="n">key_error</span></a></span></span> – if column does not exist </p></li>
+<li><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni10file_errorE" title="pni::file_error"><span class="n">file_error</span></a></span></span> – if EOF is reached before end of data </p></li>
 </ul>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the column </p></li>
-</ul>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>n</strong> – name of the column </p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>instance of ArrayT holding the data. </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT">
-<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringER10ContainerT"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringER10ContainerT"></span>template&lt;typename <code class="sig-name descname">ContainerT</code>&gt;<br /><span class="target" id="classpni_1_1fio__reader_1a5178f78a512c5686d9a570833187b1b4"></span>void <code class="sig-name descname">column</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>n</em>, <a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT" title="pni::fio_reader::column::ContainerT">ContainerT</a> &amp;<em>c</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT">
+<span id="_CPPv3I0ENK3pni10fio_reader6columnERKNSt6stringER10ContainerT"></span><span id="_CPPv2I0ENK3pni10fio_reader6columnERKNSt6stringER10ContainerT"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ContainerT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpni_1_1fio__reader_1a5178f78a512c5686d9a570833187b1b4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">column</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span>, <a class="reference internal" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT" title="pni::fio_reader::column::ContainerT"><span class="n"><span class="pre">ContainerT</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">c</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I0ENK3pni10fio_reader6columnEvRKNSt6stringER10ContainerT" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>read single column </p>
-<p>Read a single column and stores the result in an appropriate container. The method assumes that the container is of appropriate size and shape. <dl class="simple">
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1key__error"><span class="std std-ref"><span class="pre">key_error</span></span></a></code>: if the requested column does not exist </p></li>
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1file__error"><span class="std std-ref"><span class="pre">file_error</span></span></a></code>: in any other case of error </p></li>
+<p>Read a single column and stores the result in an appropriate container. The method assumes that the container is of appropriate size and shape. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni9key_errorE" title="pni::key_error"><span class="n">key_error</span></a></span></span> – if the requested column does not exist </p></li>
+<li><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni10file_errorE" title="pni::file_error"><span class="n">file_error</span></a></span></span> – in any other case of error </p></li>
 </ul>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ContainerT</span></code>: container type </p></li>
-</ul>
+<dt class="field-even">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ContainerT</strong> – container type </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: name of the column </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: instance of ContainerT that will in the end contain the data </p></li>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – name of the column </p></li>
+<li><p><strong>c</strong> – instance of ContainerT that will in the end contain the data </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -446,8 +457,9 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">ASCII spreadsheet API</a><ul>
 <li><a class="reference internal" href="#pni-spreadsheet-reader"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::spreadsheet_reader</span></code></a></li>
 <li><a class="reference internal" href="#pni-column-info"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::column_info</span></code></a></li>
@@ -456,28 +468,34 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="ascii_parsers.html"
-                        title="previous chapter">ASCII parsers</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="image.html"
-                        title="next chapter">Image reader API</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="ascii_parsers.html"
+                          title="previous chapter">ASCII parsers</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="image.html"
+                          title="next chapter">Image reader API</a></p>
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><p>
+<script>document.getElementById('searchbox').style.display = "block"</script><p>
   <h3 class='versions'>Versions</h3>
   <p>
     <ul>
       <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
       <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
       
+      <li><a class="reference external" href="../index/../../v3.2.0/index.html">v3.2.0</a></li>
       <li><a class="reference external" href="../index/../../v3.1.0/index.html">v3.1.0</a></li>
       <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
       <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
@@ -507,7 +525,7 @@
         <li class="right" >
           <a href="ascii_parsers.html" title="ASCII parsers"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="ascii.html" >ASCII IO API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">ASCII spreadsheet API</a></li> 
@@ -515,7 +533,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, DESY, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

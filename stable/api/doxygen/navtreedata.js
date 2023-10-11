@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "PNI NeXus Library", "index.html", [
-    [ "PNI NeXus Library 3.1.0 Documentation", "index.html", [
+    [ "PNI NeXus Library 3.2.0 Documentation", "index.html", [
       [ "Introduction", "index.html#Introduction", null ],
       [ "Outlook - concurrent applications", "index.html#outlook", [
         [ "Thread safety", "index.html#ths", null ],
@@ -70,16 +70,21 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "add__op_8hpp.html",
-"classpni_1_1array__iterator.html#a9e48b991fa0ba31ac6a12daa4b176570",
-"classpni_1_1div__op.html#a9f77a4ee759c8a0719d48786630d83a9",
-"classpni_1_1mdarray.html#af4c0cbb74fc2914e1cbc39bfdeca838b",
-"classpni_1_1nexus_1_1xml_1_1ObjectBuilder.html#a46b4c376edc0de39137cf84a6917e6d8",
-"classpni_1_1tiff_1_1ifd__entry.html#a7721c0742016b1ab50841448ec1041bf",
-"functions.html",
-"index__maps_8hpp.html",
-"namespacepni.html#afe0a3e529d9ec13029b8589c853498a2",
-"structpni_1_1array__iterator__types_3_011_01_4.html#ae404b0625149d6e4e08a36680a8353e9",
-"type__erasures_2utils_8hpp.html#ae77b7a4b02919abedfedcbc34852d421"
+"classpni_1_1array.html#acc47d3f77842b00aeb308c37f0ed5e2c",
+"classpni_1_1array__view.html#a59f5874bacc81a101ba9503b00308ef4",
+"classpni_1_1container__iterator.html#a211e2ac2f8ce14961f114c0935bdfa46",
+"classpni_1_1fio__reader.html#a9d6bce88c55644f90c27bc4a5de7239f",
+"classpni_1_1key__error.html#afc7d5381107c4ab2322e16ab68ae33e3",
+"classpni_1_1nexus_1_1IsData.html#af8e820a77ed0b7fd738f5a4961522d15",
+"classpni_1_1nexus_1_1xml_1_1AttributeBuilder.html#acb34e644556d0ec56037dcd01aa0cc6d",
+"classpni_1_1parser_3_01pni_1_1value_01_4.html#ac9c4984ab2d42d9c272121f80fdd9d50",
+"classpni_1_1spreadsheet__reader.html#ab62401710186b765810fc6f215a5f56d",
+"classpni_1_1tiff__reader.html#a195a5c14d8d2112c8888d90c9c8612c1",
+"div__op_8hpp_source.html",
+"math_8hpp_source.html",
+"namespacepni_1_1nexus.html#a7fda8096aed1b6a944d194387d3f34cd",
+"structpni_1_1array__iterator__types_3_011_01_4.html#aee792a0aae37f2ee7530f341d5e7ad0e",
+"structpni_1_1is__view__cont.html#a9368b3ef710aa737f0afc2d595712c89"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -19,8 +19,8 @@ var classpni_1_1spreadsheet__reader =
     [ "has_column", "classpni_1_1spreadsheet__reader.html#afba8a6adce1543f2852532f9b037a2db", null ],
     [ "ncolumns", "classpni_1_1spreadsheet__reader.html#ad595dac600072d3393379b05466aa004", null ],
     [ "nrecords", "classpni_1_1spreadsheet__reader.html#a478b93d217dbd6e9b5bb9305eaf3d287", null ],
-    [ "operator=", "classpni_1_1spreadsheet__reader.html#aa900f7360d50378e587eea4fae8d4181", null ],
-    [ "operator=", "classpni_1_1spreadsheet__reader.html#a77362b1b832744de7f3e98c824113040", null ],
+    [ "operator=", "classpni_1_1spreadsheet__reader.html#ad471d4c84c82e715336b6079da71a794", null ],
+    [ "operator=", "classpni_1_1spreadsheet__reader.html#a153acbb41c32faa8c0ef7e4a10537169", null ],
     [ "_columns_info", "classpni_1_1spreadsheet__reader.html#a069e26409ff3375239cf52b09600ebc4", null ],
     [ "_nrec", "classpni_1_1spreadsheet__reader.html#a29e9632f07f90cb573a6c219d8d55cb0", null ]
 ];

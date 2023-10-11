@@ -1,8 +1,8 @@
 var sfinae__macros_8hpp =
 [
-    [ "or_t", "structpni_1_1or__t.html", "structpni_1_1or__t" ],
-    [ "and_t", "structpni_1_1and__t.html", "structpni_1_1and__t" ],
-    [ "not_t", "structpni_1_1not__t.html", "structpni_1_1not__t" ],
+    [ "pni::or_t< Operand1T, Operand2T >", "structpni_1_1or__t.html", "structpni_1_1or__t" ],
+    [ "pni::and_t< Operand1T, Operand2T >", "structpni_1_1and__t.html", "structpni_1_1and__t" ],
+    [ "pni::not_t< FunctionT >", "structpni_1_1not__t.html", "structpni_1_1not__t" ],
     [ "enable_if", "sfinae__macros_8hpp.html#aec9ea31f62e69214bab4247566bc40b3", null ],
     [ "invoke", "sfinae__macros_8hpp.html#aaf5ed7f9b2316a8c64ff063f59271574", null ],
     [ "is_cmplx", "sfinae__macros_8hpp.html#a55b31ab9efef75d51b135757e7f80f74", null ],

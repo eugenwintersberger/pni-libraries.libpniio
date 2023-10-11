@@ -1,7 +1,7 @@
 var scalar__format_8hpp =
 [
-    [ "format_config", "classpni_1_1format__config.html", "classpni_1_1format__config" ],
-    [ "format_str", "structpni_1_1format__str.html", null ],
+    [ "pni::format_config", "classpni_1_1format__config.html", "classpni_1_1format__config" ],
+    [ "pni::format_str< ElementT >", "structpni_1_1format__str.html", null ],
     [ "format", "scalar__format_8hpp.html#a8e64b53287aed6f0911f031f5a7ee6ad", null ],
     [ "format", "scalar__format_8hpp.html#accf773f9ac4d4dd75519d24cc671e7aa", null ],
     [ "format", "scalar__format_8hpp.html#acd2ce510a0af79530d873e356be05d11", null ],

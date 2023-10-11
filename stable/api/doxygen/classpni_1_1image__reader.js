@@ -9,6 +9,6 @@ var classpni_1_1image__reader =
     [ "image", "classpni_1_1image__reader.html#a6a842c1c1d68cdf5a007fc9878e42a1a", null ],
     [ "info", "classpni_1_1image__reader.html#a4226283d4d36aa1bc1f0ec800a914f2c", null ],
     [ "nimages", "classpni_1_1image__reader.html#a246e6f2067472548c01db5a4e8c5d748", null ],
-    [ "operator=", "classpni_1_1image__reader.html#a1e66da7c35413de7506c0b33eeab1298", null ],
-    [ "operator=", "classpni_1_1image__reader.html#abe0f7d003d5d422a589ae5bcd28f2e10", null ]
+    [ "operator=", "classpni_1_1image__reader.html#a8d5cd08b0b0a018197c38ac2ab4cd57d", null ],
+    [ "operator=", "classpni_1_1image__reader.html#aee683ecfe5fa62e2dfc0292f8829db7a", null ]
 ];

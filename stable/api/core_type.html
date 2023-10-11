@@ -2,24 +2,26 @@
 
 <!doctype html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data types and type management &#8212; libpninexus 3.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Data types and type management &#8212; libpninexus 3.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
     
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/bizstyle.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Type erasures" href="core_type_erasure.html" />
-    <link rel="prev" title="PNI core API" href="core.html" />
+    <link rel="prev" title="Utility functions and classes" href="nexus_utils.html" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <!--[if lt IE 9]>
     <script src="_static/css3-mediaqueries.js"></script>
@@ -35,11 +37,10 @@
           <a href="core_type_erasure.html" title="Type erasures"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="core.html" title="PNI core API"
+          <a href="nexus_utils.html" title="Utility functions and classes"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.1.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="core.html" accesskey="U">PNI core API</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">API documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Data types and type management</a></li> 
       </ul>
     </div>  
@@ -49,500 +50,499 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="data-types-and-type-management">
-<h1>Data types and type management<a class="headerlink" href="#data-types-and-type-management" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="pni-type-id-t">
-<h2><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">pni::type_id_t</span></code></a><a class="headerlink" href="#pni-type-id-t" title="Permalink to this headline">¶</a></h2>
-<dl class="cpp enum">
-<dt id="_CPPv4N3pni9type_id_tE">
-<span id="_CPPv3N3pni9type_id_tE"></span><span id="_CPPv2N3pni9type_id_tE"></span><span class="target" id="group__type__classes_1ga2c8ca0de37c42914554a1a9e500b31cd"></span><em class="property">enum </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id_t</code><a class="headerlink" href="#_CPPv4N3pni9type_id_tE" title="Permalink to this definition">¶</a><br /></dt>
+  <section id="data-types-and-type-management">
+<h1>Data types and type management<a class="headerlink" href="#data-types-and-type-management" title="Permalink to this heading">¶</a></h1>
+<section id="pni-type-id-t">
+<h2><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">pni::type_id_t</span></code></a><a class="headerlink" href="#pni-type-id-t" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_tE">
+<span id="_CPPv3N3pni9type_id_tE"></span><span id="_CPPv2N3pni9type_id_tE"></span><span class="target" id="group__type__classes_1ga2c8ca0de37c42914554a1a9e500b31cd"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">type_id_t</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>type codes for PNI data types </p>
 <p>Typed enumeration with type IDs. </p>
 <p><em>Values:</em></p>
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t4NoneE">
-<span id="_CPPv3N3pni9type_id_t4NoneE"></span><span id="_CPPv2N3pni9type_id_t4NoneE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda6adf97f83acf6453d4a6a4b1070f3754"></span><em class="property">enumerator </em><code class="sig-name descname">None</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t4NoneE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t4NoneE">
+<span id="_CPPv3N3pni9type_id_t4NoneE"></span><span id="_CPPv2N3pni9type_id_t4NoneE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda6adf97f83acf6453d4a6a4b1070f3754"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">None</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t4NoneE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>no data type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t4Int8E">
-<span id="_CPPv3N3pni9type_id_t4Int8E"></span><span id="_CPPv2N3pni9type_id_t4Int8E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda7d839b2c12bfd40ac121b4cc9e81c539"></span><em class="property">enumerator </em><code class="sig-name descname">Int8</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t4Int8E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t4Int8E">
+<span id="_CPPv3N3pni9type_id_t4Int8E"></span><span id="_CPPv2N3pni9type_id_t4Int8E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda7d839b2c12bfd40ac121b4cc9e81c539"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Int8</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t4Int8E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>signed 8Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t5UInt8E">
-<span id="_CPPv3N3pni9type_id_t5UInt8E"></span><span id="_CPPv2N3pni9type_id_t5UInt8E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdab31df9c476d20e85ff898121efe11b5a"></span><em class="property">enumerator </em><code class="sig-name descname">UInt8</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t5UInt8E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t5UInt8E">
+<span id="_CPPv3N3pni9type_id_t5UInt8E"></span><span id="_CPPv2N3pni9type_id_t5UInt8E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdab31df9c476d20e85ff898121efe11b5a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UInt8</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t5UInt8E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>unsigned 8Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t5Int16E">
-<span id="_CPPv3N3pni9type_id_t5Int16E"></span><span id="_CPPv2N3pni9type_id_t5Int16E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda39bc2ae44b184207f560ff8619823208"></span><em class="property">enumerator </em><code class="sig-name descname">Int16</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t5Int16E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t5Int16E">
+<span id="_CPPv3N3pni9type_id_t5Int16E"></span><span id="_CPPv2N3pni9type_id_t5Int16E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda39bc2ae44b184207f560ff8619823208"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Int16</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t5Int16E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>signed 16Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t6UInt16E">
-<span id="_CPPv3N3pni9type_id_t6UInt16E"></span><span id="_CPPv2N3pni9type_id_t6UInt16E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda8bd950a9d7779b83f5c30046c9aaf1cf"></span><em class="property">enumerator </em><code class="sig-name descname">UInt16</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t6UInt16E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t6UInt16E">
+<span id="_CPPv3N3pni9type_id_t6UInt16E"></span><span id="_CPPv2N3pni9type_id_t6UInt16E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda8bd950a9d7779b83f5c30046c9aaf1cf"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UInt16</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t6UInt16E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>unsigned 16Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t5Int32E">
-<span id="_CPPv3N3pni9type_id_t5Int32E"></span><span id="_CPPv2N3pni9type_id_t5Int32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdac06129f6e6e15c09328365e553f1dc31"></span><em class="property">enumerator </em><code class="sig-name descname">Int32</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t5Int32E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t5Int32E">
+<span id="_CPPv3N3pni9type_id_t5Int32E"></span><span id="_CPPv2N3pni9type_id_t5Int32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdac06129f6e6e15c09328365e553f1dc31"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Int32</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t5Int32E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>signed 32Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t6UInt32E">
-<span id="_CPPv3N3pni9type_id_t6UInt32E"></span><span id="_CPPv2N3pni9type_id_t6UInt32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdae7956ed7be1c5025a27ed3cb42a396bd"></span><em class="property">enumerator </em><code class="sig-name descname">UInt32</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t6UInt32E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t6UInt32E">
+<span id="_CPPv3N3pni9type_id_t6UInt32E"></span><span id="_CPPv2N3pni9type_id_t6UInt32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdae7956ed7be1c5025a27ed3cb42a396bd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UInt32</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t6UInt32E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>unsigned 32Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t5Int64E">
-<span id="_CPPv3N3pni9type_id_t5Int64E"></span><span id="_CPPv2N3pni9type_id_t5Int64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdafbde23b11d7e59af7828e81144c8b487"></span><em class="property">enumerator </em><code class="sig-name descname">Int64</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t5Int64E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t5Int64E">
+<span id="_CPPv3N3pni9type_id_t5Int64E"></span><span id="_CPPv2N3pni9type_id_t5Int64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdafbde23b11d7e59af7828e81144c8b487"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Int64</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t5Int64E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>signed 64Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t6UInt64E">
-<span id="_CPPv3N3pni9type_id_t6UInt64E"></span><span id="_CPPv2N3pni9type_id_t6UInt64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdaaf71234725f0470ccf993e263a8b820a"></span><em class="property">enumerator </em><code class="sig-name descname">UInt64</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t6UInt64E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t6UInt64E">
+<span id="_CPPv3N3pni9type_id_t6UInt64E"></span><span id="_CPPv2N3pni9type_id_t6UInt64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdaaf71234725f0470ccf993e263a8b820a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UInt64</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t6UInt64E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>unsigned 64Bit integer </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t7Float32E">
-<span id="_CPPv3N3pni9type_id_t7Float32E"></span><span id="_CPPv2N3pni9type_id_t7Float32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda166495adc0d0f53bee6baecc577f5204"></span><em class="property">enumerator </em><code class="sig-name descname">Float32</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t7Float32E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t7Float32E">
+<span id="_CPPv3N3pni9type_id_t7Float32E"></span><span id="_CPPv2N3pni9type_id_t7Float32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda166495adc0d0f53bee6baecc577f5204"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Float32</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t7Float32E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>32Bit IEEE floating point </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t7Float64E">
-<span id="_CPPv3N3pni9type_id_t7Float64E"></span><span id="_CPPv2N3pni9type_id_t7Float64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdad2b556d8a8f5c8ac323f51a4b82e79a0"></span><em class="property">enumerator </em><code class="sig-name descname">Float64</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t7Float64E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t7Float64E">
+<span id="_CPPv3N3pni9type_id_t7Float64E"></span><span id="_CPPv2N3pni9type_id_t7Float64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdad2b556d8a8f5c8ac323f51a4b82e79a0"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Float64</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t7Float64E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>64Bit IEEE floating point </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t8Float128E">
-<span id="_CPPv3N3pni9type_id_t8Float128E"></span><span id="_CPPv2N3pni9type_id_t8Float128E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdae74f68ddb36c1ed379de92ae3b589d34"></span><em class="property">enumerator </em><code class="sig-name descname">Float128</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t8Float128E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t8Float128E">
+<span id="_CPPv3N3pni9type_id_t8Float128E"></span><span id="_CPPv2N3pni9type_id_t8Float128E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdae74f68ddb36c1ed379de92ae3b589d34"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Float128</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t8Float128E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>128Bit IEEE floating point </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t9Complex32E">
-<span id="_CPPv3N3pni9type_id_t9Complex32E"></span><span id="_CPPv2N3pni9type_id_t9Complex32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda2ef2a9d5fdeebb762c9b0bc85c533ba1"></span><em class="property">enumerator </em><code class="sig-name descname">Complex32</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t9Complex32E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t9Complex32E">
+<span id="_CPPv3N3pni9type_id_t9Complex32E"></span><span id="_CPPv2N3pni9type_id_t9Complex32E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda2ef2a9d5fdeebb762c9b0bc85c533ba1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Complex32</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t9Complex32E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>32Bit IEEE floating point complex </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t9Complex64E">
-<span id="_CPPv3N3pni9type_id_t9Complex64E"></span><span id="_CPPv2N3pni9type_id_t9Complex64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdad966dd0f6dc22b834b636fb9df4b756a"></span><em class="property">enumerator </em><code class="sig-name descname">Complex64</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t9Complex64E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t9Complex64E">
+<span id="_CPPv3N3pni9type_id_t9Complex64E"></span><span id="_CPPv2N3pni9type_id_t9Complex64E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdad966dd0f6dc22b834b636fb9df4b756a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Complex64</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t9Complex64E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>64Bit IEEE floating point complex </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t10Complex128E">
-<span id="_CPPv3N3pni9type_id_t10Complex128E"></span><span id="_CPPv2N3pni9type_id_t10Complex128E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdaee63a91375f038924d9671f9fec7059b"></span><em class="property">enumerator </em><code class="sig-name descname">Complex128</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t10Complex128E" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t10Complex128E">
+<span id="_CPPv3N3pni9type_id_t10Complex128E"></span><span id="_CPPv2N3pni9type_id_t10Complex128E"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdaee63a91375f038924d9671f9fec7059b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Complex128</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t10Complex128E" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>128Bit IEEE floating point complex </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t6StringE">
-<span id="_CPPv3N3pni9type_id_t6StringE"></span><span id="_CPPv2N3pni9type_id_t6StringE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda27118326006d3829667a400ad23d5d98"></span><em class="property">enumerator </em><code class="sig-name descname">String</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t6StringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t6StringE">
+<span id="_CPPv3N3pni9type_id_t6StringE"></span><span id="_CPPv2N3pni9type_id_t6StringE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda27118326006d3829667a400ad23d5d98"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">String</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t6StringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>String type. </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t6BinaryE">
-<span id="_CPPv3N3pni9type_id_t6BinaryE"></span><span id="_CPPv2N3pni9type_id_t6BinaryE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda6ce976e8f061b2b5cfe4d0c50c3405dd"></span><em class="property">enumerator </em><code class="sig-name descname">Binary</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t6BinaryE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t6BinaryE">
+<span id="_CPPv3N3pni9type_id_t6BinaryE"></span><span id="_CPPv2N3pni9type_id_t6BinaryE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cda6ce976e8f061b2b5cfe4d0c50c3405dd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Binary</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t6BinaryE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>binary data </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t4BoolE">
-<span id="_CPPv3N3pni9type_id_t4BoolE"></span><span id="_CPPv2N3pni9type_id_t4BoolE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdac26f15e86e3de4c398a8273272aba034"></span><em class="property">enumerator </em><code class="sig-name descname">Bool</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t4BoolE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t4BoolE">
+<span id="_CPPv3N3pni9type_id_t4BoolE"></span><span id="_CPPv2N3pni9type_id_t4BoolE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdac26f15e86e3de4c398a8273272aba034"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Bool</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t4BoolE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>integer boolean data </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni9type_id_t5EBoolE">
-<span id="_CPPv3N3pni9type_id_t5EBoolE"></span><span id="_CPPv2N3pni9type_id_t5EBoolE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdae9ea9a7e4f8a765f1765d6f7a2ea187e"></span><em class="property">enumerator </em><code class="sig-name descname">EBool</code><a class="headerlink" href="#_CPPv4N3pni9type_id_t5EBoolE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni9type_id_t5EBoolE">
+<span id="_CPPv3N3pni9type_id_t5EBoolE"></span><span id="_CPPv2N3pni9type_id_t5EBoolE"></span><span class="target" id="group__type__classes_1gga2c8ca0de37c42914554a1a9e500b31cdae9ea9a7e4f8a765f1765d6f7a2ea187e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EBool</span></span></span><a class="headerlink" href="#_CPPv4N3pni9type_id_t5EBoolE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>enum boolean data </p>
 </dd></dl>
 
 </dd></dl>
 
-<div class="section" id="operators">
-<h3>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h3>
+<section id="operators">
+<h3>Operators<a class="headerlink" href="#operators" title="Permalink to this heading">¶</a></h3>
 <dl class="cpp function">
-<dt id="_CPPv4N3pnilsERNSt7ostreamERK9type_id_t">
-<span id="_CPPv3N3pnilsERNSt7ostreamERK9type_id_t"></span><span id="_CPPv2N3pnilsERNSt7ostreamERK9type_id_t"></span><span id="pni::lshift-operator__osR.type_id_tCR"></span><span class="target" id="group__type__classes_1ga73b873733f07704f8ddd93f6695cf9cc"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>o</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> &amp;<em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnilsERNSt7ostreamERK9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pnilsERNSt7ostreamERK9type_id_t">
+<span id="_CPPv3N3pnilsERNSt7ostreamERK9type_id_t"></span><span id="_CPPv2N3pnilsERNSt7ostreamERK9type_id_t"></span><span id="pni::lshift-operator__osR.type_id_tCR"></span><span class="target" id="group__type__classes_1ga86f4eca708a357c2a0db273a1ef0fc7b"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnilsERNSt7ostreamERK9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>output operator for type_id_t </p>
 <p>Adds a string representation of a TypeID to the output stream.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>reference to output stream </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: reference to output stream </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: reference to the TypID </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>o</strong> – reference to output stream </p></li>
+<li><p><strong>tid</strong> – reference to the TypID </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>reference to output stream </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
-</div>
-<div class="section" id="predicates">
-<h3>Predicates<a class="headerlink" href="#predicates" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="predicates">
+<h3>Predicates<a class="headerlink" href="#predicates" title="Permalink to this heading">¶</a></h3>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10is_numericE9type_id_t">
-<span id="_CPPv3N3pni10is_numericE9type_id_t"></span><span id="_CPPv2N3pni10is_numericE9type_id_t"></span><span id="pni::is_numeric__type_id_t"></span><span class="target" id="group__type__classes_1ga9dc46b894c5262ed43d7bdeec105a91e"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_numeric</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10is_numericE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10is_numericE9type_id_t">
+<span id="_CPPv3N3pni10is_numericE9type_id_t"></span><span id="_CPPv2N3pni10is_numericE9type_id_t"></span><span id="pni::is_numeric__type_id_t"></span><span class="target" id="group__type__classes_1ga9dc46b894c5262ed43d7bdeec105a91e"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_numeric</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10is_numericE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check numeric type </p>
 <p>Returns true if the type associated with tid belongs to the numeric types.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if tid refers to a numeric type, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tid</strong> – type ID of the type to check </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: type ID of the type to check </p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if tid refers to a numeric type, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10is_integerE9type_id_t">
-<span id="_CPPv3N3pni10is_integerE9type_id_t"></span><span id="_CPPv2N3pni10is_integerE9type_id_t"></span><span id="pni::is_integer__type_id_t"></span><span class="target" id="group__type__classes_1gac78b039a87a88888a5b1a0acf26a4f70"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_integer</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10is_integerE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10is_integerE9type_id_t">
+<span id="_CPPv3N3pni10is_integerE9type_id_t"></span><span id="_CPPv2N3pni10is_integerE9type_id_t"></span><span id="pni::is_integer__type_id_t"></span><span class="target" id="group__type__classes_1gac78b039a87a88888a5b1a0acf26a4f70"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_integer</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10is_integerE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check integer type </p>
 <p>Returns true if the type associated with tid belongs to the integer types.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if tid refers to an integer type, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tid</strong> – type ID of the type to check </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: type ID of the type to check </p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if tid refers to an integer type, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni10is_complexE9type_id_t">
-<span id="_CPPv3N3pni10is_complexE9type_id_t"></span><span id="_CPPv2N3pni10is_complexE9type_id_t"></span><span id="pni::is_complex__type_id_t"></span><span class="target" id="group__type__classes_1gae5aaa37c930a9d1f0407cce48f0115cc"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_complex</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10is_complexE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni10is_complexE9type_id_t">
+<span id="_CPPv3N3pni10is_complexE9type_id_t"></span><span id="_CPPv2N3pni10is_complexE9type_id_t"></span><span id="pni::is_complex__type_id_t"></span><span class="target" id="group__type__classes_1gae5aaa37c930a9d1f0407cce48f0115cc"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_complex</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni10is_complexE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check complex type </p>
 <p>Returns true if the type associated with tid belongs to the complex types.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if tid refers to a complex type, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tid</strong> – type ID of the type to check </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: type ID of the type to check </p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if tid refers to a complex type, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni8is_floatE9type_id_t">
-<span id="_CPPv3N3pni8is_floatE9type_id_t"></span><span id="_CPPv2N3pni8is_floatE9type_id_t"></span><span id="pni::is_float__type_id_t"></span><span class="target" id="group__type__classes_1gafd69134dd1bf43aa064f9a33ea8dde32"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_float</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8is_floatE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8is_floatE9type_id_t">
+<span id="_CPPv3N3pni8is_floatE9type_id_t"></span><span id="_CPPv2N3pni8is_floatE9type_id_t"></span><span id="pni::is_float__type_id_t"></span><span class="target" id="group__type__classes_1gafd69134dd1bf43aa064f9a33ea8dde32"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_float</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8is_floatE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check float type </p>
 <p>Returns true if the type associated with the tid belongs to the float types.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if tid refers to a float type, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tid</strong> – id of the type to check </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tid</span></code>: id of the type to check </p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if tid refers to a float type, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni22is_checked_convertibleE9type_id_t9type_id_t">
-<span id="_CPPv3N3pni22is_checked_convertibleE9type_id_t9type_id_t"></span><span id="_CPPv2N3pni22is_checked_convertibleE9type_id_t9type_id_t"></span><span id="pni::is_checked_convertible__type_id_t.type_id_t"></span><span class="target" id="group__type__classes_1ga2757078f2804201c182045700d3c150a"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_checked_convertible</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>source_tid</em>, <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>target_tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni22is_checked_convertibleE9type_id_t9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni22is_checked_convertibleE9type_id_t9type_id_t">
+<span id="_CPPv3N3pni22is_checked_convertibleE9type_id_t9type_id_t"></span><span id="_CPPv2N3pni22is_checked_convertibleE9type_id_t9type_id_t"></span><span id="pni::is_checked_convertible__type_id_t.type_id_t"></span><span class="target" id="group__type__classes_1ga2757078f2804201c182045700d3c150a"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_checked_convertible</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">source_tid</span></span>, <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">target_tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni22is_checked_convertibleE9type_id_t9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two types are checked convertible </p>
 <p>Returns true if two types, determined by their type ID, are checked convertible.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if types are checked convertible, false otherwise </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">source_tid</span></code>: ID of the source type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">target_tid</span></code>: ID of the target type </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_tid</strong> – ID of the source type </p></li>
+<li><p><strong>target_tid</strong> – ID of the target type </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if types are checked convertible, false otherwise </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni24is_unchecked_convertibleE9type_id_t9type_id_t">
-<span id="_CPPv3N3pni24is_unchecked_convertibleE9type_id_t9type_id_t"></span><span id="_CPPv2N3pni24is_unchecked_convertibleE9type_id_t9type_id_t"></span><span id="pni::is_unchecked_convertible__type_id_t.type_id_t"></span><span class="target" id="group__type__classes_1gaa3687c344d76e9bacd58d9291963947b"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_unchecked_convertible</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>source_tid</em>, <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>target_tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni24is_unchecked_convertibleE9type_id_t9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni24is_unchecked_convertibleE9type_id_t9type_id_t">
+<span id="_CPPv3N3pni24is_unchecked_convertibleE9type_id_t9type_id_t"></span><span id="_CPPv2N3pni24is_unchecked_convertibleE9type_id_t9type_id_t"></span><span id="pni::is_unchecked_convertible__type_id_t.type_id_t"></span><span class="target" id="group__type__classes_1gaa3687c344d76e9bacd58d9291963947b"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_unchecked_convertible</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">source_tid</span></span>, <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">target_tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni24is_unchecked_convertibleE9type_id_t9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two types are unchecked convertible </p>
 <p>Returns true if two types, determined by their type ID, are unchecked convertible.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if types are unchecked convertible, false otherwise </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">source_tid</span></code>: ID of the source type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">target_tid</span></code>: ID of the target type </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_tid</strong> – ID of the source type </p></li>
+<li><p><strong>target_tid</strong> – ID of the target type </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if types are unchecked convertible, false otherwise </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni14is_convertibleE9type_id_t9type_id_t">
-<span id="_CPPv3N3pni14is_convertibleE9type_id_t9type_id_t"></span><span id="_CPPv2N3pni14is_convertibleE9type_id_t9type_id_t"></span><span id="pni::is_convertible__type_id_t.type_id_t"></span><span class="target" id="group__type__classes_1gacae1092dd40556ecdb80eed479f3f0af"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">is_convertible</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>source_tid</em>, <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>target_tid</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni14is_convertibleE9type_id_t9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni14is_convertibleE9type_id_t9type_id_t">
+<span id="_CPPv3N3pni14is_convertibleE9type_id_t9type_id_t"></span><span id="_CPPv2N3pni14is_convertibleE9type_id_t9type_id_t"></span><span id="pni::is_convertible__type_id_t.type_id_t"></span><span class="target" id="group__type__classes_1gacae1092dd40556ecdb80eed479f3f0af"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">is_convertible</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">source_tid</span></span>, <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">target_tid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni14is_convertibleE9type_id_t9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check if two types are unchecked convertible </p>
 <p>Returns true if two types, determined by their type ID, are convertible.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if types are , false otherwise </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">source_tid</span></code>: ID of the source type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">target_tid</span></code>: ID of the target type </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_tid</strong> – ID of the source type </p></li>
+<li><p><strong>target_tid</strong> – ID of the target type </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if types are , false otherwise </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
-</div>
-<div class="section" id="utility-functions">
-<h3>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="utility-functions">
+<h3>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this heading">¶</a></h3>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni16type_id_from_strERK6string">
-<span id="_CPPv3N3pni16type_id_from_strERK6string"></span><span id="_CPPv2N3pni16type_id_from_strERK6string"></span><span id="pni::type_id_from_str__stringCR"></span><span class="target" id="group__type__classes_1gab184958f9dfbd01a2bc687d0e09a6944"></span>PNINEXUS_EXPORT <a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id_from_str</code><span class="sig-paren">(</span><em class="property">const</em> string &amp;<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni16type_id_from_strERK6string" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni16type_id_from_strERK6string">
+<span id="_CPPv3N3pni16type_id_from_strERK6string"></span><span id="_CPPv2N3pni16type_id_from_strERK6string"></span><span id="pni::type_id_from_str__stringCR"></span><span class="target" id="group__type__classes_1gab184958f9dfbd01a2bc687d0e09a6944"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">type_id_from_str</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni16type_id_from_strERK6string" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get a type ID from a string </p>
 <p>Returns the type ID for a particular string representation of a type. If the string passed is not a valid type representation an exception will be thrown.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>corresponding type ID </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni9key_errorE" title="pni::key_error"><span class="n">key_error</span></a></span></span> – if the string does not describe a type </p>
 </dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1key__error"><span class="std std-ref"><span class="pre">key_error</span></span></a></code>: if the string does not describe a type </p></li>
-</ul>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>s</strong> – string representation of the type </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: string representation of the type </p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>corresponding type ID </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni16str_from_type_idE9type_id_t">
-<span id="_CPPv3N3pni16str_from_type_idE9type_id_t"></span><span id="_CPPv2N3pni16str_from_type_idE9type_id_t"></span><span id="pni::str_from_type_id__type_id_t"></span><span class="target" id="group__type__classes_1gadeedd118d2eb933e54e989eea4d85528"></span>PNINEXUS_EXPORT string <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">str_from_type_id</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni16str_from_type_idE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni16str_from_type_idE9type_id_t">
+<span id="_CPPv3N3pni16str_from_type_idE9type_id_t"></span><span id="_CPPv2N3pni16str_from_type_idE9type_id_t"></span><span id="pni::str_from_type_id__type_id_t"></span><span class="target" id="group__type__classes_1gadeedd118d2eb933e54e989eea4d85528"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">str_from_type_id</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni16str_from_type_idE9type_id_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get the string rep. for a type </p>
 <p>Returns the string representation for a type determined by its type id. If the type determined by the ID does not have a string representation an exception will be thrown.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>string representation of the type </p>
+<dl class="field-list simple">
+<dt class="field-odd">Throws<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span><span class="cpp-expr sig sig-inline cpp"><a class="reference internal" href="core_exception.html#_CPPv4N3pni9key_errorE" title="pni::key_error"><span class="n">key_error</span></a></span></span> – if the type has no string representation </p>
 </dd>
-<dt><strong>Exceptions</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><a class="reference internal" href="core_exception.html#classpni_1_1key__error"><span class="std std-ref"><span class="pre">key_error</span></span></a></code>: if the type has no string representation </p></li>
-</ul>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id</strong> – type ID of the type </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code>: type ID of the type </p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string representation of the type </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT">
-<span id="_CPPv3I0EN3pni7type_idERK8GeneralT"></span><span id="_CPPv2I0EN3pni7type_idERK8GeneralT"></span>template&lt;typename <code class="sig-name descname">GeneralT</code>&gt;<br /><span class="target" id="group__type__classes_1ga3e9d1dd5f5654e103f9dc31e9d68de16"></span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t">type_id_t</a> <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_id</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT" title="pni::type_id::GeneralT">GeneralT</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT">
+<span id="_CPPv3I0EN3pni7type_idERK8GeneralT"></span><span id="_CPPv2I0EN3pni7type_idERK8GeneralT"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GeneralT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="group__type__classes_1ga3e9d1dd5f5654e103f9dc31e9d68de16"></span><a class="reference internal" href="#_CPPv4N3pni9type_id_tE" title="pni::type_id_t"><span class="n"><span class="pre">type_id_t</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">type_id</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT" title="pni::type_id::GeneralT"><span class="n"><span class="pre">GeneralT</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pni7type_idE9type_id_tRK8GeneralT" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get type id of an object </p>
 <p>This function returns the type ID of an instance of an object. In the case of scalar data the type if a variable is returned. If the argument passed is a container the type id of the element type is returned.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>type ID </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>GeneralT</strong> – type if the object </p>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">GeneralT</span></code>: type if the object </p></li>
-</ul>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>type ID </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="pni-type-class-t">
-<h2><a class="reference internal" href="#_CPPv4N3pni12type_class_tE" title="pni::type_class_t"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">pni::type_class_t</span></code></a><a class="headerlink" href="#pni-type-class-t" title="Permalink to this headline">¶</a></h2>
-<dl class="cpp enum">
-<dt id="_CPPv4N3pni12type_class_tE">
-<span id="_CPPv3N3pni12type_class_tE"></span><span id="_CPPv2N3pni12type_class_tE"></span><span class="target" id="group__type__classes_1ga1642c8c1645f56b86fac5837490b408d"></span><em class="property">enum </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">type_class_t</code><a class="headerlink" href="#_CPPv4N3pni12type_class_tE" title="Permalink to this definition">¶</a><br /></dt>
+</section>
+</section>
+<section id="pni-type-class-t">
+<h2><a class="reference internal" href="#_CPPv4N3pni12type_class_tE" title="pni::type_class_t"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">pni::type_class_t</span></code></a><a class="headerlink" href="#pni-type-class-t" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_tE">
+<span id="_CPPv3N3pni12type_class_tE"></span><span id="_CPPv2N3pni12type_class_tE"></span><span class="target" id="group__type__classes_1ga1642c8c1645f56b86fac5837490b408d"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">type_class_t</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>type class definitions </p>
 <p>classes of data types provided by the PNI utility library </p>
 <p><em>Values:</em></p>
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t4NoneE">
-<span id="_CPPv3N3pni12type_class_t4NoneE"></span><span id="_CPPv2N3pni12type_class_t4NoneE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da6adf97f83acf6453d4a6a4b1070f3754"></span><em class="property">enumerator </em><code class="sig-name descname">None</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t4NoneE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t4NoneE">
+<span id="_CPPv3N3pni12type_class_t4NoneE"></span><span id="_CPPv2N3pni12type_class_t4NoneE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da6adf97f83acf6453d4a6a4b1070f3754"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">None</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t4NoneE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>unspecified type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t7IntegerE">
-<span id="_CPPv3N3pni12type_class_t7IntegerE"></span><span id="_CPPv2N3pni12type_class_t7IntegerE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408daa0faef0851b4294c06f2b94bb1cb2044"></span><em class="property">enumerator </em><code class="sig-name descname">Integer</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t7IntegerE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t7IntegerE">
+<span id="_CPPv3N3pni12type_class_t7IntegerE"></span><span id="_CPPv2N3pni12type_class_t7IntegerE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408daa0faef0851b4294c06f2b94bb1cb2044"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Integer</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t7IntegerE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>integer type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t5FloatE">
-<span id="_CPPv3N3pni12type_class_t5FloatE"></span><span id="_CPPv2N3pni12type_class_t5FloatE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da22ae0e2b89e5e3d477f988cc36d3272b"></span><em class="property">enumerator </em><code class="sig-name descname">Float</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t5FloatE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t5FloatE">
+<span id="_CPPv3N3pni12type_class_t5FloatE"></span><span id="_CPPv2N3pni12type_class_t5FloatE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da22ae0e2b89e5e3d477f988cc36d3272b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Float</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t5FloatE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>floating point type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t6BinaryE">
-<span id="_CPPv3N3pni12type_class_t6BinaryE"></span><span id="_CPPv2N3pni12type_class_t6BinaryE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da6ce976e8f061b2b5cfe4d0c50c3405dd"></span><em class="property">enumerator </em><code class="sig-name descname">Binary</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t6BinaryE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t6BinaryE">
+<span id="_CPPv3N3pni12type_class_t6BinaryE"></span><span id="_CPPv2N3pni12type_class_t6BinaryE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da6ce976e8f061b2b5cfe4d0c50c3405dd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Binary</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t6BinaryE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>binary data type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t4BoolE">
-<span id="_CPPv3N3pni12type_class_t4BoolE"></span><span id="_CPPv2N3pni12type_class_t4BoolE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408dac26f15e86e3de4c398a8273272aba034"></span><em class="property">enumerator </em><code class="sig-name descname">Bool</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t4BoolE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t4BoolE">
+<span id="_CPPv3N3pni12type_class_t4BoolE"></span><span id="_CPPv2N3pni12type_class_t4BoolE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408dac26f15e86e3de4c398a8273272aba034"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Bool</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t4BoolE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>boolean data type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t7ComplexE">
-<span id="_CPPv3N3pni12type_class_t7ComplexE"></span><span id="_CPPv2N3pni12type_class_t7ComplexE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da10b4eb76294b70d7fd6df997ff06edb1"></span><em class="property">enumerator </em><code class="sig-name descname">Complex</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t7ComplexE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t7ComplexE">
+<span id="_CPPv3N3pni12type_class_t7ComplexE"></span><span id="_CPPv2N3pni12type_class_t7ComplexE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da10b4eb76294b70d7fd6df997ff06edb1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Complex</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t7ComplexE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>complex data type </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N3pni12type_class_t6StringE">
-<span id="_CPPv3N3pni12type_class_t6StringE"></span><span id="_CPPv2N3pni12type_class_t6StringE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da27118326006d3829667a400ad23d5d98"></span><em class="property">enumerator </em><code class="sig-name descname">String</code><a class="headerlink" href="#_CPPv4N3pni12type_class_t6StringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni12type_class_t6StringE">
+<span id="_CPPv3N3pni12type_class_t6StringE"></span><span id="_CPPv2N3pni12type_class_t6StringE"></span><span class="target" id="group__type__classes_1gga1642c8c1645f56b86fac5837490b408da27118326006d3829667a400ad23d5d98"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">String</span></span></span><a class="headerlink" href="#_CPPv4N3pni12type_class_t6StringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>class for string types </p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="pni-bool-t">
-<h2><a class="reference internal" href="#_CPPv4N3pni6bool_tE" title="pni::bool_t"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::bool_t</span></code></a><a class="headerlink" href="#pni-bool-t" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pni-bool-t">
+<h2><a class="reference internal" href="#_CPPv4N3pni6bool_tE" title="pni::bool_t"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::bool_t</span></code></a><a class="headerlink" href="#pni-bool-t" title="Permalink to this heading">¶</a></h2>
 <dl class="cpp class">
-<dt id="_CPPv4N3pni6bool_tE">
-<span id="_CPPv3N3pni6bool_tE"></span><span id="_CPPv2N3pni6bool_tE"></span><span id="pni::bool_t"></span><span class="target" id="classpni_1_1bool__t"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">bool_t</code><a class="headerlink" href="#_CPPv4N3pni6bool_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni6bool_tE">
+<span id="_CPPv3N3pni6bool_tE"></span><span id="_CPPv2N3pni6bool_tE"></span><span id="pni::bool_t"></span><span class="target" id="classpni_1_1bool__t"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bool_t</span></span></span><a class="headerlink" href="#_CPPv4N3pni6bool_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>boolean type </p>
 <p>There is a particular problem when using the standard bool type in connection with std::vector. The std::vector template is overloaded for bool in a sense that each boolean value is stored in an individual bit. Thus elements cannot be addressed. Thus std::vector&lt;bool&gt; cannot be used in connection with libpninexus. This type prevents the C++ compiler to overload std:vector&lt;bool_t&gt; making boolean values available for libpninexus. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni6bool_t6bool_tEv">
-<span id="_CPPv3N3pni6bool_t6bool_tEv"></span><span id="_CPPv2N3pni6bool_t6bool_tEv"></span><span id="pni::bool_t::bool_t"></span><span class="target" id="classpni_1_1bool__t_1ab9df2f212a254a3c51ee72a332bbad30"></span><code class="sig-name descname">bool_t</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6bool_t6bool_tEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni6bool_t6bool_tEv">
+<span id="_CPPv3N3pni6bool_t6bool_tEv"></span><span id="_CPPv2N3pni6bool_t6bool_tEv"></span><span id="pni::bool_t::bool_t"></span><span class="target" id="classpni_1_1bool__t_1ab9df2f212a254a3c51ee72a332bbad30"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bool_t</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6bool_t6bool_tEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni6bool_t6bool_tEb">
-<span id="_CPPv3N3pni6bool_t6bool_tEb"></span><span id="_CPPv2N3pni6bool_t6bool_tEb"></span><span id="pni::bool_t::bool_t__b"></span><span class="target" id="classpni_1_1bool__t_1a55ba2a02d61a7f4422e43dccd378191a"></span><code class="sig-name descname">bool_t</code><span class="sig-paren">(</span>bool <em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6bool_t6bool_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni6bool_t6bool_tEb">
+<span id="_CPPv3N3pni6bool_t6bool_tEb"></span><span id="_CPPv2N3pni6bool_t6bool_tEb"></span><span id="pni::bool_t::bool_t__b"></span><span class="target" id="classpni_1_1bool__t_1a55ba2a02d61a7f4422e43dccd378191a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bool_t</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">v</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni6bool_t6bool_tEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>conversion constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni6bool_tcvbEv">
-<span id="_CPPv3NK3pni6bool_tcvbEv"></span><span id="_CPPv2NK3pni6bool_tcvbEv"></span><span id="pni::bool_t::castto-b-operatorC"></span><span class="target" id="classpni_1_1bool__t_1a37d8fcd08f5e2ff79192d380dfec826d"></span><code class="sig-name descname">operator bool</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni6bool_tcvbEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni6bool_tcvbEv">
+<span id="_CPPv3NK3pni6bool_tcvbEv"></span><span id="_CPPv2NK3pni6bool_tcvbEv"></span><span id="pni::bool_t::castto-b-operatorC"></span><span class="target" id="classpni_1_1bool__t_1a37d8fcd08f5e2ff79192d380dfec826d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni6bool_tcvbEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>conversion operator </p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="pni-none">
-<h2><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::none</span></code></a><a class="headerlink" href="#pni-none" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pni-none">
+<h2><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::none</span></code></a><a class="headerlink" href="#pni-none" title="Permalink to this heading">¶</a></h2>
 <dl class="cpp struct">
-<dt id="_CPPv4N3pni4noneE">
-<span id="_CPPv3N3pni4noneE"></span><span id="_CPPv2N3pni4noneE"></span><span id="pni::none"></span><span class="target" id="structpni_1_1none"></span><em class="property">struct </em><code class="sig-name descname">none</code><a class="headerlink" href="#_CPPv4N3pni4noneE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni4noneE">
+<span id="_CPPv3N3pni4noneE"></span><span id="_CPPv2N3pni4noneE"></span><span id="pni::none"></span><span class="target" id="structpni_1_1none"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">none</span></span></span><a class="headerlink" href="#_CPPv4N3pni4noneE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>none type </p>
 <p>This type is used in situations where a type for initialization is required but not provided (or at the moment not available). It thus denotes the absence of type information. </p>
 </dd></dl>
 
-<div class="section" id="id1">
-<h3>Operators<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>Operators<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <dl class="cpp function">
-<dt id="_CPPv4N3pnilsERNSt7ostreamERK4none">
-<span id="_CPPv3N3pnilsERNSt7ostreamERK4none"></span><span id="_CPPv2N3pnilsERNSt7ostreamERK4none"></span><span id="pni::lshift-operator__osR.noneCR"></span><span class="target" id="group__type__classes_1ga73bdb8ed778470ebcbfccda9ecf4001c"></span>PNINEXUS_EXPORT std::ostream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>stream</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none">none</a> &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnilsERNSt7ostreamERK4none" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pnilsERNSt7ostreamERK4none">
+<span id="_CPPv3N3pnilsERNSt7ostreamERK4none"></span><span id="_CPPv2N3pnilsERNSt7ostreamERK4none"></span><span id="pni::lshift-operator__osR.noneCR"></span><span class="target" id="group__type__classes_1ga846541ddc4268f4f83fc5a70ce4ee62c"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><span class="n"><span class="pre">none</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnilsERNSt7ostreamERK4none" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>output stream for none </p>
 <p>Using the none type with the output stream operator has no effect and does not modify the stream.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>reference to the output stream </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code>: reference the output stream </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: none instance </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> – reference the output stream </p></li>
+<li><p><strong>n</strong> – none instance </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>reference to the output stream </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pnirsERNSt7istreamER4none">
-<span id="_CPPv3N3pnirsERNSt7istreamER4none"></span><span id="_CPPv2N3pnirsERNSt7istreamER4none"></span><span id="pni::rshift-operator__isR.noneR"></span><span class="target" id="group__type__classes_1gaed999ca8bafe7e4028123834e6a163ae"></span>PNINEXUS_EXPORT std::istream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&gt;&gt;</code><span class="sig-paren">(</span>std::istream &amp;<em>stream</em>, <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none">none</a> &amp;<em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnirsERNSt7istreamER4none" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pnirsERNSt7istreamER4none">
+<span id="_CPPv3N3pnirsERNSt7istreamER4none"></span><span id="_CPPv2N3pnirsERNSt7istreamER4none"></span><span id="pni::rshift-operator__isR.noneR"></span><span class="target" id="group__type__classes_1gae4a7efca1430d8235ea0117813ddcb63"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">istream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&gt;&gt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">istream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><span class="n"><span class="pre">none</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnirsERNSt7istreamER4none" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>input stream for none </p>
 <p>Using the none type with the input stream operator has no effect and does not modify the stream.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>reference to the input stream </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">stream</span></code>: reference the input stream </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code>: none instance </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stream</strong> – reference the input stream </p></li>
+<li><p><strong>n</strong> – none instance </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>reference to the input stream </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pnieqERK4noneRK4none">
-<span id="_CPPv3N3pnieqERK4noneRK4none"></span><span id="_CPPv2N3pnieqERK4noneRK4none"></span><span id="pni::eq-operator__noneCR.noneCR"></span><span class="target" id="group__type__classes_1gacf05b9b0fa6d3b2841056c5c2d4404eb"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator==</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none">none</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none">none</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnieqERK4noneRK4none" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pnieqERK4noneRK4none">
+<span id="_CPPv3N3pnieqERK4noneRK4none"></span><span id="_CPPv2N3pnieqERK4noneRK4none"></span><span id="pni::eq-operator__noneCR.noneCR"></span><span class="target" id="group__type__classes_1gacf05b9b0fa6d3b2841056c5c2d4404eb"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">==</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><span class="n"><span class="pre">none</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><span class="n"><span class="pre">none</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnieqERK4noneRK4none" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>equality operator for none </p>
 <p>Two instance of none are always considered equal.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>always true </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: instance on the lhs of the operator </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: instance on the rhs of the operator </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – instance on the lhs of the operator </p></li>
+<li><p><strong>b</strong> – instance on the rhs of the operator </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>always true </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pnineERK4noneRK4none">
-<span id="_CPPv3N3pnineERK4noneRK4none"></span><span id="_CPPv2N3pnineERK4noneRK4none"></span><span id="pni::neq-operator__noneCR.noneCR"></span><span class="target" id="group__type__classes_1gaa7e3e9f567bd2819c1644b9e519b11cb"></span>PNINEXUS_EXPORT bool <code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator!=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none">none</a> &amp;<em>a</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none">none</a> &amp;<em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnineERK4noneRK4none" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pnineERK4noneRK4none">
+<span id="_CPPv3N3pnineERK4noneRK4none"></span><span id="_CPPv2N3pnineERK4noneRK4none"></span><span id="pni::neq-operator__noneCR.noneCR"></span><span class="target" id="group__type__classes_1gaa7e3e9f567bd2819c1644b9e519b11cb"></span><span class="pre">PNINEXUS_EXPORT</span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">!=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><span class="n"><span class="pre">none</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni4noneE" title="pni::none"><span class="n"><span class="pre">none</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">b</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pnineERK4noneRK4none" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>inquality operator for none </p>
 <p>Two instances of none are always equal and thus this will always return false.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>always false </p>
-</dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: instance on the lhs of the operator </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: instnace on the rhs of the operator </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – instance on the lhs of the operator </p></li>
+<li><p><strong>b</strong> – instnace on the rhs of the operator </p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>always false </p>
+</dd>
 </dl>
-</p>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="pni-binary-t">
-<h2><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::binary_t</span></code></a><a class="headerlink" href="#pni-binary-t" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="pni-binary-t">
+<h2><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">pni::binary_t</span></code></a><a class="headerlink" href="#pni-binary-t" title="Permalink to this heading">¶</a></h2>
 <dl class="cpp class">
-<dt id="_CPPv4I0EN3pni8binary_tE">
-<span id="_CPPv3I0EN3pni8binary_tE"></span><span id="_CPPv2I0EN3pni8binary_tE"></span>template&lt;typename <code class="sig-name descname">NativeT</code>&gt;<br /><span class="target" id="classpni_1_1binary__t"></span><em class="property">class </em><code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">binary_t</code><a class="headerlink" href="#_CPPv4I0EN3pni8binary_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN3pni8binary_tE">
+<span id="_CPPv3I0EN3pni8binary_tE"></span><span id="_CPPv2I0EN3pni8binary_tE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NativeT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpni_1_1binary__t"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">binary_t</span></span></span><a class="headerlink" href="#_CPPv4I0EN3pni8binary_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Binary data type. </p>
 <p>This class represents a binary data type. Typically binary data is represented by a typedef to an unsigned char type. However, this has an inconvenience: the unsigned char and the typedef for binary are indistinguishable by the compiler. Thus, such a binary type cannot be used for function overloading or for template specialization - it would always be treated by the compiler as the underlying unsigned char type. </p>
 <p>To circumvent this problem <code class="docutils literal notranslate"><span class="pre">libpninexus</span></code> defines this binary type which can be used instead of a simple typedef to unsigned char. The BinaryType template has several advantages:</p>
@@ -550,47 +550,45 @@
 <li><p>it can be distinguished from the type used to store binary data </p></li>
 <li><p>all arithmetic operators are stripped from the type.</p></li>
 </ul>
-<p>Thus this type cannot be used for arithmetic operations directly. Its primary purpose is to hold uninterpreted binary data for transfer. However it can be converted to the native type used to hold the data. Stream operators are provided for IO operations using binary data.</p>
-</p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NativeT</span></code>: native type used to store binary data </p></li>
-</ul>
+
+Thus this type cannot be used for arithmetic operations directly. Its primary purpose is to hold uninterpreted binary data for transfer. However it can be converted to the native type used to hold the data. Stream operators are provided for IO operations using binary data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NativeT</strong> – native type used to store binary data </p>
 </dd>
 </dl>
-</p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
 <dl class="cpp type">
-<dt id="_CPPv4N3pni8binary_t12storage_typeE">
-<span id="_CPPv3N3pni8binary_t12storage_typeE"></span><span id="_CPPv2N3pni8binary_t12storage_typeE"></span><span id="pni::binary_t::storage_type"></span><span class="target" id="classpni_1_1binary__t_1ac7018c065a00c842d45d6416ed30c22e"></span><em class="property">typedef </em><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t::NativeT">NativeT</a> <code class="sig-name descname">storage_type</code><a class="headerlink" href="#_CPPv4N3pni8binary_t12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8binary_t12storage_typeE">
+<span id="_CPPv3N3pni8binary_t12storage_typeE"></span><span id="_CPPv2N3pni8binary_t12storage_typeE"></span><span id="pni::binary_t::storage_type"></span><span class="target" id="classpni_1_1binary__t_1ac7018c065a00c842d45d6416ed30c22e"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t::NativeT"><span class="n"><span class="pre">NativeT</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">storage_type</span></span></span><a class="headerlink" href="#_CPPv4N3pni8binary_t12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>native type that is used for binary data </p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N3pni8binary_t8binary_tEv">
-<span id="_CPPv3N3pni8binary_t8binary_tEv"></span><span id="_CPPv2N3pni8binary_t8binary_tEv"></span><span id="pni::binary_t::binary_t"></span><span class="target" id="classpni_1_1binary__t_1afb0b2a804050279ffbbff8cd286ab482"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8binary_t8binary_tEv">
+<span id="_CPPv3N3pni8binary_t8binary_tEv"></span><span id="_CPPv2N3pni8binary_t8binary_tEv"></span><span id="pni::binary_t::binary_t"></span><span class="target" id="classpni_1_1binary__t_1afb0b2a804050279ffbbff8cd286ab482"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">binary_t</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>default constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni8binary_t8binary_tERK12storage_type">
-<span id="_CPPv3N3pni8binary_t8binary_tERK12storage_type"></span><span id="_CPPv2N3pni8binary_t8binary_tERK12storage_type"></span><span id="pni::binary_t::binary_t__storage_typeCR"></span><span class="target" id="classpni_1_1binary__t_1aa9967391d5804f2fd9bde460209234b1"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type">storage_type</a> &amp;<em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK12storage_type" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8binary_t8binary_tERK12storage_type">
+<span id="_CPPv3N3pni8binary_t8binary_tERK12storage_type"></span><span id="_CPPv2N3pni8binary_t8binary_tERK12storage_type"></span><span id="pni::binary_t::binary_t__storage_typeCR"></span><span class="target" id="classpni_1_1binary__t_1aa9967391d5804f2fd9bde460209234b1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">binary_t</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type"><span class="n"><span class="pre">storage_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK12storage_type" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE">
-<span id="_CPPv3N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="_CPPv2N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="pni::binary_t::binary_t__binary_t:storage_type:CR"></span><span class="target" id="classpni_1_1binary__t_1a3ac008397b9a0641d9250455d25a7e38"></span><code class="sig-name descname">binary_t</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="pni::binary_t::binary_t">binary_t</a>&lt;<a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type">storage_type</a>&gt; &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE">
+<span id="_CPPv3N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="_CPPv2N3pni8binary_t8binary_tERK8binary_tI12storage_typeE"></span><span id="pni::binary_t::binary_t__binary_t:storage_type:CR"></span><span class="target" id="classpni_1_1binary__t_1a3ac008397b9a0641d9250455d25a7e38"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">binary_t</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="pni::binary_t::binary_t"><span class="n"><span class="pre">binary_t</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N3pni8binary_t12storage_typeE" title="pni::binary_t::storage_type"><span class="n"><span class="pre">storage_type</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N3pni8binary_t8binary_tERK8binary_tI12storage_typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>copy constructor </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4NK3pni8binary_tcv7NativeTEv">
-<span id="_CPPv3NK3pni8binary_tcv7NativeTEv"></span><span id="_CPPv2NK3pni8binary_tcv7NativeTEv"></span><span id="pni::binary_t::castto-NativeT-operatorC"></span><span class="target" id="classpni_1_1binary__t_1af164ab5afbd4529b4139c9cdf3f863a0"></span><code class="sig-name descname">operator NativeT</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK3pni8binary_tcv7NativeTEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK3pni8binary_tcv7NativeTEv">
+<span id="_CPPv3NK3pni8binary_tcv7NativeTEv"></span><span id="_CPPv2NK3pni8binary_tcv7NativeTEv"></span><span id="pni::binary_t::castto-NativeT-operatorC"></span><span class="target" id="classpni_1_1binary__t_1af164ab5afbd4529b4139c9cdf3f863a0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t::NativeT"><span class="n"><span class="pre">NativeT</span></span></a></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK3pni8binary_tcv7NativeTEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>conversion operator</p>
 <p>Allows a conversion from BinaryType&lt;NativeT&gt; to the underlying NativeT. </p>
 </dd></dl>
@@ -599,28 +597,28 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE">
-<span id="_CPPv3I0EN3pnilsERNSt7ostreamERK8binary_tI7NativeTE"></span><span id="_CPPv2I0EN3pnilsERNSt7ostreamERK8binary_tI7NativeTE"></span>template&lt;typename <code class="sig-name descname">NativeT</code>&gt;<br /><span class="target" id="group__type__classes_1ga62d81b395f0abab9dc37fac6a767c06d"></span>std::ostream &amp;<code class="sig-prename descclassname">pni<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">operator&lt;&lt;</code><span class="sig-paren">(</span>std::ostream &amp;<em>os</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t">binary_t</a>&lt;<a class="reference internal" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE" title="pni::operator&lt;&lt;::NativeT">NativeT</a>&gt; &amp;<em>o</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE">
+<span id="_CPPv3I0EN3pnilsERNSt7ostreamERK8binary_tI7NativeTE"></span><span id="_CPPv2I0EN3pnilsERNSt7ostreamERK8binary_tI7NativeTE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NativeT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="group__type__classes_1ga26d0ae4e6bc37d793b2884a84966f80f"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-prename descclassname"><span class="n"><span class="pre">pni</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">os</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN3pni8binary_tE" title="pni::binary_t"><span class="n"><span class="pre">binary_t</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE" title="pni::operator&lt;&lt;::NativeT"><span class="n"><span class="pre">NativeT</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN3pnilsERNSt7ostreamERNSt7ostreamERK8binary_tI7NativeTE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>output stream operator for binary data </p>
 <p>This is the overloaded output stream operator for binary data.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>reference to the modified output stream </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NativeT</strong> – basic type for binary </p>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">NativeT</span></code>: basic type for binary </p></li>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>os</strong> – reference to the output stream </p></li>
+<li><p><strong>o</strong> – reference to the binary object </p></li>
 </ul>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">os</span></code>: reference to the output stream </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">o</span></code>: reference to the binary object </p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>reference to the modified output stream </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -629,8 +627,9 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Data types and type management</a><ul>
 <li><a class="reference internal" href="#pni-type-id-t"><code class="xref cpp cpp-enum docutils literal notranslate"><span class="pre">pni::type_id_t</span></code></a><ul>
 <li><a class="reference internal" href="#operators">Operators</a></li>
@@ -649,28 +648,34 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="core.html"
-                        title="previous chapter">PNI core API</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="core_type_erasure.html"
-                        title="next chapter">Type erasures</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="nexus_utils.html"
+                          title="previous chapter">Utility functions and classes</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="core_type_erasure.html"
+                          title="next chapter">Type erasures</a></p>
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script><p>
+<script>document.getElementById('searchbox').style.display = "block"</script><p>
   <h3 class='versions'>Versions</h3>
   <p>
     <ul>
       <li><a class="reference external" href="../index/../../latest/index.html">v:latest</a></li>
       <li><a class="reference external" href="../index/../../stable/index.html">v:stable</a></li>
       
+      <li><a class="reference external" href="../index/../../v3.2.0/index.html">v3.2.0</a></li>
       <li><a class="reference external" href="../index/../../v3.1.0/index.html">v3.1.0</a></li>
       <li><a class="reference external" href="../index/../../v3.0.4/index.html">v3.0.4</a></li>
       <li><a class="reference external" href="../index/../../v3.0.3/index.html">v3.0.3</a></li>
@@ -698,17 +703,16 @@
           <a href="core_type_erasure.html" title="Type erasures"
              >next</a> |</li>
         <li class="right" >
-          <a href="core.html" title="PNI core API"
+          <a href="nexus_utils.html" title="Utility functions and classes"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">libpninexus 3.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >API documentation</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="core.html" >PNI core API</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Data types and type management</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, DESY, Eugen Wintersberger.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
   </body>
 </html>

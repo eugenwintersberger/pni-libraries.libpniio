@@ -1,6 +1,6 @@
 var ifd__entry_8hpp =
 [
-    [ "ifd_entry", "classpni_1_1tiff_1_1ifd__entry.html", "classpni_1_1tiff_1_1ifd__entry" ],
+    [ "pni::tiff::ifd_entry", "classpni_1_1tiff_1_1ifd__entry.html", "classpni_1_1tiff_1_1ifd__entry" ],
     [ "ifd_entry_type_id", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19", [
       [ "Byte", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19aa245c3230debe5c956484ecc6fa93877", null ],
       [ "ASCII", "ifd__entry_8hpp.html#a2fbe7af1ba1b5a746af470fdaa837a19ad2cd8253361a9c732d21ca1d336599cc", null ],

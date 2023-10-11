@@ -1,26 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,557,109,584"/>
-<area shape="rect" id="node2" href="$classpni_1_1exception.html" title="Exceptions base class." alt="" coords="157,557,260,584"/>
-<area shape="rect" id="node3" href="$classpni_1_1cli__argument__error.html" title="command line argument error" alt="" coords="320,5,475,32"/>
-<area shape="rect" id="node4" href="$classpni_1_1cli__error.html" title="general CLI error" alt="" coords="351,56,444,83"/>
-<area shape="rect" id="node5" href="$classpni_1_1cli__help__request.html" title="help request" alt="" coords="327,107,468,133"/>
-<area shape="rect" id="node6" href="$classpni_1_1cli__option__error.html" title="command line option error" alt="" coords="330,157,465,184"/>
-<area shape="rect" id="node7" href="$classpni_1_1file__error.html" title="file IO fails" alt="" coords="349,208,446,235"/>
-<area shape="rect" id="node8" href="$classpni_1_1index__error.html" title="index error" alt="" coords="342,259,453,285"/>
-<area shape="rect" id="node9" href="$classpni_1_1invalid__object__error.html" title="unexpected invalid object" alt="" coords="334,310,461,351"/>
-<area shape="rect" id="node10" href="$classpni_1_1io__error.html" title="general IO error" alt="" coords="352,376,443,403"/>
-<area shape="rect" id="node11" href="$classpni_1_1iterator__error.html" title="iterator error" alt="" coords="337,427,457,453"/>
-<area shape="rect" id="node12" href="$classpni_1_1key__error.html" title="key error" alt="" coords="347,477,448,504"/>
-<area shape="rect" id="node13" href="$classpni_1_1link__error.html" title="link error" alt="" coords="347,528,447,555"/>
-<area shape="rect" id="node14" href="$classpni_1_1memory__allocation__error.html" title="memory allocation error" alt="" coords="319,579,475,621"/>
-<area shape="rect" id="node15" href="$classpni_1_1memory__not__allocated__error.html" title="memory not allocated error" alt="" coords="308,645,487,686"/>
-<area shape="rect" id="node16" href="$classpni_1_1not__implemented__error.html" title="not implemented exception" alt="" coords="324,710,471,751"/>
-<area shape="rect" id="node17" href="$classpni_1_1object__error.html" title="general error on IO objects" alt="" coords="340,776,455,803"/>
-<area shape="rect" id="node18" href="$classpni_1_1parser__error.html" title="general parser related error" alt="" coords="339,827,455,853"/>
-<area shape="rect" id="node19" href="$classpni_1_1range__error.html" title="data range error" alt="" coords="341,877,453,904"/>
-<area shape="rect" id="node20" href="$classpni_1_1shape__mismatch__error.html" title="Shape mismatch error." alt="" coords="324,929,471,970"/>
-<area shape="rect" id="node21" href="$classpni_1_1size__mismatch__error.html" title="Size mismatch error." alt="" coords="330,994,465,1035"/>
-<area shape="rect" id="node22" href="$classpni_1_1tiff_1_1tiff__read__error.html" title="error during TIFF reading" alt="" coords="340,1059,455,1101"/>
-<area shape="rect" id="node23" href="$classpni_1_1type__error.html" title="data type error" alt="" coords="345,1125,450,1152"/>
-<area shape="rect" id="node24" href="$classpni_1_1value__error.html" title="data value error" alt="" coords="342,1176,453,1203"/>
+<area shape="rect" id="node1" href="$classpni_1_1div__op.html" title="Division expression template." alt="" coords="5,5,188,47"/>
 </map>

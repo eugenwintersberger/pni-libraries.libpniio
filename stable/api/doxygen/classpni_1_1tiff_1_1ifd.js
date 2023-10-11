@@ -11,11 +11,11 @@ var classpni_1_1tiff_1_1ifd =
     [ "begin", "classpni_1_1tiff_1_1ifd.html#a7e48309233db9c855380028b074f2cb9", null ],
     [ "end", "classpni_1_1tiff_1_1ifd.html#a343e603153464520374ecdaf4ec1febd", null ],
     [ "end", "classpni_1_1tiff_1_1ifd.html#ad16eed820ecdf1b7ae9d06d41962d155", null ],
-    [ "operator=", "classpni_1_1tiff_1_1ifd.html#a37bca30ff8b33238721111aa5bdacc7b", null ],
-    [ "operator=", "classpni_1_1tiff_1_1ifd.html#a71ce4c4f06470c71a0075be3b542a8e6", null ],
+    [ "operator=", "classpni_1_1tiff_1_1ifd.html#a87b8ee8f7bc85f2d6afb3496c8805366", null ],
+    [ "operator=", "classpni_1_1tiff_1_1ifd.html#a34a455dffba62c32c8b89114dc96bc84", null ],
     [ "operator[]", "classpni_1_1tiff_1_1ifd.html#a97fcc381fa040412fdf864543092b26b", null ],
     [ "operator[]", "classpni_1_1tiff_1_1ifd.html#ac7a9f024848a71993b0c0096c6984b4f", null ],
     [ "size", "classpni_1_1tiff_1_1ifd.html#a00fa91ff71fc5e95d22c58541beeeb0f", null ],
-    [ "operator<<", "classpni_1_1tiff_1_1ifd.html#a0426d996a873c583ac6d966c55166886", null ],
+    [ "operator<<", "classpni_1_1tiff_1_1ifd.html#adb2e0dde14992498012b5576bea46e5b", null ],
     [ "_entries", "classpni_1_1tiff_1_1ifd.html#ac2fd7c5b51d392772a59a91195b4fb16", null ]
 ];
