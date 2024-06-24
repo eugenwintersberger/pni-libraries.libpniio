@@ -46,7 +46,7 @@ class PNINeXusConan(ConanFile):
 
         if self.options.get_safe("with_boost", False):
             if self.settings.os == "Windows":
-                self.requires("boost/1.81.0")
+                self.requires("boost/1.85.0")
             elif self.settings.os == "Macos":
                 self.requires("boost/1.81.0")
             else:
