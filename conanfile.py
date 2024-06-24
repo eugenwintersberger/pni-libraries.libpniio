@@ -25,6 +25,8 @@ class PNINeXusConan(ConanFile):
     }
 
     def build_requirements(self):
+	if self.settings.os == "Windows":
+	    self.tool_requires("b2/4.10.1")
         self.build_requires("ninja/1.10.2")
         self.build_requires("zlib/1.2.13")
 
@@ -46,7 +48,7 @@ class PNINeXusConan(ConanFile):
 
         if self.options.get_safe("with_boost", False):
             if self.settings.os == "Windows":
-                self.requires("boost/1.85.0")
+                self.requires("boost/1.81.0")
             elif self.settings.os == "Macos":
                 self.requires("boost/1.81.0")
             else:
