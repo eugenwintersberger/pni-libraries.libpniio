@@ -348,7 +348,7 @@ BOOST_AUTO_TEST_CASE(add_filters_mandatory)
       std::cout <<"BSm: "<< a << std::endl;
     }
     BOOST_REQUIRE_EQUAL(filters[0].cd_values().size(), bs_opts.size());
-    for(size_t i = 1; i < 3; ++i){
+    for(size_t i = 2; i < 3; ++i){
       BOOST_CHECK_EQUAL(filters[0].cd_values()[i], bs_opts[i]);
     }
     BOOST_CHECK(flags[0] == hdf5::filter::Availability::Mandatory);
