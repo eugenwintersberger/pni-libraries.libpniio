@@ -19,7 +19,7 @@ RUN apt-get -qq update && apt-get  -y install  python3-pygments libhdf5-dev libg
 RUN apt-get -qq update && apt-get  -y install  python3-breathe texlive-pictures python3-sphinx-rtd-theme libjs-mathjax fonts-mathjax fonts-mathjax-extras ghostscript
 RUN apt-get -qq update && apt-get  -y install libhdf5-dev
 RUN apt-get update && apt-get -y install libh5cpp0.6.0-dev libh5cpp0.6.0
-RUN apt-get -qq update && apt-get -qq -y install hdf5-plugin-blosc hdf5-plugin-bshuf
+RUN apt-get -qq update && apt-get -qq -y install bitshuffle-serial-links hdf5-filter-plugin-blosc-serial-links
 
 RUN apt-get clean
 
