@@ -45,13 +45,13 @@ For Debian (Bookworm) use
 
    $ wget http://repos.pni-hdri.de/bookworm-pni-hdri.list
 
-and for Ubuntu (Jammy)
+and for Ubuntu (Noble)
 
 .. code-block:: bash
 
-   $ wget http://repos.pni-hdri.de/jammy-pni-hdri.list
+   $ wget http://repos.pni-hdri.de/noble-pni-hdri.list
 
-The packages are also available for Debian Bookworm, Bullseye, Buster and Ubuntu Lunar, Jammy, Focal.
+The packages are also available for Debian Bookworm, Bullseye, Buster and Ubuntu Oracular, Noble, Jammy.
 
 Once you have downloaded the file use
 
