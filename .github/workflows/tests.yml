@@ -268,7 +268,7 @@ jobs:
           pip install --upgrade conan
       - name: build h5cpp
         run: |
-          mkdir h5cpp-src && cd h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && copy ..\conanfile.py .\h5cpp && mkdir h5cpp-build
+          mkdir h5cpp-src && cd h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && cp ../conanfile.py h5cpp && mkdir h5cpp-build
           CONAN_ARGS=" --profile ../.github/workflows/conan/profiles/vs2022 \
             -o with_boost=False \
             -o shared=${PNINEXUS_SHARED} \
