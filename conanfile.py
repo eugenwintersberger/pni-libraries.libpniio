@@ -41,9 +41,9 @@ class PNINeXusConan(ConanFile):
     def requirements(self):
         self.requires("hdf5/1.14.5")
         self.requires("zlib/1.3.1")
-        self.requires("szip/2.1.1")
-        self.requires("bzip2/1.0.8")
-        self.requires("doxygen/1.9.4")
+        # self.requires("szip/2.1.1")
+        # self.requires("bzip2/1.0.8")
+        # self.requires("doxygen/1.9.4")
 
 
         if self.options.get_safe("with_boost", False):
