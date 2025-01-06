@@ -48,7 +48,7 @@ class PNINeXusConan(ConanFile):
 
         if self.options.get_safe("with_boost", False):
             if self.settings.os == "Windows":
-                self.requires("boost/1.81.0")
+                self.requires("boost/1.85.0")
             elif self.settings.os == "Macos":
                 self.requires("boost/1.81.0")
             else:
@@ -74,6 +74,6 @@ class PNINeXusConan(ConanFile):
                 if insprefix:
                     variables["CMAKE_INSTALL_PREFIX"] = insprefix
                     variables["h5cpp_DIR"] = "%s/%s" % (
-                        insprefix, "lib/cmake/h5cpp-0.5")
+                        insprefix, "lib/cmake/h5cpp-0.6")
                 cmake.configure(variables=variables)
                 cmake.build()
