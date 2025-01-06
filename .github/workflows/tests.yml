@@ -285,7 +285,7 @@ jobs:
           cd ../../
       - name: build pninexus
         run: |
-          CONAN_ARGS=" --profile .github/workflows/conan/profiles/vs2019 \
+          CONAN_ARGS=" --profile .github/workflows/conan/profiles/vs2022 \
             -o with_boost=True \
             -o shared=${PNINEXUS_SHARED} \
             -o install_prefix=D:/a/libpninexus/libpninexus/h5cpp-src/h5cppbin \

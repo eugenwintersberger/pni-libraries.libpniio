@@ -39,7 +39,10 @@ class PNINeXusConan(ConanFile):
             self.options["hdf5"].parallel = True
 
     def requirements(self):
-        self.requires("hdf5/1.14.0")
+        if self.settings.os == "Windows":
+            self.requires("hdf5/1.14.5")
+        else:
+            self.requires("hdf5/1.14.0")
         self.requires("zlib/1.2.13")
         self.requires("szip/2.1.1")
         self.requires("bzip2/1.0.8")
@@ -48,7 +51,7 @@ class PNINeXusConan(ConanFile):
 
         if self.options.get_safe("with_boost", False):
             if self.settings.os == "Windows":
-                self.requires("boost/1.85.0")
+                self.requires("boost/1.86.0")
             elif self.settings.os == "Macos":
                 self.requires("boost/1.81.0")
             else:
