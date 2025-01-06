@@ -143,7 +143,7 @@ jobs:
         run: |
           pip install --upgrade conan==2.0.2
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-          CONAN_ARGS="--profile .github/workflows/conan/profiles/${{ matrix.profile }} \
+          CONAN_ARGS="--profile ../.github/workflows/conan/profiles/${{ matrix.profile }} \
             -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
