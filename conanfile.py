@@ -27,8 +27,8 @@ class PNINeXusConan(ConanFile):
     def build_requirements(self):
         self.build_requires("ninja/1.10.2")
         self.build_requires("zlib/1.2.13")
-        if self.settings.os == "Windows":
-           self.tool_requires("b2/4.10.1")
+        # if self.settings.os == "Windows":
+        #    self.tool_requires("b2/4.10.1")
 
     def config_options(self):
         if self.settings.os == "Windows":
