@@ -120,7 +120,7 @@ jobs:
         profile: [
              gcc11,
              # clang14-libc++,
-             # clang14-libstdc++
+             clang14-libstdc++
         ]
     runs-on: ubuntu-20.04
     container:
