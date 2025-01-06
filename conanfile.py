@@ -25,8 +25,8 @@ class PNINeXusConan(ConanFile):
     }
 
     def build_requirements(self):
-        self.build_requires("ninja/1.10.2")
-        self.build_requires("zlib/1.3.1")
+        # self.build_requires("ninja/1.10.2")
+        # self.build_requires("zlib/1.3.1")
         # if self.settings.os == "Windows":
         #    self.tool_requires("b2/5.2.1")
 
@@ -40,9 +40,9 @@ class PNINeXusConan(ConanFile):
 
     def requirements(self):
         self.requires("hdf5/1.14.5")
-        self.requires("zlib/1.3.1")
-        self.requires("szip/2.1.1")
-        self.requires("bzip2/1.0.8")
+        # self.requires("zlib/1.3.1")
+        # self.requires("szip/2.1.1")
+        # self.requires("bzip2/1.0.8")
         # self.requires("doxygen/1.9.4")
 
 
