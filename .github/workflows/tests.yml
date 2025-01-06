@@ -122,10 +122,10 @@ jobs:
              clang14-libc++,
              clang14-libstdc++
         ]
-    runs-on: ubuntu-20.04
-    container:
-      image: ${{ matrix.image }}
-      options: '--user=root'
+    runs-on: ubuntu-22.04
+    # container:
+    #   image: ${{ matrix.image }}
+    #   options: '--user=root'
     steps:
       - uses: actions/checkout@v2
       - name: Set environment variables
