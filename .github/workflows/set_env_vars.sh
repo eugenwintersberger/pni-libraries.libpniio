@@ -9,3 +9,7 @@ if [ "$2" = "mpi" ]; then
 else
 	echo "PNINEXUS_WITH_MPI=False" >> $GITHUB_ENV
 fi
+if [ "$3" = "clang14-libc++" ] || [ "$3" = "clang14-libstdc++" ] ; then
+	echo "CC=clang" >> $GITHUB_ENV
+	echo "CXX=clang++" >> $GITHUB_ENV
+fi
