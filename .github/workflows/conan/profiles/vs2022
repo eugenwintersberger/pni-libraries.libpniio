@@ -2,11 +2,10 @@
 arch=x86_64
 build_type=Release
 compiler=msvc
-compiler.version=193
+compiler.version=194
 compiler.toolset=v144
 compiler.runtime=dynamic
 os=Windows
 
 [conf]
 tools.env.virtualenv:powershell=True
-tools.microsoft.msbuild:vs_version=17
