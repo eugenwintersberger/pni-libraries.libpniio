@@ -16,7 +16,6 @@ defaults:
 jobs:
   dpkg:
     runs-on: ubuntu-latest
-    if: false
 
     strategy:
       matrix:
@@ -109,7 +108,6 @@ jobs:
         run: docker container stop build
 
   conan:
-    if: false
     strategy:
       matrix:
         shared: [
@@ -182,7 +180,6 @@ jobs:
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/runner/testinst/lib
           make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
   windows-2019:
-    if: false
     strategy:
       matrix:
         shared: [
@@ -205,7 +202,7 @@ jobs:
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade conan==2.0.2
+          pip install --upgrade conan
       - name: build h5cpp
         run: |
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
