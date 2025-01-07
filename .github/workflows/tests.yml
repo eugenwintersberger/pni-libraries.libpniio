@@ -143,7 +143,7 @@ jobs:
             apt-get install -y --no-install-recommends ssh
       - name: build h5cpp
         run: |
-          pip install --upgrade conan==2.0.2
+          pip install --upgrade conan
           mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
           CONAN_ARGS="--profile ../.github/workflows/conan/profiles/${{ matrix.profile }} \
             -o with_boost=True \
