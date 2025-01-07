@@ -7,4 +7,4 @@ compiler.runtime=dynamic
 os=Windows
 
 [conf]
-tools.env.virtualenv:powershell=True
+tools.env.virtualenv:powershell=pwsh
