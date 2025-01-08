@@ -117,25 +117,23 @@ jobs:
         mpi: [
         # mpi,   # not supported yet
         serial]
-        libcxx: [
-            libstdc++11,
-            # libc++   # not supported yet
+        profile: [
+             gcc11,
+             clang14-libc++,
+             clang14-libstdc++
         ]
-        image: [
-            "conanio/gcc11-ubuntu16.04:2.0.2",
-            # "conanio/clang13-ubuntu16.04:2.0.2"
-        ]
-    runs-on: ubuntu-20.04
-    container:
-      image: ${{ matrix.image }}
-      options: '--user=root'
+    runs-on: ubuntu-22.04
+    # container:
+    #   image: ${{ matrix.image }}
+    #   options: '--user=root'
     steps:
       - uses: actions/checkout@v2
       - name: Set environment variables
         run: |
             bash .github/workflows/set_env_vars.sh \
               ${{ matrix.shared }} \
-              ${{ matrix.mpi }}
+              ${{ matrix.mpi }} \
+              ${{ matrix.profile }}
       - name: Install MPI prerequisites
         if: ${{ matrix.mpi == 'mpi' }}
         run: |
@@ -143,12 +141,13 @@ jobs:
             apt-get install -y --no-install-recommends ssh
       - name: build h5cpp
         run: |
-          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-          CONAN_ARGS=" \
+          pip install --upgrade conan
+          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp  && cp ../h5cpp_conanfile.py h5cpp/conanfile.py && mkdir h5cpp-build
+          CONAN_ARGS="--profile ../.github/workflows/conan/profiles/${{ matrix.profile }} \
             -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
-            -o install_prefix=/usr/local/ \
+            -o install_prefix=/home/runner/testinst \
             -o *:shared=${PNINEXUS_SHARED}"
           conan profile detect
           conan remove -c zlib/*
@@ -161,12 +160,13 @@ jobs:
           cd ../../
       - name: build pninexus
         run: |
-          CONAN_ARGS=" \
+          CONAN_ARGS="--profile .github/workflows/conan/profiles/${{ matrix.profile }} \
             -o with_boost=True \
             -o with_mpi=${PNINEXUS_WITH_MPI} \
             -o shared=${PNINEXUS_SHARED} \
-            -o install_prefix=/usr/local/ \
+            -o install_prefix=/home/runner/testinst \
             -o *:shared=${PNINEXUS_SHARED}"
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/runner/testinst/lib
           conan install . ${CONAN_ARGS}  --output-folder build   --build missing  --update
           conan build . ${CONAN_ARGS}  --output-folder build
       - name: run tests
@@ -177,7 +177,7 @@ jobs:
             -o shared=${PNINEXUS_SHARED} \
             -o *:shared=${PNINEXUS_SHARED}"
           cd build
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/runner/testinst/lib
           make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
   windows-2019:
     strategy:
@@ -202,10 +202,10 @@ jobs:
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade conan==2.0.2
+          pip install --upgrade conan
       - name: build h5cpp
         run: |
-          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
+          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && cp ../h5cpp_conanfile.py h5cpp/conanfile.py && mkdir h5cpp-build
           CONAN_ARGS=" --profile ../.github/workflows/conan/profiles/vs2019 \
             -o with_boost=False \
             -o shared=${PNINEXUS_SHARED} \
@@ -240,7 +240,6 @@ jobs:
           cmake --build . --verbose --target check --config RELEASE
         shell: pwsh
   windows-2022:
-    if: false
     strategy:
       matrix:
         shared: [
@@ -263,11 +262,11 @@ jobs:
       - name: Install and configure conan
         run: |
           python -m pip install --upgrade pip
-          pip install --upgrade conan==2.0.2
+          pip install --upgrade conan
       - name: build h5cpp
         run: |
-          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp && mkdir h5cpp-build
-          CONAN_ARGS=" --profile h5cpp/.github/workflows/conan/profiles/vs2022 \
+          mkdir h5cpp-src && cd h5cpp-src && git clone https://github.com/ess-dmsc/h5cpp && cp ../h5cpp_conanfile.py h5cpp/conanfile.py && mkdir h5cpp-build
+          CONAN_ARGS=" --profile ../.github/workflows/conan/profiles/vs2022 \
             -o with_boost=False \
             -o shared=${PNINEXUS_SHARED} \
             -o install_prefix=D:/a/libpninexus/libpninexus/h5cpp-src/h5cppbin \
@@ -283,7 +282,7 @@ jobs:
           cd ../../
       - name: build pninexus
         run: |
-          CONAN_ARGS=" --profile .github/workflows/conan/profiles/vs2019 \
+          CONAN_ARGS=" --profile .github/workflows/conan/profiles/vs2022 \
             -o with_boost=True \
             -o shared=${PNINEXUS_SHARED} \
             -o install_prefix=D:/a/libpninexus/libpninexus/h5cpp-src/h5cppbin \
@@ -300,3 +299,75 @@ jobs:
           .\conanrunenv-release-x86_64.ps1
           cmake --build . --verbose --target check --config RELEASE
         shell: pwsh
+  macos-13:
+    strategy:
+      matrix:
+        shared: [
+          shared,
+          # static  # not supported yet
+        ]
+        mpi: [
+        # mpi,   # not supported yet
+        serial]
+        profile: [
+             apple-clang12
+        ]
+    runs-on: macos-13
+    # container:
+    #   image: ${{ matrix.image }}
+    #   options: '--user=root'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Set environment variables
+        run: |
+            bash .github/workflows/set_env_vars.sh \
+              ${{ matrix.shared }} \
+              ${{ matrix.mpi }} \
+              ${{ matrix.profile }}
+      - name: Install MPI prerequisites
+        if: ${{ matrix.mpi == 'mpi' }}
+        run: brew install open-mpi
+      - name: build h5cpp
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade conan
+          mkdir h5cpp-src && cd h5cpp-src &&  git clone https://github.com/ess-dmsc/h5cpp  && cp ../h5cpp_conanfile.py h5cpp/conanfile.py && mkdir h5cpp-build
+          CONAN_ARGS="--profile ../.github/workflows/conan/profiles/${{ matrix.profile }} \
+            -o with_boost=True \
+            -o with_mpi=${PNINEXUS_WITH_MPI} \
+            -o shared=${PNINEXUS_SHARED} \
+            -o install_prefix=/Users/runner/testinst \
+            -o *:shared=${PNINEXUS_SHARED}"
+          conan profile detect
+          conan remove -c zlib/*
+          # conan remove -c boost/*
+          # conan remove -c b2/*
+          conan install h5cpp ${CONAN_ARGS} --output-folder h5cpp-build --build missing --update
+          conan build h5cpp ${CONAN_ARGS} --output-folder h5cpp-build
+          cd  h5cpp-build
+          make install
+          cd ../../
+      - name: build pninexus
+        run: |
+          CONAN_ARGS="--profile .github/workflows/conan/profiles/${{ matrix.profile }} \
+            -o with_boost=True \
+            -o with_mpi=${PNINEXUS_WITH_MPI} \
+            -o shared=${PNINEXUS_SHARED} \
+            -o install_prefix=//Users/runner/testinst \
+            -o *:shared=${PNINEXUS_SHARED}"
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/Users/runner/testinst/lib
+          conan install . ${CONAN_ARGS}  --output-folder build   --build missing  --update
+          conan build . ${CONAN_ARGS}  --output-folder build
+      - name: run tests
+        run: |
+          CONAN_ARGS=" \
+            -o with_boost=True \
+            -o with_mpi=${PNINEXUS_WITH_MPI} \
+            -o shared=${PNINEXUS_SHARED} \
+            -o *:shared=${PNINEXUS_SHARED}"
+          cd build
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/Users/runner/testinst/lib
+          make check CTEST_OUTPUT_ON_FAILURE=TRUE  -j4
